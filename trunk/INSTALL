@@ -1,0 +1,6 @@
+To compile and install Mednafen, follow these steps:
+
+	1.  Run "./configure".  
+	    To see all possible compilation options, run "./configure --help".
+
+	2.  Run "make install".

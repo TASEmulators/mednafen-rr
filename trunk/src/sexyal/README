@@ -1,0 +1,5 @@
+SexyAL current bugs and limitations:
+
+	Only supports one input sample format right now:  SEXYAL_FMT_PCMS16
+
+	Does not perform sample-rate conversion.
