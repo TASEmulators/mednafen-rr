@@ -41,6 +41,10 @@ int readonly = 0;
 
 #define RLSB 		MDFNSTATE_RLSB	//0x80000000
 
+
+/// all the smem stuff relates to taking care of savestates and movies in memory
+/// basically like dealing with filestreams
+
 int32 smem_read(StateMem *st, void *buffer, uint32 len)
 {
  if((len + st->loc) > st->len)
@@ -649,6 +653,7 @@ std::cout << "temporarymbuflen" << Grabtempmov().len <<std::endl;
 FILE* statemovie;
 
 
+//create the associated movie file
 
 statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 10,0).c_str(),"wb");
 
@@ -694,6 +699,7 @@ std::cout << "----------" <<std::endl;
 
 fclose(statemovie);
 
+//go back to the beginning
 
 smem_seek(&Grabtempmov(), 0, SEEK_END);
 
@@ -866,7 +872,7 @@ std::cout << "LoadState" <<std::endl;
 
 StateMem temp = Grabtempmov();
 
-FILE* statemovie;
+FILE* statemovie;  //the movie file that will be read
 
 uint32 moviedatasize;
 
@@ -1098,7 +1104,7 @@ void MDFNI_LoadState(const char *fname, const char *suffix)
   if(MDFNnetplay)
    MDFNNET_SendState();
   #endif
-//  if(MDFNMOV_IsRecording())
+//  if(MDFNMOV_IsRecording())  //we don't want this to happen
  //  MDFNMOV_RecordState();
  }
 }

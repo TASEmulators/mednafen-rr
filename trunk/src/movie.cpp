@@ -61,6 +61,7 @@ static uint32 frameptr = 0;
 
 char * tempbuffer;
 
+
 void incFrameCounter(void) {
 
 FrameCounter++;
@@ -73,6 +74,7 @@ return(FrameCounter);
 
 }
 
+//used for conditionals in state.cpp depending on whether we are playing back or recording
 int checkcurrent(void) {
 
 return(current);
@@ -86,6 +88,7 @@ FrameCounter = value;
 
 }
 
+//used for truncating the movie file when a state is saved during playback
 uint32 getmloc(void) {
 
 return(tempmloc);
@@ -109,25 +112,20 @@ bool MDFNMOV_IsRecording(void)
  else return(0);
 }
 
+
+//this is useful for manipulating the moviebuffer in state.cpp
 StateMem Grabtempmov(void) {
 
  StateMem ret = temporarymoviebuffer;
- //memset(&temporarymoviebuffer, 0, sizeof(StateMem));
- //RewindBuffer.initial_malloc = 16;
  return(ret);
 
 
 }
 
+
 void Writetempmov(StateMem in) {
 
 temporarymoviebuffer = in;
-
- //StateMem ret = temporarymoviebuffer;
- //memset(&temporarymoviebuffer, 0, sizeof(StateMem));
- //RewindBuffer.initial_malloc = 16;
-// return(ret);
-
 
 }
 
@@ -163,22 +161,6 @@ tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
 fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest3);
 
 fclose(tempbuffertest3);
-
-/*
-FILE* tempbuffertest4;
-
-smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
-tempbuffertest4=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb");
-//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
-fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest3);
-
-fclose(tempbuffertest4);
-
-*/
-//fwrite(
-
-
-
 
 /////
 
@@ -225,6 +207,8 @@ fp=fopen("junk.txt","wb3");
  current++;  //Recording
 
 ///////////////////
+
+//this actually gets recorded into the movie file
 
  MDFNI_Power(); //right now, movies always start from power on
 
@@ -315,7 +299,7 @@ rewind(fp);
 
 
 //test temp buffer
-
+//this is debugging junk
 
 FILE* tempbuffertest;
 
@@ -345,7 +329,7 @@ smem_write(&temporarymoviebuffer, tempbuffer, moviedatasize);
 
 
 //test temp buffer 2 
-
+// more debugging junk
 
 FILE* tempbuffertest2;
 
@@ -365,7 +349,13 @@ smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
 
 //movies start at frame zero
 
+//this doesn't work but i don't know why
+
 FrameCounter = 0;
+
+
+
+
 
  current = CurrentMovie;
  slots[current] = fp;
@@ -453,7 +443,7 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
    return; 
   }
 
-//this ought to read directly from temporarymoviebuffer
+//we play movies back from the disk
 
 if(fread(PDCdata, 1, PDClen, fp) != PDClen)
 //smem_seek(&temporarymoviebuffer, 1, SEEK_CUR);
@@ -482,7 +472,12 @@ if(fread(PDCdata, 1, PDClen, fp) != PDClen)
  //  fwrite(PDCdata, 1, PDClen, fp);
   }
  }
+
+//uncomment this line to get proper state saving during playback
+//but it causes a segfault when you try to record
+
 //tempmloc = ftell(fp); 
+
 }
 
 
