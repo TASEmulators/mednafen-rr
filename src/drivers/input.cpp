@@ -714,6 +714,8 @@ bool MDFND_ExitBlockingLoop(void)
 
 int FrameAdvanceCounter;
 
+int FrameAdvanceSpeed = 3;
+
 static void KeyboardCommands(void)
 {
   memcpy(keys, SDL_GetKeyState(0), MKK_COUNT);
@@ -957,9 +959,9 @@ static void KeyboardCommands(void)
 
 //this is to make holding down the frame advance key slower
 //it advanced at full speed before
-    if(FrameAdvanceCounter > 3) {
-
-
+    if(FrameAdvanceCounter > FrameAdvanceSpeed) {
+std::cout << "FAC" << FrameAdvanceCounter <<std::endl;
+std::cout << "FAS" << FrameAdvanceSpeed <<std::endl;
 
     DoFrameAdvance();
     FrameAdvanceCounter = 0;
@@ -1185,13 +1187,44 @@ static void KeyboardCommands(void)
 
    if(CK_Check(CK_STATE_SLOT_INC))
    {
-    MDFNI_SelectState(666 + 1);
+
+ 
+MDFN_DispMessage((UTF8 *)_("Speed %d"),FrameAdvanceSpeed);
+  //  MDFNI_SelectState(666 + 1);
+
+//the decrease in speed starts to get too small afer a point, so we increase by 2 in that case
+
+if(FrameAdvanceSpeed < 4) {
+
+FrameAdvanceSpeed = FrameAdvanceSpeed + 1;
+}
+else {
+FrameAdvanceSpeed = FrameAdvanceSpeed + 2;
+}
+
    }
 
    if(CK_Check(CK_STATE_SLOT_DEC))
    {
-    MDFNI_SelectState(666 - 1);
-   }
+
+
+//the increase in speed starts to get too small afer a point, so we decrease by 2 in that case
+
+if(FrameAdvanceSpeed < 5) {
+
+FrameAdvanceSpeed = FrameAdvanceSpeed - 1;
+}
+else {
+FrameAdvanceSpeed = FrameAdvanceSpeed - 2;
+}
+
+
+//FrameAdvanceSpeed = FrameAdvanceSpeed -1;
+MDFN_DispMessage((UTF8 *)_("Speed %d"),FrameAdvanceSpeed);
+}
+
+   // MDFNI_SelectState(666 - 1);
+   
   }
 
   if(CK_Check(CK_RESET))
