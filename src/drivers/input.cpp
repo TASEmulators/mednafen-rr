@@ -559,56 +559,33 @@ typedef struct __COKE
 
 static COKE CKeys[_CK_COUNT]	=
 {
-	{ MK_CK(F5), "save_state", ~0, 1, gettext_noop("Save state") },
-	{ MK_CK(F7), "load_state", ~0, 0, gettext_noop("Load state") },
-	{ MK_CK_SHIFT(F5), "save_movie", ~0, 1, gettext_noop("Save movie") },
-	{ MK_CK_SHIFT(F7), "load_movie", ~0, 0, gettext_noop("Load movie") },
+	{ MK_CK_SHIFT(b), "save_state", ~0, 1, gettext_noop("Save state") },
+	{ MK_CK_SHIFT(n), "load_state", ~0, 0, gettext_noop("Load state") },
+	{ MK_CK_SHIFT(m), "save_movie", ~0, 1, gettext_noop("Save movie") },
+	{ MK_CK_SHIFT(n), "load_movie", ~0, 0, gettext_noop("Load movie") },
 	{ MK_CK_ALT(s), "toggle_state_rewind", ~0, 1, gettext_noop("Toggle state rewind functionality") },
-/* new functionality
-	{ MK_CK(F1), "load_state_0", ~0, 0, gettext_noop("Load state 0")},
-        { MK_CK(F2), "load_state_0", ~0, 0, gettext_noop("Load state 1")},
-        { MK_CK(F3), "load_state_2", ~0, 0, gettext_noop("Load state 2")},
-        { MK_CK(F4), "load_state_3", ~0, 0, gettext_noop("Load state 3")},
-        { MK_CK(F5), "load_state_4", ~0, 0, gettext_noop("Load state 4")},
-        { MK_CK(F6), "load_state_5", ~0, 0, gettext_noop("Load state 5")},
-        { MK_CK(F7), "load_state_6", ~0, 0, gettext_noop("Load state 6")},
-        { MK_CK(F8), "load_state_7", ~0, 0, gettext_noop("Load state 7")},
-        { MK_CK(F9), "load_state_8", ~0, 0, gettext_noop("Load state 8")},
-        { MK_CK(F10), "load_state_9", ~0, 0, gettext_noop("Load state 9")},
 
-        { MK_CK_SHIFT(F1), "save_state_0", ~0, 1, gettext_noop("Save State 0") },
-        { MK_CK_SHIFT(F2), "save_state_1", ~0, 1, gettext_noop("Save State 1")  },
-        { MK_CK_SHIFT(F3), "save_state_2", ~0, 1, gettext_noop("Save State 2")  },
-        { MK_CK_SHIFT(F4), "save_state_3", ~0, 1, gettext_noop("Save State 3")  },
-        { MK_CK_SHIFT(F5), "save_state_4", ~0, 1, gettext_noop("Save State 4")  },
-        { MK_CK_SHIFT(F6), "save_state_5", ~0, 1, gettext_noop("Save State 5")  },
-        { MK_CK_SHIFT(F7), "save_state_6", ~0, 1, gettext_noop("Save State 6")  },
-        { MK_CK_SHIFT(F8), "save_state_7", ~0, 1, gettext_noop("Save State 7")  },
-        { MK_CK_SHIFT(F8), "save_state_8", ~0, 1, gettext_noop("Save State 8")  },
-        { MK_CK_SHIFT(F10), "save_state_9", ~0, 1, gettext_noop("Save State 9")  },
-*/
-// Old functionality
-	{ MK_CK(0), "0", ~0, 1, gettext_noop("Save state 0 select")},
-        { MK_CK(1), "1", ~0, 1, gettext_noop("Save state 1 select")},
-        { MK_CK(2), "2", ~0, 1, gettext_noop("Save state 2 select")},
-        { MK_CK(3), "3", ~0, 1, gettext_noop("Save state 3 select")},
-        { MK_CK(4), "4", ~0, 1, gettext_noop("Save state 4 select")},
-        { MK_CK(5), "5", ~0, 1, gettext_noop("Save state 5 select")},
-        { MK_CK(6), "6", ~0, 1, gettext_noop("Save state 6 select")},
-        { MK_CK(7), "7", ~0, 1, gettext_noop("Save state 7 select")},
-        { MK_CK(8), "8", ~0, 1, gettext_noop("Save state 8 select")},
-        { MK_CK(9), "9", ~0, 1, gettext_noop("Save state 9 select")},
+	{ MK_CK(F1), "0", ~0, 1, gettext_noop("Load state 0")},
+        { MK_CK(F2), "1", ~0, 1, gettext_noop("Load state 1")},
+        { MK_CK(F3), "2", ~0, 1, gettext_noop("Load state 2")},
+        { MK_CK(F4), "3", ~0, 1, gettext_noop("Load state 3")},
+        { MK_CK(F5), "4", ~0, 1, gettext_noop("Load state 4")},
+        { MK_CK(F6), "5", ~0, 1, gettext_noop("Load state 5")},
+        { MK_CK(F7), "6", ~0, 1, gettext_noop("Load state 6")},
+        { MK_CK(F8), "7", ~0, 1, gettext_noop("Load state 7")},
+        { MK_CK(F9), "8", ~0, 1, gettext_noop("Load state 8")},
+        { MK_CK(F10), "9", ~0, 1, gettext_noop("Load state 9")},
 
-	{ MK_CK_SHIFT(0), "m0", ~0, 1, gettext_noop("Movie 0 select") },
-        { MK_CK_SHIFT(1), "m1", ~0, 1, gettext_noop("Movie 1 select")  },
-        { MK_CK_SHIFT(2), "m2", ~0, 1, gettext_noop("Movie 2 select")  },
-        { MK_CK_SHIFT(3), "m3", ~0, 1, gettext_noop("Movie 3 select")  },
-        { MK_CK_SHIFT(4), "m4", ~0, 1, gettext_noop("Movie 4 select")  },
-        { MK_CK_SHIFT(5), "m5", ~0, 1, gettext_noop("Movie 5 select")  },
-        { MK_CK_SHIFT(6), "m6", ~0, 1, gettext_noop("Movie 6 select")  },
-        { MK_CK_SHIFT(7), "m7", ~0, 1, gettext_noop("Movie 7 select")  },
-        { MK_CK_SHIFT(8), "m8", ~0, 1, gettext_noop("Movie 8 select")  },
-        { MK_CK_SHIFT(9), "m9", ~0, 1, gettext_noop("Movie 9 select")  },
+	{ MK_CK_SHIFT(F1), "m0", ~0, 1, gettext_noop("Save State 0") },
+        { MK_CK_SHIFT(F2), "m1", ~0, 1, gettext_noop("Save State 1")  },
+        { MK_CK_SHIFT(F3), "m2", ~0, 1, gettext_noop("Save State 2")  },
+        { MK_CK_SHIFT(F4), "m3", ~0, 1, gettext_noop("Save State 3")  },
+        { MK_CK_SHIFT(F5), "m4", ~0, 1, gettext_noop("Save State 4")  },
+        { MK_CK_SHIFT(F6), "m5", ~0, 1, gettext_noop("Save State 5")  },
+        { MK_CK_SHIFT(F7), "m6", ~0, 1, gettext_noop("Save State 6")  },
+        { MK_CK_SHIFT(F8), "m7", ~0, 1, gettext_noop("Save State 7")  },
+        { MK_CK_SHIFT(F9), "m8", ~0, 1, gettext_noop("Save State 8")  },
+        { MK_CK_SHIFT(F10), "m9", ~0, 1, gettext_noop("Save State 9")  },
 
         { MK_CK_CTRL(1), "tl1", ~0, 1, gettext_noop("Toggle graphics layer 1")  },
         { MK_CK_CTRL(2), "tl2", ~0, 1, gettext_noop("Toggle graphics layer 2") },
@@ -620,38 +597,38 @@ static COKE CKeys[_CK_COUNT]	=
         { MK_CK_CTRL(8), "tl8", ~0, 1, gettext_noop("Toggle graphics layer 8") },
         { MK_CK_CTRL(9), "tl9", ~0, 1, gettext_noop("Toggle graphics layer 9") },
 
-	{ MK_CK(F9), "take_snapshot", ~0, 1, gettext_noop("Take screen snapshot") },
+	{ MK_CK_SHIFT(q), "take_snapshot", ~0, 1, gettext_noop("Take screen snapshot") },
 	{ MK_CK_ALT(RETURN), "toggle_fs", ~0, 1, gettext_noop("Toggle fullscreen mode") },
 	{ MK_CK(BACKQUOTE), "fast_forward", ~0, 1, gettext_noop("Fast-forward") },
-	{ MK_CK(F8), "insert_coin", ~0, 1, gettext_noop("Insert coin") },
-	{ MK_CK(F6), "toggle_dipview", ~0, 1, gettext_noop("Toggle DIP switch view") },
-	{ MK_CK(F6), "select_disk", ~0, 1, gettext_noop("Select disk/disc") },
-	{ MK_CK(F8), "insert_eject_disk", ~0, 1, gettext_noop("Insert/Eject disk/disc") },
-	{ MK_CK(F8), "activate_barcode", ~0, 1, gettext_noop("Activate barcode(for Famicom)") },
+	{ MK_CK_SHIFT(w), "insert_coin", ~0, 1, gettext_noop("Insert coin") },
+	{ MK_CK_SHIFT(e), "toggle_dipview", ~0, 1, gettext_noop("Toggle DIP switch view") },
+	{ MK_CK_SHIFT(r), "select_disk", ~0, 1, gettext_noop("Select disk/disc") },
+	{ MK_CK_SHIFT(t), "insert_eject_disk", ~0, 1, gettext_noop("Insert/Eject disk/disc") },
+	{ MK_CK_SHIFT(y), "activate_barcode", ~0, 1, gettext_noop("Activate barcode(for Famicom)") },
 	{ MK_CK(SCROLLOCK), "toggle_grab_input", ~0, 1, gettext_noop("Grab input") },
 	{ MK_CK_SHIFT(SCROLLOCK), "toggle_cidisable", ~0, 1, gettext_noop("Grab input and disable commands") },
 	{ MK_CK_ALT_SHIFT(1), "input_config1", ~0, 0, gettext_noop("Configure buttons on virtual port 1") },
 	{ MK_CK_ALT_SHIFT(2), "input_config2", ~0, 0, gettext_noop("Configure buttons on virtual port 2")  },
-        { MK_CK(F2), "input_configc", ~0, 0, gettext_noop("Configure command key") },
+        { MK_CK_SHIFT(i), "input_configc", ~0, 0, gettext_noop("Configure command key") },
         { MK_CK_ALT_SHIFT(3), "input_config3", ~0, 0, gettext_noop("Configure buttons on virtual port 3")  },
         { MK_CK_ALT_SHIFT(4), "input_config4", ~0, 0, gettext_noop("Configure buttons on virtual port 4")  },
 	{ MK_CK_ALT_SHIFT(5), "input_config5", ~0, 0, gettext_noop("Configure buttons on virtual port 5")  },
-	{ MK_CK(F10), "reset", ~0, 0, gettext_noop("Reset") },
-	{ MK_CK(F11), "power", ~0, 0, gettext_noop("Power toggle") },
+	{ MK_CK_SHIFT(o), "reset", ~0, 0, gettext_noop("Reset") },
+	{ MK_CK_SHIFT(p), "power", ~0, 0, gettext_noop("Power toggle") },
 	{ MK_CK2(F12, ESCAPE), "exit", ~0, 0, gettext_noop("Exit") },
 	{ MK_CK(BACKSPACE), "state_rewind", ~0, 1, gettext_noop("Rewind") },
-	{ MK_CK(F8), "rotatescreen", ~0, 1, gettext_noop("Rotate screen") },
+	{ MK_CK_SHIFT(k), "rotatescreen", ~0, 1, gettext_noop("Rotate screen") },
 
 	{ MK_CK(t), "togglenetview", ~0, 1, gettext_noop("Toggle netplay console")},
 	{ MK_CK_ALT(a), "advance_frame", ~0, 1, gettext_noop("Advance frame") },
 	{ MK_CK_ALT(r), "run_normal", ~0, 1, gettext_noop("Return to normal mode after advancing frames") },
 	{ MK_CK_ALT(c), "togglecheatview", ~0, 1, gettext_noop("Toggle cheat console") },
 	{ MK_CK_ALT(t), "togglecheatactive", ~0, 1, gettext_noop("Enable/Disable cheats") },
-        { MK_CK_SHIFT(F1), "toggle_fps_view", ~0, 1, gettext_noop("Toggle frames-per-second display") },
+        { MK_CK_CTRL_SHIFT(F1), "toggle_fps_view", ~0, 1, gettext_noop("Toggle frames-per-second display") },
 	{ MK_CK_ALT(d), "toggle_debugger", ~0, 1, gettext_noop("Toggle debugger") },
 	{ MK_CK(MINUS), "state_slot_dec", ~0, 1, gettext_noop("Decrease selected save state slot by 1") },
 	{ MK_CK(EQUALS), "state_slot_inc", ~0, 1, gettext_noop("Increase selected save state slot by 1") },
-	{ MK_CK(F1), "toggle_help", ~0, 1, gettext_noop("Toggle help screen") },
+	{ MK_CK_CTRL_SHIFT(F2), "toggle_help", ~0, 1, gettext_noop("Toggle help screen") },
 	{ MK_CK_CTRL_SHIFT(1), "device_select1", ~0, 1, gettext_noop("Select virtual device on virtual input port 1") },
         { MK_CK_CTRL_SHIFT(2), "device_select2", ~0, 1, gettext_noop("Select virtual device on virtual input port 2") },
         { MK_CK_CTRL_SHIFT(3), "device_select3", ~0, 1, gettext_noop("Select virtual device on virtual input port 3") },
@@ -980,9 +957,10 @@ static void KeyboardCommands(void)
 
 //this is to make holding down the frame advance key slower
 //it advanced at full speed before
-
-
     if(FrameAdvanceCounter > 3) {
+
+
+
     DoFrameAdvance();
     FrameAdvanceCounter = 0;
 // std::cout << FrameAdvanceCounter <<std::endl;
@@ -1308,8 +1286,151 @@ static void KeyboardCommands(void)
    {
     if(CurGame->GameType != GMT_PLAYER)
     {
-     if(CK_Check(CK_0)) MDFNI_SelectState(0);
-     if(CK_Check(CK_1)) MDFNI_SelectState(1);
+////
+//// State Loading Hotkeys
+///
+if(CK_Check(CK_0)) {
+MDFNI_SelectStateSimple(0);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_1)) {
+MDFNI_SelectStateSimple(1);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_2)) {
+MDFNI_SelectStateSimple(2);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_3)) {
+MDFNI_SelectStateSimple(3);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_4)) {
+MDFNI_SelectStateSimple(4);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_5)) {
+MDFNI_SelectStateSimple(5);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_6)) {
+MDFNI_SelectStateSimple(6);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_7)) {
+MDFNI_SelectStateSimple(7);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_8)) {
+MDFNI_SelectStateSimple(8);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+if(CK_Check(CK_9)) {
+MDFNI_SelectStateSimple(9);
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
+
+
+if(CK_Check(CK_M0)) {
+MDFNI_SelectStateSimple(0);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M1)) {
+MDFNI_SelectStateSimple(1);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M2)) {
+MDFNI_SelectStateSimple(2);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M3)) {
+MDFNI_SelectStateSimple(3);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M4)) {
+MDFNI_SelectStateSimple(4);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M5)) {
+MDFNI_SelectStateSimple(5);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M6)) {
+MDFNI_SelectStateSimple(6);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M6)) {
+MDFNI_SelectStateSimple(6);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M7)) {
+MDFNI_SelectStateSimple(7);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M8)) {
+MDFNI_SelectStateSimple(8);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M8)) {
+MDFNI_SelectStateSimple(8);
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_M9)) {
+MDFNI_SelectStateSimple(9);
+pending_save_state = 1;
+}
+
+    /* if(CK_Check(CK_1)) MDFNI_SelectState(1);
      if(CK_Check(CK_2)) MDFNI_SelectState(2);
      if(CK_Check(CK_3)) MDFNI_SelectState(3);
      if(CK_Check(CK_4)) MDFNI_SelectState(4);
@@ -1318,7 +1439,8 @@ static void KeyboardCommands(void)
      if(CK_Check(CK_7)) MDFNI_SelectState(7);
      if(CK_Check(CK_8)) MDFNI_SelectState(8);
      if(CK_Check(CK_9)) MDFNI_SelectState(9);
-
+*/
+/*
      if(CK_Check(CK_M0)) MDFNI_SelectMovie(0);
      if(CK_Check(CK_M1)) MDFNI_SelectMovie(1);
      if(CK_Check(CK_M2)) MDFNI_SelectMovie(2);
@@ -1329,6 +1451,7 @@ static void KeyboardCommands(void)
      if(CK_Check(CK_M7)) MDFNI_SelectMovie(7);
      if(CK_Check(CK_M8)) MDFNI_SelectMovie(8);
      if(CK_Check(CK_M9)) MDFNI_SelectMovie(9);
+*/
     }
    }
    #undef SSM
