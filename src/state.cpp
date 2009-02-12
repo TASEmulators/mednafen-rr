@@ -646,7 +646,7 @@ uint32 templength;
 
 std::cout << "----------" <<std::endl;
 
-std::cout << "Savestate" << Grabtempmov().len <<std::endl;
+std::cout << "Saved State #" << CurrentState <<std::endl;
 
 std::cout << "temporarymbuflen" << Grabtempmov().len <<std::endl;
 
@@ -655,7 +655,7 @@ FILE* statemovie;
 
 //create the associated movie file
 
-statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 10,0).c_str(),"wb");
+statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str(),"wb");
 
 //tempbuffertest3=fopen(,"wb3");
 
@@ -868,7 +868,7 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 
 std::cout << "----------" <<std::endl;
 
-std::cout << "LoadState" <<std::endl;
+std::cout << "Loaded State #" << CurrentState << std::endl;
 
 StateMem temp = Grabtempmov();
 
@@ -890,7 +890,7 @@ std::cout << "seeked to zero" <<smem_tell(&temp)  <<std::endl;
 
 //open the associated movie file
 
-statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 10,0).c_str(),"rb");
+statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str(),"rb");
 //tempbuffertest3=fopen(,"wb3");
 
 // get the size of it
