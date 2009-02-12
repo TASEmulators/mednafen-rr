@@ -561,8 +561,8 @@ static COKE CKeys[_CK_COUNT]	=
 {
 	{ MK_CK_SHIFT(b), "save_state", ~0, 1, gettext_noop("Save state") },
 	{ MK_CK_SHIFT(n), "load_state", ~0, 0, gettext_noop("Load state") },
-	{ MK_CK_SHIFT(m), "save_movie", ~0, 1, gettext_noop("Save movie") },
-	{ MK_CK_SHIFT(n), "load_movie", ~0, 0, gettext_noop("Load movie") },
+	{ MK_CK_SHIFT(k), "save_movie", ~0, 1, gettext_noop("Save movie") },
+	{ MK_CK_SHIFT(l), "load_movie", ~0, 0, gettext_noop("Load movie") },
 	{ MK_CK_ALT(s), "toggle_state_rewind", ~0, 1, gettext_noop("Toggle state rewind functionality") },
 
 	{ MK_CK(F1), "0", ~0, 1, gettext_noop("Load state 0")},
