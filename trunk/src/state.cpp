@@ -950,9 +950,6 @@ fclose(statemovie);
 Writetempmov(temp);
 
 
-
-
-
 /////////////////////////////
 
 
