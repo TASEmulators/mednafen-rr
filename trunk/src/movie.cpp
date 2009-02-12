@@ -172,6 +172,10 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 {
  FILE* fp;
 
+//movies start at frame zero
+
+FrameCounter = 0;
+
  if(current < 0)	// Can't save a movie during playback.
   return;
 
@@ -348,8 +352,6 @@ smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
 /////////////////////////
 
 //movies start at frame zero
-
-//this doesn't work but i don't know why
 
 FrameCounter = 0;
 

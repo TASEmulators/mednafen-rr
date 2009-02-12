@@ -655,6 +655,8 @@ FILE* statemovie;
 
 //create the associated movie file
 
+std::cout << "Creating the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str()  <<std::endl;
+
 statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str(),"wb");
 
 //tempbuffertest3=fopen(,"wb3");
@@ -889,6 +891,8 @@ smem_seek(&temp, 0, SEEK_SET);
 std::cout << "seeked to zero" <<smem_tell(&temp)  <<std::endl;
 
 //open the associated movie file
+
+std::cout << "Opening the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str()  <<std::endl;
 
 statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str(),"rb");
 //tempbuffertest3=fopen(,"wb3");
