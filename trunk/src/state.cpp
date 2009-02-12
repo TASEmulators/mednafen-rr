@@ -992,6 +992,15 @@ void MDFNSS_CheckStates(void)
         MDFND_SetStateStatus(NULL);
 }
 
+
+void MDFNI_SelectStateSimple(int w)
+{
+  CurrentState = w;
+}  
+
+
+
+
 void MDFNI_SelectState(int w)
 {
  gzFile fp;
