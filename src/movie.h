@@ -15,6 +15,8 @@ void MDFNMOV_ForceRecord(StateMem *sm);
 StateMem MDFNMOV_GrabRewindJoy(void);
 void MDFNMOV_RecordState();
 
+int retisMov(void);
+
 static void ReserveInputBufferSpace(uint32 spaceNeeded);
 
 static int movie_readchar();

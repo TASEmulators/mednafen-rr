@@ -45,6 +45,9 @@ uint32 tempmloc;
 
 StateMem temporarymoviebuffer;
 
+int isMov = 0; //used to create a second set of savestates for nonrecording/nonplayback
+//0 = not playing or recording
+
 static int current = 0;		// > 0 for recording, < 0 for playback
 static FILE* slots[10]={0};
 
@@ -58,6 +61,25 @@ static uint32 moviedatasize = 0;
 static uint32 frameptr = 0;
 
 char * tempbuffer;
+
+int retisMov(void) {
+
+std::cout << "isMov " << isMov <<std::endl;
+
+//we want a separate set of savestates for nonrecording/nonplayback so movies don't accidentally get ruined
+if(isMov == 0) {
+
+return(42);  //this could be any number, doesn't matter
+
+}
+
+else {
+
+return(NULL);
+
+}
+
+}
 
 
 void incFrameCounter(void) {
@@ -162,7 +184,7 @@ fclose(tempbuffertest3);
 
 /////
 
-
+isMov = 0;
 
 }
 
@@ -217,6 +239,8 @@ fp=fopen("junk.txt","wb3");
 //////////////////
 
 
+isMov = 1;
+
  MDFN_DispMessage((UTF8 *)_("Movie recording started."));
 }
 
@@ -230,6 +254,9 @@ static void StopPlayback(void)
 
  fclose(slots[-1 - current]);
  current=0;
+
+isMov = 0;
+
  MDFN_DispMessage((UTF8 *)_("Movie playback stopped."));
 }
 
@@ -370,7 +397,7 @@ FrameCounter = 0;
 
 ///////
 
-
+isMov = 1;
 
  MDFN_DispMessage((UTF8*)_("Movie playback started."));
 }
