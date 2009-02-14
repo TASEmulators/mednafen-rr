@@ -606,8 +606,8 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
  	  MDFN_DispMessage((UTF8 *)_("State %d save error."), CurrentState);
 	 return(0);
 	}
-
-	if(!MDFN_DumpToFile(fname ? fname : MDFN_MakeFName(MDFNMKF_STATE,CurrentState,suffix).c_str(), 6, st.data, st.len))
+//retismov for making a separates set of states for nonplayback/nonrecording
+	if(!MDFN_DumpToFile(fname ? fname : MDFN_MakeFName(MDFNMKF_STATE,CurrentState + retisMov(),suffix).c_str(), 6, st.data, st.len))
 	{
          SaveStateStatus[CurrentState] = 0;
 	 free(st.data);
@@ -655,9 +655,9 @@ FILE* statemovie;
 
 //create the associated movie file
 
-std::cout << "Creating the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str()  <<std::endl;
+std::cout << "Creating the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str()  <<std::endl;
 
-statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str(),"wb");
+statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"wb");
 
 //tempbuffertest3=fopen(,"wb3");
 
@@ -843,7 +843,7 @@ int MDFNSS_Load(const char *fname, const char *suffix)
          st=gzopen(fname, "rb");
         else
         {
-         st=gzopen(MDFN_MakeFName(MDFNMKF_STATE,CurrentState,suffix).c_str(),"rb");
+         st=gzopen(MDFN_MakeFName(MDFNMKF_STATE,CurrentState + retisMov(),suffix).c_str(),"rb");
 	}
 
 	if(st == NULL)
@@ -892,9 +892,9 @@ std::cout << "seeked to zero" <<smem_tell(&temp)  <<std::endl;
 
 //open the associated movie file
 
-std::cout << "Opening the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str()  <<std::endl;
+std::cout << "Opening the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str()  <<std::endl;
 
-statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10,0).c_str(),"rb");
+statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"rb");
 //tempbuffertest3=fopen(,"wb3");
 
 // get the size of it

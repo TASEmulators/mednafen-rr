@@ -1403,6 +1403,10 @@ LockGameMutex(0);
 }
 
 
+//
+//state saving hotkeys
+//
+
 if(CK_Check(CK_M0)) {
 MDFNI_SelectStateSimple(0);
 pending_save_state = 1;
@@ -1463,28 +1467,6 @@ MDFNI_SelectStateSimple(9);
 pending_save_state = 1;
 }
 
-    /* if(CK_Check(CK_1)) MDFNI_SelectState(1);
-     if(CK_Check(CK_2)) MDFNI_SelectState(2);
-     if(CK_Check(CK_3)) MDFNI_SelectState(3);
-     if(CK_Check(CK_4)) MDFNI_SelectState(4);
-     if(CK_Check(CK_5)) MDFNI_SelectState(5);
-     if(CK_Check(CK_6)) MDFNI_SelectState(6);
-     if(CK_Check(CK_7)) MDFNI_SelectState(7);
-     if(CK_Check(CK_8)) MDFNI_SelectState(8);
-     if(CK_Check(CK_9)) MDFNI_SelectState(9);
-*/
-/*
-     if(CK_Check(CK_M0)) MDFNI_SelectMovie(0);
-     if(CK_Check(CK_M1)) MDFNI_SelectMovie(1);
-     if(CK_Check(CK_M2)) MDFNI_SelectMovie(2);
-     if(CK_Check(CK_M3)) MDFNI_SelectMovie(3);
-     if(CK_Check(CK_M4)) MDFNI_SelectMovie(4);
-     if(CK_Check(CK_M5)) MDFNI_SelectMovie(5);
-     if(CK_Check(CK_M6)) MDFNI_SelectMovie(6);
-     if(CK_Check(CK_M7)) MDFNI_SelectMovie(7);
-     if(CK_Check(CK_M8)) MDFNI_SelectMovie(8);
-     if(CK_Check(CK_M9)) MDFNI_SelectMovie(9);
-*/
     }
    }
    #undef SSM
