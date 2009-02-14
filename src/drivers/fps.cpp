@@ -140,7 +140,47 @@ void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
 
  SDL_FillRect(FPSSurface, NULL, MK_COLOR_A(FPSSurface, 0, 0, 0, 0x80));
  DrawTextTrans((uint32 *)FPSSurface->pixels, FPSSurface->pitch, FPSSurface->w, (UTF8*)virtfps, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
- DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)drawnfps, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+// DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)drawnfps, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+
+
+//recording/playback indicator
+////////
+/////////
+////////
+
+ //std::cout << "PDClen  " << retFrameCounter() <<std::endl;
+
+char tempcount2[64];
+
+
+
+//display the right thing
+
+if(MovInd() == 666) {
+
+snprintf(tempcount2, 64, "Recording");
+}
+
+if(MovInd() == 333) {
+
+snprintf(tempcount2, 64, "Playback");
+}
+
+if(MovInd() == 111) {
+
+snprintf(tempcount2, 64, "Stopped");
+}
+
+
+//snprintf(tempcount2, 64, "%f", (double)retFrameCounter());
+
+DrawTextTrans((uint32 *)FPSSurface->pixels + 7 *  (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount2, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+
+/////////
+//
+/////////
+///////////
+
 
  //std::cout << "PDClen  " << retFrameCounter() <<std::endl;
 

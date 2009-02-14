@@ -62,6 +62,43 @@ static uint32 frameptr = 0;
 
 char * tempbuffer;
 
+
+//display plackback/recording indicator
+
+int MovInd(void) 
+
+{
+
+if(isMov == 1) 
+
+  {
+
+	if(current > 0 ) //recording
+
+	{
+
+		return(666);	
+
+		}
+
+		else { //playback
+
+		return(333);
+	
+	}
+
+
+
+
+
+  }
+
+else { return(111); }//not recording or playback 
+
+}
+
+
+
 int retisMov(void) {
 
 std::cout << "isMov " << isMov <<std::endl;
