@@ -37,7 +37,7 @@
 
 static int SaveStateStatus[10];
 
-int readonly = 0;
+//int readonly = 0;
 
 #define RLSB 		MDFNSTATE_RLSB	//0x80000000
 
@@ -553,9 +553,17 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 	{
          memset(header+16,0,16);
 
+
+         //write the current place in the playback to the header for loadiding a savestate during playing later
+
+         FILE* fp = getSlots(); //slots[current - 1];
+         std::cout << "-----------------------" <<std::endl;
+	 MDFN_en32lsb(header + 8, ftell(fp));
+         std::cout << "header ftell write " << ftell (fp) <<std::endl;
+         std::cout << "-----------------------" <<std::endl;
 //write the framecount to savestate header
 //this is so that the frame counter will decrement when a earlier state is loaded
-
+	 
 	 MDFN_en32lsb(header + 12, retFrameCounter());
 	 MDFN_en32lsb(header + 16, MEDNAFEN_VERSION_NUMERIC);
 	 MDFN_en32lsb(header + 24, neowidth);
@@ -768,6 +776,8 @@ int MDFNSS_LoadSM(StateMem *st, int haspreview, int data_only)
        //  if(memcmp(header,"MEDNAFENSVESTATE",16))
         //  return(0);
 
+setMoviePlaybackPointer(MDFN_de32lsb(header + 8));
+
 //grab the framecount from the savestate header and overwrite the framecounter
 //this is so that the frame counter will decrement when a earlier state is loaded
 
@@ -890,6 +900,21 @@ smem_seek(&temp, 0, SEEK_SET);
 
 std::cout << "seeked to zero" <<smem_tell(&temp)  <<std::endl;
 
+
+
+///////////////////
+///////////////
+/////////////////////
+
+
+
+
+
+
+
+
+if(getreadonly == 0 && MovInd() == 666) { //if we are in read+write mode and recording
+
 //open the associated movie file
 
 std::cout << "Opening the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str()  <<std::endl;
@@ -948,6 +973,36 @@ std::cout << "----------" <<std::endl;
 fclose(statemovie);
 
 Writetempmov(temp);
+
+}// end of if
+
+
+/////////
+/////////
+/////////
+
+// if we are in read only we need to set the playback to the right spot
+
+if(getreadonly() == 1 && MovInd() == 333)  {
+
+//how do i figure out where to seek the movie?
+
+FILE* temp12;
+
+
+temp12 = getSlots();
+
+MDFNMOV_Seek(temp12);
+
+
+//smem_seek(&temp, readonlypointer, SEEK_SET);
+
+}
+
+
+
+
+
 
 
 /////////////////////////////
