@@ -622,7 +622,7 @@ static COKE CKeys[_CK_COUNT]	=
 	{ MK_CK_SHIFT(p), "power", ~0, 0, gettext_noop("Power toggle") },
 	{ MK_CK2(F12, ESCAPE), "exit", ~0, 0, gettext_noop("Exit") },
 	{ MK_CK(BACKSPACE), "state_rewind", ~0, 1, gettext_noop("Rewind") },
-	{ MK_CK_SHIFT(k), "rotatescreen", ~0, 1, gettext_noop("Rotate screen") },
+	{ MK_CK_SHIFT(j), "rotatescreen", ~0, 1, gettext_noop("Rotate screen") },
 
 	{ MK_CK(t), "togglenetview", ~0, 1, gettext_noop("Toggle netplay console")},
 	{ MK_CK_ALT(a), "advance_frame", ~0, 1, gettext_noop("Advance frame") },
@@ -965,8 +965,8 @@ static void KeyboardCommands(void)
 //this is to make holding down the frame advance key slower
 //it advanced at full speed before
     if(FrameAdvanceCounter > FrameAdvanceSpeed) {
-std::cout << "FAC" << FrameAdvanceCounter <<std::endl;
-std::cout << "FAS" << FrameAdvanceSpeed <<std::endl;
+//std::cout << "FAC" << FrameAdvanceCounter <<std::endl;
+//std::cout << "FAS" << FrameAdvanceSpeed <<std::endl;
 
     DoFrameAdvance();
     FrameAdvanceCounter = 0;

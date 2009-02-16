@@ -534,7 +534,7 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
  FILE* fp;
 
 //movies start at frame zero
-
+std::cout << "1-----------------------" <<std::endl;
 FrameCounter = 0;
 
  if(current < 0)	// Can't save a movie during playback.
@@ -546,12 +546,12 @@ FrameCounter = 0;
   return;   memset(&RewindBuffer, 0, sizeof(StateMem));
  RewindBuffer.initial_malloc = 16;
  }
-
+std::cout << "2-----------------------" <<std::endl;
  memset(&RewindBuffer, 0, sizeof(StateMem));  // init
  RewindBuffer.initial_malloc = 16;
 
  current=CurrentMovie;
-
+std::cout << "3-----------------------" <<std::endl;
  if(fname)  //if a filename was given in the arguments, use that
   fp = fopen(fname, "wb3");
  else
@@ -560,17 +560,20 @@ FrameCounter = 0;
 fp=fopen("junk.txt","wb3"); 
 //MakeFName is a generic function used for naming movies, states, etc filenames - MDFNMKF_MOVIE is the type specified here - CurrentMovie is the number for the filename (state 1, 3, 4, etc) - c_str makes it null terminated
  }
-
+std::cout << "4-----------------------" <<std::endl;
  if(!fp) return;
-
- MDFNSS_SaveFP(fp, fb, LineWidths);
+std::cout << "5--78--9---0----------------" <<std::endl;
+// MDFNSS_SaveFP(fp, fb, LineWidths);
+std::cout << "5--78---------------------" <<std::endl;
  fseek(fp, 0, SEEK_END);
+std::cout << "5--78---777------------------" <<std::endl;
 //commented out for the moment
 // fflush(fp, Z_SYNC_FLUSH); // Flush output so that previews will still work right while
 			    // the movie is being recorded.  Purely cosmetic. :)
+std::cout << "5--78----45678-----------------" <<std::endl;
  slots[current] = fp;
  current++;  //Recording
-
+std::cout << "5--78---------------------" <<std::endl;
 ///////////////////
 
 //this actually gets recorded into the movie file
@@ -579,6 +582,8 @@ fp=fopen("junk.txt","wb3");
 
 //////////////////
 
+
+readonly = 0; //we are Read+Write
 
 isMov = 1;
 
@@ -781,14 +786,14 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 
   fp = slots[-1 - current];
 
-std::cout << "ftell before getc" << ftell(fp) <<std::endl;
+//std::cout << "ftell before getc" << ftell(fp) <<std::endl;
 
 //while((t = smem_getc(temporarymoviebuffer)) >=0 &&t)
   while((t = fgetc(fp)) >= 0 && t)  //slots[currrent] is a file pointer,   //t must always be greater or equal to zero, and t must be ?
 
   {
-std::cout << "ftell after getc" << ftell(fp) <<std::endl;
-std::cout << "t = " << t <<std::endl;
+//std::cout << "ftell after getc" << ftell(fp) <<std::endl;
+//std::cout << "t = " << t <<std::endl;
    if(t == MDFNNPCMD_LOADSTATE) //takes care of embedded savestates in movies, commented out
    {
   //  uint32 len;
@@ -824,8 +829,8 @@ std::cout << "t = " << t <<std::endl;
    StopPlayback();
    return; 
   }
-std::cout << "ftell after while " << ftell(fp) <<std::endl;
-std::cout << "PDClen " << PDClen <<std::endl;
+//std::cout << "ftell after while " << ftell(fp) <<std::endl;
+//std::cout << "PDClen " << PDClen <<std::endl;
 //we play movies back from the disk
 
 if(fread(PDCdata, 1, PDClen, fp) != PDClen)

@@ -60,7 +60,7 @@ void FPS_IncBlitted(void)
  BlittedIndex = (BlittedIndex + 1) & 127;
 }
 
-static bool isactive = 0;
+static bool isactive = 1;
 bool FPS_IsActive(void)
 {
  return(isactive);
