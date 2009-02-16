@@ -556,10 +556,24 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 
          //write the current place in the playback to the header for loadiding a savestate during playing later
 
-         FILE* fp = getSlots(); //slots[current - 1];
-         std::cout << "-----------------------" <<std::endl;
-	 MDFN_en32lsb(header + 8, ftell(fp));
-         std::cout << "header ftell write " << ftell (fp) <<std::endl;
+//ok this functionality doesn't work right
+//accessing the slots at all during recording causes a segfault
+
+        // FILE* gs = getSlots(); //slots[current - 1];
+         std::cout << " writing header1-----------------------" <<std::endl;
+         //if we are recording we need to use the statemem
+        if(MovInd() == 666) {
+	std::cout << "Recording" <<std::endl;
+         MDFN_en32lsb(header + 8, smem_tell(&Grabtempmov()));
+         }
+
+	 //if we are playing back we need to use the fp
+         if(MovInd() == 333) {
+	std::cout << "Playback" <<std::endl;
+	FILE* gs = getSlots();
+	 MDFN_en32lsb(header + 8, ftell(gs));
+        }
+        //std::cout << "header ftell write " << ftell (gs) <<std::endl;
          std::cout << "-----------------------" <<std::endl;
 //write the framecount to savestate header
 //this is so that the frame counter will decrement when a earlier state is loaded
@@ -602,6 +616,8 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 
 int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *LineWidths)
 {
+std::cout << "SS_Save" <<std::endl;
+
 	StateMem st;
 
 	memset(&st, 0, sizeof(StateMem));
@@ -776,7 +792,10 @@ int MDFNSS_LoadSM(StateMem *st, int haspreview, int data_only)
        //  if(memcmp(header,"MEDNAFENSVESTATE",16))
         //  return(0);
 
+//if we are playing back and the movie is read only
+if(MovInd() == 333 && getreadonly() == 1) {
 setMoviePlaybackPointer(MDFN_de32lsb(header + 8));
+}
 
 //grab the framecount from the savestate header and overwrite the framecounter
 //this is so that the frame counter will decrement when a earlier state is loaded
@@ -894,11 +913,11 @@ char * tempbuffer;
 
 std::cout << "temporarymbuflen" << Grabtempmov().len <<std::endl;
 
-std::cout << "smem tell" << smem_tell(&temp)  <<std::endl;
+std::cout << "Temp Mov smem tell" << smem_tell(&temp)  <<std::endl;
 
 smem_seek(&temp, 0, SEEK_SET);
 
-std::cout << "seeked to zero" <<smem_tell(&temp)  <<std::endl;
+std::cout << "Temp Mov seeked to zero" <<smem_tell(&temp)  <<std::endl;
 
 
 
@@ -910,11 +929,12 @@ std::cout << "seeked to zero" <<smem_tell(&temp)  <<std::endl;
 
 
 
+std::cout << "getreadonly" <<  getreadonly() <<std::endl;
 
+std::cout << "MovInd()" <<  MovInd() <<std::endl;
 
-
-if(getreadonly == 0 && MovInd() == 666) { //if we are in read+write mode and recording
-
+if(getreadonly() == 0 && MovInd() == 666) { //if we are in read+write mode and recording
+std::cout << "Should be Read+Write and Recording Mode Only" <<std::endl;
 //open the associated movie file
 
 std::cout << "Opening the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str()  <<std::endl;
@@ -984,7 +1004,7 @@ Writetempmov(temp);
 // if we are in read only we need to set the playback to the right spot
 
 if(getreadonly() == 1 && MovInd() == 333)  {
-
+std::cout << "Should be Read Only and Playback Only" <<std::endl;
 //how do i figure out where to seek the movie?
 
 FILE* temp12;
@@ -1150,8 +1170,11 @@ void MDFNI_SelectState(int w)
 
 void MDFNI_SaveState(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *LineWidths)
 {
+
+std::cout << "MDFNI_SaveState" <<std::endl;
  MDFND_SetStateStatus(NULL);
  MDFNSS_Save(fname, suffix, fb, LineWidths);
+std::cout << "MDFNI_SaveState-Out" <<std::endl;
 }
 
 void MDFNI_LoadState(const char *fname, const char *suffix)
