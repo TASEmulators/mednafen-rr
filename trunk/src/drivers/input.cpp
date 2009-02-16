@@ -448,6 +448,11 @@ static void BuildPortInfo(MDFNGI *gi)
 
   }
 
+  //numports refers to the number of ports supported by the console
+  //for example PCE supports 5
+  //this code gets run during initialization, not regular emulation
+  std::cout << "NumPorts" << NumPorts <<std::endl;
+  std::cout << "PortDataSize[NumPorts]" << PortDataSize[NumPorts] <<std::endl;
   MDFNI_SetInput(NumPorts, zedevice->ShortName, PortData[NumPorts], PortDataSize[NumPorts]);
   NumPorts++;
  }
@@ -1145,7 +1150,8 @@ std::cout << "FAS" << FrameAdvanceSpeed <<std::endl;
   if(CurGame->GameType != GMT_PLAYER)
   {
    if(CK_Check(CK_SAVE_STATE))
-	pending_save_state = 1;
+	setreadonly();
+	//pending_save_state = 1;
 
    if(CK_Check(CK_SAVE_MOVIE))
 	pending_save_movie = 1;

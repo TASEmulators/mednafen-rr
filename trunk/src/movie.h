@@ -15,6 +15,17 @@ void MDFNMOV_ForceRecord(StateMem *sm);
 StateMem MDFNMOV_GrabRewindJoy(void);
 void MDFNMOV_RecordState();
 
+void setMoviePlaybackPointer(uint32 value);
+
+void MDFNMOV_Seek(FILE* fp);
+
+FILE* getSlots();
+
+void MDFNMOV_Count(FILE* fp);
+
+int getreadonly(void);
+
+//void setreadonly(void);
 
 int MovInd(void);
 
