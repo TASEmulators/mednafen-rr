@@ -39,6 +39,8 @@
 #include "netplay.h"
 #include "movie.h"
 
+#include "drivers/main.h"
+
 uint32 FrameCounter;
 
 uint32 tempmloc;
@@ -58,9 +60,9 @@ static int RecentlySavedMovie = -1;
 static int MovieStatus[10];
 static StateMem RewindBuffer;
 
-static uint8* moviedata = NULL;
+
 static uint32 moviedatasize = 0;
-static uint32 frameptr = 0;
+
 
 char * tempbuffer;
 
@@ -74,6 +76,50 @@ int NumberOfPorts = 5;  //PCE hardcoded for the moment
 uint32 PortDataCacheLength = 2; //PCE hardcoded for the moment
 
 int MovieFrameCount;  //total number of frames in a movie
+
+
+
+void SetNumberOfPorts(void) {
+
+
+if (strcmp (CurGame->shortname, "lynx")  || strcmp (CurGame->shortname, "wswan") || strcmp(CurGame->shortname, "ngp") ) 
+
+{
+
+//"pce"
+
+//"ngp"
+
+NumberOfPorts = 1;
+
+}
+
+
+
+
+if (strcmp (CurGame->shortname, "pcfx") ) ) 
+
+{
+
+//"pce"
+
+//"ngp"
+
+NumberOfPorts = 2;
+
+}
+
+
+
+
+
+
+
+
+
+}
+
+
 
 
 
@@ -111,132 +157,6 @@ void MDFNMOV_Seek(FILE* fp)
 
 fseek (fp , MoviePlaybackPointer, SEEK_SET );
 }
-
-
-
-
-
-
-//this whole thing is completely fucked
-
-/*
-
-
-
-//this doesn't get us anywhere near the point it needs to be in the file
-
-//also seems to totally break playback, no input coming to it at all
-
-///////////////////////////////////////////
-//seek to a particular frame in the movie//
-///////////////////////////////////////////
-
-void MDFNMOV_Seek(FILE* fp)
-{
-
- //FILE* fp;
-
- int t;
-
- int moviesize1;
-
-int currentframe;
-
-
- //if(!current) return;	
-// if(current < 0)	
- 
-
-//  fp = slots[-1 - current];
-
-
-//get the size of the movie
-
-fseek(fp, 0, SEEK_END);
-moviesize1=ftell (fp);
-rewind(fp);
-
-
-//a junk buffer, useless except for doing the count
-
-char * junkbuffer;
-
-junkbuffer = (char*) malloc (sizeof(char)*moviesize1);
-
-//std::cout << "-----------------------" <<std::endl;
-
-//std::cout << "MDFNMOV_Seek" <<std::endl;
-
-//std::cout << "ftell before getc" << ftell(fp) <<std::endl;
-	
-//while we haven't reached the frame in the movie that we need to play back from
-while(currentframe < retFrameCounter()) {
-	
-	
-	
-		
-//seek through any command byte stuff
-
-//while((t = smem_getc(temporarymoviebuffer)) >=0 &&t)
-  while((t = fgetc(fp)) >= 0 && t)  //slots[currrent] is a file pointer,   //t must always be greater or equal to zero, and t must be ?
-
-  {
-//std::cout << "ftell after getc" << ftell(fp) <<std::endl;
-//std::cout << "t = " << t <<std::endl;
-  }
-//std::cout << "ftell after while " << ftell(fp) <<std::endl;
-//std::cout << "PDClen " << PDClen <<std::endl;
-//we play movies back from the disk
-
-//borken // get this to work properly
-
-//this function needs to work the same as the normal playback or else it's
-//going to get all screwed up on the control bytes
-
-//this is totally wrong
-
-//how can i calculate this correctly?
-
-fread(junkbuffer, 1, PortDataCacheLength * NumberOfPorts * 3, fp);//!= PDClen)
-
-
-//also messed up but i'll try it for now
-currentframe++;
-//currentframe++;
-
-
-
-//std::cout << "-----------------------" <<std::endl;
-
-//smem_seek(&temporarymoviebuffer, 1, SEEK_CUR);
-//if(smem_read(&temporarymoviebuffer, PDCdata, PDClen) != PDClen)
-
-  //{
-   //StopPlayback();
-  // return;
- // }
- }
-std::cout << "+++++++++++++++" <<std::endl;
-std::cout << "retFrameCounter()" << retFrameCounter() <<std::endl;
-
-std::cout << "currentframe" << currentframe <<std::endl;
-std::cout << "+++++++++++++++" <<std::endl;
-}
-
-
-
-
-
-*/
-
-
-
-
-
-
-
-
-
 
 
 
@@ -512,7 +432,10 @@ static void StopRecording(void)
   free(RewindBuffer.data);
   RewindBuffer.data = NULL;
  }
-//////
+
+///////////
+// write our final movie file
+///////////
 
 FILE* tempbuffertest3;
 
@@ -585,7 +508,7 @@ std::cout << "5--78---------------------" <<std::endl;
 
 readonly = 0; //we are Read+Write
 
-isMov = 1;
+isMov = 1;// use movie specific savestates
 
  MDFN_DispMessage((UTF8 *)_("Movie recording started."));
 }
@@ -613,6 +536,20 @@ void MDFNMOV_Stop(void)
  if(current < 0) StopPlayback();
  if(current > 0) StopRecording();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void MDFNI_LoadMovie(char *fname)
 {
@@ -738,7 +675,7 @@ smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
 
 FrameCounter = 0;
 
-
+SetNumberOfPorts(); //so we can load a state and continue playback correctly
 
 
 
@@ -755,9 +692,9 @@ FrameCounter = 0;
 
 ///////
 
-isMov = 1;
+isMov = 1;  //use movie specfic savestates
 
- MDFN_DispMessage((UTF8*)_("Movie playback started."));
+ MDFN_DispMessage((UTF8*)_("Movie playback started. Length: %d Frames"), MovieFrameCount);
 }
 
 
@@ -884,7 +821,7 @@ void MDFNMOV_AddCommand(int cmd)
 }
 
 
-//handles loading a state during recording - current behavior is saving the state to the movie file so that the state loads during playback
+//current behavior is saving the state to the movie file so that the state loads during playback
 void MDFNMOV_RecordState(void) 
 {
 /*
