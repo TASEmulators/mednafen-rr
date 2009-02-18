@@ -5,3 +5,5 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths);
 void MDFNI_LoadMovie(char *fname);
 
 void setreadonly(void);
+
+void ClearPCESRAM(void);
