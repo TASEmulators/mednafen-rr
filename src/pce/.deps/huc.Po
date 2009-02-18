@@ -75,7 +75,7 @@ huc.o: huc.cpp /usr/include/errno.h /usr/include/features.h \
   ../settings-common.h ../debug.h ../settings.h ../mednafen-driver.h \
   ../nes/ppu/palette-driver.h ../state.h ../general.h ../memory.h \
   huc6280.h cdrom.h adpcm.h ../md5.h ../file.h ../cdrom/cdromif.h \
-  ../mempatcher.h ../mempatcher-driver.h
+  ../mempatcher.h ../mempatcher-driver.h ../movie-driver.h
 
 /usr/include/errno.h:
 
@@ -362,3 +362,5 @@ adpcm.h:
 ../mempatcher.h:
 
 ../mempatcher-driver.h:
+
+../movie-driver.h:

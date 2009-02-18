@@ -41,6 +41,8 @@
 
 #include "drivers/main.h"
 
+//#include "pce/huc.h"
+
 uint32 FrameCounter;
 
 uint32 tempmloc;
@@ -68,6 +70,19 @@ char * tempbuffer;
 
 
 
+
+
+
+
+
+void MovClearAllSRAM(void) {
+
+ClearPCESRAM();
+
+}
+
+
+
 /////////////////////////////
 
 
@@ -78,6 +93,10 @@ uint32 PortDataCacheLength = 2; //PCE hardcoded for the moment
 int MovieFrameCount;  //total number of frames in a movie
 
 
+
+//this is for the sake of properly counting frames
+//and getting to the right point in a movie file
+//when a state is loaded in read only mode
 
 void SetNumberOfPorts(void) {
 
@@ -97,7 +116,7 @@ NumberOfPorts = 1;
 
 
 
-if (strcmp (CurGame->shortname, "pcfx") ) ) 
+if (strcmp (CurGame->shortname, "pcfx") ) 
 
 {
 
@@ -289,6 +308,8 @@ MDFN_DispMessage((UTF8 *)_("Read Only"));
 
 //display plackback/recording indicator
 
+//also for indicating whether saveram should be cleared
+
 int MovInd(void) 
 
 {
@@ -330,7 +351,7 @@ std::cout << "isMov " << isMov <<std::endl;
 //we want a separate set of savestates for nonrecording/nonplayback so movies don't accidentally get ruined
 if(isMov == 0) {
 
-return(42);  //this could be any number, doesn't matter
+return(42);  //this could be any number large enough to make the savestates not conflict
 
 }
 
@@ -497,6 +518,13 @@ std::cout << "5--78----45678-----------------" <<std::endl;
  slots[current] = fp;
  current++;  //Recording
 std::cout << "5--78---------------------" <<std::endl;
+
+
+//start from clean sram
+
+MovClearAllSRAM();
+
+
 ///////////////////
 
 //this actually gets recorded into the movie file
@@ -577,6 +605,7 @@ void MDFNI_LoadMovie(char *fname)
  {
  // fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"rb");
 fp=fopen("stoprecordingsmemmovie.txt","rb");
+
 
 
 
@@ -684,6 +713,10 @@ SetNumberOfPorts(); //so we can load a state and continue playback correctly
 
  current = -1 - current;
  MovieStatus[CurrentMovie] = 1;
+
+//start from clean sram
+
+MovClearAllSRAM();
 
 
 /////movies always play back from poweron

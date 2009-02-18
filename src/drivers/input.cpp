@@ -504,7 +504,7 @@ static void IncSelectedDevice(unsigned int port)
 
 typedef enum {
 	_CK_FIRST = 0,
-        CK_SAVE_STATE = 0,
+        CK_READ_ONLY = 0,
 	CK_LOAD_STATE,
 	CK_SAVE_MOVIE,
 	CK_LOAD_MOVIE,
@@ -542,8 +542,8 @@ typedef enum {
 	CK_TOGGLE_CHEAT_ACTIVE,
 	CK_TOGGLE_FPS_VIEW,
 	CK_TOGGLE_DEBUGGER,
-	CK_STATE_SLOT_DEC,
-        CK_STATE_SLOT_INC,
+	CK_frame_advance_speedDEC,
+        CK_frame_advance_speedINC,
 	CK_TOGGLE_HELP,
 	CK_DEVICE_SELECT1,
         CK_DEVICE_SELECT2,
@@ -564,7 +564,8 @@ typedef struct __COKE
 
 static COKE CKeys[_CK_COUNT]	=
 {
-	{ MK_CK_SHIFT(b), "save_state", ~0, 1, gettext_noop("Save state") },
+	{ MK_CK_SHIFT(b), "read_only", ~0, 1, gettext_noop("Read Only") },
+
 	{ MK_CK_SHIFT(n), "load_state", ~0, 0, gettext_noop("Load state") },
 	{ MK_CK_SHIFT(k), "save_movie", ~0, 1, gettext_noop("Save movie") },
 	{ MK_CK_SHIFT(l), "load_movie", ~0, 0, gettext_noop("Load movie") },
@@ -631,8 +632,8 @@ static COKE CKeys[_CK_COUNT]	=
 	{ MK_CK_ALT(t), "togglecheatactive", ~0, 1, gettext_noop("Enable/Disable cheats") },
         { MK_CK_CTRL_SHIFT(F1), "toggle_fps_view", ~0, 1, gettext_noop("Toggle frames-per-second display") },
 	{ MK_CK_ALT(d), "toggle_debugger", ~0, 1, gettext_noop("Toggle debugger") },
-	{ MK_CK(MINUS), "state_slot_dec", ~0, 1, gettext_noop("Decrease selected save state slot by 1") },
-	{ MK_CK(EQUALS), "state_slot_inc", ~0, 1, gettext_noop("Increase selected save state slot by 1") },
+	{ MK_CK(MINUS), "frame_advance_speeddec", ~0, 1, gettext_noop("Decrease the speed of frame advance") },
+	{ MK_CK(EQUALS), "frame_advance_speedinc", ~0, 1, gettext_noop("Increase the speed of frame advance") },
 	{ MK_CK_CTRL_SHIFT(F2), "toggle_help", ~0, 1, gettext_noop("Toggle help screen") },
 	{ MK_CK_CTRL_SHIFT(1), "device_select1", ~0, 1, gettext_noop("Select virtual device on virtual input port 1") },
         { MK_CK_CTRL_SHIFT(2), "device_select2", ~0, 1, gettext_noop("Select virtual device on virtual input port 2") },
@@ -1149,7 +1150,7 @@ static void KeyboardCommands(void)
 
   if(CurGame->GameType != GMT_PLAYER)
   {
-   if(CK_Check(CK_SAVE_STATE))
+   if(CK_Check(CK_READ_ONLY))
 	setreadonly();
 	//pending_save_state = 1;
 
@@ -1191,7 +1192,7 @@ static void KeyboardCommands(void)
    if(CK_Check(CK_TL9))
     MDFNI_ToggleLayer(8);
 
-   if(CK_Check(CK_STATE_SLOT_INC))
+   if(CK_Check(CK_frame_advance_speedINC))
    {
 
  
@@ -1210,7 +1211,7 @@ FrameAdvanceSpeed = FrameAdvanceSpeed + 2;
 
    }
 
-   if(CK_Check(CK_STATE_SLOT_DEC))
+   if(CK_Check(CK_frame_advance_speedDEC))
    {
 
 

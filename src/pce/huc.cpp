@@ -28,6 +28,8 @@
 #include "../cdrom/cdromif.h"
 #include "../mempatcher.h"
 
+#include "../movie-driver.h"
+
 static uint8 *HuCROM;
 static uint8 HuCROMMask;
 static uint8 *ROMMap[0x100];
@@ -692,4 +694,11 @@ void HuC_Power(void)
  ACShiftBits = 0;
  AC1ae5 = 0;
  memset(AC, 0, sizeof(AC));
+}
+
+void ClearPCESRAM(void) {
+
+  memset(SaveRAM, 0x00, 2048);
+  memcpy(SaveRAM, "HUBM\x00\xa0\x10\x80", 8);  
+
 }
