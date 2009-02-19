@@ -60,6 +60,8 @@ static bool ValidateSetting(const char *name, const char *value)
 
 static MDFNSetting MednafenSettings[] =
 {
+
+
   { "srwcompressor", gettext_noop("Compressor to use with state rewinding:  \"minilzo\", \"quicklz\", or \"blz\""), MDFNST_STRING, "minilzo", NULL, NULL, ValidateSetting },
   { "srwframes", gettext_noop("Number of frames to keep states for when state rewinding is enabled."), MDFNST_UINT, "600", "10", "99999" },
   { "snapname", gettext_noop("If value is true, use an alternate naming scheme(file base and numeric) for screen snapshots."), MDFNST_BOOL, "0"},
@@ -68,6 +70,10 @@ static MDFNSetting MednafenSettings[] =
   #ifdef NEED_CDEMU
   { "cdrom.lec_eval", gettext_noop("Enable simple error correction of raw data sector rips by evaluating L-EC and EDC data."), MDFNST_BOOL, "1" },
   #endif
+
+
+  { "mov.author", gettext_noop("Author's name/comments"), MDFNST_STRING, "" },
+
 
   { "path_snap", gettext_noop("Path override for screen snapshots."), MDFNST_STRING, "" },
   { "path_sav", gettext_noop("Path override for save games and nonvolatile memory."), MDFNST_STRING, "" },

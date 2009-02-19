@@ -16,6 +16,15 @@ StateMem MDFNMOV_GrabRewindJoy(void);
 void MDFNMOV_RecordState();
 
 
+
+
+static char MovMD5Sum[33];
+static char MovRomFilename[64];
+
+
+
+void WriteHeader(FILE* headertest);
+
 void MovClearAllSRAM(void);
 
 void SetNumberOfPorts(void);
@@ -31,6 +40,11 @@ void MDFNMOV_Count(FILE* fp);
 int getreadonly(void);
 
 //void setreadonly(void);
+
+
+
+void AddRerecordCount(void);
+
 
 int MovInd(void);
 
