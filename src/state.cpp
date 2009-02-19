@@ -556,10 +556,6 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 
          //write the current place in the playback to the header for loadiding a savestate during playing later
 
-//ok this functionality doesn't work right
-//accessing the slots at all during recording causes a segfault
-
-        // FILE* gs = getSlots(); //slots[current - 1];
          std::cout << " writing header1-----------------------" <<std::endl;
          //if we are recording we need to use the statemem
         if(MovInd() == 666) {
@@ -890,6 +886,12 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 	 if(!fname && !suffix)
 	 {
 
+
+///////////////////////
+
+AddRerecordCount();  //every loaded state is +1 rerecord
+
+//std::cout << "RerecordCount" << AddRerecordCount() << std::endl;
 
 ////////////////////////////
 

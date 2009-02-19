@@ -13,6 +13,8 @@ void MDFN_ltrim(char *string);
 void MDFN_rtrim(char *string);
 void MDFN_trim(char *string);
 
+void GetMD5AndFilename(FILE* fp);
+
 typedef enum
 {
  MDFNMKF_STATE = 0,

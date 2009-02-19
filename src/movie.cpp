@@ -15,6 +15,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <string>
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,9 +43,13 @@
 #include "netplay.h"
 #include "movie.h"
 
+#include "endian.h"
+
 #include "drivers/main.h"
 
 //#include "pce/huc.h"
+
+static uint32 RerecordCount;
 
 uint32 FrameCounter;
 
@@ -67,6 +75,121 @@ static uint32 moviedatasize = 0;
 
 
 char * tempbuffer;
+
+
+
+void AddRerecordCount(void) {
+
+//make this a conditional for recording mode only once testing is finished
+
+RerecordCount++;
+
+}
+
+
+void WriteHeader(FILE* headertest) {
+
+//FILE* headertest;
+
+smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
+//headertest=fopen("headertest.txt","wb");
+//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
+
+
+//file indicator
+
+
+
+//this is the only way i could figure out how to do this without causing a segfault
+//the same reason why all the code sucks
+
+//MDFNMOVI
+
+fputc(77, headertest);
+fputc(68, headertest);
+fputc(70, headertest);
+fputc(78, headertest);
+fputc(77, headertest);
+fputc(79, headertest);
+fputc(86, headertest);
+fputc(73, headertest);
+
+
+//write mednafen version
+
+write32le(MEDNAFEN_VERSION_NUMERIC, headertest);
+
+
+
+//write movie format version
+
+uint32 MovieVersion = 1;
+
+write32le(MovieVersion, headertest);
+
+
+
+//write MD5, Filename of the rom
+GetMD5AndFilename(headertest);  //up to 64 chars of filename
+
+
+
+
+
+//Rerecords
+write32le(RerecordCount, headertest);
+
+
+
+
+
+
+//console
+
+static char MovConsole[6];
+
+snprintf(MovConsole, 6, "%s", CurGame->shortname);
+
+fwrite(MovConsole, sizeof(char), 5, headertest);
+
+
+//author's name
+
+
+
+std::string author = MDFN_GetSettingS("mov.author");
+
+std::cout << author << std::endl;
+
+int i;
+
+for (i = 0; i < 32; i++) {
+
+fputc(author[i], headertest);
+
+}
+
+
+//some padding
+
+
+int j;
+
+for (j = 0; j < 103; j++) {
+
+fputc(0, headertest);
+
+}
+
+
+//close the file
+
+//fclose(headertest);
+
+}
+
+
+
 
 
 
@@ -458,11 +581,24 @@ static void StopRecording(void)
 // write our final movie file
 ///////////
 
+//open a new file
+
 FILE* tempbuffertest3;
 
 smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
 tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
 //tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
+
+
+//write the header
+
+
+WriteHeader(tempbuffertest3);
+
+// write the movie starting at the end of the header
+
+fseek(tempbuffertest3, 256, SEEK_SET);
+
 fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest3);
 
 fclose(tempbuffertest3);
@@ -472,6 +608,23 @@ fclose(tempbuffertest3);
 isMov = 0;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 {
@@ -609,7 +762,6 @@ fp=fopen("stoprecordingsmemmovie.txt","rb");
 
 
 
-
 //count the number of frames in the movie
 MovieFrameCount = 0;
 
@@ -639,17 +791,22 @@ std::cout << "FrameCount " << MovieFrameCount <<std::endl;
 
 ///get the size
 
+
+
 fseek(fp, 0, SEEK_END);
 moviedatasize=ftell (fp);
-rewind(fp);
+
+moviedatasize = moviedatasize - 256; //subtract length of header
+
+fseek(fp, 256, SEEK_SET);  //seek past header
 
 //copy it
 
 tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
 
 fread (tempbuffer,1,moviedatasize,fp);
-rewind(fp);
-
+//rewind(fp);
+fseek(fp, 256, SEEK_SET);
 
 //test temp buffer
 //this is debugging junk

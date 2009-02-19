@@ -32,6 +32,8 @@ extern int MDFNnetplay;
 
 #define MDFNNPCMD_SETNICK       0x98 /* Sent from client to server only. */
 
+//#define MDFNNPCMD_AUTHOR        0x98 /* testing */
+
 #define MDFNNPCMD_PLAYERJOINED	0xA0	// Data:  <byte: bitmask, which inputs this player controls>
 					//	  <bytestream: nickname>
 #define MDFNNPCMD_PLAYERLEFT	0xA1	// Data: (see above)
