@@ -71,7 +71,23 @@ general.o: general.cpp mednafen.h types.h ../include/config.h \
   /usr/include/zconf.h /usr/include/zlibdefs.h state-driver.h \
   settings-common.h debug.h settings.h mednafen-driver.h \
   nes/ppu/palette-driver.h /usr/include/sys/stat.h \
-  /usr/include/bits/stat.h general.h movie.h movie-driver.h md5.h
+  /usr/include/bits/stat.h /usr/include/c++/4.3/iostream \
+  /usr/include/c++/4.3/ostream /usr/include/c++/4.3/ios \
+  /usr/include/c++/4.3/bits/ios_base.h \
+  /usr/include/c++/4.3/bits/locale_classes.h \
+  /usr/include/c++/4.3/bits/locale_classes.tcc \
+  /usr/include/c++/4.3/streambuf /usr/include/c++/4.3/bits/streambuf.tcc \
+  /usr/include/c++/4.3/bits/basic_ios.h \
+  /usr/include/c++/4.3/bits/locale_facets.h /usr/include/c++/4.3/cwctype \
+  /usr/include/wctype.h \
+  /usr/include/c++/4.3/i486-linux-gnu/bits/ctype_base.h \
+  /usr/include/c++/4.3/bits/streambuf_iterator.h \
+  /usr/include/c++/4.3/i486-linux-gnu/bits/ctype_inline.h \
+  /usr/include/c++/4.3/bits/locale_facets.tcc \
+  /usr/include/c++/4.3/bits/basic_ios.tcc \
+  /usr/include/c++/4.3/bits/ostream.tcc /usr/include/c++/4.3/istream \
+  /usr/include/c++/4.3/bits/istream.tcc general.h movie.h movie-driver.h \
+  md5.h
 
 mednafen.h:
 
@@ -324,6 +340,46 @@ nes/ppu/palette-driver.h:
 /usr/include/sys/stat.h:
 
 /usr/include/bits/stat.h:
+
+/usr/include/c++/4.3/iostream:
+
+/usr/include/c++/4.3/ostream:
+
+/usr/include/c++/4.3/ios:
+
+/usr/include/c++/4.3/bits/ios_base.h:
+
+/usr/include/c++/4.3/bits/locale_classes.h:
+
+/usr/include/c++/4.3/bits/locale_classes.tcc:
+
+/usr/include/c++/4.3/streambuf:
+
+/usr/include/c++/4.3/bits/streambuf.tcc:
+
+/usr/include/c++/4.3/bits/basic_ios.h:
+
+/usr/include/c++/4.3/bits/locale_facets.h:
+
+/usr/include/c++/4.3/cwctype:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/4.3/i486-linux-gnu/bits/ctype_base.h:
+
+/usr/include/c++/4.3/bits/streambuf_iterator.h:
+
+/usr/include/c++/4.3/i486-linux-gnu/bits/ctype_inline.h:
+
+/usr/include/c++/4.3/bits/locale_facets.tcc:
+
+/usr/include/c++/4.3/bits/basic_ios.tcc:
+
+/usr/include/c++/4.3/bits/ostream.tcc:
+
+/usr/include/c++/4.3/istream:
+
+/usr/include/c++/4.3/bits/istream.tcc:
 
 general.h:
 

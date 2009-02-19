@@ -100,7 +100,22 @@ drivers/netplay.o: drivers/netplay.cpp ../include/config.h drivers/main.h \
   /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
   /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h \
   drivers/netplay.h drivers/console.h drivers/../md5.h \
-  ../include/trio/trio.h ../include/trio/triodef.h
+  /usr/include/c++/4.3/iostream /usr/include/c++/4.3/ostream \
+  /usr/include/c++/4.3/ios /usr/include/c++/4.3/bits/ios_base.h \
+  /usr/include/c++/4.3/bits/locale_classes.h \
+  /usr/include/c++/4.3/bits/locale_classes.tcc \
+  /usr/include/c++/4.3/streambuf /usr/include/c++/4.3/bits/streambuf.tcc \
+  /usr/include/c++/4.3/bits/basic_ios.h \
+  /usr/include/c++/4.3/bits/locale_facets.h /usr/include/c++/4.3/cwctype \
+  /usr/include/wctype.h \
+  /usr/include/c++/4.3/i486-linux-gnu/bits/ctype_base.h \
+  /usr/include/c++/4.3/bits/streambuf_iterator.h \
+  /usr/include/c++/4.3/i486-linux-gnu/bits/ctype_inline.h \
+  /usr/include/c++/4.3/bits/locale_facets.tcc \
+  /usr/include/c++/4.3/bits/basic_ios.tcc \
+  /usr/include/c++/4.3/bits/ostream.tcc /usr/include/c++/4.3/istream \
+  /usr/include/c++/4.3/bits/istream.tcc ../include/trio/trio.h \
+  ../include/trio/triodef.h
 
 ../include/config.h:
 
@@ -477,6 +492,46 @@ drivers/netplay.h:
 drivers/console.h:
 
 drivers/../md5.h:
+
+/usr/include/c++/4.3/iostream:
+
+/usr/include/c++/4.3/ostream:
+
+/usr/include/c++/4.3/ios:
+
+/usr/include/c++/4.3/bits/ios_base.h:
+
+/usr/include/c++/4.3/bits/locale_classes.h:
+
+/usr/include/c++/4.3/bits/locale_classes.tcc:
+
+/usr/include/c++/4.3/streambuf:
+
+/usr/include/c++/4.3/bits/streambuf.tcc:
+
+/usr/include/c++/4.3/bits/basic_ios.h:
+
+/usr/include/c++/4.3/bits/locale_facets.h:
+
+/usr/include/c++/4.3/cwctype:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/4.3/i486-linux-gnu/bits/ctype_base.h:
+
+/usr/include/c++/4.3/bits/streambuf_iterator.h:
+
+/usr/include/c++/4.3/i486-linux-gnu/bits/ctype_inline.h:
+
+/usr/include/c++/4.3/bits/locale_facets.tcc:
+
+/usr/include/c++/4.3/bits/basic_ios.tcc:
+
+/usr/include/c++/4.3/bits/ostream.tcc:
+
+/usr/include/c++/4.3/istream:
+
+/usr/include/c++/4.3/bits/istream.tcc:
 
 ../include/trio/trio.h:
 

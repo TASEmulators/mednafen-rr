@@ -71,7 +71,8 @@ static const char *CSD_pixshader = gettext_noop("Enable specified OpenGL pixel s
 static std::vector <MDFNSetting> NeoDriverSettings;
 static MDFNSetting DriverSettings[] =
 {
-  #ifdef NETWORK
+
+ #ifdef NETWORK
   { "nethost", gettext_noop("Network play server hostname."), MDFNST_STRING, "mednafen.com" },
   { "netport", gettext_noop("Port to connect to on the server."), MDFNST_UINT, "4046", "1", "65535" },
   { "netpassword", gettext_noop("Password to connect to the netplay server."), MDFNST_STRING, "" },

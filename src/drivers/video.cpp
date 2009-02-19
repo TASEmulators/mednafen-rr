@@ -17,6 +17,8 @@
 
 #include <string.h>
 
+#include <iostream>
+
 #include "main.h"
 #include "video.h"
 #include "opengl.h"
