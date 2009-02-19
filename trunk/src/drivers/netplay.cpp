@@ -28,6 +28,8 @@
 #include "console.h"
 #include "../md5.h"
 
+#include <iostream>
+
 #include <trio/trio.h>
 
 static const int PopupTime = 3500;
@@ -80,6 +82,17 @@ static void CC_nick(const UTF8 *arg)
  }
 }
 
+static void CC_author(const UTF8 *arg)
+{
+ char newnick[512];
+
+ if(trio_sscanf((char*)arg, "%*[ ]%.511[^\n]", newnick))
+ {
+  SendCEvent(CEVT_NP_AUTHOR, strdup(newnick), NULL);
+ }
+}
+
+
 typedef struct
 {
  const char *name;
@@ -93,6 +106,8 @@ static CommandEntry ConsoleCommands[]   =
  { "/quit", CC_quit },
  { "/help", CC_help },
  { "/nick", CC_nick },
+ { "a", CC_author },
+
 };
 
 
@@ -399,6 +414,15 @@ int NetplayEventHook_GT(const SDL_Event *event)
 	 MDFNI_NetplayChangeNick((UTF8*)event->user.data1);
 	free(event->user.data1);
 	break;
+
+   case CEVT_NP_AUTHOR:
+std::cout << "lol" << std::endl;
+	//MDFNI_SetSetting("author", (char*)event->user.data1);
+//	if(MDFNDnetplay)
+//	 MDFNI_NetplayChangeNick((UTF8*)event->user.data1);
+	free(event->user.data1);
+	break;
+
 
    case CEVT_NP_CONNECT:
 	if(event->user.data1) // Connect!

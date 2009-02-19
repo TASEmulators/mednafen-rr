@@ -63,6 +63,8 @@
 #define CEVT_NP_CONNECT		0x104
 #define CEVT_NP_SETNICK		0x105
 
+#define CEVT_NP_AUTHOR		0x106
+
 void SendCEvent(unsigned int code, void *data1, void *data2);
 
 void PauseGameLoop(bool p);
