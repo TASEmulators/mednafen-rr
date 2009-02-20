@@ -703,7 +703,7 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
  FILE* fp;
 
 //movies start at frame zero
-std::cout << "1-----------------------" <<std::endl;
+
 FrameCounter = 0;
 
  if(current < 0)	// Can't save a movie during playback.
@@ -715,34 +715,40 @@ FrameCounter = 0;
   return;   memset(&RewindBuffer, 0, sizeof(StateMem));
  RewindBuffer.initial_malloc = 16;
  }
-std::cout << "2-----------------------" <<std::endl;
+
  memset(&RewindBuffer, 0, sizeof(StateMem));  // init
  RewindBuffer.initial_malloc = 16;
 
  current=CurrentMovie;
-std::cout << "3-----------------------" <<std::endl;
- if(fname)  //if a filename was given in the arguments, use that
+
+ if(fname){  //if a filename was given in the arguments, use that
   fp = fopen(fname, "wb3");
- else
+ std::cout << "1_____________" <<std::endl;
+ std::cout << fname <<std::endl;
+  } 
+else
  {
  // fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3"); 
 fp=fopen("junk.txt","wb3"); 
-//MakeFName is a generic function used for naming movies, states, etc filenames - MDFNMKF_MOVIE is the type specified here - CurrentMovie is the number for the filename (state 1, 3, 4, etc) - c_str makes it null terminated
+std::cout << "2_____________" <<std::endl;
  }
-std::cout << "4-----------------------" <<std::endl;
+
  if(!fp) return;
-std::cout << "5--78--9---0----------------" <<std::endl;
+
+
+std::cout << "3_____________" <<std::endl;
+
 // MDFNSS_SaveFP(fp, fb, LineWidths);
-std::cout << "5--78---------------------" <<std::endl;
+
  fseek(fp, 0, SEEK_END);
-std::cout << "5--78---777------------------" <<std::endl;
-//commented out for the moment
+
+
 // fflush(fp, Z_SYNC_FLUSH); // Flush output so that previews will still work right while
 			    // the movie is being recorded.  Purely cosmetic. :)
-std::cout << "5--78----45678-----------------" <<std::endl;
+
  slots[current] = fp;
  current++;  //Recording
-std::cout << "5--78---------------------" <<std::endl;
+
 
 
 //start from clean sram
@@ -765,6 +771,10 @@ isMov = 1;// use movie specific savestates
 
  MDFN_DispMessage((UTF8 *)_("Movie recording started."));
 }
+
+
+
+
 
 
 static void StopPlayback(void)
@@ -816,6 +826,8 @@ MDFNI_LoadMovie(fname2);
 
 void MDFNI_LoadMovie(char *fname)
 {
+std::cout << fname <<std::endl;
+
  FILE* fp;
  //puts("KAO");
 
@@ -834,8 +846,11 @@ void MDFNI_LoadMovie(char *fname)
   return;
  }
 
- if(fname)
+ if(fname) {
   fp = fopen(fname, "rb");
+std::cout << "fopen_____________" <<std::endl;
+std::cout << fname <<std::endl;
+}
  else
  {
  // fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"rb");
@@ -845,7 +860,8 @@ fp=fopen("stoprecordingsmemmovie.txt","rb");
 
  if(!fp) return;
 
-
+std::cout << "fopen_____________" <<std::endl;
+std::cout << fp <<std::endl;
 
 //count the number of frames in the movie
 MovieFrameCount = 0;

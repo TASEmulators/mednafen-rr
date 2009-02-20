@@ -61,9 +61,6 @@ static bool ValidateSetting(const char *name, const char *value)
 static MDFNSetting MednafenSettings[] =
 {
 
-{ "playmovie", gettext_noop("Play the designated movie."), MDFNST_STRING, "" },
-
-
   { "srwcompressor", gettext_noop("Compressor to use with state rewinding:  \"minilzo\", \"quicklz\", or \"blz\""), MDFNST_STRING, "minilzo", NULL, NULL, ValidateSetting },
   { "srwframes", gettext_noop("Number of frames to keep states for when state rewinding is enabled."), MDFNST_UINT, "600", "10", "99999" },
   { "snapname", gettext_noop("If value is true, use an alternate naming scheme(file base and numeric) for screen snapshots."), MDFNST_BOOL, "0"},

@@ -11,5 +11,7 @@ typedef struct {
 int ParseArguments(int argc, char *argv[], ARGPSTRUCT *argsps, char **);
 int ShowArgumentsHelp(ARGPSTRUCT *argsps);
 
+extern const char* MovieToLoad;
+
 #define _DRIVERS_ARGH
 #endif
