@@ -15,6 +15,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <iostream>
+
 #include <unistd.h>
 #include <sys/types.h>
 #include <signal.h>
@@ -505,7 +507,8 @@ static void MakeMednafenArgsStruct(void)
 }
 
 
-static char * ArgPlayMovie = NULL;
+const char* MovieToLoad;
+static char * ArgRecordMovie = NULL;
 
 static int netconnect = 0;
 static char * loadcd = NULL;
@@ -515,7 +518,10 @@ static int DoArgs(int argc, char *argv[], char **filename)
 	int DoSetRemote = 0;
 
         ARGPSTRUCT MDFNArgs[]={
-         {"playmov", _("Play a Movie"), 0, &ArgPlayMovie, 0 },
+
+	 {"recordmov", _("Record a movie"), 0, &ArgRecordMovie, 0x4001},
+
+         {"playmov", _("Play a Movie"), 0, &MovieToLoad, 0x4001 },
 
 	 {"help", _("Show help!"), &ShowCLHelp, 0, 0 },
 	 {"remote", _("Enable remote mode."), &DoSetRemote, 0, 0 },
@@ -590,11 +596,22 @@ int LoadGame(const char *path)
 	  return 0;
 	}
 
-	if(ArgPlayMovie)
+	if(MovieToLoad)
+	{
+
+	char * tmppath = const_cast<char *>(MovieToLoad);
+	MDFNI_LoadMovie(tmppath);
+std::cout << "lalala" << MovieToLoad <<std::endl;
+	MovieToLoad = NULL;
+	//  return 0;
+	}
+
+	
+	if(ArgRecordMovie)
 	{
 
 	//char * tmppath = const_cast<char *>(path);
-	MDFNI_LoadMovie(ArgPlayMovie);
+	MDFNI_SaveMovie(ArgRecordMovie, NULL, NULL);
 	//  return 0;
 	}
 
