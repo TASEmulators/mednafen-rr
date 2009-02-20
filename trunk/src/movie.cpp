@@ -77,8 +77,79 @@ static uint32 moviedatasize = 0;
 char * tempbuffer;
 
 
+uint8  md5_of_rom_used[16];
+
+
+void ReadHeader(FILE* headertest) {
+
+//check file indicator
+
+
+
+//compare mednafen version
+
+uint32 version;
+
+//read32le(version, headertest);
+
+fseek(headertest, 8, SEEK_SET);
+
+version = fgetc(headertest);
+
+//MEDNAFEN_VERSION_NUMERIC
+
+std::cout << "Version " << version <<std::endl; //display 1st digit
+
+version = fgetc(headertest);
+
+std::cout << "Version " << version <<std::endl; //display 2nd digit
+
+//compare movie file format version
+
+uint32 movversion;
+
+fseek(headertest, 12, SEEK_SET);
+
+movversion = fgetc(headertest);
+
+std::cout << "MovVersion " << movversion <<std::endl;
+
+//compare MD5 Sums
+
+fread(md5_of_rom_used, 1, 16, headertest);
+
+//std::cout << "MD5 " << md5_of_rom_used[3] <<std::endl;
+
+
+
+//md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str()
+
+//update rerecords with value from file
+
+fseek(headertest, 112, SEEK_SET);
+
+read32le(&RerecordCount, headertest);
+
+//fread(RerecordCount, 1, 4, headertest);
+
+//RerecordCount = read32le(((uint32 *)headertest));
+
+
+
+//read32le(fuck, headertest);
+
+//read console - only useful for counting frames
+
+//read author's name
+
+//finished
+
+}
+
 
 void AddRerecordCount(void) {
+
+//TODO
 
 //make this a conditional for recording mode only once testing is finished
 
@@ -420,7 +491,8 @@ MDFN_DispMessage((UTF8 *)_("Read+Write"));
 
 else {
 
-readonly = 1;// read only
+readonly = 1;// read onlymovie.cpp:124: error: at this point in file
+
 
 MDFN_DispMessage((UTF8 *)_("Read Only"));
 }
@@ -722,9 +794,19 @@ void MDFNMOV_Stop(void)
 
 
 
+/*
+void LoadMovieCLI(void) {
 
 
 
+std::string fname = MDFN_GetSettingS("playmovie");
+
+//char * fname2 = fname;
+
+MDFNI_LoadMovie(fname2);
+
+}
+*/
 
 
 
@@ -759,6 +841,9 @@ void MDFNI_LoadMovie(char *fname)
  // fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"rb");
 fp=fopen("stoprecordingsmemmovie.txt","rb");
 
+}
+
+ if(!fp) return;
 
 
 
@@ -768,11 +853,6 @@ MovieFrameCount = 0;
 MDFNMOV_Count(fp);
 
 std::cout << "FrameCount " << MovieFrameCount <<std::endl;
-
-
- }
-
- if(!fp) return;
 
 //currently commented out because I've disabled savestates in movie files
 
@@ -786,6 +866,14 @@ std::cout << "FrameCount " << MovieFrameCount <<std::endl;
 /////////////////////
 /////////////////////
 /////////////////////
+
+
+//first do the header
+
+ReadHeader(fp);
+
+
+
 
 //load the movie file into a buffer
 
@@ -884,8 +972,21 @@ MovClearAllSRAM();
 
 isMov = 1;  //use movie specfic savestates
 
- MDFN_DispMessage((UTF8*)_("Movie playback started. Length: %d Frames"), MovieFrameCount);
+ //MDFN_DispMessage((UTF8*)_("Movie playback started. Length: %d Frames /n"), MovieFrameCount);
+
+MDFN_DispMessage((UTF8*)_("FR: %d MD5: RR: %d ATH: "), MovieFrameCount, RerecordCount);
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

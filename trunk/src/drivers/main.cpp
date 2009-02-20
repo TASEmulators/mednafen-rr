@@ -504,6 +504,9 @@ static void MakeMednafenArgsStruct(void)
  MDFN_Internal_Args[x].subs = NULL;
 }
 
+
+static char * ArgPlayMovie = NULL;
+
 static int netconnect = 0;
 static char * loadcd = NULL;
 static int DoArgs(int argc, char *argv[], char **filename)
@@ -512,6 +515,8 @@ static int DoArgs(int argc, char *argv[], char **filename)
 	int DoSetRemote = 0;
 
         ARGPSTRUCT MDFNArgs[]={
+         {"playmov", _("Play a Movie"), 0, &ArgPlayMovie, 0 },
+
 	 {"help", _("Show help!"), &ShowCLHelp, 0, 0 },
 	 {"remote", _("Enable remote mode."), &DoSetRemote, 0, 0 },
 	 #ifdef NEED_CDEMU
@@ -584,6 +589,15 @@ int LoadGame(const char *path)
          if(!(tmp=MDFNI_LoadGame(path)))
 	  return 0;
 	}
+
+	if(ArgPlayMovie)
+	{
+
+	//char * tmppath = const_cast<char *>(path);
+	MDFNI_LoadMovie(ArgPlayMovie);
+	//  return 0;
+	}
+
 	CurGame = tmp;
 	InitGameInput(tmp);
 

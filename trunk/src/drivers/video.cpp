@@ -666,7 +666,7 @@ static bool BlitInternalMessage(void)
 
  if(CurrentMessage)
  {
-  SDL_FillRect(SMSurface, NULL, MK_COLOR_A(SMSurface, 0x00, 0x00, 0x00, 0xC0));
+SDL_FillRect(SMSurface, NULL, MK_COLOR_A(SMSurface, 0x00, 0x00, 0x00, 0xC0));
   DrawTextTransShadow((uint32 *)((uint8 *)SMSurface->pixels + SMSurface->pitch * 1), SMSurface->pitch, SMRect.w, CurrentMessage, 
 	MK_COLOR_A(SMSurface, 0xFF, 0xFF, 0xFF, 0xFF), MK_COLOR_A(SMSurface, 0x00, 0x00, 0x00, 0xFF), TRUE);
   free(CurrentMessage);

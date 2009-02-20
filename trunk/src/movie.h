@@ -15,13 +15,14 @@ void MDFNMOV_ForceRecord(StateMem *sm);
 StateMem MDFNMOV_GrabRewindJoy(void);
 void MDFNMOV_RecordState();
 
-
+void LoadMovieCLI(void);
 
 
 static char MovMD5Sum[33];
 static char MovRomFilename[64];
 
 
+void ReadHeader(FILE* headertest);
 
 void WriteHeader(FILE* headertest);
 
