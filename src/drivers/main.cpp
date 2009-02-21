@@ -690,14 +690,14 @@ static bool NeedFrameAdvance = 0;
 void DoRunNormal(void)
 {
  InFrameAdvance = 0;
-ZeroStateShow();
+
 }
 
 void DoFrameAdvance(void)
 {
  InFrameAdvance = 1;
  NeedFrameAdvance = 1;
-ZeroStateShow();
+
 }
 
 static int GameLoopPaused = 0;
