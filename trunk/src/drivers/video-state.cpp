@@ -190,10 +190,12 @@ void DrawSaveStates(SDL_Surface *screen, double exs, double eys, int rs, int gs,
 
   BlitRaw(TextSurface, &TextRect, &tdrect);
 
-  drect.w = PreviewRect.w * meow;
-  drect.h = PreviewRect.h * meow;
+
+
+  drect.w = screen->w;  
+  drect.h = screen->h;
   drect.x = (screen->w - drect.w) / 2;
-  drect.y = screen->h - drect.h - tdrect.h - 4;
+  drect.y = screen->h - drect.h - tdrect.h;  
 
   BlitRaw(PreviewSurface, &PreviewRect, &drect);
 
