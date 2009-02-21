@@ -690,12 +690,14 @@ static bool NeedFrameAdvance = 0;
 void DoRunNormal(void)
 {
  InFrameAdvance = 0;
+ZeroStateShow();
 }
 
 void DoFrameAdvance(void)
 {
  InFrameAdvance = 1;
  NeedFrameAdvance = 1;
+ZeroStateShow();
 }
 
 static int GameLoopPaused = 0;
@@ -765,6 +767,7 @@ int GameLoop(void *arg)
 	  espec.soundmultiplier = CurGameSpeed;
 	  espec.NeedRewind = DNeedRewind;
           MDFNI_Emulate(&espec); //(uint32 *)VTBuffer[VTBackBuffer], (MDFN_Rect *)VTLineWidths[VTBackBuffer], &sound, &ssize, fskip, CurGameSpeed);
+	ZeroStateShow();//get rid of state previews
 	 }
 	 LockGameMutex(0);
 	 FPS_IncVirtual();

@@ -554,7 +554,7 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
          memset(header+16,0,16);
 
 
-         //write the current place in the playback to the header for loadiding a savestate during playing later
+         //write the current place in the playback to the header for loading a savestate during playing later
 
          std::cout << " writing header1-----------------------" <<std::endl;
          //if we are recording we need to use the statemem
@@ -1023,8 +1023,8 @@ MDFNMOV_Seek(temp12);
 
 
 
-
-
+//show the preview so you can tell what state you've loaded
+MDFNI_DisplayState(CurrentState);
 
 
 /////////////////////////////
@@ -1074,6 +1074,102 @@ void MDFNSS_CheckStates(void)
 void MDFNI_SelectStateSimple(int w)
 {
   CurrentState = w;
+}  
+
+
+//attempting to display the screenshot to the screen so that 
+//you don't have to advance a frame to see the state you've loaded
+
+void MDFNI_DisplayState(int w)
+{
+ gzFile fp;
+ uint32 StateShow;
+ uint32 *StateShowPB = NULL;
+ uint32 StateShowPBWidth;
+ uint32 StateShowPBHeight;
+
+// if(w == -1) 
+// {  
+//  MDFND_SetStateStatus(NULL);
+//  StateShow = 0; 
+//  return; 
+// }
+// MDFNI_SelectMovie(-1);
+
+// if(w == 666 + 1)
+//  CurrentState = (CurrentState + 1) % 10;
+// else if(w == 666 - 1)
+// {
+//  CurrentState--;
+
+//  if(CurrentState < 0 || CurrentState > 9)
+ //  CurrentState = 9;
+// }
+// else
+  CurrentState = w;
+ //StateShow = MDFND_GetTime() + 2000;
+ //StateShow = 1;
+
+ fp = gzopen(MDFN_MakeFName(MDFNMKF_STATE,CurrentState + retisMov(),NULL).c_str(),"rb");
+ if(fp)
+ {
+  uint8 header[32];
+
+  gzread(fp, header, 32);
+  uint32 width = MDFN_de32lsb(header + 24);
+  uint32 height = MDFN_de32lsb(header + 28);
+
+  if(width > 512) width = 512;
+  if(height > 512) height = 512;
+
+  {
+   uint8 previewbuffer[3 * width * height];
+   uint8 *rptr = previewbuffer;
+
+   gzread(fp, previewbuffer, 3 * width * height);
+
+   if(StateShowPB)
+   {
+    free(StateShowPB);
+    StateShowPB = NULL;
+   }
+   StateShowPB = (uint32 *)malloc(4 * width * height);
+   StateShowPBWidth = width;
+   StateShowPBHeight = height;
+
+   for(unsigned int y=0; y<height; y++)
+    for(unsigned int x=0; x<width; x++)
+    {
+     StateShowPB[x + y * width] = MK_COLORA(rptr[0],rptr[1],rptr[2], 0xFF);
+     rptr+=3;
+    }
+
+   gzclose(fp);
+  }
+ }
+ else
+ {
+  if(StateShowPB)
+  {
+   free(StateShowPB);
+   StateShowPB = NULL;
+  }
+  StateShowPBWidth = MDFNGameInfo->ss_preview_width;
+ StateShowPBHeight = MDFNGameInfo->DisplayRect.h;
+ }
+// MDFN_ResetMessages();
+
+ StateStatusStruct *status = (StateStatusStruct*)calloc(1, sizeof(StateStatusStruct));
+ 
+ memcpy(status->status, SaveStateStatus, 10 * sizeof(int));
+ status->current = CurrentState;
+ status->recently_saved = RecentlySavedState;
+ status->gfx = StateShowPB;
+ status->w = StateShowPBWidth;
+ status->h = StateShowPBHeight;
+ status->pitch = StateShowPBWidth;
+
+ MDFND_SetStateStatus(status);
 }  
 
 
