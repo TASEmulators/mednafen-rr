@@ -847,7 +847,9 @@ std::cout << fname <<std::endl;
  }
 
  if(fname) {
-  fp = fopen(fname, "rb");
+//  fp = fopen(fname, "rb");
+
+fp=fopen("../s.txt","rb");
 std::cout << "fopen_____________" <<std::endl;
 std::cout << fname <<std::endl;
 }

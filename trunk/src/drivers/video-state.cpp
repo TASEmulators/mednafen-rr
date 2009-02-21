@@ -29,9 +29,18 @@ static SDL_Rect PreviewRect, TextRect;
 static StateStatusStruct *StateStatus, *MovieStatus;
 static uint32 StateShow, MovieShow;
 
+//get rid of the preview when we do anything
+
+void ZeroStateShow(void) {
+
+StateShow = 0;
+
+}
+
+
 void DrawStateMovieRow(SDL_Surface *surface, int *nstatus, int cur, int recently_saved, uint8 *text)
 {
- uint32 *XBuf = (uint32 *)surface->pixels;
+/* uint32 *XBuf = (uint32 *)surface->pixels;
  uint32 pitch32 = surface->pitch >> 2;
  int x, y;
 
@@ -71,7 +80,7 @@ void DrawStateMovieRow(SDL_Surface *surface, int *nstatus, int cur, int recently
 
   DrawTextTransShadow(XBuf + (i - 1) * 23 + 7, pitch32 << 2, 230, (UTF8*)stringie, MK_COLOR_A(surface, 0xE0, 0xFF, 0xE0, 0xFF), MK_COLOR_A(surface, 0x00, 0x00, 0x00, 0xFF), FALSE);
  }
- DrawTextTransShadow(XBuf + 20 * pitch32, pitch32 << 2, 230, text, MK_COLOR_A(surface, 0xE0, 0xFF, 0xE0, 0xFF), MK_COLOR_A(surface, 0x00, 0x00, 0x00, 0xFF), TRUE);
+ DrawTextTransShadow(XBuf + 20 * pitch32, pitch32 << 2, 230, text, MK_COLOR_A(surface, 0xE0, 0xFF, 0xE0, 0xFF), MK_COLOR_A(surface, 0x00, 0x00, 0x00, 0xFF), TRUE); */
 }
 
 
@@ -126,7 +135,7 @@ void DrawSaveStates(SDL_Surface *screen, double exs, double eys, int rs, int gs,
   PreviewRect.x = PreviewRect.y = 0;
   PreviewRect.w = tmps->w + 2;
   PreviewRect.h = tmps->h + 2;
-  MDFN_DrawRectangleAlpha((uint32*)PreviewSurface->pixels, PreviewSurface->pitch >> 2, 0, 0, MK_COLOR_A(PreviewSurface, 0x00, 0x00, 0x9F, 0xFF), tmps->w + 2, tmps->h + 2);
+//  MDFN_DrawRectangleAlpha((uint32*)PreviewSurface->pixels, PreviewSurface->pitch >> 2, 0, 0, MK_COLOR_A(PreviewSurface, 0x00, 0x00, 0x9F, 0xFF), tmps->w + 2, tmps->h + 2);
 
   uint32 *psp = (uint32*)PreviewSurface->pixels;
 
@@ -143,12 +152,12 @@ void DrawSaveStates(SDL_Surface *screen, double exs, double eys, int rs, int gs,
   if(!TextSurface)
   {
    TextSurface = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, 230, 40, 32, 0xFF << rs, 0xFF << gs, 0xFF << bs, 0xFF << as);
-   SDL_SetColorKey(TextSurface, SDL_SRCCOLORKEY, 0);
-   SDL_SetAlpha(TextSurface, SDL_SRCALPHA, 0);
+ //  SDL_SetColorKey(TextSurface, SDL_SRCCOLORKEY, 0);
+ //  SDL_SetAlpha(TextSurface, SDL_SRCALPHA, 0);
 
-   TextRect.x = TextRect.y = 0;
-   TextRect.w = 230;
-   TextRect.h = 40;
+ //  TextRect.x = TextRect.y = 0;
+//   TextRect.w = 230;
+ //  TextRect.h = 40;
   }
   if(tmps == MovieStatus)
   {

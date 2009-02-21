@@ -16,6 +16,8 @@ typedef struct
 
 void MDFNI_SelectState(int);
 
+void MDFNI_DisplayState(int w);
+
 /* "fname" overrides the default save state filename code if non-NULL. */
 /* If suffix is set, just override the default suffix(nc0-nc9) */
 void MDFNI_SaveState(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *LineWidths);
