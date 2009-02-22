@@ -8,7 +8,7 @@
 
 #include <assert.h>
 #include <inttypes.h>
-
+/*
 #if HAVE_MKDIR
  #if MKDIR_TAKES_ONE_ARG
   #define MDFN_mkdir(a, b) mkdir(a)
@@ -18,12 +18,12 @@
 #else
  #if HAVE__MKDIR
   /* Plain Win32 */
-  #define MDFN_mkdir(a, b) _mkdir(a)
+ /* #define MDFN_mkdir(a, b) _mkdir(a)
  #else
   #error "Don't know how to create a directory on this system."
  #endif
 #endif
-
+*/
 typedef int8_t int8;
 typedef int16_t int16;
 typedef int32_t int32; 
