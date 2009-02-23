@@ -14,6 +14,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#ifdef WIN32
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+
+typedef signed short int16_t;
+typedef unsigned short uint16_t;
+
+typedef signed int int32_t;
+typedef unsigned int uint32_t;
+
+#define int64 __int64
+typedef unsigned __int64  uint64 ;
+#endif
 
 #include "video-common.h"
 #include "../string/ConvertUTF.h"
