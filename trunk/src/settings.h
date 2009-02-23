@@ -1,6 +1,20 @@
 #ifndef MDFN_SETTINGS_H
 #define MDFN_SETTINGS_H
 
+#ifdef WIN32
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+
+typedef signed short int16_t;
+typedef unsigned short uint16_t;
+
+typedef signed int int32_t;
+typedef unsigned int uint32_t;
+
+#define int64 __int64
+typedef unsigned __int64  uint64 ;
+#endif
+
 #include <string>
 
 #include "git.h"

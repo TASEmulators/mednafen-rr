@@ -25,6 +25,13 @@ of samples between the ~60Hz peaks(just to verify that the math shown below is r
 The spectrum peaked at 15734 Hz.  21477272.727272... / 3 / 15734 = 455.00(CPU cycles per scanline)"
 */
 
+#ifdef WIN32
+#define snprintf _snprintf
+#define strcasecmp _stricmp
+#define strncasecmp _strnicmp
+#define snprintf sprintf_s
+#endif
+
 #define VDC_DEBUG(x) 
 //printf("%s: %d\n", x, vdc->display_counter);
 #define VDC_UNDEFINED(x) { }

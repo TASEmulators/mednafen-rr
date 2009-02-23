@@ -17,6 +17,11 @@
 
 // TODO:  horizontal scrolling
 
+#ifdef WIN32
+#define snprintf _snprintf
+#endif
+
+
 #include "main.h"
 #include "logdebugger.h"
 #include "debugger.h"

@@ -14,6 +14,22 @@
  function: #ifdef jail to whip a few platforms into the UNIX ideal.
 
  ********************************************************************/
+#ifdef WIN32
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+
+typedef signed short int16_t;
+typedef unsigned short uint16_t;
+
+typedef signed int int32_t;
+typedef unsigned int uint32_t;
+
+#define int64 __int64
+typedef __int64 int64_t;
+typedef unsigned __int64  uint64 ;
+#endif
+
+
 #ifndef _OS_TYPES_H
 #define _OS_TYPES_H
 
