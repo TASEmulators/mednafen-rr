@@ -30,7 +30,7 @@
 #define HAVE_ALLOCA_H 1
 
 /* Define if we are compiling with ALSA support. */
-//#define HAVE_ALSA 1
+#define HAVE_ALSA 1
 
 /* Define if we should include from OpenGL instead of GL */
 /* #undef HAVE_APPLE_OPENGL_FRAMEWORK */
@@ -180,7 +180,7 @@
 #define HAVE_MEMSET 1
 
 /* Define to 1 if you have the `mkdir' function. */
-//#define HAVE_MKDIR 1
+#define HAVE_MKDIR 1
 
 /* Define to 1 if you have a working `mmap' system call. */
 #define HAVE_MMAP 1
@@ -391,7 +391,7 @@
 
 /* Define as the maximum value of type 'size_t', if the system doesn't define
    it. */
-//#define SIZE_MAX (((1U << 31) - 1) * 2 + 1)
+#define SIZE_MAX (((1U << 31) - 1) * 2 + 1)
 
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be
