@@ -24,6 +24,9 @@
    least structure were set big endian, so at reverse
    engineering wasn't such a big headache... */
 
+#include "prefix.h"
+
+#pragma pack(push, 1)
 PRAGMA_BEGIN_PACKED
 typedef union {
   struct {
@@ -117,6 +120,7 @@ typedef struct {
 } _chunk_t;
 
 PRAGMA_END_PACKED
+#pragma pack(pop)
 
 /* Nero images are Big Endian. */
 typedef enum {
