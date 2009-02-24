@@ -27,7 +27,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
 #include <unistd.h>
+#endif
 
 #include <SDL.h>
 
@@ -95,8 +100,9 @@ static uint32_t RawWrite(SexyAL_device *device, void *data, uint32_t len)
 
  while(len)
  {
+  int tocopy;
   SDL_LockAudio();
-  int tocopy = len;
+  tocopy = len;
 
   if((tocopy + sw->BufferIn) > sw->BufferSize) tocopy = sw->BufferSize - sw->BufferIn;
 
@@ -112,7 +118,7 @@ static uint32_t RawWrite(SexyAL_device *device, void *data, uint32_t len)
 
    sw->BufferIn += maxcopy;
 
-   data += maxcopy;
+   (uint8_t*)data += maxcopy;
    tocopy -= maxcopy;
    len -= maxcopy;
   }
@@ -174,7 +180,7 @@ static int RawClose(SexyAL_device *device)
  return(0);
 }
 
-SexyAL_device *SexyALI_SDL_Open(char *id, SexyAL_format *format, SexyAL_buffering *buffering)
+SexyAL_device *SexyALI_SDL_Open(const char *id, SexyAL_format *format, SexyAL_buffering *buffering)
 {
  SexyAL_device *device;
  SDLWrap *sw;
