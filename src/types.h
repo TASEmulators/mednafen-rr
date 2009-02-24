@@ -13,8 +13,8 @@
 //configuration which disables features:
 #define NO_SNDFILE
 
-#define MEDNAFEN_VERSION "999"
-#define MEDNAFEN_VERSION_NUMERIC 999
+#define MEDNAFEN_VERSION "0.8.A"
+#define MEDNAFEN_VERSION_NUMERIC 0x00080A
 
 #else
 #endif
