@@ -11,6 +11,7 @@
 #define stat _stat
 #define strtoull _strtoui64
 #define strtoll _strtoi64
+#define S_ISREG(x) 0
 
 inline double round(double x)
 {

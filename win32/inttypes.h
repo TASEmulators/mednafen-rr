@@ -12,6 +12,31 @@ typedef unsigned __int64 uint64_t;
 typedef int64_t int64;
 typedef uint64_t uint64;
 
+typedef int ssize_t;
+typedef int mode_t;
+
+#include <direct.h> 
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <errno.h>
+#define HAVE__MKDIR 1
+#define HAVE_MEMSET 1
+#define EMPTY_ARRAY_SIZE 1
+
+#define PSS "\\"
+#define PATH_MAX _MAX_PATH
+
+#define LSB_FIRST
+#define _MSC_VER_ICKY_TYPES
+#pragma warning( disable: 4996 ) //disable "The POSIX name for this item is deprecated"
+#define strcasecmp _stricmp
+#define strncasecmp _strnicmp
+#define snprintf _snprintf
+#define fstat _fstat
+
+
 #ifdef __cplusplus
 #define INLINE inline
 #else

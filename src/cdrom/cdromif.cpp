@@ -15,6 +15,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "types.h"
+
 #include <string.h>
 #include <sys/types.h>
 #include <cdio/cdio.h>
@@ -40,6 +42,7 @@ typedef struct __CD_INFO
 static CD_INFO CD_Info;
 static CDRFile *p_cdrfile = NULL;
 
+#ifndef NO_CODECS
 #include <sndfile.h>
 
 static void DumpCUEISOWAV(void)
@@ -104,7 +107,7 @@ static void DumpCUEISOWAV(void)
  }
  fclose(cuep);
 }
-
+#endif
 bool CDIF_ReadAudioSector(int16 *buffer, uint8 *SubPWBuf, uint32 read_sec)
 {
  return(cdrfile_read_audio_sector(p_cdrfile, buffer, SubPWBuf, read_sec));
