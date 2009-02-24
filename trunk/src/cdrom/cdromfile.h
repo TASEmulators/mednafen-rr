@@ -3,7 +3,11 @@
 
 #include "../tremor/ivorbisfile.h"
 #include <mpcdec/mpcdec.h>
+
+#ifndef NO_CODECS
 #include <sndfile.h>
+#endif NO_CODECS
+
 #include <stdio.h>
 
 #define CACHE_START_SECTORS	2
@@ -29,10 +33,12 @@ typedef struct __CDRFILE_TRACK_INFO
 	long FileOffset;
 	unsigned int SubchannelMode;
 
+
+#ifdef USE_CODECS
         SNDFILE *sf;
 	SF_INFO sfinfo;
 
-        OggVorbis_File *ovfile;
+	OggVorbis_File *ovfile;
 
 	mpc_decoder *MPCDecoder;
 	mpc_streaminfo *MPCStreamInfo;
@@ -42,8 +48,10 @@ typedef struct __CDRFILE_TRACK_INFO
 	MPC_SAMPLE_FORMAT *MPCBuffer; 
 	uint32 MPCBufferIn;
 	uint32 MPCBufferOffs;
-	uint32 LastSamplePos;
 
+	#endif
+
+	uint32 LastSamplePos;
 	uint8 StartCache[2352 * CACHE_START_SECTORS];
 } CDRFILE_TRACK_INFO;
 

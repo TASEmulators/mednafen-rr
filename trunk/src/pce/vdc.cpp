@@ -125,7 +125,7 @@ typedef struct
 
         uint16 SAT[0x100];
         uint16 VRAM[VRAM_Size];
-        uint8 bg_tile_cache[VRAM_Size / 16][8][8] __attribute__ ((aligned (8))); // Tile, y, x
+        uint8 ALIGN(8) bg_tile_cache[VRAM_Size / 16][8][8]; // Tile, y, x
 
         uint16 DMAReadBuffer;
         bool8 DMAReadWrite;
@@ -1088,7 +1088,7 @@ static void DrawSprites(vdc_t *vdc, uint32 *target, int enabled)
 {
  int active_sprites = 0;
  SPRLE SpriteList[64 * 2]; // (see unlimited_sprites option, *2 to accomodate 32-pixel-width sprites ) //16];
- uint32 sprite_line_buf[1024] __attribute__ ((aligned (16)));
+ uint32 ALIGN(16) sprite_line_buf[1024];
 
  // First, grab the up to 16 sprites.
  for(int i = 0; i < 64; i++)

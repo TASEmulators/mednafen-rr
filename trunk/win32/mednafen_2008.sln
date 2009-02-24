@@ -7,12 +7,18 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
+		XBOX_Debug|Win32 = XBOX_Debug|Win32
+		XBOX_Release|Win32 = XBOX_Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{28EF8B88-8DB8-4F42-B6A6-B5FC7F2EC2EB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{28EF8B88-8DB8-4F42-B6A6-B5FC7F2EC2EB}.Debug|Win32.Build.0 = Debug|Win32
 		{28EF8B88-8DB8-4F42-B6A6-B5FC7F2EC2EB}.Release|Win32.ActiveCfg = Release|Win32
 		{28EF8B88-8DB8-4F42-B6A6-B5FC7F2EC2EB}.Release|Win32.Build.0 = Release|Win32
+		{28EF8B88-8DB8-4F42-B6A6-B5FC7F2EC2EB}.XBOX_Debug|Win32.ActiveCfg = Debug|Win32
+		{28EF8B88-8DB8-4F42-B6A6-B5FC7F2EC2EB}.XBOX_Debug|Win32.Build.0 = Debug|Win32
+		{28EF8B88-8DB8-4F42-B6A6-B5FC7F2EC2EB}.XBOX_Release|Win32.ActiveCfg = Release|Win32
+		{28EF8B88-8DB8-4F42-B6A6-B5FC7F2EC2EB}.XBOX_Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
