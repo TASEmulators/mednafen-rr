@@ -337,14 +337,6 @@
 							>
 						</File>
 						<Filter
-							Name="dummy"
-							>
-							<File
-								RelativePath=".\SDL-1.2.13\src\cdrom\dummy\SDL_syscdrom.c"
-								>
-							</File>
-						</Filter>
-						<Filter
 							Name="win32"
 							>
 							<File
