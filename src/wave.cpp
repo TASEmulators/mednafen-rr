@@ -17,12 +17,21 @@
 
 #include "mednafen.h"
 
+
+#ifdef NO_SNDFILE
+void MDFN_WriteWaveData(int16 *Buffer, int Count) {}
+int MDFNI_EndWaveRecord(void) { return 0; }
+int MDFNI_BeginWaveRecord(uint32 rate, int channels, char *fn) { return 0; }
+#else
+
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
 #include <sndfile.h>
+
 
 static SNDFILE *soundlog;
 
@@ -71,3 +80,5 @@ int MDFNI_BeginWaveRecord(uint32 rate, int channels, char *fn)
 
  return(1);
 }
+
+#endif

@@ -1,4 +1,9 @@
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
 #include <errno.h>
+#endif
+
 #include <string.h>
 #include <vector>
 #include <string>
@@ -6,12 +11,6 @@
 #include "settings.h"
 #include "md5.h"
 #include "string/world_strtod.h"
-
-#ifdef WIN32 
-
-#include "oull.c"
-
-#endif
 
 std::vector <MDFNCS> CurrentSettings;
 static std::string fname;

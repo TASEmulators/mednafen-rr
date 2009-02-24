@@ -1,4 +1,3 @@
-#ifdef NETWORK
 int MDFND_NetworkConnect(void);
 void DrawNetplayTextBuffer(SDL_Surface *surface, const SDL_Rect *src_rect);
 void NetplayText_InMainThread(uint8 *text, bool NetEcho);
@@ -11,6 +10,6 @@ int Netplay_GetTextView(void);
 bool Netplay_IsTextInput(void);
 bool Netplay_TryTextExit(void);
 
+
 extern int MDFNDnetplay;
 
-#endif

@@ -35,7 +35,7 @@ font18x18 FontData18x18[]=
 	#ifdef WANT_INTERNAL_CJK
         #include "font18x18.h"
 	#else
-
+		0
 	#endif
 };
 

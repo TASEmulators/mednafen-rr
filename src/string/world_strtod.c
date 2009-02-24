@@ -60,8 +60,29 @@ extern int errno;
 
 #include "world_strtod.h"
 
+#include <string.h>
+#include <stdlib.h>
+
 /* Convert NPTR to a double.  If ENDPTR is not NULL, a pointer to the
    character after the last one used in the number is put in *ENDPTR.  */
+double world_strtod (const char *nptr, char **endptr)
+{
+	char *buf;
+	char *myendptr;
+	char *cp;
+	double ret;
+	
+	cp = buf = strdup(nptr);
+	while(*cp) {
+		if(*cp == ',') *cp = '.';
+		cp++;
+	}
+	ret = strtod(buf,&myendptr);
+	if(endptr) *endptr = myendptr;
+	return ret;
+}
+
+#if 0
 double world_strtod (const char *nptr, char **endptr)
 {
   register const char *s;
@@ -205,3 +226,5 @@ noconv:
     *endptr = (char *) nptr;
   return 0.0;
 }
+#endif
+

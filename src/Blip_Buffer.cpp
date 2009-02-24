@@ -1,4 +1,3 @@
-
 // Blip_Buffer 0.4.0. http://www.slack.net/~ant/
 
 #include "blip/Blip_Buffer.h"

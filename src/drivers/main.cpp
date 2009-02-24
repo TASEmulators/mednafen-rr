@@ -17,6 +17,9 @@
 
 #include <iostream>
 
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
 #include <unistd.h>
 #include <sys/types.h>
 #include <signal.h>
@@ -25,8 +28,10 @@
 #include <string.h>
 #include <strings.h>
 #include <errno.h>
-#include <trio/trio.h>
 #include <locale.h>
+#endif
+
+#include <trio/trio.h>
 
 #ifdef WIN32
 #include <windows.h>
@@ -637,8 +642,10 @@ std::cout << "lalala" << MovieToLoad <<std::endl;
         if(MDFN_GetSettingB("autosave"))
 	 MDFNI_LoadState(NULL, "ncq");
 
+#ifdef NETWORK
 	if(netconnect)
 	 MDFND_NetworkConnect();
+#endif
 
 	GameThreadRun = 1;
 	GameThread = SDL_CreateThread(GameLoop, NULL);
@@ -855,7 +862,9 @@ static void GameThread_HandleEvents(void)
   if(EventHook)
    EventHook(event);
 
+#ifdef NETWORK
   NetplayEventHook_GT(event);
+#endif
  }
  SDL_mutexV(EVMutex);
 }
@@ -896,9 +905,11 @@ void PumpWrap(void)
  SDL_Event gtevents_temp[gtevents_size];
  int numevents = 0;
 
- bool NITI;
+ bool NITI = false;
 
+#ifdef NETWORK
  NITI = Netplay_IsTextInput();
+#endif
 
  if(Debugger_IsActive() || NITI || IsConsoleCheatConfigActive() || Help_IsActive())
  {
@@ -921,7 +932,9 @@ void PumpWrap(void)
    if(IsConsoleCheatConfigActive())
     CheatEventHook(&event);
 
+#ifdef NETWORK
   NetplayEventHook(&event);
+#endif
 
   /* This is a very ugly hack for some joystick hats that don't behave very well. */
   if(event.type == SDL_JOYHATMOTION)
@@ -956,12 +969,14 @@ void PumpWrap(void)
 		 case CEVT_SET_STATE_STATUS: MT_SetStateStatus((StateStatusStruct *)event.user.data1); break;
                  case CEVT_SET_MOVIE_STATUS: MT_SetMovieStatus((StateStatusStruct *)event.user.data1); break;
 		 case CEVT_WANT_EXIT:
+			#ifdef NETWORK
 		     if(!Netplay_TryTextExit())
 		     {
 		      SDL_Event evt;
 		      evt.quit.type = SDL_QUIT;
 		      SDL_PushEvent(&evt);
 		     }
+			#endif
 		     break;
 	         case CEVT_SET_GRAB_INPUT:
                          SDL_WM_GrabInput(*(int *)event.user.data1 ? SDL_GRAB_ON : SDL_GRAB_OFF);
@@ -1325,6 +1340,7 @@ static int ThrottleCheckFS(void)
   }
  }
 
+#ifdef NETWORK
  if(!MDFNDnetplay)
  {
   if(((ttime-ltime) >= (1.5*tfreq/desiredfps)))
@@ -1346,6 +1362,7 @@ static int ThrottleCheckFS(void)
   else
    ltime+=tfreq/desiredfps;
  }
+#endif
 
  return(needskip);
 }
@@ -1387,6 +1404,7 @@ void MDFND_Update(uint32 *XBuf, int16 *Buffer, int Count)
 
   WriteSound(Buffer, Count);
 
+#ifdef NETWORK
   if(MDFNDnetplay && GetWriteSound() >= Count * 1.00) // Cheap code to fix sound buffer underruns due to accumulation of timer error during netplay.
   {
    int16 zbuf[128 * 2];
@@ -1400,8 +1418,9 @@ void MDFND_Update(uint32 *XBuf, int16 *Buffer, int Count)
    }
    ltime = ttime;
   }
-
+#endif
  }
+
 
  MDFND_UpdateInput();
 

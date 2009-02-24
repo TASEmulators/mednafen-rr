@@ -41,9 +41,9 @@ static uint32 wlookup2[203];
 
 static double wlookup1_d[32], wlookup2_d[203];
 
-static int16 WaveHi[40000] __attribute__ ((aligned (16)));
-int16 WaveHiEx[40000] __attribute__ ((aligned (16)));
-int16 WaveFinal[2048+512] __attribute__ ((aligned (16)));
+static ALIGN(16) int16 WaveHi[40000];
+ALIGN(16) int16 WaveHiEx[40000];
+ALIGN(16) int16 WaveFinal[2048+512];
 
 std::vector<EXPSOUND> GameExpSound;
 

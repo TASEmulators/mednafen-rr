@@ -37,9 +37,14 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "shader.h"
 
 #include <string.h>
+
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#endif
 
 #if MDFN_WANT_OPENGL_SHADERS
 

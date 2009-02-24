@@ -18,11 +18,15 @@
 #include "mednafen.h"
 
 #include <string.h>
-#include <stdarg.h>
 
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
+#include <stdarg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#endif
 
 #include <string>
 #include <iostream>
@@ -252,7 +256,7 @@ void GetFileBase(const char *f)
      }
      else
      {
-      char tmpfn[tp1 - f + 1];
+      char *tmpfn = (char*)alloca(tp1 - f + 1);
 
       memcpy(tmpfn,f,tp1-f);
       tmpfn[tp1-f]=0;
@@ -263,7 +267,7 @@ void GetFileBase(const char *f)
 
      if(((tp3=strrchr(f,'.'))!=NULL) && (tp3>tp1))
      {
-      char tmpbase[tp3 - tp1 + 1];
+      char *tmpbase = (char*)alloca(tp3 - tp1 + 1);
 
       memcpy(tmpbase,tp1,tp3-tp1);
       tmpbase[tp3-tp1]=0;

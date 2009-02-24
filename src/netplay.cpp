@@ -525,4 +525,11 @@ void NetplayUpdate(const char **PortDNames, void *PortData[], uint32 PortLen[], 
 
 }
 
+#else
+
+void NetplayUpdate(const char **, void *PortData[], uint32 PortLen[], int NumPorts) {}
+
+int NetplayStart(const char *PortDeviceCache[16], const uint32 PortDataLenCache[16], uint32 local_players, uint32 netmerge, const std::string &nickname, const std::string &game_key, const std::string &connect_password) 
+{ return 0; }
+
 #endif

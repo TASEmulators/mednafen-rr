@@ -33,6 +33,10 @@
  */
 
 #include "scale2x.h"
+#ifdef _MSC_VER 
+#define inline
+#define __restrict__
+#endif
 
 #include <assert.h>
 

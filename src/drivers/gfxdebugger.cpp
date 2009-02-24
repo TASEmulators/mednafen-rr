@@ -15,14 +15,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifdef WIN32
-#define snprintf _snprintf
-#endif
-
-
 #include "main.h"
 #include "gfxdebugger.h"
 #include "debugger.h"
+
+#ifdef WANT_DEBUGGER
 
 static bool IsActive = 0;
 static const char *LayerNames[16];
@@ -243,3 +240,4 @@ int GfxDebugger_Event(const SDL_Event *event)
  return(1);
 }
 
+#endif //WANT_DEBUGGER

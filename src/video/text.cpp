@@ -14,19 +14,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#ifdef WIN32
-typedef signed char int8_t;
-typedef unsigned char uint8_t;
-
-typedef signed short int16_t;
-typedef unsigned short uint16_t;
-
-typedef signed int int32_t;
-typedef unsigned int uint32_t;
-
-#define int64 __int64
-typedef unsigned __int64  uint64 ;
-#endif
 
 #include "video-common.h"
 #include "../string/ConvertUTF.h"
@@ -196,12 +183,12 @@ uint32 GetTextPixLength(const UTF8 *msg, uint32 which_font)
  uint32 slen;
  uint32 pixwidth;
  uint32 max_glyph_len = strlen((char *)msg);
- const uint8 *glyph_ptrs[max_glyph_len];
- uint8 glyph_width[max_glyph_len];
- uint8 glyph_ov_width[max_glyph_len];
+ const uint8 **glyph_ptrs = (const uint8**)alloca(max_glyph_len*sizeof(uint8 *));
+ uint8 *glyph_width = (uint8*)alloca(max_glyph_len);
+ uint8 *glyph_ov_width = (uint8*)alloca(max_glyph_len);
 
  const UTF8 *src_begin = (UTF8 *)msg;
- UTF32 utf32_buf[max_glyph_len];
+ UTF32 *utf32_buf = (UTF32 *)alloca(max_glyph_len*sizeof(UTF32));
  UTF32 *tstart = utf32_buf;
 
  ConvertUTF8toUTF32(&src_begin, (UTF8*)msg + max_glyph_len, &tstart, &tstart[max_glyph_len], lenientConversion);
@@ -216,9 +203,9 @@ uint32 GetTextPixLength(const UTF32 *msg, uint32 which_font)
  uint32 slen;
  uint32 pixwidth;
  uint32 max_glyph_len = utf32_strlen((UTF32 *)msg);
- const uint8 *glyph_ptrs[max_glyph_len];
- uint8 glyph_width[max_glyph_len];
- uint8 glyph_ov_width[max_glyph_len];
+ const uint8 **glyph_ptrs = (const uint8**)alloca(max_glyph_len*sizeof(uint8 *));
+ uint8 *glyph_width = (uint8*)alloca(max_glyph_len);
+ uint8 *glyph_ov_width = (uint8*)alloca(max_glyph_len);
 
  slen = utf32_strlen((UTF32 *)msg);
  DrawTextSub((UTF32*)msg, slen, glyph_ptrs, glyph_width, glyph_ov_width, ~0, pixwidth, which_font);
@@ -264,12 +251,12 @@ uint32 DrawTextTrans(uint32 *dest, int pitch, uint32 width, const UTF8 *msg, uin
  uint32 slen;
  uint32 pixwidth;
  uint32 max_glyph_len = strlen((char *)msg);
- const uint8 *glyph_ptrs[max_glyph_len];
- uint8 glyph_width[max_glyph_len];
- uint8 glyph_ov_width[max_glyph_len];
+ const uint8 **glyph_ptrs = (const uint8**)alloca(max_glyph_len*sizeof(uint8 *));
+ uint8 *glyph_width = (uint8*)alloca(max_glyph_len);
+ uint8 *glyph_ov_width = (uint8*)alloca(max_glyph_len);
 
  const UTF8 *src_begin = (UTF8 *)msg;
- UTF32 utf32_buf[max_glyph_len];
+ UTF32 *utf32_buf = (UTF32*)alloca(max_glyph_len*sizeof(UTF32));
  UTF32 *tstart = utf32_buf;
 
  ConvertUTF8toUTF32(&src_begin, (UTF8*)msg + max_glyph_len, &tstart, &tstart[max_glyph_len], lenientConversion);
@@ -284,9 +271,9 @@ uint32 DrawTextTrans(uint32 *dest, int pitch, uint32 width, const UTF32 *msg, ui
  uint32 slen;
  uint32 pixwidth;
  uint32 max_glyph_len = utf32_strlen((UTF32 *)msg);
- const uint8 *glyph_ptrs[max_glyph_len];
- uint8 glyph_width[max_glyph_len];
- uint8 glyph_ov_width[max_glyph_len];
+ const uint8 **glyph_ptrs = (const uint8**)alloca(max_glyph_len*sizeof(uint8 *));
+ uint8 *glyph_width = (uint8*)alloca(max_glyph_len);
+ uint8 *glyph_ov_width= (uint8*)alloca(max_glyph_len);
 
  slen = utf32_strlen((UTF32 *)msg);
  DrawTextSub((UTF32*)msg, slen, glyph_ptrs, glyph_width, glyph_ov_width, ~0, pixwidth, which_font);

@@ -11,7 +11,7 @@ typedef struct {
         double acc1,acc2;
         int rate;
 
-        int16 coeffs_i16[NCOEFFS] __attribute__ ((aligned (16)));
+        int16 ALIGN(16) coeffs_i16[NCOEFFS];
 	int32 SoundVolume;
 
 	double lrhfactor;

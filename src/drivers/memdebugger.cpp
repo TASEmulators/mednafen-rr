@@ -15,6 +15,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef WANT_DEBUGGER
+
 #include "main.h"
 #include "memdebugger.h"
 #include "debugger.h"
@@ -1051,3 +1053,5 @@ bool MemDebugger_Init(void)
   AddressSpaces = NULL;
  return(TRUE);
 }
+
+#endif WANT_DEBUGGER
