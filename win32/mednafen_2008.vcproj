@@ -186,23 +186,23 @@
 					Name="src"
 					>
 					<File
-						RelativePath="..\..\..\temp\newest_mednafen\src\SDL\src\SDL.c"
+						RelativePath=".\SDL-1.2.13\src\SDL.c"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\temp\newest_mednafen\src\SDL\src\SDL_error.c"
+						RelativePath=".\SDL-1.2.13\src\SDL_error.c"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\temp\newest_mednafen\src\SDL\src\SDL_error_c.h"
+						RelativePath=".\SDL-1.2.13\src\SDL_error_c.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\temp\newest_mednafen\src\SDL\src\SDL_fatal.c"
+						RelativePath=".\SDL-1.2.13\src\SDL_fatal.c"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\temp\newest_mednafen\src\SDL\src\SDL_fatal.h"
+						RelativePath=".\SDL-1.2.13\src\SDL_fatal.h"
 						>
 					</File>
 					<Filter
@@ -300,6 +300,18 @@
 							Name="windib"
 							>
 							<File
+								RelativePath=".\SDL-1.2.13\src\audio\windib\SDL_dibaudio.c"
+								>
+							</File>
+							<File
+								RelativePath=".\SDL-1.2.13\src\audio\windib\SDL_dibaudio.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="windx5"
+							>
+							<File
 								RelativePath=".\SDL-1.2.13\src\audio\windx5\directx.h"
 								>
 							</File>
@@ -309,18 +321,6 @@
 							</File>
 							<File
 								RelativePath=".\SDL-1.2.13\src\audio\windx5\SDL_dx5audio.h"
-								>
-							</File>
-						</Filter>
-						<Filter
-							Name="windx5"
-							>
-							<File
-								RelativePath=".\SDL-1.2.13\src\audio\windib\SDL_dibaudio.c"
-								>
-							</File>
-							<File
-								RelativePath=".\SDL-1.2.13\src\audio\windib\SDL_dibaudio.h"
 								>
 							</File>
 						</Filter>
@@ -417,14 +417,6 @@
 							>
 						</File>
 						<Filter
-							Name="dummy"
-							>
-							<File
-								RelativePath=".\SDL-1.2.13\src\joystick\dummy\SDL_sysjoystick.c"
-								>
-							</File>
-						</Filter>
-						<Filter
 							Name="win32"
 							>
 							<File
@@ -436,14 +428,6 @@
 					<Filter
 						Name="loadso"
 						>
-						<Filter
-							Name="dummy"
-							>
-							<File
-								RelativePath=".\SDL-1.2.13\src\loadso\dummy\SDL_sysloadso.c"
-								>
-							</File>
-						</Filter>
 						<Filter
 							Name="win32"
 							>
@@ -501,6 +485,10 @@
 						Name="thread"
 						>
 						<File
+							RelativePath=".\SDL-1.2.13\src\thread\SDL_systhread.h"
+							>
+						</File>
+						<File
 							RelativePath=".\SDL-1.2.13\src\thread\SDL_thread.c"
 							>
 						</File>
@@ -533,6 +521,14 @@
 							</File>
 							<File
 								RelativePath=".\SDL-1.2.13\src\thread\win32\SDL_systhread_c.h"
+								>
+							</File>
+							<File
+								RelativePath=".\SDL-1.2.13\src\thread\win32\win_ce_semaphore.c"
+								>
+							</File>
+							<File
+								RelativePath=".\SDL-1.2.13\src\thread\win32\win_ce_semaphore.h"
 								>
 							</File>
 						</Filter>
@@ -697,34 +693,6 @@
 							>
 						</File>
 						<Filter
-							Name="dummy"
-							>
-							<File
-								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullevents.c"
-								>
-							</File>
-							<File
-								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullevents_c.h"
-								>
-							</File>
-							<File
-								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullmouse.c"
-								>
-							</File>
-							<File
-								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullmouse_c.h"
-								>
-							</File>
-							<File
-								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullvideo.c"
-								>
-							</File>
-							<File
-								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullvideo.h"
-								>
-							</File>
-						</Filter>
-						<Filter
 							Name="wincommon"
 							>
 							<File
@@ -817,6 +785,34 @@
 							</File>
 							<File
 								RelativePath=".\SDL-1.2.13\src\video\windx5\SDL_dx5yuv_c.h"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="dummy"
+							>
+							<File
+								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullevents.c"
+								>
+							</File>
+							<File
+								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullevents_c.h"
+								>
+							</File>
+							<File
+								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullmouse.c"
+								>
+							</File>
+							<File
+								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullmouse_c.h"
+								>
+							</File>
+							<File
+								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullvideo.c"
+								>
+							</File>
+							<File
+								RelativePath=".\SDL-1.2.13\src\video\dummy\SDL_nullvideo.h"
 								>
 							</File>
 						</Filter>
