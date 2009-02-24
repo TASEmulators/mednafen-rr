@@ -110,109 +110,109 @@ CdIo_driver_t CdIo_all_drivers[CDIO_MAX_DRIVER+1] = {
    NULL
   },
 
-  {DRIVER_BSDI, 
-   CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
-   "AIX",
-   "AIX SCSI driver",
-   &cdio_have_aix,
-   &cdio_open_aix,
-   &cdio_open_am_aix,
-   &cdio_get_default_device_aix,
-   &cdio_is_device_generic,
-   &cdio_get_devices_aix,
-   NULL
-  },
+  //{DRIVER_BSDI, 
+  // CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
+  // "AIX",
+  // "AIX SCSI driver",
+  // &cdio_have_aix,
+  // &cdio_open_aix,
+  // &cdio_open_am_aix,
+  // &cdio_get_default_device_aix,
+  // &cdio_is_device_generic,
+  // &cdio_get_devices_aix,
+  // NULL
+  //},
 
-  {DRIVER_BSDI, 
-   CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
-   "BSDI",
-   "BSDI ATAPI and SCSI driver",
-   &cdio_have_bsdi,
-   &cdio_open_bsdi,
-   &cdio_open_am_bsdi,
-   &cdio_get_default_device_bsdi,
-   &cdio_is_device_generic,
-   &cdio_get_devices_bsdi,
-   &close_tray_bsdi
-  },
+  //{DRIVER_BSDI, 
+  // CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
+  // "BSDI",
+  // "BSDI ATAPI and SCSI driver",
+  // &cdio_have_bsdi,
+  // &cdio_open_bsdi,
+  // &cdio_open_am_bsdi,
+  // &cdio_get_default_device_bsdi,
+  // &cdio_is_device_generic,
+  // &cdio_get_devices_bsdi,
+  // &close_tray_bsdi
+  //},
 
-  {DRIVER_FREEBSD, 
-   CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
-   "FreeBSD",
-   "FreeBSD driver",
-   &cdio_have_freebsd,
-   &cdio_open_freebsd,
-   &cdio_open_am_freebsd,
-   &cdio_get_default_device_freebsd,
-   &cdio_is_device_generic,
-   &cdio_get_devices_freebsd,
-   &close_tray_freebsd
-  },
+  //{DRIVER_FREEBSD, 
+  // CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
+  // "FreeBSD",
+  // "FreeBSD driver",
+  // &cdio_have_freebsd,
+  // &cdio_open_freebsd,
+  // &cdio_open_am_freebsd,
+  // &cdio_get_default_device_freebsd,
+  // &cdio_is_device_generic,
+  // &cdio_get_devices_freebsd,
+  // &close_tray_freebsd
+  //},
 
-  {DRIVER_NETBSD, 
-   CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
-   "NetBSD",
-   "NetBSD driver",
-   &cdio_have_netbsd,
-   &cdio_open_netbsd,
-   &cdio_open_am_netbsd,
-   &cdio_get_default_device_netbsd,
-   &cdio_is_device_generic,
-   &cdio_get_devices_netbsd,
-   &close_tray_netbsd
-  },
+  //{DRIVER_NETBSD, 
+  // CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
+  // "NetBSD",
+  // "NetBSD driver",
+  // &cdio_have_netbsd,
+  // &cdio_open_netbsd,
+  // &cdio_open_am_netbsd,
+  // &cdio_get_default_device_netbsd,
+  // &cdio_is_device_generic,
+  // &cdio_get_devices_netbsd,
+  // &close_tray_netbsd
+  //},
 
-  {DRIVER_LINUX, 
-   CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK,
-   "GNU/Linux", 
-   "GNU/Linux ioctl and MMC driver",
-   &cdio_have_linux,
-   &cdio_open_linux,
-   &cdio_open_am_linux,
-   &cdio_get_default_device_linux,
-   &cdio_is_device_generic,
-   &cdio_get_devices_linux,
-   &close_tray_linux
-  },
+  //{DRIVER_LINUX, 
+  // CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK,
+  // "GNU/Linux", 
+  // "GNU/Linux ioctl and MMC driver",
+  // &cdio_have_linux,
+  // &cdio_open_linux,
+  // &cdio_open_am_linux,
+  // &cdio_get_default_device_linux,
+  // &cdio_is_device_generic,
+  // &cdio_get_devices_linux,
+  // &close_tray_linux
+  //},
 
-  {DRIVER_SOLARIS, 
-   CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
-   "Solaris",
-   "Solaris ATAPI and SCSI driver",
-   &cdio_have_solaris,
-   &cdio_open_solaris,
-   &cdio_open_am_solaris,
-   &cdio_get_default_device_solaris,
-   &cdio_is_device_generic,
-   &cdio_get_devices_solaris,
-   &close_tray_solaris
-  },
+  //{DRIVER_SOLARIS, 
+  // CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
+  // "Solaris",
+  // "Solaris ATAPI and SCSI driver",
+  // &cdio_have_solaris,
+  // &cdio_open_solaris,
+  // &cdio_open_am_solaris,
+  // &cdio_get_default_device_solaris,
+  // &cdio_is_device_generic,
+  // &cdio_get_devices_solaris,
+  // &close_tray_solaris
+  //},
 
-  {DRIVER_OSX, 
-   CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
-   "OS X",
-   "Apple Darwin OS X driver",
-   &cdio_have_osx,
-   &cdio_open_osx,
-   &cdio_open_am_osx,
-   &cdio_get_default_device_osx,
-   &cdio_is_device_generic,
-   &cdio_get_devices_osx,
-   &close_tray_osx
-  },
+  //{DRIVER_OSX, 
+  // CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
+  // "OS X",
+  // "Apple Darwin OS X driver",
+  // &cdio_have_osx,
+  // &cdio_open_osx,
+  // &cdio_open_am_osx,
+  // &cdio_get_default_device_osx,
+  // &cdio_is_device_generic,
+  // &cdio_get_devices_osx,
+  // &close_tray_osx
+  //},
 
-  {DRIVER_WIN32, 
-   CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
-   "WIN32",
-   "MS Windows ASPI and ioctl driver",
-   &cdio_have_win32,
-   &cdio_open_win32,
-   &cdio_open_am_win32,
-   &cdio_get_default_device_win32,
-   &cdio_is_device_win32,
-   &cdio_get_devices_win32,
-   &close_tray_win32
-  },
+  //{DRIVER_WIN32, 
+  // CDIO_SRC_IS_DEVICE_MASK|CDIO_SRC_IS_NATIVE_MASK|CDIO_SRC_IS_SCSI_MASK,
+  // "WIN32",
+  // "MS Windows ASPI and ioctl driver",
+  // &cdio_have_win32,
+  // &cdio_open_win32,
+  // &cdio_open_am_win32,
+  // &cdio_get_default_device_win32,
+  // &cdio_is_device_win32,
+  // &cdio_get_devices_win32,
+  // &close_tray_win32
+  //},
 
   {DRIVER_CDRDAO,
    CDIO_SRC_IS_DISK_IMAGE_MASK,
@@ -361,6 +361,8 @@ driver_return_code_t
 cdio_close_tray (const char *psz_orig_drive, /*in/out*/ driver_id_t
                  *p_driver_id)
 {
+	return DRIVER_OP_SUCCESS;
+#if 0
   driver_id_t temp_driver_id = DRIVER_DEVICE;
   char *psz_drive;
   driver_return_code_t drc;
@@ -395,6 +397,7 @@ cdio_close_tray (const char *psz_orig_drive, /*in/out*/ driver_id_t
     return drc;
   }
   return DRIVER_OP_UNSUPPORTED;
+#endif
 }
 
 /*!
@@ -500,7 +503,7 @@ cdio_get_default_device_driver (/*in/out*/ driver_id_t *p_driver_id)
     if (DRIVER_UNKNOWN == *p_driver_id) 
       (*p_driver_id)++;
     else 
-      *p_driver_id = CDIO_MIN_DEVICE_DRIVER;
+      *p_driver_id = CDIO_MIN_DRIVER;
     
     /* Scan for driver */
     for ( ; *p_driver_id<=CDIO_MAX_DRIVER; (*p_driver_id)++) {
@@ -542,11 +545,11 @@ cdio_get_devices_ret (/*in/out*/ driver_id_t *p_driver_id)
 
   switch (*p_driver_id) {
     /* FIXME: spit out unknown to give image drivers as well.  */
-  case DRIVER_DEVICE:
-    p_cdio = scan_for_driver(DRIVER_UNKNOWN+1, CDIO_MAX_DEVICE_DRIVER, 
-                             NULL, NULL);
-    *p_driver_id = cdio_get_driver_id(p_cdio);
-    break;
+  //case DRIVER_DEVICE:
+  //  p_cdio = scan_for_driver(DRIVER_UNKNOWN+1, CDIO_MAX_DEVICE_DRIVER, 
+  //                           NULL, NULL);
+  //  *p_driver_id = cdio_get_driver_id(p_cdio);
+  //  break;
   case DRIVER_UNKNOWN:
     p_cdio = scan_for_driver(DRIVER_UNKNOWN+1, CDIO_MAX_DRIVER, NULL, NULL);
     *p_driver_id = cdio_get_driver_id(p_cdio);
@@ -864,6 +867,8 @@ cdio_have_driver(driver_id_t driver_id)
 bool
 cdio_is_device(const char *psz_source, driver_id_t driver_id)
 {
+	return false;
+#if 0
   if (DRIVER_UNKNOWN == driver_id || DRIVER_DEVICE == driver_id) {
     if (DRIVER_UNKNOWN == driver_id) 
       driver_id++;
@@ -880,6 +885,7 @@ cdio_is_device(const char *psz_source, driver_id_t driver_id)
   }
   if (CdIo_all_drivers[driver_id].is_device == NULL) return false;
   return (*CdIo_all_drivers[driver_id].is_device)(psz_source);
+#endif
 }
 
 
@@ -932,14 +938,14 @@ cdio_open_am (const char *psz_orig_source, driver_id_t driver_id,
       return ret;
     }
     break;
-  case DRIVER_AIX:
-  case DRIVER_BSDI:
-  case DRIVER_FREEBSD:
-  case DRIVER_LINUX:
-  case DRIVER_NETBSD:
-  case DRIVER_SOLARIS:
-  case DRIVER_WIN32:
-  case DRIVER_OSX:
+  //case DRIVER_AIX:
+  //case DRIVER_BSDI:
+  //case DRIVER_FREEBSD:
+  //case DRIVER_LINUX:
+  //case DRIVER_NETBSD:
+  //case DRIVER_SOLARIS:
+  //case DRIVER_WIN32:
+  //case DRIVER_OSX:
   case DRIVER_NRG:
   case DRIVER_BINCUE:
   case DRIVER_CDRDAO:
@@ -992,7 +998,7 @@ cdio_open_am_cd (const char *psz_source, const char *psz_access_mode)
   if (CdIo_last_driver == -1) cdio_init();
 
   /* Scan for a driver. */
-  return scan_for_driver(CDIO_MIN_DEVICE_DRIVER, CDIO_MAX_DEVICE_DRIVER, 
+  return scan_for_driver(DRIVER_CDRDAO, DRIVER_NRG, 
                          psz_source, psz_access_mode);
 }
 

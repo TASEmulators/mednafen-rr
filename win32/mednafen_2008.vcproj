@@ -978,14 +978,6 @@
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\bincue.c"
 								>
-								<FileConfiguration
-									Name="Debug|Win32"
-									>
-									<Tool
-										Name="VCCLCompilerTool"
-										GeneratePreprocessedFile="1"
-									/>
-								</FileConfiguration>
 							</File>
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\cdrdao.c"

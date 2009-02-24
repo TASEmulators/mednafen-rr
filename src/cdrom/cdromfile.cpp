@@ -334,7 +334,7 @@ CDRFile *cdrfile_open(const char *path)
 
 		GetFileBase("cdrom");
 
-		devices = cdio_get_devices(DRIVER_DEVICE);
+	/*	devices = cdio_get_devices(DRIVER_UNKNOWN);
 		parseit = devices;
 		if(parseit)
 		{
@@ -357,7 +357,7 @@ CDRFile *cdrfile_open(const char *path)
 		}
 
 		if(devices)
-			cdio_free_device_list(devices);
+			cdio_free_device_list(devices);*/
 
 		p_cdio = cdio_open_cd(path); //, DRIVER_UNKNOWN); //NULL, DRIVER_UNKNOWN);
 
