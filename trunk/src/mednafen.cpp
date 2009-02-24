@@ -364,7 +364,8 @@ MDFNGI *MDFNI_LoadGame(const char *name)
 	
 	if(!stat(name, &stat_buf) && !S_ISREG(stat_buf.st_mode))
 	{
-	 return(MDFNI_LoadCD(NULL, name));
+		MDFNGI * tmp = MDFNI_LoadCD(NULL, name);
+	 if(tmp) return tmp;
 	}
 	#endif
 
