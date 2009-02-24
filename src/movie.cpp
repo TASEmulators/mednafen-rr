@@ -241,7 +241,7 @@ int i;
 
 for (i = 0; i < 32; i++) {
 
-fputc(author[i], headertest);
+//fputc(author[i], headertest);
 
 }
 
@@ -644,7 +644,7 @@ static void StopRecording(void)
  {
   MDFN_StateEvilFlushMovieLove();
  }
- fclose(slots[current-1]);
+// fclose(slots[current-1]);
  MovieStatus[current - 1] = 1;
  RecentlySavedMovie = current - 1;
  current=0; // we are not recording
@@ -737,24 +737,24 @@ FrameCounter = 0;
 else
  {
  // fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3"); 
-fp=fopen("junk.txt","wb3"); 
+//fp=fopen("junk.txt","wb3"); 
 std::cout << "2_____________" <<std::endl;
  }
 
- if(!fp) return;
+// if(!fp) return;
 
 
 std::cout << "3_____________" <<std::endl;
 
 // MDFNSS_SaveFP(fp, fb, LineWidths);
 
- fseek(fp, 0, SEEK_END);
+// fseek(fp, 0, SEEK_END);
 
 
 // fflush(fp, Z_SYNC_FLUSH); // Flush output so that previews will still work right while
 			    // the movie is being recorded.  Purely cosmetic. :)
 
- slots[current] = fp;
+// slots[current] = fp;
  current++;  //Recording
 
 
@@ -834,7 +834,7 @@ MDFNI_LoadMovie(fname2);
 
 void MDFNI_LoadMovie(char *fname)
 {
-std::cout << fname <<std::endl;
+//std::cout << fname <<std::endl;
 
  FILE* fp;
  //puts("KAO");
@@ -925,12 +925,12 @@ fseek(fp, 256, SEEK_SET);
 //test temp buffer
 //this is debugging junk
 
-FILE* tempbuffertest;
+//FILE* tempbuffertest;
 
-tempbuffertest=fopen("tempbuffertest.txt","wb");
-fwrite(tempbuffer, 1, moviedatasize, tempbuffertest);
+//tempbuffertest=fopen("tempbuffertest.txt","wb");
+//fwrite(tempbuffer, 1, moviedatasize, tempbuffertest);
 
-fclose(tempbuffertest);
+//fclose(tempbuffertest);
 
 
 ////////////////////////
@@ -955,13 +955,13 @@ smem_write(&temporarymoviebuffer, tempbuffer, moviedatasize);
 //test temp buffer 2 
 // more debugging junk
 
-FILE* tempbuffertest2;
+//FILE* tempbuffertest2;
 
-tempbuffertest2=fopen("smembuffertest.txt","wb");
-fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest2);
-std::cout << "temporarymbuflen" << temporarymoviebuffer.len <<std::endl;
+//tempbuffertest2=fopen("smembuffertest.txt","wb");
+//fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest2);
+//std::cout << "temporarymbuflen" << temporarymoviebuffer.len <<std::endl;
 
-fclose(tempbuffertest2);
+//fclose(tempbuffertest2);
 
 
 //fwrite(

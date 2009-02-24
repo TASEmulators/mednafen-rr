@@ -358,14 +358,16 @@ void MDFN_trim(char *string)
 
 void GetMD5AndFilename(FILE* fp) {
 
+	//FIXME
+
 //snprintf(MovMD5Sum, 16, "%s"PSS"%s.%d.mcm", eff_dir.c_str(), FileBase.c_str(), id1);
 //MD5
-snprintf(MovMD5Sum, 33, "%s"PSS"%s.%d.mcm", md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str());
+//snprintf(MovMD5Sum, 33, "%s"PSS"%s.%d.mcm", md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str());
 
 std::cout << MovMD5Sum << std::endl;
 
 //Filename
-snprintf(MovRomFilename, 64, "%s", FileBase.c_str());
+//snprintf(MovRomFilename, 64, "%s", FileBase.c_str());
 
 //snprintf(tmp_path, 4096, "%s"PSS"%s%s.ips",FileBaseDirectory.c_str(),FileBase.c_str(),FileExt.c_str());
 
