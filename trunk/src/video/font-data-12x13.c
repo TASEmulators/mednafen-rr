@@ -35,7 +35,7 @@ font12x13 FontData12x13[]=
 	#ifdef WANT_INTERNAL_CJK
         #include "font12x13.h"
 	#else
-
+		0
 	#endif
 };
 

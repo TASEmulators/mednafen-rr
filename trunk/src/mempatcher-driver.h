@@ -1,17 +1,3 @@
-#ifdef WIN32
-typedef signed char int8_t;
-typedef unsigned char uint8_t;
-
-typedef signed short int16_t;
-typedef unsigned short uint16_t;
-
-typedef signed int int32_t;
-typedef unsigned int uint32_t;
-
-#define int64 __int64
-typedef unsigned __int64  uint64 ;
-#endif
-
 int MDFNI_DecodePAR(const char *code, uint32 *a, uint8 *v, uint8 *c, char *type);
 int MDFNI_DecodeGG(const char *str, uint32 *a, uint8 *v, uint8 *c, char *type);
 int MDFNI_AddCheat(const char *name, uint32 addr, uint64 val, uint64 compare, char type, unsigned int length, bool bigendian);

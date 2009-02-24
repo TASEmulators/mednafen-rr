@@ -18,6 +18,9 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+int MDFNDnetplay = 0;  // Only write/read this global variable in the game thread.
+
 #ifdef NETWORK
 #include "main.h"
 #include <stdarg.h>
@@ -37,7 +40,7 @@ static volatile int inputable = 0;
 static volatile int viewable = 0;
 static int32 LastTextTime = -1;
 
-int MDFNDnetplay = 0;  // Only write/read this global variable in the game thread.
+
 
 static void CC_server(const UTF8 *arg)
 {
@@ -446,5 +449,9 @@ std::cout << "lol" << std::endl;
  return(1);
 }
 
-#endif
+#else
 
+bool Netplay_IsTextInput(void) { return false; }
+void Netplay_ToggleTextView(void) { }
+
+#endif

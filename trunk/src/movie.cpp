@@ -22,16 +22,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <unistd.h>
+#endif
+
 
 #include <fstream>
 #include <iostream>
 
 #include "mednafen.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 #include <string.h>
 #include <vector>
 
@@ -271,7 +276,8 @@ fputc(0, headertest);
 
 void MovClearAllSRAM(void) {
 
-ClearPCESRAM();
+	//TODO ZERO
+//ClearPCESRAM();
 
 }
 
@@ -582,7 +588,9 @@ return(current);
 uint32 setFrameCounter(uint32 value) {
 
 FrameCounter = value;
-
+//TODO TODO TODO - zero didnt know what this should do
+return 0;
+//TODO TODO TODO - zero didnt know what this should do
 }
 
 //used for truncating the movie file when a state is saved during playback
@@ -1229,7 +1237,7 @@ void MDFNI_SelectMovie(int w)
   if(height > 512) height = 512;
  
   {
-   uint8 previewbuffer[3 * width * height];
+   uint8 *previewbuffer = (uint8*)alloca(3 * width * height);
    uint8 *rptr = previewbuffer;
 
    fread(previewbuffer, 1, 3 * width * height, fp);

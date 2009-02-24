@@ -18,13 +18,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifdef WIN32
-#define snprintf _snprintf
-#define strcasecmp _stricmp
-#define strncasecmp _strnicmp
-#define snprintf sprintf_s
-#endif
-
 #include <stdio.h>
 #include <string.h>
 
@@ -62,7 +55,7 @@ void WriteSound(int16 *Buffer, int Count)
 void WriteSoundSilence(int ms)
 {
  unsigned int frames = (uint64)format.rate * ms / 1000;
- int16 SBuffer[frames * format.channels];
+ int16 *SBuffer = (int16*)alloca(frames * format.channels);
 
  memset(SBuffer, 0, sizeof(SBuffer));
  Output->Write(Output, SBuffer, frames);

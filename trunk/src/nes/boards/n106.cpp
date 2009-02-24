@@ -483,7 +483,7 @@ static void PutAddressSpaceBytes(const char *name, uint32 Address, uint32 Length
 }
 #endif
 
-void Mapper19_Init(CartInfo *info)
+int Mapper19_Init(CartInfo *info)
 {
 	is210=0;
 
@@ -506,6 +506,7 @@ void Mapper19_Init(CartInfo *info)
 	MDFNDBG_AddASpace(GetAddressSpaceBytes, PutAddressSpaceBytes, "wram", "Cart WRAM", 13);
 	MDFNDBG_AddASpace(GetAddressSpaceBytes, PutAddressSpaceBytes, "iram", "N106 Internal RAM", 7);
 	#endif
+	return 1;
 }
 
 static int Mapper210_StateAction(StateMem *sm, int load, int data_only)
@@ -526,9 +527,10 @@ static int Mapper210_StateAction(StateMem *sm, int load, int data_only)
  return(ret);
 }
 
-void Mapper210_Init(CartInfo *info)
+int Mapper210_Init(CartInfo *info)
 {
  is210=1;
  info->StateAction = Mapper210_StateAction;
  info->Power=N106_Power;
+ return 1;
 }

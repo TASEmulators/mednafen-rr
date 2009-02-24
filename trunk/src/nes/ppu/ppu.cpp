@@ -441,8 +441,8 @@ static void ResetRL(uint8 *target)
  //MDFNPPU_LineUpdate();
 }
 
-static uint8 sprlinebuf[256+8] __attribute__ ((aligned (16)));
-static uint8 emphlinebuf[256] __attribute__ ((aligned (16)));
+static ALIGN(16) uint8 sprlinebuf[256+8];
+static ALIGN(16) uint8 emphlinebuf[256];
 
 void MDFNPPU_LineUpdate(void)
 {

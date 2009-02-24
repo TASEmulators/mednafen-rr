@@ -18,8 +18,8 @@ extern std::vector<EXPSOUND> GameExpSound;
 int GetSoundBuffer(float **W);
 int FlushEmulateSound(int);
 
-extern int16 WaveFinal[2048+512] __attribute__ ((aligned (16)));
-extern int16 WaveHiEx[40000] __attribute__ ((aligned (16)));
+extern ALIGN(16) int16 WaveFinal[2048+512];
+extern ALIGN(16) int16 WaveHiEx[40000];
 
 extern uint32 soundtsoffs;
 #define SOUNDTS (timestamp + soundtsoffs)

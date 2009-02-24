@@ -138,6 +138,8 @@ static const struct {
   "\0\0\0\0\0\0\0",
 };
 
+#ifndef WIN32
+
 static const struct {
   unsigned int  	 width;
   unsigned int  	 height;
@@ -2261,3 +2263,5 @@ static const struct {
   "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",
 };
 
+
+#endif

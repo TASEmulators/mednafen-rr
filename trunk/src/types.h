@@ -7,7 +7,34 @@
 #endif
 
 #include <assert.h>
+
+#ifdef _MSC_VER
+
+//configuration which disables features:
+#define NO_SNDFILE
+#define MEDNAFEN_VERSION "999"
+#define MEDNAFEN_VERSION_NUMERIC 999
+
+#include <direct.h> 
+#include <string.h>
+#define HAVE__MKDIR 1
+#define PSS "\\"
+#define LSB_FIRST
+#define _MSC_VER_ICKY_TYPES
+#pragma warning( disable: 4996 ) //disable "The POSIX name for this item is deprecated"
+#define strcasecmp _stricmp
+#define strncasecmp _strnicmp
+#define snprintf _snprintf
+#else
+#endif
+
 #include <inttypes.h>
+
+#if defined(_MSC_VER)
+#define ALIGN(X) __declspec(align(X))
+#else
+#define ALIGN(X) __attribute__ ((aligned (X)))
+#endif
 
 #if HAVE_MKDIR
  #if MKDIR_TAKES_ONE_ARG

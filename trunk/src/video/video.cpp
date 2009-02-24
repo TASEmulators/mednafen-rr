@@ -15,11 +15,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <string.h>
 #include <stdarg.h>
+#endif
+
+#include <string.h>
 
 #include <trio/trio.h>
 

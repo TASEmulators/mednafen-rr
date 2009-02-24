@@ -268,7 +268,7 @@ static uint32_t RawWrite(SexyAL_device *device, void *data, uint32_t len)
   if(LockPtr[1] != 0 && LockPtr[1] != LockPtr[0])
   {
    memcpy(LockPtr[0],data,LockLen[0]);
-   memcpy(LockPtr[1],data+LockLen[0],len-LockLen[0]);
+   memcpy(LockPtr[1],(uint8_t*)data+LockLen[0],len-LockLen[0]);
   }
   else if(LockPtr[0])
   {
@@ -279,7 +279,7 @@ static uint32_t RawWrite(SexyAL_device *device, void *data, uint32_t len)
 
   len-=curlen;
   //(uint8_t *)
-  data+=curlen;
+  (uint8_t*)data+=curlen;
   if(len)
    Sleep(1);
  } // end while(len) loop

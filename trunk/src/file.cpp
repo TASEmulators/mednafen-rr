@@ -16,12 +16,17 @@
  */
 
 #include "mednafen.h"
+
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
 #include <stdarg.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
+#endif
 
 #ifdef HAVE_MMAP
 #include <sys/mman.h>
@@ -286,7 +291,9 @@ static MDFNFILE *MakeMemWrap(void *tz, int type)
 }
 
 #ifndef __GNUC__
+ #ifndef strcasecmp
  #define strcasecmp strcmp
+ #endif
 #endif
 
 static const char *unzErrorString(int error_code)
@@ -418,7 +425,7 @@ MDFNFILE * MDFN_fopen(const char *path, const char *ipsfn, const char *mode, con
    if(!(fceufp = MakeMemWrap(t, 0)))
     return(0);
 
-   char *ld = strrchr(path, '.');
+   const char *ld = strrchr(path, '.');
    fceufp->ext = strdup(ld ? ld + 1 : "");
   }
   else                  /* Probably gzip */
@@ -675,7 +682,7 @@ static INLINE bool MDFN_DumpToFileReal(const char *filename, int compress, const
    const void *data = pearpairs[i].GetData();
    const uint64 length = pearpairs[i].GetLength();
 
-   if(gzwrite(gp, data, length) != length)
+   if(gzwrite(gp, (uint8*)data, length) != length)
    {
     int errnum;
 

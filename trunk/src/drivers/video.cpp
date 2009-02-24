@@ -952,13 +952,13 @@ void BlitScreen(uint32 *XBuf, MDFN_Rect *DisplayRect, MDFN_Rect *LineWidths)
   CheatSurface = NULL;
  }
 
+ #ifdef NETWORK
  if(Netplay_GetTextView())
  {
   if(SDL_MUSTLOCK(NetSurface))
    SDL_LockSurface(NetSurface);
 
   DrawNetplayTextBuffer(NetSurface, &NetRect);
-
   {
    SDL_Rect zederect;
 
@@ -972,6 +972,7 @@ void BlitScreen(uint32 *XBuf, MDFN_Rect *DisplayRect, MDFN_Rect *LineWidths)
   if(SDL_MUSTLOCK(NetSurface))
    SDL_UnlockSurface(NetSurface);
  }
+ #endif
 
  BlitInternalMessage();
 

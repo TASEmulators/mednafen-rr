@@ -23,6 +23,8 @@
 #include "logdebugger.h"
 #include "prompt.h"
 
+#ifdef WANT_DEBUGGER
+
 static FILE *TraceLog = NULL;
 static std::string TraceLogSpec;
 static int64 TraceLogEnd;
@@ -1401,3 +1403,4 @@ void Debugger_Event(const SDL_Event *event)
   }
 }
 
+#endif //WANT_DEBUGGER

@@ -22,9 +22,14 @@
 #include <iostream>
 
 #include <string.h>
+
+#ifdef _MSC_VER
+#include "unixstuff.h"
+#else
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#endif
 
 #include "driver.h"
 #include "endian.h"
@@ -1123,7 +1128,7 @@ void MDFNI_DisplayState(int w)
   if(height > 512) height = 512;
 
   {
-   uint8 previewbuffer[3 * width * height];
+   uint8 *previewbuffer = (uint8*)alloca(3 * width * height);
    uint8 *rptr = previewbuffer;
 
    gzread(fp, previewbuffer, 3 * width * height);
@@ -1217,7 +1222,7 @@ void MDFNI_SelectState(int w)
   if(height > 512) height = 512;
 
   {
-   uint8 previewbuffer[3 * width * height];
+   uint8 *previewbuffer = (uint8*)alloca(3 * width * height);
    uint8 *rptr = previewbuffer;
 
    gzread(fp, previewbuffer, 3 * width * height);
