@@ -295,8 +295,6 @@ int MovieFrameCount;  //total number of frames in a movie
 
 
 //this is for the sake of properly counting frames
-//and getting to the right point in a movie file
-//when a state is loaded in read only mode
 
 void SetNumberOfPorts(void) {
 

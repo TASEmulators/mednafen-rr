@@ -65,6 +65,8 @@
 
 #define CEVT_NP_AUTHOR		0x106
 
+bool GetInFrameAdvance(void);
+
 void SendCEvent(unsigned int code, void *data1, void *data2);
 
 void PauseGameLoop(bool p);

@@ -502,19 +502,28 @@ static void IncSelectedDevice(unsigned int port)
 
 #define MKZ()   {0, 0, 0}
 
+
+//these enums MUST be in the same order as COKE CKeys[_CK_COUNT] and vice versa
 typedef enum {
+
 	_CK_FIRST = 0,
-        CK_READ_ONLY = 0,
+	CK_SAVE_CURRENT_STATE,
+	CK_LOAD_CURRENT_STATE,
+    CK_READ_ONLY,
+
 	CK_LOAD_STATE,
 	CK_SAVE_MOVIE,
 	CK_LOAD_MOVIE,
 	CK_STATE_REWIND_TOGGLE,
 	CK_0,CK_1,CK_2,CK_3,CK_4,CK_5,CK_6,CK_7,CK_8,CK_9,
 	CK_M0,CK_M1,CK_M2,CK_M3,CK_M4,CK_M5,CK_M6,CK_M7,CK_M8,CK_M9,
+	CK_SS0, CK_SS1, CK_SS2, CK_SS3, CK_SS4, CK_SS5, CK_SS6, CK_SS7, CK_SS8, CK_SS9,
 	CK_TL1, CK_TL2, CK_TL3, CK_TL4, CK_TL5, CK_TL6, CK_TL7, CK_TL8, CK_TL9,
 	CK_TAKE_SNAPSHOT,
 	CK_TOGGLE_FS,
 	CK_FAST_FORWARD,
+
+	
 
 	CK_INSERT_COIN,
 	CK_TOGGLE_DIPVIEW,
@@ -564,6 +573,9 @@ typedef struct __COKE
 
 static COKE CKeys[_CK_COUNT]	=
 {
+	{ MK_CK_CTRL_SHIFT(SCROLLOCK), "dummy", ~0, 1, gettext_noop("I don't do anything except prevent all your keys from being off by one :D ") },
+	{ MK_CK(i), "save_current_state", ~0, 1, gettext_noop("Save Current State") },
+	{ MK_CK(p), "load_current_state", ~0, 1, gettext_noop("Load Current State") },
 	{ MK_CK_SHIFT(b), "read_only", ~0, 1, gettext_noop("Read Only") },
 
 	{ MK_CK_SHIFT(n), "load_state", ~0, 0, gettext_noop("Load state") },
@@ -571,29 +583,41 @@ static COKE CKeys[_CK_COUNT]	=
 	{ MK_CK_SHIFT(l), "load_movie", ~0, 0, gettext_noop("Load movie") },
 	{ MK_CK_ALT(s), "toggle_state_rewind", ~0, 1, gettext_noop("Toggle state rewind functionality") },
 
-	{ MK_CK(F1), "0", ~0, 1, gettext_noop("Load state 0")},
-        { MK_CK(F2), "1", ~0, 1, gettext_noop("Load state 1")},
-        { MK_CK(F3), "2", ~0, 1, gettext_noop("Load state 2")},
-        { MK_CK(F4), "3", ~0, 1, gettext_noop("Load state 3")},
-        { MK_CK(F5), "4", ~0, 1, gettext_noop("Load state 4")},
-        { MK_CK(F6), "5", ~0, 1, gettext_noop("Load state 5")},
-        { MK_CK(F7), "6", ~0, 1, gettext_noop("Load state 6")},
-        { MK_CK(F8), "7", ~0, 1, gettext_noop("Load state 7")},
-        { MK_CK(F9), "8", ~0, 1, gettext_noop("Load state 8")},
-        { MK_CK(F10), "9", ~0, 1, gettext_noop("Load state 9")},
+	    { MK_CK(F10), "0", ~0, 1, gettext_noop("Load state 0")},
+        { MK_CK(F1), "1", ~0, 1, gettext_noop("Load state 1")},
+        { MK_CK(F2), "2", ~0, 1, gettext_noop("Load state 2")},
+        { MK_CK(F3), "3", ~0, 1, gettext_noop("Load state 3")},
+        { MK_CK(F4), "4", ~0, 1, gettext_noop("Load state 4")},
+        { MK_CK(F5), "5", ~0, 1, gettext_noop("Load state 5")},
+        { MK_CK(F6), "6", ~0, 1, gettext_noop("Load state 6")},
+        { MK_CK(F7), "7", ~0, 1, gettext_noop("Load state 7")},
+        { MK_CK(F8), "8", ~0, 1, gettext_noop("Load state 8")},
+        { MK_CK(F9), "9", ~0, 1, gettext_noop("Load state 9")},
 
-	{ MK_CK_SHIFT(F1), "m0", ~0, 1, gettext_noop("Save State 0") },
-        { MK_CK_SHIFT(F2), "m1", ~0, 1, gettext_noop("Save State 1")  },
-        { MK_CK_SHIFT(F3), "m2", ~0, 1, gettext_noop("Save State 2")  },
-        { MK_CK_SHIFT(F4), "m3", ~0, 1, gettext_noop("Save State 3")  },
-        { MK_CK_SHIFT(F5), "m4", ~0, 1, gettext_noop("Save State 4")  },
-        { MK_CK_SHIFT(F6), "m5", ~0, 1, gettext_noop("Save State 5")  },
-        { MK_CK_SHIFT(F7), "m6", ~0, 1, gettext_noop("Save State 6")  },
-        { MK_CK_SHIFT(F8), "m7", ~0, 1, gettext_noop("Save State 7")  },
-        { MK_CK_SHIFT(F9), "m8", ~0, 1, gettext_noop("Save State 8")  },
-        { MK_CK_SHIFT(F10), "m9", ~0, 1, gettext_noop("Save State 9")  },
+	    { MK_CK_SHIFT(F10), "m0", ~0, 1, gettext_noop("Save State 0") },
+        { MK_CK_SHIFT(F1), "m1", ~0, 1, gettext_noop("Save State 1")  },
+        { MK_CK_SHIFT(F2), "m2", ~0, 1, gettext_noop("Save State 2")  },
+        { MK_CK_SHIFT(F3), "m3", ~0, 1, gettext_noop("Save State 3")  },
+        { MK_CK_SHIFT(F4), "m4", ~0, 1, gettext_noop("Save State 4")  },
+        { MK_CK_SHIFT(F5), "m5", ~0, 1, gettext_noop("Save State 5")  },
+        { MK_CK_SHIFT(F6), "m6", ~0, 1, gettext_noop("Save State 6")  },
+        { MK_CK_SHIFT(F7), "m7", ~0, 1, gettext_noop("Save State 7")  },
+        { MK_CK_SHIFT(F8), "m8", ~0, 1, gettext_noop("Save State 8")  },
+        { MK_CK_SHIFT(F9), "m9", ~0, 1, gettext_noop("Save State 9")  },
 
-        { MK_CK_CTRL(1), "tl1", ~0, 1, gettext_noop("Toggle graphics layer 1")  },
+		{ MK_CK(0), "ss0", ~0, 1, gettext_noop("Select State 0") },
+		{ MK_CK(1), "ss1", ~0, 1, gettext_noop("Select State 1") },
+        { MK_CK(2), "ss2", ~0, 1, gettext_noop("Select State 2") },
+        { MK_CK(3), "ss3", ~0, 1, gettext_noop("Select State 3") },
+        { MK_CK(4), "ss4", ~0, 1, gettext_noop("Select State 4") },
+        { MK_CK(5), "ss5", ~0, 1, gettext_noop("Select State 5") },
+        { MK_CK(6), "ss6", ~0, 1, gettext_noop("Select State 6") },
+        { MK_CK(7), "ss7", ~0, 1, gettext_noop("Select State 7") },
+        { MK_CK(8), "ss8", ~0, 1, gettext_noop("Select State 8") },
+        { MK_CK(9), "ss9", ~0, 1, gettext_noop("Select State 9") },
+		
+
+        { MK_CK_CTRL(1), "tl1", ~0, 1, gettext_noop("Toggle graphics layer 1") },
         { MK_CK_CTRL(2), "tl2", ~0, 1, gettext_noop("Toggle graphics layer 2") },
         { MK_CK_CTRL(3), "tl3", ~0, 1, gettext_noop("Toggle graphics layer 3") },
         { MK_CK_CTRL(4), "tl4", ~0, 1, gettext_noop("Toggle graphics layer 4") },
@@ -603,9 +627,9 @@ static COKE CKeys[_CK_COUNT]	=
         { MK_CK_CTRL(8), "tl8", ~0, 1, gettext_noop("Toggle graphics layer 8") },
         { MK_CK_CTRL(9), "tl9", ~0, 1, gettext_noop("Toggle graphics layer 9") },
 
-	{ MK_CK_SHIFT(q), "take_snapshot", ~0, 1, gettext_noop("Take screen snapshot") },
+	{ MK_CK(F12), "take_snapshot", ~0, 1, gettext_noop("Take screen snapshot") },
 	{ MK_CK_ALT(RETURN), "toggle_fs", ~0, 1, gettext_noop("Toggle fullscreen mode") },
-	{ MK_CK(BACKQUOTE), "fast_forward", ~0, 1, gettext_noop("Fast-forward") },
+	{ MK_CK(TAB), "fast_forward", ~0, 1, gettext_noop("Fast-forward") },
 	{ MK_CK_SHIFT(w), "insert_coin", ~0, 1, gettext_noop("Insert coin") },
 	{ MK_CK_SHIFT(e), "toggle_dipview", ~0, 1, gettext_noop("Toggle DIP switch view") },
 	{ MK_CK_SHIFT(r), "select_disk", ~0, 1, gettext_noop("Select disk/disc") },
@@ -619,15 +643,15 @@ static COKE CKeys[_CK_COUNT]	=
         { MK_CK_ALT_SHIFT(3), "input_config3", ~0, 0, gettext_noop("Configure buttons on virtual port 3")  },
         { MK_CK_ALT_SHIFT(4), "input_config4", ~0, 0, gettext_noop("Configure buttons on virtual port 4")  },
 	{ MK_CK_ALT_SHIFT(5), "input_config5", ~0, 0, gettext_noop("Configure buttons on virtual port 5")  },
-	{ MK_CK_SHIFT(o), "reset", ~0, 0, gettext_noop("Reset") },
-	{ MK_CK_SHIFT(p), "power", ~0, 0, gettext_noop("Power toggle") },
-	{ MK_CK2(F12, ESCAPE), "exit", ~0, 0, gettext_noop("Exit") },
+	{ MK_CK_CTRL(r), "reset", ~0, 0, gettext_noop("Reset") },
+	{ MK_CK_CTRL(p), "power", ~0, 0, gettext_noop("Power toggle") },
+	{ MK_CK(ESCAPE), "exit", ~0, 0, gettext_noop("Exit") },
 	{ MK_CK(BACKSPACE), "state_rewind", ~0, 1, gettext_noop("Rewind") },
 	{ MK_CK_SHIFT(j), "rotatescreen", ~0, 1, gettext_noop("Rotate screen") },
 
 	{ MK_CK(t), "togglenetview", ~0, 1, gettext_noop("Toggle netplay console")},
-	{ MK_CK_ALT(a), "advance_frame", ~0, 1, gettext_noop("Advance frame") },
-	{ MK_CK_ALT(r), "run_normal", ~0, 1, gettext_noop("Return to normal mode after advancing frames") },
+	{ MK_CK(BACKSLASH), "advance_frame", ~0, 0, gettext_noop("Advance frame") },
+	{ MK_CK(PAUSE), "run_normal", ~0, 1, gettext_noop("Return to normal mode after advancing frames") },
 	{ MK_CK_ALT(c), "togglecheatview", ~0, 1, gettext_noop("Toggle cheat console") },
 	{ MK_CK_ALT(t), "togglecheatactive", ~0, 1, gettext_noop("Enable/Disable cheats") },
         { MK_CK_CTRL_SHIFT(F1), "toggle_fps_view", ~0, 1, gettext_noop("Toggle frames-per-second display") },
@@ -976,7 +1000,16 @@ static void KeyboardCommands(void)
     FrameAdvanceCounter++;
  //std::cout << FrameAdvanceCounter <<std::endl;
    if(CK_Check(CK_RUN_NORMAL))
+
+
+	   //if we are paused, unpause, otherwise, pause
+	   if(GetInFrameAdvance() == 1) {
     DoRunNormal();
+	   }
+	   else {
+
+		   DoFrameAdvance();
+	   }
   }
 
   if(!Debugger_IsActive()) // We don't want to start button configuration when the debugger is active!
@@ -1326,6 +1359,51 @@ MDFN_DispMessage((UTF8 *)_("Speed %d"),FrameAdvanceSpeed);
    {
     if(CurGame->GameType != GMT_PLAYER)
     {
+	//State Selecting Hotkeys
+		//
+
+		//
+
+		if(CK_Check(CK_SS0)) {
+		MDFNI_TellState(0);
+}
+
+if(CK_Check(CK_SS1)) {
+MDFNI_TellState(1);
+}
+
+if(CK_Check(CK_SS2)) {
+MDFNI_TellState(2);
+}
+
+if(CK_Check(CK_SS3)) {
+MDFNI_TellState(3);
+}
+
+if(CK_Check(CK_SS4)) {
+MDFNI_TellState(4);
+}
+
+if(CK_Check(CK_SS5)) {
+MDFNI_TellState(5);
+}
+
+if(CK_Check(CK_SS6)) {
+MDFNI_TellState(6);
+}
+
+if(CK_Check(CK_SS7)) {
+MDFNI_TellState(7);
+}
+
+if(CK_Check(CK_SS8)) {
+MDFNI_TellState(8);
+}
+
+if(CK_Check(CK_SS9)) {
+MDFNI_TellState(9);
+}
+
 ////
 //// State Loading Hotkeys
 ///
@@ -1409,6 +1487,18 @@ Debugger_ForceStepIfStepping();
 LockGameMutex(0);
 }
 
+//save/load current state
+
+if(CK_Check(CK_SAVE_CURRENT_STATE)) {
+pending_save_state = 1;
+}
+
+if(CK_Check(CK_LOAD_CURRENT_STATE)) {
+LockGameMutex(1);
+MDFNI_LoadState(NULL, NULL);
+Debugger_ForceStepIfStepping();
+LockGameMutex(0);
+}
 
 //
 //state saving hotkeys

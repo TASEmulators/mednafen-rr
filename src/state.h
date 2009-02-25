@@ -8,6 +8,8 @@
 
 void MDFNI_SelectStateSimple(int w);
 
+void MDFNI_TellState(int w);
+
 int MDFNSS_Save(const char *, const char *suffix, uint32 *fb = (uint32 *)NULL, MDFN_Rect *LineWidths = (MDFN_Rect *)NULL);
 int MDFNSS_Load(const char *, const char *suffix);
 int MDFNSS_SaveFP(gzFile fp, uint32 *fb = (uint32 *)NULL, MDFN_Rect *LineWidths = (MDFN_Rect *)NULL);

@@ -912,7 +912,7 @@ StateMem temp = Grabtempmov();
 
 FILE* statemovie;  //the movie file that will be read
 
-uint32 moviedatasize;
+uint32 moviedatasize = 0;
 
 char * tempbuffer;
 
@@ -1080,6 +1080,14 @@ void MDFNI_SelectStateSimple(int w)
 {
   CurrentState = w;
 }  
+
+//tell the user which state they selected
+
+void MDFNI_TellState(int w)
+{
+	CurrentState = w;
+  MDFN_DispMessage((UTF8 *)_("State Slot %d Selected."),CurrentState);
+}
 
 
 //attempting to display the screenshot to the screen so that 
