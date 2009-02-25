@@ -1855,6 +1855,25 @@ static void ConfigDeviceBegin(void)
  cd_lx = -1;
 }
 
+//make configuring joypads a little less cryptic
+
+char ConfigInfo[30];
+
+void RetConfigStr(int snooty) {
+
+	char confirm[30] = " - Confirm selection";
+	char press[30] = " - Press desired key";
+
+	if(snooty > 1) {
+		sprintf(ConfigInfo, "%s", confirm);
+	//ConfigInfo = confirm;
+	}
+	else
+		sprintf(ConfigInfo, "%s", press);
+		//ConfigInfo = press;
+
+}
+
 int ConfigDevice(int arg)
 {
  char buf[256];
@@ -1873,10 +1892,13 @@ int ConfigDevice(int arg)
 
   // For Lynx, GB, GBA, NGP, WonderSwan(especially wonderswan!)
   //if(!strcasecmp(PortDevice[arg]->ShortName, "builtin")) // && !arg)
+
+RetConfigStr(subcon_wc + 1);
+
   if(NumPorts == 1 && PortPossibleDevices[CurGame->shortname][0].size() == 1)
    sprintf(buf, "%s", PortButtons[arg][snooty]);
   else
-   sprintf(buf, "%s %d: %s", PortDevice[arg]->FullName, arg + 1, PortButtons[arg][snooty]);
+   sprintf(buf, "%s %d: %s %s", PortDevice[arg]->FullName, arg + 1, PortButtons[arg][snooty], ConfigInfo);
 
   if(cd_x != cd_lx)
   {

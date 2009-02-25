@@ -37,4 +37,6 @@ extern bool DNeedRewind; // Only read/write in game thread.
 bool InitCommandInput(void);
 void KillCommandInput(void);
 
+void RetConfigStr(int snooty);
+
 #endif
