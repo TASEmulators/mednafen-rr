@@ -650,7 +650,7 @@ static COKE CKeys[_CK_COUNT]	=
 	{ MK_CK_SHIFT(j), "rotatescreen", ~0, 1, gettext_noop("Rotate screen") },
 
 	{ MK_CK(t), "togglenetview", ~0, 1, gettext_noop("Toggle netplay console")},
-	{ MK_CK(BACKSLASH), "advance_frame", ~0, 0, gettext_noop("Advance frame") },
+	{ MK_CK(BACKSLASH), "advance_frame", ~0, 1, gettext_noop("Advance frame") },
 	{ MK_CK(PAUSE), "run_normal", ~0, 1, gettext_noop("Return to normal mode after advancing frames") },
 	{ MK_CK_ALT(c), "togglecheatview", ~0, 1, gettext_noop("Toggle cheat console") },
 	{ MK_CK_ALT(t), "togglecheatactive", ~0, 1, gettext_noop("Enable/Disable cheats") },
