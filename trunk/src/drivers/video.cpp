@@ -929,7 +929,8 @@ void BlitScreen(uint32 *XBuf, MDFN_Rect *DisplayRect, MDFN_Rect *LineWidths)
   HelpSurface = NULL;
  }
 
- DrawSaveStates(screen, exs, eys, real_rs, real_gs, real_bs, real_as);
+ 
+DrawSaveStates(screen, exs, eys, real_rs, real_gs, real_bs, real_as);
 
  if(IsConsoleCheatConfigActive())
  {

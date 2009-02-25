@@ -694,6 +694,12 @@ static int ThrottleCheckFS(void);
 static bool InFrameAdvance = 0;
 static bool NeedFrameAdvance = 0;
 
+//used for pause/unpause
+bool GetInFrameAdvance(void)
+{
+ return(InFrameAdvance);
+}
+
 void DoRunNormal(void)
 {
  InFrameAdvance = 0;
