@@ -21,6 +21,7 @@ void LoadMovieCLI(void);
 static char MovMD5Sum[33];
 static char MovRomFilename[64];
 
+int DisplayTotalFrames(void);
 
 void ReadHeader(FILE* headertest);
 

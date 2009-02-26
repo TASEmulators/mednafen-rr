@@ -454,6 +454,14 @@ MDFN_DispMessage((UTF8 *)_("Read Only"));
 
 }
 
+//gets the total number of frames to the hud
+
+int DisplayTotalFrames(void) {
+
+	return(MovieFrameCount);
+}
+
+
 
 
 //display plackback/recording indicator
