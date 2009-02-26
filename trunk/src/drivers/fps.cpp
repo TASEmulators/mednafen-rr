@@ -85,8 +85,10 @@ void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
 
  if(!FPSSurface)
  {
-  FPSSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, 9 * 5, 3 * 7, 32, 0xFF << rs, 0xFF << gs, 0xFF << bs, 0xFF << as);
-  FPSRect.w = 9 * 5;
+	//resizing this will get you more digits
+
+  FPSSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, 9 * 8, 3 * 7, 32, 0xFF << rs, 0xFF << gs, 0xFF << bs, 0xFF << as);
+  FPSRect.w = 9 * 8;
   FPSRect.h = 3 * 7;
   FPSRect.x = FPSRect.y = 0;
  }
@@ -128,18 +130,18 @@ void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
  else
   snprintf(virtfps, 64, "?");
 
- if(curtime - dt_mintime)
-  snprintf(drawnfps, 64, "%f", (double)dt_frames_drawn * 1000 / (curtime - dt_mintime));
- else
-  snprintf(drawnfps, 64, "?");
+// if(curtime - dt_mintime)
+//  snprintf(drawnfps, 64, "%f", (double)dt_frames_drawn * 1000 / (curtime - dt_mintime));
+// else
+//  snprintf(drawnfps, 64, "?");
 
- if(curtime - bt_mintime)
-  snprintf(blitfps, 64, "%f", (double)bt_frames_drawn * 1000 / (curtime - bt_mintime));
- else
-  snprintf(blitfps, 64, "?");
+// if(curtime - bt_mintime)
+//  snprintf(blitfps, 64, "%f", (double)bt_frames_drawn * 1000 / (curtime - bt_mintime));
+// else
+//  snprintf(blitfps, 64, "?");
 
  SDL_FillRect(FPSSurface, NULL, MK_COLOR_A(FPSSurface, 0, 0, 0, 0x80));
- DrawTextTrans((uint32 *)FPSSurface->pixels, FPSSurface->pitch, FPSSurface->w, (UTF8*)virtfps, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+// DrawTextTrans((uint32 *)FPSSurface->pixels, FPSSurface->pitch, FPSSurface->w, (UTF8*)virtfps, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
 // DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)drawnfps, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
 
 
@@ -158,23 +160,23 @@ char tempcount2[64];
 
 if(MovInd() == 666) {
 
-snprintf(tempcount2, 64, "Recording");
+snprintf(tempcount2, 64, "Recording %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
 }
 
 if(MovInd() == 333) {
 
-snprintf(tempcount2, 64, "Playback");
+snprintf(tempcount2, 64, "Playback  %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
 }
 
 if(MovInd() == 111) {
 
-snprintf(tempcount2, 64, "Stopped");
+snprintf(tempcount2, 64, "Stopped   %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
 }
 
 
 //snprintf(tempcount2, 64, "%f", (double)retFrameCounter());
 
-DrawTextTrans((uint32 *)FPSSurface->pixels + 7 *  (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount2, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+DrawTextTrans((uint32 *)FPSSurface->pixels + 0 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount2, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
 
 /////////
 //
@@ -199,9 +201,12 @@ snprintf(tempcount, 64, "%d", retFrameCounter());
 
 //frame counter
 
-DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
 
 // DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)blitfps, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+
+//the final container for all the stuff
+//resizing this will get you a "zoomed in" fps box
 
  SDL_Rect drect;
  drect.x = 0;
