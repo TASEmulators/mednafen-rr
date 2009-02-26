@@ -742,6 +742,7 @@ bool MDFND_ExitBlockingLoop(void)
  return(NeedBLExitNow);
 }
 
+int FrameAdvanceDelayCounter;
 int FrameAdvanceCounter;
 
 int FrameAdvanceSpeed = 3;
@@ -990,15 +991,22 @@ static void KeyboardCommands(void)
 //this is to make holding down the frame advance key slower
 //it advanced at full speed before
     if(FrameAdvanceCounter > FrameAdvanceSpeed) {
-//std::cout << "FAC" << FrameAdvanceCounter <<std::endl;
-//std::cout << "FAS" << FrameAdvanceSpeed <<std::endl;
 
+		//the key hasn't been pressed yet
+		if(FrameAdvanceDelayCounter == 0) {
+			DoFrameAdvance();
+		}
+		
+		//the key has been pressed, but to start advancing again it mustbe larger than 10
+		if(FrameAdvanceDelayCounter > 10) {
     DoFrameAdvance();
+		}
+
     FrameAdvanceCounter = 0;
-// std::cout << FrameAdvanceCounter <<std::endl;
     }
     FrameAdvanceCounter++;
- //std::cout << FrameAdvanceCounter <<std::endl;
+	FrameAdvanceDelayCounter++;
+
    if(CK_Check(CK_RUN_NORMAL))
 
 
@@ -1011,6 +1019,12 @@ static void KeyboardCommands(void)
 		   DoFrameAdvance();
 	   }
   }
+
+  //this has to be outside or it doesn't ever reset the number
+  if(!CK_CheckActive(CK_ADVANCE_FRAME)) {
+
+			FrameAdvanceDelayCounter =0;
+		}
 
   if(!Debugger_IsActive()) // We don't want to start button configuration when the debugger is active!
   {
