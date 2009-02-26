@@ -184,10 +184,18 @@ DrawTextTrans((uint32 *)FPSSurface->pixels + 7 *  (FPSSurface->pitch >> 2), FPSS
 
  //std::cout << "PDClen  " << retFrameCounter() <<std::endl;
 
+//display framecount/total number of frames
+
 char tempcount[64];
 
-snprintf(tempcount, 64, "%f", (double)retFrameCounter());
+if(MovInd() == 333) {
 
+	snprintf(tempcount, 64, "%d/%d", retFrameCounter(), DisplayTotalFrames());
+}
+else {
+
+snprintf(tempcount, 64, "%d", retFrameCounter());
+}
 
 //frame counter
 
