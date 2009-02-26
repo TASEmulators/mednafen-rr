@@ -997,7 +997,7 @@ static void KeyboardCommands(void)
 			DoFrameAdvance();
 		}
 		
-		//the key has been pressed, but to start advancing again it mustbe larger than 10
+		//the key has been pressed, but to start advancing again it must be larger than 10
 		if(FrameAdvanceDelayCounter > 10) {
     DoFrameAdvance();
 		}
@@ -1021,6 +1021,7 @@ static void KeyboardCommands(void)
   }
 
   //this has to be outside or it doesn't ever reset the number
+  //if the key isn't being pressed, we start the key delay process again
   if(!CK_CheckActive(CK_ADVANCE_FRAME)) {
 
 			FrameAdvanceDelayCounter =0;

@@ -326,13 +326,17 @@ NumberOfPorts = 2;
 
 }
 
+if (strcmp (CurGame->shortname, "pce") ) 
 
+{
 
+//"pce"
 
+//"ngp"
 
+NumberOfPorts = 5;
 
-
-
+}
 
 }
 
@@ -386,94 +390,41 @@ fseek (fp , MoviePlaybackPointer, SEEK_SET );
 
 void MDFNMOV_Count(FILE* fp)
 {
+	 MovieFrameCount = 0;
 
- //FILE* fp;
-
- int t;
-
- int moviesize1;
-
-
-
-
- //if(!current) return;	/* Not playback nor recording. */
-// if(current < 0)	/* Playback */
- 
-
-//  fp = slots[-1 - current];
-
-
-//get the size of the movie
-
-fseek(fp, 0, SEEK_END);
-moviesize1=ftell (fp);
-rewind(fp);
-
-
-//a junk buffer, useless except for doing the count
-
-char * junkbuffer;
-
-junkbuffer = (char*) malloc (sizeof(char)*moviesize1);
-
-
-//std::cout << "ftell before getc" << ftell(fp) <<std::endl;
+	 int t;
 	
-//while we still have movie to read
-while(ftell(fp) < moviesize1) {
-	
-	
-	
-		
+	 int moviesize1;
 
+	//get the size of the movie
 
-//while((t = smem_getc(temporarymoviebuffer)) >=0 &&t)
-  while((t = fgetc(fp)) >= 0 && t)  //slots[currrent] is a file pointer,   //t must always be greater or equal to zero, and t must be ?
+	fseek(fp, 0, SEEK_END);
+	moviesize1=ftell (fp);
+	rewind(fp);
 
-  {
-std::cout << "_____________" <<std::endl;
-std::cout << "MDFNMOV_Count" <<std::endl;
+	//skip the header
+	fseek(fp, 256, SEEK_SET);
 
-std::cout << "ftell after getc" << ftell(fp) <<std::endl;
-std::cout << "t = " << t <<std::endl;
-std::cout << "_____________" <<std::endl;
-  }
-//std::cout << "ftell after while " << ftell(fp) <<std::endl;
-//std::cout << "PortDataCacheLength " << PortDataCacheLength <<std::endl;
-//we play movies back from the disk
+    //a junk buffer, useless except for doing the count
 
-fread(junkbuffer, 1, PortDataCacheLength, fp);//!= PDClen)
+	char * junkbuffer;
 
+	junkbuffer = (char*) malloc (sizeof(char)*moviesize1);
 
-//just a hack for the moment
-//this gets the right number
-//but why do i need to increase by two?
-//this might need to reflect the PDCLength
-MovieFrameCount++;
-MovieFrameCount++;
+	//while we still have movie to read
+	while(ftell(fp) < moviesize1) {	
 
-//smem_seek(&temporarymoviebuffer, 1, SEEK_CUR);
-//if(smem_read(&temporarymoviebuffer, PDCdata, PDClen) != PDClen)
+		//we need to take any resets or power ons into account
+		while((t = fgetc(fp)) >= 0) {
+  
+		fread(junkbuffer, 1, PortDataCacheLength, fp);//!= PDClen)
 
-  //{
-   //StopPlayback();
-  // return;
- // }
- }
-
-
+		MovieFrameCount++;
+		}
+	 }
+	//each port increases the size of the movie
+	MovieFrameCount = MovieFrameCount / NumberOfPorts;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 int getreadonly(void) {
 
