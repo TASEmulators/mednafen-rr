@@ -955,6 +955,8 @@ void MDFNI_LoadMovie(char *fname)
 
 	isMov = 1;  //use movie specfic savestates
 
+	readonly = 1;  //we always start read only so that the user can toggle it later
+
 	//MDFN_DispMessage((UTF8*)_("Movie playback started. Length: %d Frames /n"), MovieFrameCount);
 
 	MDFN_DispMessage((UTF8*)_("FR: %d MD5: RR: %d ATH: "), MovieFrameCount, RerecordCount);
