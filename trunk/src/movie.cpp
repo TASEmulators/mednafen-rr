@@ -154,10 +154,8 @@ void ReadHeader(FILE* headertest) {
 
 void AddRerecordCount(void) {
 
-	//TODO
-
-	//make this a conditional for recording mode only once testing is finished
-
+	//only if we are in record mode
+	if(current > 0)
 	RerecordCount++;
 
 }
@@ -277,7 +275,7 @@ void WriteHeader(FILE* headertest) {
 void MovClearAllSRAM(void) {
 
 	//TODO ZERO
-	//ClearPCESRAM();
+	ClearPCESRAM();
 
 }
 
@@ -392,9 +390,9 @@ void MDFNMOV_Count(FILE* fp)
 {
 	MovieFrameCount = 0;
 
-	int t;
+	int t = 0;
 
-	int moviesize1;
+	int moviesize1 = 0;
 
 	//get the size of the movie
 
@@ -424,6 +422,8 @@ void MDFNMOV_Count(FILE* fp)
 	}
 	//each port increases the size of the movie
 	MovieFrameCount = MovieFrameCount / NumberOfPorts;
+
+	free(junkbuffer);
 }
 
 int getreadonly(void) {
@@ -640,6 +640,12 @@ static void StopRecording(void)
 
 	fclose(tempbuffertest3);
 
+	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
+
+	free(temporarymoviebuffer.data);
+
+	
+
 	/////
 
 	isMov = 0;
@@ -754,6 +760,8 @@ static void StopPlayback(void)
 
 	isMov = 0;
 
+	free(temporarymoviebuffer.data);
+
 	MDFN_DispMessage((UTF8 *)_("Movie playback stopped."));
 }
 
@@ -792,6 +800,10 @@ MDFNI_LoadMovie(fname2);
 void MDFNI_LoadMovie(char *fname)
 {
 	//std::cout << fname <<std::endl;
+
+	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
+
+	free(temporarymoviebuffer.data);
 
 	FILE* fp;
 	//puts("KAO");
