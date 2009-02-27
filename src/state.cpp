@@ -923,6 +923,55 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 			///////////////////
 			///////////////
 			/////////////////////
+			//if we are read+write and playing back, we need to get the associated movie and overwrite the main one
+			//and we need to switch to recording mode without powering on
+
+			if(getreadonly() == 0 && MovInd() == 333) { //if we are in read+write mode and playing back
+
+				//open the associated movie file
+
+				statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"rb");
+				//tempbuffertest3=fopen(,"wb3");
+
+				// get the size of it
+
+				fseek(statemovie, 0, SEEK_END);
+				moviedatasize=ftell (statemovie);
+				rewind(statemovie);
+
+				//copy it to the temporary buffer
+
+				tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
+
+				fread (tempbuffer,1,moviedatasize,statemovie);
+				rewind(statemovie);
+
+
+				//memset(&Grabtempmov(), 0, sizeof(StateMem));
+				//Grabtempmov().initial_malloc = moviedatasize;
+
+				//smem needs to be overwritten with the data associated with the loaded state
+				//the smem loc should be at the end of the data associated with the loaded state
+				//the size ought to be truncated so that a movie won't get garbage written to the end
+
+				temp.len = moviedatasize;
+
+
+				//smem_write(&temporarymoviebuffer, sm.data, sm.len);
+				smem_write(&temp, tempbuffer, moviedatasize);
+				//smem_seek(&temporarymoviebuffer, 0, SEEK_END);
+
+				smem_seek(&temp, moviedatasize, SEEK_SET);
+
+				//fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, statemovie);
+
+				fclose(statemovie);
+
+				Writetempmov(temp);
+
+				SetCurrent(1);
+
+			}// end of if
 
 
 			if(getreadonly() == 0 && MovInd() == 666) { //if we are in read+write mode and recording

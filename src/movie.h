@@ -17,6 +17,8 @@ void MDFNMOV_RecordState();
 
 void LoadMovieCLI(void);
 
+void SetCurrent(int incurrent);
+
 
 static char MovMD5Sum[33];
 static char MovRomFilename[64];
