@@ -297,13 +297,9 @@ int MovieFrameCount;  //total number of frames in a movie
 void SetNumberOfPorts(void) {
 
 
-	if (strcmp (CurGame->shortname, "lynx")  || strcmp (CurGame->shortname, "wswan") || strcmp(CurGame->shortname, "ngp") ) 
+	if (strcmp (CurGame->shortname, "lynx") == 0 || strcmp (CurGame->shortname, "wswan") == 0 || strcmp(CurGame->shortname, "ngp")== 0 ) 
 
 	{
-
-		//"pce"
-
-		//"ngp"
 
 		NumberOfPorts = 1;
 
@@ -312,25 +308,17 @@ void SetNumberOfPorts(void) {
 
 
 
-	if (strcmp (CurGame->shortname, "pcfx") ) 
+	if (strcmp (CurGame->shortname, "pcfx") == 0 ) 
 
 	{
-
-		//"pce"
-
-		//"ngp"
 
 		NumberOfPorts = 2;
 
 	}
 
-	if (strcmp (CurGame->shortname, "pce") ) 
+	if (strcmp (CurGame->shortname, "pce")== 0 ) 
 
 	{
-
-		//"pce"
-
-		//"ngp"
 
 		NumberOfPorts = 5;
 
