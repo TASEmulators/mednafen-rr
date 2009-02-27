@@ -881,7 +881,7 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 	 if(!fname && !suffix)
 	 {
           MDFN_DispMessage((UTF8 *)_("State %d load error."),CurrentState);
-          SaveStateStatus[CurrentState]=0;
+        //  SaveStateStatus[CurrentState]=0;
 	 }
 	 return(0);
 	}
@@ -904,9 +904,6 @@ AddRerecordCount();  //every loaded state is +1 rerecord
 //load the associated movie file
 //and overwrite the temporarymoviebuffer
 
-std::cout << "----------" <<std::endl;
-
-std::cout << "Loaded State #" << CurrentState << std::endl;
 
 StateMem temp = Grabtempmov();
 
@@ -918,13 +915,8 @@ char * tempbuffer;
 
 //get back to the beginning of the buffer
 
-std::cout << "temporarymbuflen" << Grabtempmov().len <<std::endl;
-
-std::cout << "Temp Mov smem tell" << smem_tell(&temp)  <<std::endl;
 
 smem_seek(&temp, 0, SEEK_SET);
-
-std::cout << "Temp Mov seeked to zero" <<smem_tell(&temp)  <<std::endl;
 
 
 
@@ -933,18 +925,9 @@ std::cout << "Temp Mov seeked to zero" <<smem_tell(&temp)  <<std::endl;
 /////////////////////
 
 
-
-
-
-std::cout << "getreadonly" <<  getreadonly() <<std::endl;
-
-std::cout << "MovInd()" <<  MovInd() <<std::endl;
-
 if(getreadonly() == 0 && MovInd() == 666) { //if we are in read+write mode and recording
-std::cout << "Should be Read+Write and Recording Mode Only" <<std::endl;
-//open the associated movie file
 
-std::cout << "Opening the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str()  <<std::endl;
+//open the associated movie file
 
 statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"rb");
 //tempbuffertest3=fopen(,"wb3");
@@ -954,8 +937,6 @@ statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).
 fseek(statemovie, 0, SEEK_END);
 moviedatasize=ftell (statemovie);
 rewind(statemovie);
-
-std::cout << "moviedatasize" << moviedatasize <<std::endl;
 
 //copy it
 
@@ -968,10 +949,6 @@ rewind(statemovie);
 //memset(&Grabtempmov(), 0, sizeof(StateMem));
 //Grabtempmov().initial_malloc = moviedatasize;
 
-std::cout << "before overwriting smem" <<"temporarymbuflen" << temp.len <<std::endl;
-
-std::cout << "smem tell" << smem_tell(&temp) <<std::endl;
-
 //smem needs to be overwritten with the data associated with the loaded state
 //the smem loc should be at the end of the data associated with the loaded state
 //the size ought to be truncated so that a movie won't get garbage written to the end
@@ -983,17 +960,7 @@ temp.len = moviedatasize;
 smem_write(&temp, tempbuffer, moviedatasize);
 //smem_seek(&temporarymoviebuffer, 0, SEEK_END);
 
-std::cout << "smem tell" << smem_tell(&temp) <<std::endl;
-
 smem_seek(&temp, moviedatasize, SEEK_SET);
-
-std::cout << "smem tell" << smem_tell(&temp) <<std::endl;
-
-std::cout << "after overwriting smem" << "temporarymbuflen" << temp.len <<std::endl;
-
-std::cout << "----------" <<std::endl;
-
-
 
 //fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, statemovie);
 
@@ -1011,7 +978,7 @@ Writetempmov(temp);
 // if we are in read only we need to set the playback to the right spot
 
 if(getreadonly() == 1 && MovInd() == 333)  {
-std::cout << "Should be Read Only and Playback Only" <<std::endl;
+
 //how do i figure out where to seek the movie?
 
 FILE* temp12;
