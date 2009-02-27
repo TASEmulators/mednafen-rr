@@ -1,19 +1,19 @@
 /* Mednafen - Multi-system Emulator
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 
 #include <string>
 
@@ -87,180 +87,180 @@ uint8  md5_of_rom_used[16];
 
 void ReadHeader(FILE* headertest) {
 
-//check file indicator
+	//check file indicator
 
 
 
-//compare mednafen version
+	//compare mednafen version
 
-uint32 version;
+	uint32 version;
 
-//read32le(version, headertest);
+	//read32le(version, headertest);
 
-fseek(headertest, 8, SEEK_SET);
+	fseek(headertest, 8, SEEK_SET);
 
-version = fgetc(headertest);
+	version = fgetc(headertest);
 
-//MEDNAFEN_VERSION_NUMERIC
+	//MEDNAFEN_VERSION_NUMERIC
 
-std::cout << "Version " << version <<std::endl; //display 1st digit
+	std::cout << "Version " << version <<std::endl; //display 1st digit
 
-version = fgetc(headertest);
+	version = fgetc(headertest);
 
-std::cout << "Version " << version <<std::endl; //display 2nd digit
+	std::cout << "Version " << version <<std::endl; //display 2nd digit
 
-//compare movie file format version
+	//compare movie file format version
 
-uint32 movversion;
+	uint32 movversion;
 
-fseek(headertest, 12, SEEK_SET);
+	fseek(headertest, 12, SEEK_SET);
 
-movversion = fgetc(headertest);
+	movversion = fgetc(headertest);
 
-std::cout << "MovVersion " << movversion <<std::endl;
+	std::cout << "MovVersion " << movversion <<std::endl;
 
-//compare MD5 Sums
+	//compare MD5 Sums
 
-fread(md5_of_rom_used, 1, 16, headertest);
+	fread(md5_of_rom_used, 1, 16, headertest);
 
-//std::cout << "MD5 " << md5_of_rom_used[3] <<std::endl;
-
-
-
-//md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str()
-
-//update rerecords with value from file
-
-fseek(headertest, 112, SEEK_SET);
-
-read32le(&RerecordCount, headertest);
-
-//fread(RerecordCount, 1, 4, headertest);
-
-//RerecordCount = read32le(((uint32 *)headertest));
+	//std::cout << "MD5 " << md5_of_rom_used[3] <<std::endl;
 
 
 
-//read32le(fuck, headertest);
+	//md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str()
 
-//read console - only useful for counting frames
+	//update rerecords with value from file
 
-//read author's name
+	fseek(headertest, 112, SEEK_SET);
 
-//finished
+	read32le(&RerecordCount, headertest);
+
+	//fread(RerecordCount, 1, 4, headertest);
+
+	//RerecordCount = read32le(((uint32 *)headertest));
+
+
+
+	//read32le(fuck, headertest);
+
+	//read console - only useful for counting frames
+
+	//read author's name
+
+	//finished
 
 }
 
 
 void AddRerecordCount(void) {
 
-//TODO
+	//TODO
 
-//make this a conditional for recording mode only once testing is finished
+	//make this a conditional for recording mode only once testing is finished
 
-RerecordCount++;
+	RerecordCount++;
 
 }
 
 
 void WriteHeader(FILE* headertest) {
 
-//FILE* headertest;
+	//FILE* headertest;
 
-smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
-//headertest=fopen("headertest.txt","wb");
-//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
-
-
-//file indicator
+	smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
+	//headertest=fopen("headertest.txt","wb");
+	//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
 
 
-
-//this is the only way i could figure out how to do this without causing a segfault
-//the same reason why all the code sucks
-
-//MDFNMOVI
-
-fputc(77, headertest);
-fputc(68, headertest);
-fputc(70, headertest);
-fputc(78, headertest);
-fputc(77, headertest);
-fputc(79, headertest);
-fputc(86, headertest);
-fputc(73, headertest);
-
-
-//write mednafen version
-
-write32le(MEDNAFEN_VERSION_NUMERIC, headertest);
+	//file indicator
 
 
 
-//write movie format version
+	//this is the only way i could figure out how to do this without causing a segfault
+	//the same reason why all the code sucks
 
-uint32 MovieVersion = 1;
+	//MDFNMOVI
 
-write32le(MovieVersion, headertest);
+	fputc(77, headertest);
+	fputc(68, headertest);
+	fputc(70, headertest);
+	fputc(78, headertest);
+	fputc(77, headertest);
+	fputc(79, headertest);
+	fputc(86, headertest);
+	fputc(73, headertest);
+
+
+	//write mednafen version
+
+	write32le(MEDNAFEN_VERSION_NUMERIC, headertest);
 
 
 
-//write MD5, Filename of the rom
-GetMD5AndFilename(headertest);  //up to 64 chars of filename
+	//write movie format version
+
+	uint32 MovieVersion = 1;
+
+	write32le(MovieVersion, headertest);
 
 
 
-
-
-//Rerecords
-write32le(RerecordCount, headertest);
+	//write MD5, Filename of the rom
+	GetMD5AndFilename(headertest);  //up to 64 chars of filename
 
 
 
 
 
-
-//console
-
-static char MovConsole[6];
-
-snprintf(MovConsole, 6, "%s", CurGame->shortname);
-
-fwrite(MovConsole, sizeof(char), 5, headertest);
-
-
-//author's name
+	//Rerecords
+	write32le(RerecordCount, headertest);
 
 
 
-std::string author = MDFN_GetSettingS("author");
-
-std::cout << author << std::endl;
-
-int i;
-
-for (i = 0; i < 32; i++) {
-
-//fputc(author[i], headertest);
-
-}
 
 
-//some padding
+
+	//console
+
+	static char MovConsole[6];
+
+	snprintf(MovConsole, 6, "%s", CurGame->shortname);
+
+	fwrite(MovConsole, sizeof(char), 5, headertest);
 
 
-int j;
-
-for (j = 0; j < 103; j++) {
-
-fputc(0, headertest);
-
-}
+	//author's name
 
 
-//close the file
 
-//fclose(headertest);
+	std::string author = MDFN_GetSettingS("author");
+
+	std::cout << author << std::endl;
+
+	int i;
+
+	for (i = 0; i < 32; i++) {
+
+		//fputc(author[i], headertest);
+
+	}
+
+
+	//some padding
+
+
+	int j;
+
+	for (j = 0; j < 103; j++) {
+
+		fputc(0, headertest);
+
+	}
+
+
+	//close the file
+
+	//fclose(headertest);
 
 }
 
@@ -277,7 +277,7 @@ fputc(0, headertest);
 void MovClearAllSRAM(void) {
 
 	//TODO ZERO
-//ClearPCESRAM();
+	//ClearPCESRAM();
 
 }
 
@@ -299,44 +299,44 @@ int MovieFrameCount;  //total number of frames in a movie
 void SetNumberOfPorts(void) {
 
 
-if (strcmp (CurGame->shortname, "lynx")  || strcmp (CurGame->shortname, "wswan") || strcmp(CurGame->shortname, "ngp") ) 
+	if (strcmp (CurGame->shortname, "lynx")  || strcmp (CurGame->shortname, "wswan") || strcmp(CurGame->shortname, "ngp") ) 
 
-{
+	{
 
-//"pce"
+		//"pce"
 
-//"ngp"
+		//"ngp"
 
-NumberOfPorts = 1;
+		NumberOfPorts = 1;
 
-}
-
-
+	}
 
 
-if (strcmp (CurGame->shortname, "pcfx") ) 
 
-{
 
-//"pce"
+	if (strcmp (CurGame->shortname, "pcfx") ) 
 
-//"ngp"
+	{
 
-NumberOfPorts = 2;
+		//"pce"
 
-}
+		//"ngp"
 
-if (strcmp (CurGame->shortname, "pce") ) 
+		NumberOfPorts = 2;
 
-{
+	}
 
-//"pce"
+	if (strcmp (CurGame->shortname, "pce") ) 
 
-//"ngp"
+	{
 
-NumberOfPorts = 5;
+		//"pce"
 
-}
+		//"ngp"
+
+		NumberOfPorts = 5;
+
+	}
 
 }
 
@@ -354,7 +354,7 @@ uint32 MoviePlaybackPointer;
 
 void setMoviePlaybackPointer(uint32 value) {
 
-MoviePlaybackPointer = value;
+	MoviePlaybackPointer = value;
 
 }
 
@@ -363,7 +363,7 @@ MoviePlaybackPointer = value;
 
 FILE* getSlots() {
 
-return(slots[-1 - current]);
+	return(slots[-1 - current]);
 
 }
 
@@ -376,7 +376,7 @@ return(slots[-1 - current]);
 void MDFNMOV_Seek(FILE* fp)
 {
 
-fseek (fp , MoviePlaybackPointer, SEEK_SET );
+	fseek (fp , MoviePlaybackPointer, SEEK_SET );
 }
 
 
@@ -390,11 +390,11 @@ fseek (fp , MoviePlaybackPointer, SEEK_SET );
 
 void MDFNMOV_Count(FILE* fp)
 {
-	 MovieFrameCount = 0;
+	MovieFrameCount = 0;
 
-	 int t;
-	
-	 int moviesize1;
+	int t;
+
+	int moviesize1;
 
 	//get the size of the movie
 
@@ -405,7 +405,7 @@ void MDFNMOV_Count(FILE* fp)
 	//skip the header
 	fseek(fp, 256, SEEK_SET);
 
-    //a junk buffer, useless except for doing the count
+	//a junk buffer, useless except for doing the count
 
 	char * junkbuffer;
 
@@ -416,41 +416,41 @@ void MDFNMOV_Count(FILE* fp)
 
 		//we need to take any resets or power ons into account
 		while((t = fgetc(fp)) >= 0) {
-  
-		fread(junkbuffer, 1, PortDataCacheLength, fp);//!= PDClen)
 
-		MovieFrameCount++;
+			fread(junkbuffer, 1, PortDataCacheLength, fp);//!= PDClen)
+
+			MovieFrameCount++;
 		}
-	 }
+	}
 	//each port increases the size of the movie
 	MovieFrameCount = MovieFrameCount / NumberOfPorts;
 }
 
 int getreadonly(void) {
 
-return(readonly);
+	return(readonly);
 }
 
 
 void setreadonly(void) {
 
-//it's a toggle
+	//it's a toggle
 
-if(readonly == 1) {
+	if(readonly == 1) {
 
-readonly = 0; // read+write
+		readonly = 0; // read+write
 
-MDFN_DispMessage((UTF8 *)_("Read+Write"));
+		MDFN_DispMessage((UTF8 *)_("Read+Write"));
 
-}
+	}
 
-else {
+	else {
 
-readonly = 1;// read onlymovie.cpp:124: error: at this point in file
+		readonly = 1;// read onlymovie.cpp:124: error: at this point in file
 
 
-MDFN_DispMessage((UTF8 *)_("Read Only"));
-}
+		MDFN_DispMessage((UTF8 *)_("Read Only"));
+	}
 
 }
 
@@ -472,31 +472,31 @@ int MovInd(void)
 
 {
 
-if(isMov == 1) 
-
-  {
-
-	if(current > 0 ) //recording
+	if(isMov == 1) 
 
 	{
 
-		return(666);	
+		if(current > 0 ) //recording
+
+		{
+
+			return(666);	
 
 		}
 
 		else { //playback
 
-		return(333);
-	
+			return(333);
+
+		}
+
+
+
+
+
 	}
 
-
-
-
-
-  }
-
-else { return(111); }//not recording or playback 
+	else { return(111); }//not recording or playback 
 
 }
 
@@ -504,56 +504,56 @@ else { return(111); }//not recording or playback
 
 int retisMov(void) {
 
-std::cout << "isMov " << isMov <<std::endl;
+	std::cout << "isMov " << isMov <<std::endl;
 
-//we want a separate set of savestates for nonrecording/nonplayback so movies don't accidentally get ruined
-if(isMov == 0) {
+	//we want a separate set of savestates for nonrecording/nonplayback so movies don't accidentally get ruined
+	if(isMov == 0) {
 
-return(42);  //this could be any number large enough to make the savestates not conflict
+		return(42);  //this could be any number large enough to make the savestates not conflict
 
-}
+	}
 
-else {
+	else {
 
-return(NULL);
+		return(NULL);
 
-}
+	}
 
 }
 
 
 void incFrameCounter(void) {
 
-FrameCounter++;
+	FrameCounter++;
 
 }
 
 uint32 retFrameCounter(void) {
 
-return(FrameCounter);
+	return(FrameCounter);
 
 }
 
 //used for conditionals in state.cpp depending on whether we are playing back or recording
 int checkcurrent(void) {
 
-return(current);
+	return(current);
 
 }
 
 
 uint32 setFrameCounter(uint32 value) {
 
-FrameCounter = value;
-//TODO TODO TODO - zero didnt know what this should do
-return 0;
-//TODO TODO TODO - zero didnt know what this should do
+	FrameCounter = value;
+	//TODO TODO TODO - zero didnt know what this should do
+	return 0;
+	//TODO TODO TODO - zero didnt know what this should do
 }
 
 //used for truncating the movie file when a state is saved during playback
 uint32 getmloc(void) {
 
-return(tempmloc);
+	return(tempmloc);
 
 }
 
@@ -562,24 +562,24 @@ return(tempmloc);
 //returns 1 if mdfn is playing back
 bool MDFNMOV_IsPlaying(void)
 {
- if(current < 0) return(1);
- else return(0);
+	if(current < 0) return(1);
+	else return(0);
 }
 
 //used in netplay and rewinding code
 //returns 1 if mdfn is recording
 bool MDFNMOV_IsRecording(void)
 {
- if(current > 0) return(1);
- else return(0);
+	if(current > 0) return(1);
+	else return(0);
 }
 
 
 //this is useful for manipulating the moviebuffer in state.cpp
 StateMem Grabtempmov(void) {
 
- StateMem ret = temporarymoviebuffer;
- return(ret);
+	StateMem ret = temporarymoviebuffer;
+	return(ret);
 
 
 }
@@ -587,7 +587,7 @@ StateMem Grabtempmov(void) {
 
 void Writetempmov(StateMem in) {
 
-temporarymoviebuffer = in;
+	temporarymoviebuffer = in;
 
 }
 
@@ -596,53 +596,53 @@ temporarymoviebuffer = in;
 
 static void StopRecording(void)
 {
-// MDFNMOV_RecordState(); //saves the ending state into the movie file with playback indicator 0x80 - we don't want this to happen
- if(MDFN_StateEvilIsRunning())  //state rewinding
- {
-  MDFN_StateEvilFlushMovieLove();
- }
-// fclose(slots[current-1]);
- MovieStatus[current - 1] = 1;
- RecentlySavedMovie = current - 1;
- current=0; // we are not recording
- MDFN_DispMessage((UTF8 *)_("Movie recording stopped."));
+	// MDFNMOV_RecordState(); //saves the ending state into the movie file with playback indicator 0x80 - we don't want this to happen
+	if(MDFN_StateEvilIsRunning())  //state rewinding
+	{
+		MDFN_StateEvilFlushMovieLove();
+	}
+	// fclose(slots[current-1]);
+	MovieStatus[current - 1] = 1;
+	RecentlySavedMovie = current - 1;
+	current=0; // we are not recording
+	MDFN_DispMessage((UTF8 *)_("Movie recording stopped."));
 
- if(RewindBuffer.data)  //get rid of rewind data
- {
-  //puts("Oops");
-  free(RewindBuffer.data);
-  RewindBuffer.data = NULL;
- }
+	if(RewindBuffer.data)  //get rid of rewind data
+	{
+		//puts("Oops");
+		free(RewindBuffer.data);
+		RewindBuffer.data = NULL;
+	}
 
-///////////
-// write our final movie file
-///////////
+	///////////
+	// write our final movie file
+	///////////
 
-//open a new file
+	//open a new file
 
-FILE* tempbuffertest3;
+	FILE* tempbuffertest3;
 
-smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
-tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
-//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
-
-
-//write the header
+	smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
+	tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
+	//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
 
 
-WriteHeader(tempbuffertest3);
+	//write the header
 
-// write the movie starting at the end of the header
 
-fseek(tempbuffertest3, 256, SEEK_SET);
+	WriteHeader(tempbuffertest3);
 
-fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest3);
+	// write the movie starting at the end of the header
 
-fclose(tempbuffertest3);
+	fseek(tempbuffertest3, 256, SEEK_SET);
 
-/////
+	fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest3);
 
-isMov = 0;
+	fclose(tempbuffertest3);
+
+	/////
+
+	isMov = 0;
 
 }
 
@@ -665,76 +665,76 @@ isMov = 0;
 
 void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 {
- FILE* fp;
+	FILE* fp;
 
-//movies start at frame zero
+	//movies start at frame zero
 
-FrameCounter = 0;
+	FrameCounter = 0;
 
- if(current < 0)	// Can't save a movie during playback.
-  return;
+	if(current < 0)	// Can't save a movie during playback.
+		return;
 
- if(current > 0)	//Stop saving if we are recording. 
- {
-  StopRecording();
-  return;   memset(&RewindBuffer, 0, sizeof(StateMem));
- RewindBuffer.initial_malloc = 16;
- }
+	if(current > 0)	//Stop saving if we are recording. 
+	{
+		StopRecording();
+		return;   memset(&RewindBuffer, 0, sizeof(StateMem));
+		RewindBuffer.initial_malloc = 16;
+	}
 
- memset(&RewindBuffer, 0, sizeof(StateMem));  // init
- RewindBuffer.initial_malloc = 16;
+	memset(&RewindBuffer, 0, sizeof(StateMem));  // init
+	RewindBuffer.initial_malloc = 16;
 
- current=CurrentMovie;
+	current=CurrentMovie;
 
- if(fname){  //if a filename was given in the arguments, use that
-  fp = fopen(fname, "wb3");
- std::cout << "1_____________" <<std::endl;
- std::cout << fname <<std::endl;
-  } 
-else
- {
- // fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3"); 
-//fp=fopen("junk.txt","wb3"); 
-std::cout << "2_____________" <<std::endl;
- }
+	if(fname){  //if a filename was given in the arguments, use that
+		fp = fopen(fname, "wb3");
+		std::cout << "1_____________" <<std::endl;
+		std::cout << fname <<std::endl;
+	} 
+	else
+	{
+		// fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3"); 
+		//fp=fopen("junk.txt","wb3"); 
+		std::cout << "2_____________" <<std::endl;
+	}
 
-// if(!fp) return;
-
-
-std::cout << "3_____________" <<std::endl;
-
-// MDFNSS_SaveFP(fp, fb, LineWidths);
-
-// fseek(fp, 0, SEEK_END);
+	// if(!fp) return;
 
 
-// fflush(fp, Z_SYNC_FLUSH); // Flush output so that previews will still work right while
-			    // the movie is being recorded.  Purely cosmetic. :)
+	std::cout << "3_____________" <<std::endl;
 
-// slots[current] = fp;
- current++;  //Recording
+	// MDFNSS_SaveFP(fp, fb, LineWidths);
 
-
-
-//start from clean sram
-
-MovClearAllSRAM();
+	// fseek(fp, 0, SEEK_END);
 
 
-///////////////////
+	// fflush(fp, Z_SYNC_FLUSH); // Flush output so that previews will still work right while
+	// the movie is being recorded.  Purely cosmetic. :)
 
-//this actually gets recorded into the movie file
-
- MDFNI_Power(); //right now, movies always start from power on
-
-//////////////////
+	// slots[current] = fp;
+	current++;  //Recording
 
 
-readonly = 0; //we are Read+Write
 
-isMov = 1;// use movie specific savestates
+	//start from clean sram
 
- MDFN_DispMessage((UTF8 *)_("Movie recording started."));
+	MovClearAllSRAM();
+
+
+	///////////////////
+
+	//this actually gets recorded into the movie file
+
+	MDFNI_Power(); //right now, movies always start from power on
+
+	//////////////////
+
+
+	readonly = 0; //we are Read+Write
+
+	isMov = 1;// use movie specific savestates
+
+	MDFN_DispMessage((UTF8 *)_("Movie recording started."));
 }
 
 
@@ -744,25 +744,25 @@ isMov = 1;// use movie specific savestates
 
 static void StopPlayback(void)
 {
- if(RewindBuffer.data)
- {
-  RewindBuffer.data = NULL;
- }
+	if(RewindBuffer.data)
+	{
+		RewindBuffer.data = NULL;
+	}
 
- fclose(slots[-1 - current]);
- current=0;
+	fclose(slots[-1 - current]);
+	current=0;
 
-isMov = 0;
+	isMov = 0;
 
- MDFN_DispMessage((UTF8 *)_("Movie playback stopped."));
+	MDFN_DispMessage((UTF8 *)_("Movie playback stopped."));
 }
 
 
 //used to stop playback and recording when a game is closed, and stop playback during netplay
 void MDFNMOV_Stop(void)
 {
- if(current < 0) StopPlayback();
- if(current > 0) StopRecording();
+	if(current < 0) StopPlayback();
+	if(current > 0) StopRecording();
 }
 
 
@@ -791,173 +791,173 @@ MDFNI_LoadMovie(fname2);
 
 void MDFNI_LoadMovie(char *fname)
 {
-//std::cout << fname <<std::endl;
+	//std::cout << fname <<std::endl;
 
- FILE* fp;
- //puts("KAO");
+	FILE* fp;
+	//puts("KAO");
 
- if(current > 0)        // Can't interrupt recording.
-  return;
+	if(current > 0)        // Can't interrupt recording.
+		return;
 
- if(MDFNnetplay)	// Playback is UNPOSSIBLE during netplay. 
- {
-  MDFN_DispMessage((UTF8*)_("Can't play movies during netplay."));
-  return;
- }
+	if(MDFNnetplay)	// Playback is UNPOSSIBLE during netplay. 
+	{
+		MDFN_DispMessage((UTF8*)_("Can't play movies during netplay."));
+		return;
+	}
 
- if(current < 0)        // We stop playback when loading a movie. 
- {
-  StopPlayback();
-  return;
- }
+	if(current < 0)        // We stop playback when loading a movie. 
+	{
+		StopPlayback();
+		return;
+	}
 
- if(fname) {
-//  fp = fopen(fname, "rb");
+	if(fname) {
+		//  fp = fopen(fname, "rb");
 
-fp=fopen("../s.txt","rb");
-std::cout << "fopen_____________" <<std::endl;
-std::cout << fname <<std::endl;
-}
- else
- {
- // fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"rb");
-fp=fopen("stoprecordingsmemmovie.txt","rb");
+		fp=fopen("../s.txt","rb");
+		std::cout << "fopen_____________" <<std::endl;
+		std::cout << fname <<std::endl;
+	}
+	else
+	{
+		// fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"rb");
+		fp=fopen("stoprecordingsmemmovie.txt","rb");
 
-}
+	}
 
- if(!fp) return;
+	if(!fp) return;
 
-std::cout << "fopen_____________" <<std::endl;
-std::cout << fp <<std::endl;
+	std::cout << "fopen_____________" <<std::endl;
+	std::cout << fp <<std::endl;
 
-//count the number of frames in the movie
-MovieFrameCount = 0;
+	//count the number of frames in the movie
+	MovieFrameCount = 0;
 
-MDFNMOV_Count(fp);
+	MDFNMOV_Count(fp);
 
-std::cout << "FrameCount " << MovieFrameCount <<std::endl;
+	std::cout << "FrameCount " << MovieFrameCount <<std::endl;
 
-//currently commented out because I've disabled savestates in movie files
+	//currently commented out because I've disabled savestates in movie files
 
-// if(!MDFNSS_LoadFP(fp)) 
-// {
-//  MDFN_DispMessage((UTF8 *)_("Error loading state portion of the movie."));
-//  return;
-// }
+	// if(!MDFNSS_LoadFP(fp)) 
+	// {
+	//  MDFN_DispMessage((UTF8 *)_("Error loading state portion of the movie."));
+	//  return;
+	// }
 
 
-/////////////////////
-/////////////////////
-/////////////////////
+	/////////////////////
+	/////////////////////
+	/////////////////////
 
 
-//first do the header
+	//first do the header
 
-ReadHeader(fp);
+	ReadHeader(fp);
 
 
 
 
-//load the movie file into a buffer
+	//load the movie file into a buffer
 
-///get the size
+	///get the size
 
 
 
-fseek(fp, 0, SEEK_END);
-moviedatasize=ftell (fp);
+	fseek(fp, 0, SEEK_END);
+	moviedatasize=ftell (fp);
 
-moviedatasize = moviedatasize - 256; //subtract length of header
+	moviedatasize = moviedatasize - 256; //subtract length of header
 
-fseek(fp, 256, SEEK_SET);  //seek past header
+	fseek(fp, 256, SEEK_SET);  //seek past header
 
-//copy it
+	//copy it
 
-tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
+	tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
 
-fread (tempbuffer,1,moviedatasize,fp);
-//rewind(fp);
-fseek(fp, 256, SEEK_SET);
+	fread (tempbuffer,1,moviedatasize,fp);
+	//rewind(fp);
+	fseek(fp, 256, SEEK_SET);
 
-//test temp buffer
-//this is debugging junk
+	//test temp buffer
+	//this is debugging junk
 
-//FILE* tempbuffertest;
+	//FILE* tempbuffertest;
 
-//tempbuffertest=fopen("tempbuffertest.txt","wb");
-//fwrite(tempbuffer, 1, moviedatasize, tempbuffertest);
+	//tempbuffertest=fopen("tempbuffertest.txt","wb");
+	//fwrite(tempbuffer, 1, moviedatasize, tempbuffertest);
 
-//fclose(tempbuffertest);
+	//fclose(tempbuffertest);
 
 
-////////////////////////
-////////////////////////
-////////////////////////
+	////////////////////////
+	////////////////////////
+	////////////////////////
 
-//writing it to a statemem
+	//writing it to a statemem
 
 
 
-memset(&temporarymoviebuffer, 0, sizeof(StateMem));
-temporarymoviebuffer.initial_malloc = moviedatasize;
+	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
+	temporarymoviebuffer.initial_malloc = moviedatasize;
 
-//smem_write(&temporarymoviebuffer, sm.data, sm.len);
-smem_write(&temporarymoviebuffer, tempbuffer, moviedatasize);
+	//smem_write(&temporarymoviebuffer, sm.data, sm.len);
+	smem_write(&temporarymoviebuffer, tempbuffer, moviedatasize);
 
 
-//gzwrite(slots[current - 1], sm->data, sm->len);
+	//gzwrite(slots[current - 1], sm->data, sm->len);
 
 
 
-//test temp buffer 2 
-// more debugging junk
+	//test temp buffer 2 
+	// more debugging junk
 
-//FILE* tempbuffertest2;
+	//FILE* tempbuffertest2;
 
-//tempbuffertest2=fopen("smembuffertest.txt","wb");
-//fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest2);
-//std::cout << "temporarymbuflen" << temporarymoviebuffer.len <<std::endl;
+	//tempbuffertest2=fopen("smembuffertest.txt","wb");
+	//fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest2);
+	//std::cout << "temporarymbuflen" << temporarymoviebuffer.len <<std::endl;
 
-//fclose(tempbuffertest2);
+	//fclose(tempbuffertest2);
 
 
-//fwrite(
+	//fwrite(
 
-smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
+	smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
 
 
-/////////////////////////
+	/////////////////////////
 
-//movies start at frame zero
+	//movies start at frame zero
 
-FrameCounter = 0;
+	FrameCounter = 0;
 
-SetNumberOfPorts(); //so we can load a state and continue playback correctly
+	SetNumberOfPorts(); //so we can load a state and continue playback correctly
 
 
 
- current = CurrentMovie;
- slots[current] = fp;
+	current = CurrentMovie;
+	slots[current] = fp;
 
- current = -1 - current;
- MovieStatus[CurrentMovie] = 1;
+	current = -1 - current;
+	MovieStatus[CurrentMovie] = 1;
 
-//start from clean sram
+	//start from clean sram
 
-MovClearAllSRAM();
+	MovClearAllSRAM();
 
 
-/////movies always play back from poweron
+	/////movies always play back from poweron
 
- MDFNI_Power();
+	MDFNI_Power();
 
-///////
+	///////
 
-isMov = 1;  //use movie specfic savestates
+	isMov = 1;  //use movie specfic savestates
 
- //MDFN_DispMessage((UTF8*)_("Movie playback started. Length: %d Frames /n"), MovieFrameCount);
+	//MDFN_DispMessage((UTF8*)_("Movie playback started. Length: %d Frames /n"), MovieFrameCount);
 
-MDFN_DispMessage((UTF8*)_("FR: %d MD5: RR: %d ATH: "), MovieFrameCount, RerecordCount);
+	MDFN_DispMessage((UTF8*)_("FR: %d MD5: RR: %d ATH: "), MovieFrameCount, RerecordCount);
 }
 
 
@@ -987,95 +987,95 @@ int tempcount = 0;
 
 void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 {
- FILE* fp;
+	FILE* fp;
 
- int t;
+	int t;
 
- if(!current) return;	/* Not playback nor recording. */
- if(current < 0)	/* Playback */
- {
+	if(!current) return;	/* Not playback nor recording. */
+	if(current < 0)	/* Playback */
+	{
 
-  fp = slots[-1 - current];
+		fp = slots[-1 - current];
 
-//std::cout << "ftell before getc" << ftell(fp) <<std::endl;
+		//std::cout << "ftell before getc" << ftell(fp) <<std::endl;
 
-//while((t = smem_getc(temporarymoviebuffer)) >=0 &&t)
-  while((t = fgetc(fp)) >= 0 && t)  //slots[currrent] is a file pointer,   //t must always be greater or equal to zero, and t must be ?
+		//while((t = smem_getc(temporarymoviebuffer)) >=0 &&t)
+		while((t = fgetc(fp)) >= 0 && t)  //slots[currrent] is a file pointer,   //t must always be greater or equal to zero, and t must be ?
 
-  {
-//std::cout << "ftell after getc" << ftell(fp) <<std::endl;
-//std::cout << "t = " << t <<std::endl;
-   if(t == MDFNNPCMD_LOADSTATE) //takes care of embedded savestates in movies, commented out
-   {
-  //  uint32 len;
-  //  StateMem sm;
-  //  len = fgetc(fp);
-  //  len |= fgetc(fp) << 8;
-  //  len |= fgetc(fp) << 16;
-  //  len |= fgetc(fp) << 24;
-  //  if(len >= 5 * 1024 * 1024) // A sanity limit of 5MiB
-  //  {
-  //   StopPlayback();
-  //   return;
-  //  }
-  //  memset(&sm, 0, sizeof(StateMem));
-  //  sm.len = len;
-   // sm.data = (uint8 *)malloc(len);
-  //  if(fread(fp, sm.data, len) != len)
-  //  {
-  //   StopPlayback();
-  //   return;
-  //  }
-  //  if(!MDFNSS_LoadSM(&sm, 0, 0))
-  //  {
-  //   StopPlayback();
-  //   return;
-  //  }
-   }
-   else
-    MDFN_DoSimpleCommand(t);
-  }
-  if(t < 0)
-  {
-   StopPlayback();
-   return; 
-  }
-//std::cout << "ftell after while " << ftell(fp) <<std::endl;
-//std::cout << "PDClen " << PDClen <<std::endl;
-//we play movies back from the disk
+		{
+			//std::cout << "ftell after getc" << ftell(fp) <<std::endl;
+			//std::cout << "t = " << t <<std::endl;
+			if(t == MDFNNPCMD_LOADSTATE) //takes care of embedded savestates in movies, commented out
+			{
+				//  uint32 len;
+				//  StateMem sm;
+				//  len = fgetc(fp);
+				//  len |= fgetc(fp) << 8;
+				//  len |= fgetc(fp) << 16;
+				//  len |= fgetc(fp) << 24;
+				//  if(len >= 5 * 1024 * 1024) // A sanity limit of 5MiB
+				//  {
+				//   StopPlayback();
+				//   return;
+				//  }
+				//  memset(&sm, 0, sizeof(StateMem));
+				//  sm.len = len;
+				// sm.data = (uint8 *)malloc(len);
+				//  if(fread(fp, sm.data, len) != len)
+				//  {
+				//   StopPlayback();
+				//   return;
+				//  }
+				//  if(!MDFNSS_LoadSM(&sm, 0, 0))
+				//  {
+				//   StopPlayback();
+				//   return;
+				//  }
+			}
+			else
+				MDFN_DoSimpleCommand(t);
+		}
+		if(t < 0)
+		{
+			StopPlayback();
+			return; 
+		}
+		//std::cout << "ftell after while " << ftell(fp) <<std::endl;
+		//std::cout << "PDClen " << PDClen <<std::endl;
+		//we play movies back from the disk
 
-if(fread(PDCdata, 1, PDClen, fp) != PDClen)
-//smem_seek(&temporarymoviebuffer, 1, SEEK_CUR);
-//if(smem_read(&temporarymoviebuffer, PDCdata, PDClen) != PDClen)
+		if(fread(PDCdata, 1, PDClen, fp) != PDClen)
+			//smem_seek(&temporarymoviebuffer, 1, SEEK_CUR);
+			//if(smem_read(&temporarymoviebuffer, PDCdata, PDClen) != PDClen)
 
-  {
-   StopPlayback();
-   return;
-  }
- }
- else			/* Recording */
- {
-  if(MDFN_StateEvilIsRunning())
-  {
-   smem_putc(&RewindBuffer, 0);
-   smem_write(&RewindBuffer, PDCdata, PDClen);
-  }
-  else
-  {
-  // fp = slots[current - 1];
+		{
+			StopPlayback();
+			return;
+		}
+	}
+	else			/* Recording */
+	{
+		if(MDFN_StateEvilIsRunning())
+		{
+			smem_putc(&RewindBuffer, 0);
+			smem_write(&RewindBuffer, PDCdata, PDClen);
+		}
+		else
+		{
+			// fp = slots[current - 1];
 
-   smem_putc(&temporarymoviebuffer, 0);
-   smem_write(&temporarymoviebuffer, PDCdata, PDClen);
+			smem_putc(&temporarymoviebuffer, 0);
+			smem_write(&temporarymoviebuffer, PDCdata, PDClen);
 
- //  fputc(0, fp);
- //  fwrite(PDCdata, 1, PDClen, fp);
-  }
- }
+			//  fputc(0, fp);
+			//  fwrite(PDCdata, 1, PDClen, fp);
+		}
+	}
 
-//uncomment this line to get proper state saving during playback
-//but it causes a segfault when you try to record
+	//uncomment this line to get proper state saving during playback
+	//but it causes a segfault when you try to record
 
-//tempmloc = ftell(fp); 
+	//tempmloc = ftell(fp); 
 
 }
 
@@ -1085,160 +1085,160 @@ if(fread(PDCdata, 1, PDClen, fp) != PDClen)
 //adds non-controller data commmands like reset and poweron to a movie
 void MDFNMOV_AddCommand(int cmd)
 {
- if(current <= 0) return;	/* Return if not recording a movie */
+	if(current <= 0) return;	/* Return if not recording a movie */
 
- if(MDFN_StateEvilIsRunning())
-  smem_putc(&RewindBuffer, 0);
- else
-  //fputc(cmd, slots[current - 1]);
-  smem_putc(&temporarymoviebuffer, cmd);
+	if(MDFN_StateEvilIsRunning())
+		smem_putc(&RewindBuffer, 0);
+	else
+		//fputc(cmd, slots[current - 1]);
+		smem_putc(&temporarymoviebuffer, cmd);
 }
 
 
 //current behavior is saving the state to the movie file so that the state loads during playback
 void MDFNMOV_RecordState(void) 
 {
-/*
- FILE* fp = slots[current - 1];
- StateMem sm;
+	/*
+	FILE* fp = slots[current - 1];
+	StateMem sm;
 
- memset(&sm, 0, sizeof(StateMem));  // zero Statemem sm
- MDFNSS_SaveSM(&sm, 0, 0);
+	memset(&sm, 0, sizeof(StateMem));  // zero Statemem sm
+	MDFNSS_SaveSM(&sm, 0, 0);
 
- if(MDFN_StateEvilIsRunning())
- {
-  smem_putc(&RewindBuffer, MDFNNPCMD_LOADSTATE);
-  smem_putc(&RewindBuffer, sm.len & 0xFF);
-  smem_putc(&RewindBuffer, (sm.len >> 8) & 0xFF);
-  smem_putc(&RewindBuffer, (sm.len >> 16) & 0xFF);
-  smem_putc(&RewindBuffer, (sm.len >> 24) & 0xFF);
-  smem_write(&RewindBuffer, sm.data, sm.len);
- }
- else
- {
-  fputc(fp, MDFNNPCMD_LOADSTATE);
-  fputc(fp, sm.len & 0xFF);
-  fputc(fp, (sm.len >> 8) & 0xFF);
-  fputc(fp, (sm.len >> 16) & 0xFF);
-  fputc(fp, (sm.len >> 24) & 0xFF);
-  fwrite(slots[current - 1], sm.data, sm.len);
- }
- free(sm.data);
-*/
+	if(MDFN_StateEvilIsRunning())
+	{
+	smem_putc(&RewindBuffer, MDFNNPCMD_LOADSTATE);
+	smem_putc(&RewindBuffer, sm.len & 0xFF);
+	smem_putc(&RewindBuffer, (sm.len >> 8) & 0xFF);
+	smem_putc(&RewindBuffer, (sm.len >> 16) & 0xFF);
+	smem_putc(&RewindBuffer, (sm.len >> 24) & 0xFF);
+	smem_write(&RewindBuffer, sm.data, sm.len);
+	}
+	else
+	{
+	fputc(fp, MDFNNPCMD_LOADSTATE);
+	fputc(fp, sm.len & 0xFF);
+	fputc(fp, (sm.len >> 8) & 0xFF);
+	fputc(fp, (sm.len >> 16) & 0xFF);
+	fputc(fp, (sm.len >> 24) & 0xFF);
+	fwrite(slots[current - 1], sm.data, sm.len);
+	}
+	free(sm.data);
+	*/
 }
 
 //used during rewinding
 void MDFNMOV_ForceRecord(StateMem *sm)
 {
- printf("Farced: %d\n", sm->len);
-// fwrite(slots[current - 1], sm->data, sm->len);
+	printf("Farced: %d\n", sm->len);
+	// fwrite(slots[current - 1], sm->data, sm->len);
 }
 
 StateMem MDFNMOV_GrabRewindJoy(void)
 {
- StateMem ret = RewindBuffer;
- memset(&RewindBuffer, 0, sizeof(StateMem));
- RewindBuffer.initial_malloc = 16;
- return(ret);
+	StateMem ret = RewindBuffer;
+	memset(&RewindBuffer, 0, sizeof(StateMem));
+	RewindBuffer.initial_malloc = 16;
+	return(ret);
 }
 
 void MDFNMOV_CheckMovies(void)
 {
-        time_t last_time = 0;
+	time_t last_time = 0;
 
-        for(int ssel = 0; ssel < 10; ssel++)
-        {
-         struct stat stat_buf;
+	for(int ssel = 0; ssel < 10; ssel++)
+	{
+		struct stat stat_buf;
 
-         MovieStatus[ssel] = 0;
-         if(stat(MDFN_MakeFName(MDFNMKF_MOVIE, ssel, 0).c_str(), &stat_buf) == 0)
-         {
-          MovieStatus[ssel] = 1;
-          if(stat_buf.st_mtime > last_time)
-          {
-           RecentlySavedMovie = ssel;
-           last_time = stat_buf.st_mtime;
-          }
-         }
-        }
-        CurrentMovie = 0;
+		MovieStatus[ssel] = 0;
+		if(stat(MDFN_MakeFName(MDFNMKF_MOVIE, ssel, 0).c_str(), &stat_buf) == 0)
+		{
+			MovieStatus[ssel] = 1;
+			if(stat_buf.st_mtime > last_time)
+			{
+				RecentlySavedMovie = ssel;
+				last_time = stat_buf.st_mtime;
+			}
+		}
+	}
+	CurrentMovie = 0;
 }
 
 void MDFNI_SelectMovie(int w)
 {
- FILE* fp;
- uint32 MovieShow = 0;
- uint32 *MovieShowPB = NULL;
- uint32 MovieShowPBWidth;
- uint32 MovieShowPBHeight;
+	FILE* fp;
+	uint32 MovieShow = 0;
+	uint32 *MovieShowPB = NULL;
+	uint32 MovieShowPBWidth;
+	uint32 MovieShowPBHeight;
 
- if(w == -1) { MovieShow = 0; return; }
- MDFNI_SelectState(-1);
+	if(w == -1) { MovieShow = 0; return; }
+	MDFNI_SelectState(-1);
 
- CurrentMovie=w;
- MovieShow = MDFND_GetTime() + 2000;;
+	CurrentMovie=w;
+	MovieShow = MDFND_GetTime() + 2000;;
 
- fp = fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,NULL).c_str(), "rb");
+	fp = fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,NULL).c_str(), "rb");
 
- if(fp)
- {
-  uint8 header[32];
+	if(fp)
+	{
+		uint8 header[32];
 
-//this should be fixed at some point
-//int gzread  (gzFile file, voidp buf, unsigned int len);
-  fread(header, 1, 32, fp);
-  uint32 width = MDFN_de32lsb(header + 24);
-  uint32 height = MDFN_de32lsb(header + 28);
+		//this should be fixed at some point
+		//int gzread  (gzFile file, voidp buf, unsigned int len);
+		fread(header, 1, 32, fp);
+		uint32 width = MDFN_de32lsb(header + 24);
+		uint32 height = MDFN_de32lsb(header + 28);
 
-  if(width > 512) width = 512;
-  if(height > 512) height = 512;
- 
-  {
-   uint8 *previewbuffer = (uint8*)alloca(3 * width * height);
-   uint8 *rptr = previewbuffer;
+		if(width > 512) width = 512;
+		if(height > 512) height = 512;
 
-   fread(previewbuffer, 1, 3 * width * height, fp);
+		{
+			uint8 *previewbuffer = (uint8*)alloca(3 * width * height);
+			uint8 *rptr = previewbuffer;
 
-   if(MovieShowPB)
-   {
-    free(MovieShowPB);
-    MovieShowPB = NULL;
-   }
+			fread(previewbuffer, 1, 3 * width * height, fp);
 
-   MovieShowPB = (uint32 *)malloc(4 * width * height);
-   MovieShowPBWidth = width;
-   MovieShowPBHeight = height;
+			if(MovieShowPB)
+			{
+				free(MovieShowPB);
+				MovieShowPB = NULL;
+			}
 
-   for(unsigned int y=0; y < height; y++)
-    for(unsigned int x=0; x < width; x++)
-    {
-     MovieShowPB[x + y * width] = MK_COLORA(rptr[0],rptr[1],rptr[2], 0xFF);
-     rptr+=3;
-    }
-   fclose(fp);
-  }
- }
- else
- {
-  if(MovieShowPB)
-  {
-   free(MovieShowPB);
-   MovieShowPB = NULL;
-  }
-  MovieShowPBWidth = MDFNGameInfo->ss_preview_width;
-  MovieShowPBHeight = MDFNGameInfo->height;
- }
+			MovieShowPB = (uint32 *)malloc(4 * width * height);
+			MovieShowPBWidth = width;
+			MovieShowPBHeight = height;
 
- StateStatusStruct *status = (StateStatusStruct*)calloc(1, sizeof(StateStatusStruct));
+			for(unsigned int y=0; y < height; y++)
+				for(unsigned int x=0; x < width; x++)
+				{
+					MovieShowPB[x + y * width] = MK_COLORA(rptr[0],rptr[1],rptr[2], 0xFF);
+					rptr+=3;
+				}
+				fclose(fp);
+		}
+	}
+	else
+	{
+		if(MovieShowPB)
+		{
+			free(MovieShowPB);
+			MovieShowPB = NULL;
+		}
+		MovieShowPBWidth = MDFNGameInfo->ss_preview_width;
+		MovieShowPBHeight = MDFNGameInfo->height;
+	}
 
- memcpy(status->status, MovieStatus, 10 * sizeof(int));
- status->current = CurrentMovie;
- status->current_movie = current;
- status->recently_saved = RecentlySavedMovie;
- status->gfx = MovieShowPB;
- status->w = MovieShowPBWidth;
- status->h = MovieShowPBHeight;
- status->pitch = MovieShowPBWidth;
+	StateStatusStruct *status = (StateStatusStruct*)calloc(1, sizeof(StateStatusStruct));
 
- MDFND_SetMovieStatus(status);
+	memcpy(status->status, MovieStatus, 10 * sizeof(int));
+	status->current = CurrentMovie;
+	status->current_movie = current;
+	status->recently_saved = RecentlySavedMovie;
+	status->gfx = MovieShowPB;
+	status->w = MovieShowPBWidth;
+	status->h = MovieShowPBHeight;
+	status->pitch = MovieShowPBWidth;
+
+	MDFND_SetMovieStatus(status);
 }
