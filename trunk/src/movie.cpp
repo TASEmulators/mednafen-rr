@@ -233,7 +233,7 @@ fwrite(MovConsole, sizeof(char), 5, headertest);
 
 
 
-std::string author = MDFN_GetSettingS("mov.author");
+std::string author = MDFN_GetSettingS("author");
 
 std::cout << author << std::endl;
 

@@ -77,7 +77,7 @@ static MDFNSetting MednafenSettings[] =
   #endif
 
 
-  { "mov.author", gettext_noop("Author's name"), MDFNST_STRING, "" },
+  { "author", gettext_noop("Author's name"), MDFNST_STRING, "" },
 
 
   { "path_snap", gettext_noop("Path override for screen snapshots."), MDFNST_STRING, "" },
