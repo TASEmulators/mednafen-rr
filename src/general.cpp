@@ -39,8 +39,9 @@
 
 using namespace std;
 
-static string BaseDirectory;
 static string FileBase;
+static string BaseDirectory;
+
 static string FileExt;	/* Includes the . character, as in ".nes" */
 static string FileBaseDirectory;
 
@@ -356,34 +357,10 @@ void MDFN_trim(char *string)
  MDFN_ltrim(string);
 }
 
-void GetMD5AndFilename(FILE* fp) {
+void GetMovFileBase(FILE* fp) {
 
-	//FIXME
-
-//snprintf(MovMD5Sum, 16, "%s"PSS"%s.%d.mcm", eff_dir.c_str(), FileBase.c_str(), id1);
-//MD5
-//snprintf(MovMD5Sum, 33, "%s"PSS"%s.%d.mcm", md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str());
-
-std::cout << MovMD5Sum << std::endl;
-
-//Filename
-//snprintf(MovRomFilename, 64, "%s", FileBase.c_str());
-
-//snprintf(tmp_path, 4096, "%s"PSS"%s%s.ips",FileBaseDirectory.c_str(),FileBase.c_str(),FileExt.c_str());
-
-std::cout << MovRomFilename << std::endl;
-
-//"PSS"%s.%d.mcm
-
-
-fwrite(MovMD5Sum, sizeof(char), 32, fp);
-
-//fwrite(array, sizeof(char), 10, headertest);
+snprintf(MovRomFilename, 64, "%s%s", FileBase.c_str(), FileExt.c_str());//.c_str());
 
 fwrite(MovRomFilename, sizeof(char), 64, fp);
-
-
-
-
 
 }

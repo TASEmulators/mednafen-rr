@@ -181,12 +181,6 @@ void WriteHeader(FILE* headertest) {
 
 
 	//file indicator
-
-
-
-	//this is the only way i could figure out how to do this without causing a segfault
-	//the same reason why all the code sucks
-
 	//MDFNMOVI
 
 	fputc(77, headertest);
@@ -203,29 +197,44 @@ void WriteHeader(FILE* headertest) {
 
 	write32le(MEDNAFEN_VERSION_NUMERIC, headertest);
 
-
-
 	//write movie format version
 
 	uint32 MovieVersion = 1;
 
 	write32le(MovieVersion, headertest);
 
-
-
 	//write MD5, Filename of the rom
-	GetMD5AndFilename(headertest);  //up to 64 chars of filename
+	//GetMD5AndFilename(headertest);  //up to 64 chars of filename
 
 
+
+//snprintf(MovMD5Sum, 16, "%s"PSS"%s.%d.mcm", eff_dir.c_str(), FileBase.c_str(), id1);
+//MD5
+//snprintf(MovMD5Sum, 33, "%s"PSS"%s.%d.mcm", md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str());
+
+snprintf(MovMD5Sum, 16, "%s", MDFNGameInfo->MD5);
+
+//Filename
+
+GetMovFileBase(headertest);
+
+//snprintf(MovRomFilename, 64, "%s", GetMovFileBase());
+
+//snprintf(tmp_path, 4096, "%s"PSS"%s%s.ips",FileBaseDirectory.c_str(),FileBase.c_str(),FileExt.c_str());
+
+//"PSS"%s.%d.mcm
+
+
+fwrite(MovMD5Sum, sizeof(char), 32, headertest);
+
+//fwrite(array, sizeof(char), 10, headertest);
+
+//fwrite(MovRomFilename, sizeof(char), 64, headertest);
 
 
 
 	//Rerecords
 	write32le(RerecordCount, headertest);
-
-
-
-
 
 
 	//console
@@ -243,16 +252,13 @@ void WriteHeader(FILE* headertest) {
 
 	std::string author = MDFN_GetSettingS("author");
 
-	std::cout << author << std::endl;
+	char writeauthor[32];
 
-	int i;
+	snprintf(writeauthor, 32, "%s", author.c_str());
 
-	for (i = 0; i < 32; i++) {
+	//strlen so that we don't write a bunch of junk to the file
 
-		//fputc(author[i], headertest);
-
-	}
-
+	fwrite(writeauthor, sizeof(char), strlen(writeauthor), headertest);
 
 	//some padding
 
@@ -271,14 +277,6 @@ void WriteHeader(FILE* headertest) {
 	//fclose(headertest);
 
 }
-
-
-
-
-
-
-
-
 
 
 

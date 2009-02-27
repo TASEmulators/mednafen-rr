@@ -13,7 +13,7 @@ void MDFN_ltrim(char *string);
 void MDFN_rtrim(char *string);
 void MDFN_trim(char *string);
 
-void GetMD5AndFilename(FILE* fp);
+void GetMovFileBase(FILE* fp);
 
 typedef enum
 {
