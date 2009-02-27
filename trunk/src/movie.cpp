@@ -85,6 +85,16 @@ char * tempbuffer;
 uint8  md5_of_rom_used[16];
 
 
+//used for starting recording when a state is loaded in read+write playback
+void SetCurrent(int incurrent) {
+
+current=CurrentMovie;
+current++;
+}
+
+	
+
+
 void ReadHeader(FILE* headertest) {
 
 	//check file indicator
@@ -639,23 +649,6 @@ static void StopRecording(void)
 	isMov = 0;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 {
