@@ -78,6 +78,9 @@ static MDFNSetting MednafenSettings[] =
 
 
   { "author", gettext_noop("Author's name"), MDFNST_STRING, "" },
+  { "mov", gettext_noop("Path to the movie to be played/recorded to"), MDFNST_STRING, "mov PATH NOT SET" },
+  //{ "recordmov", gettext_noop("Path to the movie to be recorded to"), MDFNST_STRING, "recordmov PATH NOT SET" },
+
 
 
   { "path_snap", gettext_noop("Path override for screen snapshots."), MDFNST_STRING, "" },

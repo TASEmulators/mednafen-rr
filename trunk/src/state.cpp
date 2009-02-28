@@ -864,13 +864,11 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 
 			AddRerecordCount();  //every loaded state is +1 rerecord
 
-			//std::cout << "RerecordCount" << AddRerecordCount() << std::endl;
-
 			////////////////////////////
 
 			//when a state is loaded
 			//load the associated movie file
-			//and overwrite the temporarymoviebuffer
+			//and overwrite the temporarymoviebuffer(we record to this)
 
 
 			StateMem temp = Grabtempmov();
@@ -881,8 +879,7 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 
 			char * tempbuffer;
 
-			//get back to the beginning of the buffer
-
+			//get back to the beginning of the temporary movie buffer
 
 			smem_seek(&temp, 0, SEEK_SET);
 
@@ -891,15 +888,14 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 			///////////////////
 			///////////////
 			/////////////////////
-			//if we are read+write and playing back, we need to get the associated movie and overwrite the main one
-			//and we need to switch to recording mode without powering on
+			//if we are read+write and playing back, we need to get the associated movie and overwrite the main one (the main one is our temporary buffer)
+			//and we need to switch to recording mode without powering on - start writing new joypad data to the temporary buffer
 
 			if(getreadonly() == 0 && MovInd() == 333) { //if we are in read+write mode and playing back
 
 				//open the associated movie file
 
 				statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"rb");
-				//tempbuffertest3=fopen(,"wb3");
 
 				// get the size of it
 
@@ -907,35 +903,26 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 				moviedatasize=ftell (statemovie);
 				rewind(statemovie);
 
-				//copy it to the temporary buffer
+				//copy it to a temporary temporary buffer (not the main one yet)
 
 				tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
 
 				fread (tempbuffer,1,moviedatasize,statemovie);
 				rewind(statemovie);
 
-
-				//memset(&Grabtempmov(), 0, sizeof(StateMem));
-				//Grabtempmov().initial_malloc = moviedatasize;
-
-				//smem needs to be overwritten with the data associated with the loaded state
+				//smem (our real temporary movie buffer) needs to be overwritten with the data associated with the loaded state
 				//the smem loc should be at the end of the data associated with the loaded state
 				//the size ought to be truncated so that a movie won't get garbage written to the end
 
 				temp.len = moviedatasize;
 
-
-				//smem_write(&temporarymoviebuffer, sm.data, sm.len);
 				smem_write(&temp, tempbuffer, moviedatasize);
-				//smem_seek(&temporarymoviebuffer, 0, SEEK_END);
 
 				smem_seek(&temp, moviedatasize, SEEK_SET);
 
-				//fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, statemovie);
-
 				fclose(statemovie);
 
-				Writetempmov(temp);
+				Writetempmov(temp);  //the real write - now the tempoarary buffer we are recording to is overwritten
 
 				SetCurrent(1);
 

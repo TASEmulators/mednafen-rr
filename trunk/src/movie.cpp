@@ -616,10 +616,25 @@ static void StopRecording(void)
 
 	//open a new file
 
-	FILE* tempbuffertest3;
+FILE* tempbuffertest3;
+
+	//make sure the setting isn't the default
+	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0) {
+
+		//if there's a setting, play from the designated movie
+		if(tempbuffertest3=fopen(MDFN_GetSettingS("mov").c_str(),"wb")) {
+		}
+	}
+	else
+	{
+		//we do a default movie name
+		char realmovie[10] = "realmovie";
+		tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 666,0).c_str(),"wb");
+	}
+
 
 	smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
-	tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
+//	tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
 	//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
 
 
@@ -771,11 +786,6 @@ MDFNI_LoadMovie(fname2);
 */
 
 
-
-
-
-
-
 void MDFNI_LoadMovie(char *fname)
 {
 	//std::cout << fname <<std::endl;
@@ -802,18 +812,18 @@ void MDFNI_LoadMovie(char *fname)
 		return;
 	}
 
-	if(fname) {
-		//  fp = fopen(fname, "rb");
+	//make sure the setting isn't the default
+	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0) {
 
-		fp=fopen("../s.txt","rb");
-		std::cout << "fopen_____________" <<std::endl;
-		std::cout << fname <<std::endl;
+		//if there's a setting, play from the designated movie
+		if(fp=fopen(MDFN_GetSettingS("mov").c_str(),"rb")) {
+		}
 	}
 	else
 	{
-		// fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"rb");
-		fp=fopen("stoprecordingsmemmovie.txt","rb");
-
+		//do a default movie filename
+		fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 666, 0).c_str(),"rb");
+		//fp=fopen("stoprecordingsmemmovie.txt","rb");
 	}
 
 	if(!fp) return;
