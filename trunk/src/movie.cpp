@@ -75,6 +75,9 @@ static int RecentlySavedMovie = -1;
 static int MovieStatus[10];
 static StateMem RewindBuffer;
 
+char movieauthor[33];
+char MovieMD5Sum[33];
+
 
 static uint32 moviedatasize = 0;
 
@@ -133,9 +136,11 @@ void ReadHeader(FILE* headertest) {
 
 	fread(md5_of_rom_used, 1, 16, headertest);
 
+	snprintf(MovieMD5Sum, 16, "%d", md5_of_rom_used);
+
 	//std::cout << "MD5 " << md5_of_rom_used[3] <<std::endl;
 
-
+	//fread(MovieMD5Sum, sizeof(char), 32, headertest);
 
 	//md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str()
 
@@ -156,6 +161,10 @@ void ReadHeader(FILE* headertest) {
 	//read console - only useful for counting frames
 
 	//read author's name
+
+	fseek(headertest, 121, SEEK_SET);
+
+	fread(movieauthor, sizeof(char), 32, headertest);
 
 	//finished
 
@@ -965,20 +974,8 @@ void MDFNI_LoadMovie(char *fname)
 
 	//MDFN_DispMessage((UTF8*)_("Movie playback started. Length: %d Frames /n"), MovieFrameCount);
 
-	MDFN_DispMessage((UTF8*)_("FR: %d MD5: RR: %d ATH: "), MovieFrameCount, RerecordCount);
+	MDFN_DispMessage((UTF8*)_("Read-Only Playback - Frames: %d Re-records: %d Author: %s MD5: %s"), MovieFrameCount, RerecordCount, movieauthor, MovieMD5Sum);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //takes care of either playing back the controller movie data, or recording it
