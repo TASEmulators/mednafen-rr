@@ -706,6 +706,13 @@ void DoRunNormal(void)
 
 }
 
+
+//for pausing when you start the emulator with -pause
+void DoPause(void)
+{
+ InFrameAdvance = 1;
+}
+
 void DoFrameAdvance(void)
 {
  InFrameAdvance = 1;

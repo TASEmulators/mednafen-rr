@@ -842,15 +842,10 @@ void MDFNI_LoadMovie(char *fname)
 
 	if(!fp) return;
 
-	std::cout << "fopen_____________" <<std::endl;
-	std::cout << fp <<std::endl;
-
 	//count the number of frames in the movie
 	MovieFrameCount = 0;
 
 	MDFNMOV_Count(fp);
-
-	std::cout << "FrameCount " << MovieFrameCount <<std::endl;
 
 	//currently commented out because I've disabled savestates in movie files
 
