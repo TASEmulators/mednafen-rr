@@ -561,21 +561,16 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 
 		//write the current place in the playback to the header for loading a savestate during playing later
 
-		std::cout << " writing header1-----------------------" <<std::endl;
 		//if we are recording we need to use the statemem
 		if(MovInd() == 666) {
-			std::cout << "Recording" <<std::endl;
 			MDFN_en32lsb(header + 8, smem_tell(&Grabtempmov()));
 		}
 
 		//if we are playing back we need to use the fp
 		if(MovInd() == 333) {
-			std::cout << "Playback" <<std::endl;
 			FILE* gs = getSlots();
 			MDFN_en32lsb(header + 8, ftell(gs));
 		}
-		//std::cout << "header ftell write " << ftell (gs) <<std::endl;
-		std::cout << "-----------------------" <<std::endl;
 		//write the framecount to savestate header
 		//this is so that the frame counter will decrement when a earlier state is loaded
 
@@ -617,8 +612,6 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 
 int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *LineWidths)
 {
-	std::cout << "SS_Save" <<std::endl;
-
 	StateMem st;
 
 	memset(&st, 0, sizeof(StateMem));
@@ -667,20 +660,10 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	uint32 templength;
 
 
-
-
-	std::cout << "----------" <<std::endl;
-
-	std::cout << "Saved State #" << CurrentState <<std::endl;
-
-	std::cout << "temporarymbuflen" << Grabtempmov().len <<std::endl;
-
 	FILE* statemovie;
 
 
 	//create the associated movie file
-
-	std::cout << "Creating the associated movie " << MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str()  <<std::endl;
 
 	statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"wb");
 
@@ -692,11 +675,7 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	//truncate movie
 	if(checkcurrent() < 0) {
 
-		std::cout << "Truncate" <<std::endl;
-
 		templength= getmloc();
-
-		std::cout << "templength" << templength <<std::endl;
 
 		smem_seek(&Grabtempmov(), 0, SEEK_SET);
 
@@ -708,21 +687,12 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	//do not truncate the movie
 	else {
 
-		std::cout << "Don't Truncate" <<std::endl;
-
 		smem_seek(&Grabtempmov(), 0, SEEK_SET);
-
-		std::cout << "rabtempmov().len" << Grabtempmov().len <<std::endl;
 
 		fwrite(Grabtempmov().data, 1, Grabtempmov().len, statemovie);
 
 
 	}
-
-
-	std::cout << "temporarymbuflen ^ should be same" << Grabtempmov().len <<std::endl;
-
-	std::cout << "----------" <<std::endl;
 
 	fclose(statemovie);
 
