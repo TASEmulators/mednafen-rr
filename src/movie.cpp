@@ -665,6 +665,11 @@ FILE* tempbuffertest3;
 
 void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 {
+
+	if(readonly == 1) {
+		MDFN_DispMessage((UTF8 *)_("Can't record. Toggle read only first"));
+		return;
+	}
 	FILE* fp;
 
 	//movies start at frame zero
