@@ -559,11 +559,18 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 		memset(header+16,0,16);
 
 
-		//write the current place in the playback to the header for loading a savestate during playing later
+		//if we are playing back, we need to write the current file position to the header for loading a savestate during playing later
+		//otherwise you can't load a state and have the movie continue playing back properly
+		//
 
 		//if we are recording we need to use the statemem
 		if(MovInd() == 666) {
-			MDFN_en32lsb(header + 8, smem_tell(&Grabtempmov()));
+			//movies play back from disk normally 
+			//the header needs to be taken into account
+			uint32 smemthing = 0;
+			smemthing = smem_tell(&Grabtempmov());
+			smemthing = smemthing + 256;
+			MDFN_en32lsb(header + 8, smemthing);
 		}
 
 		//if we are playing back we need to use the fp
@@ -696,18 +703,9 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 
 	fclose(statemovie);
 
-	//go back to the beginning
+	//go back to the end of the movie so that we continue recording to the end
 
 	smem_seek(&Grabtempmov(), 0, SEEK_END);
-
-
-
-
-
-
-
-
-
 
 	/////////////////
 	///////////////
