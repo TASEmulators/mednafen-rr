@@ -576,11 +576,11 @@ static COKE CKeys[_CK_COUNT]	=
 	{ MK_CK_CTRL_SHIFT(SCROLLOCK), "dummy", ~0, 1, gettext_noop("I don't do anything except prevent all your keys from being off by one :D ") },
 	{ MK_CK(i), "save_current_state", ~0, 1, gettext_noop("Save Current State") },
 	{ MK_CK(p), "load_current_state", ~0, 1, gettext_noop("Load Current State") },
-	{ MK_CK_SHIFT(b), "read_only", ~0, 1, gettext_noop("Read Only") },
+	{ MK_CK_SHIFT(t), "read_only", ~0, 1, gettext_noop("Read Only") },
 
 	{ MK_CK_SHIFT(n), "load_state", ~0, 0, gettext_noop("Load state") },
-	{ MK_CK_SHIFT(k), "save_movie", ~0, 1, gettext_noop("Save movie") },
-	{ MK_CK_SHIFT(l), "load_movie", ~0, 0, gettext_noop("Load movie") },
+	{ MK_CK_SHIFT(r), "save_movie", ~0, 1, gettext_noop("Save movie") },//record movie
+	{ MK_CK_SHIFT(p), "load_movie", ~0, 0, gettext_noop("Load movie") },//play movie
 	{ MK_CK_ALT(s), "toggle_state_rewind", ~0, 1, gettext_noop("Toggle state rewind functionality") },
 
 	    { MK_CK(F10), "0", ~0, 1, gettext_noop("Load state 0")},
@@ -639,7 +639,7 @@ static COKE CKeys[_CK_COUNT]	=
 	{ MK_CK_SHIFT(SCROLLOCK), "toggle_cidisable", ~0, 1, gettext_noop("Grab input and disable commands") },
 	{ MK_CK_ALT_SHIFT(1), "input_config1", ~0, 0, gettext_noop("Configure buttons on virtual port 1") },
 	{ MK_CK_ALT_SHIFT(2), "input_config2", ~0, 0, gettext_noop("Configure buttons on virtual port 2")  },
-        { MK_CK_SHIFT(i), "input_configc", ~0, 0, gettext_noop("Configure command key") },
+        { MK_CK_ALT_SHIFT(h), "input_configc", ~0, 0, gettext_noop("Configure command key") },
         { MK_CK_ALT_SHIFT(3), "input_config3", ~0, 0, gettext_noop("Configure buttons on virtual port 3")  },
         { MK_CK_ALT_SHIFT(4), "input_config4", ~0, 0, gettext_noop("Configure buttons on virtual port 4")  },
 	{ MK_CK_ALT_SHIFT(5), "input_config5", ~0, 0, gettext_noop("Configure buttons on virtual port 5")  },
