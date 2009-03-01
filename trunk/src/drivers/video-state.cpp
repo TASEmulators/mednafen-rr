@@ -143,7 +143,7 @@ void DrawSaveStates(SDL_Surface *screen, double exs, double eys, int rs, int gs,
   psp++;
 
   if(tmps->gfx)
-   for(int y = 0; y < tmps->h; y++)
+   for(unsigned int y = 0; y < tmps->h; y++)
    {
     memcpy(psp, tmps->gfx + y * tmps->pitch, tmps->w * sizeof(uint32));
     psp += PreviewSurface->pitch >> 2;

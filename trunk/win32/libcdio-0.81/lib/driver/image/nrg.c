@@ -217,7 +217,7 @@ parse_nrg (_img_private_t *p_env, const char *psz_nrg_name,
 		      size - footer_start, 1);
   }
   {
-    int pos = 0;
+    unsigned int pos = 0;
 
     while (pos < size - footer_start) {
       _chunk_t *chunk = (void *) (footer_buf + pos);
@@ -530,7 +530,7 @@ parse_nrg (_img_private_t *p_env, const char *psz_nrg_name,
 	cdio_debug ("SAO type image (ETNF) detected");
 	
 	{
-	  int idx;
+	  unsigned int idx;
 	  for (idx = 0; idx < entries; idx++) {
 	    uint32_t _len = UINT32_FROM_BE (_entries[idx].length);
 	    uint32_t _start = UINT32_FROM_BE (_entries[idx].start_lsn);
@@ -624,7 +624,7 @@ parse_nrg (_img_private_t *p_env, const char *psz_nrg_name,
 	cdio_debug ("SAO type image (ETN2) detected");
 
 	{
-	  int idx;
+	  unsigned int idx;
 	  for (idx = 0; idx < entries; idx++) {
 	    uint32_t _len = uint64_from_be (_entries[idx].length);
 	    uint32_t _start = uint32_from_be (_entries[idx].start_lsn);
@@ -1002,7 +1002,7 @@ _read_mode1_sectors_nrg (void *p_user_data, void *data, lsn_t lsn,
 			 bool b_form2, unsigned nblocks)
 {
   _img_private_t *p_env = p_user_data;
-  int i;
+  unsigned int i;
   int retval;
   unsigned int blocksize = b_form2 ? M2RAW_SECTOR_SIZE : CDIO_CD_FRAMESIZE;
 
@@ -1075,7 +1075,7 @@ _read_mode2_sectors_nrg (void *p_user_data, void *data, lsn_t lsn,
 			 bool b_form2, unsigned nblocks)
 {
   _img_private_t *p_env = p_user_data;
-  int i;
+  unsigned int i;
   int retval;
   unsigned int blocksize = b_form2 ? M2RAW_SECTOR_SIZE : CDIO_CD_FRAMESIZE;
 
