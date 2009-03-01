@@ -691,8 +691,8 @@ void MainRequestExit(void)
 
 static int ThrottleCheckFS(void);
 
-static bool InFrameAdvance = 0;
-static bool NeedFrameAdvance = 0;
+//static bool InFrameAdvance = 0;
+//static bool NeedFrameAdvance = 0;
 
 //used for pause/unpause
 bool GetInFrameAdvance(void)
@@ -711,6 +711,10 @@ void DoRunNormal(void)
 void DoPause(void)
 {
  InFrameAdvance = 1;
+}
+
+bool GetNeedFrameAdvance(void) {
+	return(NeedFrameAdvance);
 }
 
 void DoFrameAdvance(void)

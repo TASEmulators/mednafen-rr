@@ -130,6 +130,9 @@ void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
  else
   snprintf(virtfps, 64, "?");
 
+ if(GetInFrameAdvance() == 1 && GetNeedFrameAdvance() == 0) { //&& !NeedFrameAdvance){
+	 snprintf(virtfps, 64, "0");}
+
 // if(curtime - dt_mintime)
 //  snprintf(drawnfps, 64, "%f", (double)dt_frames_drawn * 1000 / (curtime - dt_mintime));
 // else
@@ -170,7 +173,7 @@ snprintf(tempcount2, 64, "Playback  %f", (double)vt_frames_drawn * 1000 / (curti
 
 if(MovInd() == 111) {
 
-snprintf(tempcount2, 64, "Stopped   %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
+snprintf(tempcount2, 64, "Stopped   %s", virtfps);
 }
 
 
