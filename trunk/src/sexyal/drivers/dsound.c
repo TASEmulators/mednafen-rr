@@ -86,7 +86,7 @@ SexyAL_device *SexyALI_DSound_Open(const char *id, SexyAL_format *format, SexyAL
 
  DSBUFFERDESC DSBufferDesc;
  DSCAPS dscaps;
- DSBCAPS dsbcaps;
+ //DSBCAPS dsbcaps;		//adelikat: commenting out unused variable
 
  dev = (SexyAL_device *)malloc(sizeof(SexyAL_device));
  fobby = (DSFobby *)malloc(sizeof(DSFobby));
@@ -259,7 +259,7 @@ static uint32_t RawWrite(SexyAL_device *device, void *data, uint32_t len)
    Sleep(1);
   }
 
-  if(curlen>len) curlen=len;
+  if(curlen>(int)len) curlen=len;
 
   if(DS_OK == IDirectSoundBuffer_Lock(tmp->ppbufw,tmp->ToWritePos,curlen,&LockPtr[0],&LockLen[0],&LockPtr[1],&LockLen[1],0))
   {

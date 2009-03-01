@@ -55,15 +55,15 @@ void MDFN_SelBlur(SelBlurImage *spec)
 
  for(int i = 0; i < 512; i++)
  {
-  if(abs(i - 256) <= spec->red_threshold)
+  if( (unsigned int)abs(i - 256) <= spec->red_threshold)
    r_thresh[i] = 0;
   else r_thresh[i] = 8;
 
-  if(abs(i - 256) <= spec->green_threshold)
+  if((unsigned int)abs(i - 256) <= spec->green_threshold)
    g_thresh[i] = 0;
   else g_thresh[i] = 8;
 
-  if(abs(i - 256) <= spec->blue_threshold)
+  if((unsigned int)abs(i - 256) <= spec->blue_threshold)
    b_thresh[i] = 0;
   else b_thresh[i] = 8;
  }
