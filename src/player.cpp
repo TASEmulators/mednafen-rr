@@ -40,8 +40,8 @@ static INLINE void DrawLine(uint32 *buf, uint32 color, uint32 bmatch, uint32 bre
 
  for(x = x1; x <= x2; x++)
  {
-  float ys = dy_dx * (x - 1 - x1) + dy_dx / 2;
-  float ye = dy_dx * (x + 1 - x1) - dy_dx / 2;
+  double ys = dy_dx * (x - 1 - x1) + dy_dx / 2;
+  double ye = dy_dx * (x + 1 - x1) - dy_dx / 2;
 
   if(dy_dx > 0)
   {
