@@ -513,6 +513,9 @@ int MDFNI_Initialize(char *basedir, const std::vector<MDFNSetting> &DriverSettin
 
 void MDFNI_Kill(void)
 {
+
+ MDFNI_SetSetting("mov", "mov PATH NOT SET");
+ 
  MDFN_SaveSettings();
  //MDFNNES_Kill();
 
