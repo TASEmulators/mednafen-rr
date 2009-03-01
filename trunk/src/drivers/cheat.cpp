@@ -142,7 +142,7 @@ static uint64 GetUI(uint64 def)
 }
 
 
-static int GetYN(int def)
+static bool GetYN(bool def)
 {
  char buf[32];
  CHEAT_printf("(Y/N)[%s]: ",def?"Y":"N");
@@ -345,7 +345,7 @@ static void AddCheatGGPAR(int which)
  GetString(code,256);
 
  CHEAT_printf("Add cheat \"%s\" for code \"%s\"?",name,code);
- if(GetYN(0))
+ if(GetYN(false))
  {
   if(which)
   {
@@ -417,7 +417,7 @@ static void AddCheatParam(uint32 A, uint64 V, unsigned int bytelen, bool bigendi
  V=GetUI(V);
 
  CHEAT_printf("Add cheat \"%s\" for address $%08x with value %llu?",name,(unsigned int)A,(unsigned long long)V);
- if(GetYN(0))
+ if(GetYN(false))
  {
   if(MDFNI_AddCheat(name,A,V,0, 'R', bytelen, bigendian))
    CHEAT_puts("Cheat added.");
