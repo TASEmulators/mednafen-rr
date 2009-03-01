@@ -140,7 +140,7 @@ _cdio_read_block(const CdIo_t *p_cdio, int superblock, uint32_t offset,
   unsigned int track_sec_count = cdio_get_track_sec_count(p_cdio, i_track);
   memset(buffer[bufnum], 0, CDIO_CD_FRAMESIZE);
 
-  if ( track_sec_count < superblock) {
+  if ( track_sec_count < (unsigned int)superblock) {
     cdio_debug("reading block %u skipped track %d has only %u sectors\n", 
 	       superblock, i_track, track_sec_count);
     return DRIVER_OP_ERROR;

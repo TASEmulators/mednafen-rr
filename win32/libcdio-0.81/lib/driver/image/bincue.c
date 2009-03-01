@@ -846,7 +846,7 @@ _read_mode1_sectors_bincue (void *p_user_data, void *data, lsn_t lsn,
   int retval;
   unsigned int blocksize = b_form2 ? M2RAW_SECTOR_SIZE : CDIO_CD_FRAMESIZE;
 
-  for (i = 0; i < nblocks; i++) {
+  for (i = 0; i < (int)nblocks; i++) {
     if ( (retval = _read_mode1_sector_bincue (p_env, 
 					    ((char *)data) + (blocksize * i),
 					    lsn + i, b_form2)) )
@@ -906,7 +906,7 @@ _read_mode2_sectors_bincue (void *p_user_data, void *data, lsn_t lsn,
   int retval;
   unsigned int blocksize = b_form2 ? M2RAW_SECTOR_SIZE : CDIO_CD_FRAMESIZE;
 
-  for (i = 0; i < nblocks; i++) {
+  for (i = 0; i < (int)nblocks; i++) {
     if ( (retval = _read_mode2_sector_bincue (p_env, 
 					    ((char *)data) + (blocksize * i),
 					    lsn + i, b_form2)) )

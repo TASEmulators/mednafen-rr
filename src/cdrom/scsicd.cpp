@@ -1566,7 +1566,7 @@ uint32 SCSICD_Run(uint32 system_timestamp)
        
        lb_pos = trio_snprintf(log_buffer, 1024, "Command: %02x, %s  ", cd.command_buffer[0], cmd_info_ptr->pretty_name);
 
-       for(int i = 0; i < cmd_info_ptr->cdb_length; i++)
+       for(unsigned int i = 0; i < cmd_info_ptr->cdb_length; i++)
         lb_pos += trio_snprintf(log_buffer + lb_pos, 1024 - lb_pos, "%02x ", cd.command_buffer[i]);
 
        SCSILog("SCSI", "%s", log_buffer);

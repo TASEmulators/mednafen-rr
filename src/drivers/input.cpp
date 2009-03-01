@@ -1140,7 +1140,7 @@ static void KeyboardCommands(void)
    if(CK_Check(CK_FAST_FORWARD))
    {
     inff = !inff;
-    RefreshThrottleFPS(inff ? MDFN_GetSettingUI("ffspeed") : 1);
+    RefreshThrottleFPS(inff ? (unsigned int)MDFN_GetSettingUI("ffspeed") : 1);
    }
   }
   else
@@ -1149,7 +1149,7 @@ static void KeyboardCommands(void)
    {
     if(!inff) 
     {
-     RefreshThrottleFPS(MDFN_GetSettingUI("ffspeed"));
+     RefreshThrottleFPS((unsigned int)MDFN_GetSettingUI("ffspeed"));
      inff = 1;
     }
    }
@@ -1767,9 +1767,9 @@ void MDFND_UpdateInput(void)
 
 void InitGameInput(MDFNGI *gi)
 {
- autofirefreq = MDFN_GetSettingUI("autofirefreq");
+ autofirefreq = (unsigned int)MDFN_GetSettingUI("autofirefreq");
  fftoggle = MDFN_GetSettingB("fftoggle");
- ckdelay = MDFN_GetSettingUI("ckdelay");
+ ckdelay = (unsigned int)MDFN_GetSettingUI("ckdelay");
 
  memset(CKeysPressTime, 0xff, sizeof(CKeysPressTime));
  memset(CKeysLastState, 0, sizeof(CKeysLastState));
