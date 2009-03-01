@@ -717,11 +717,22 @@ bool GetNeedFrameAdvance(void) {
 	return(NeedFrameAdvance);
 }
 
+
+
+
+void SetFPSNeedFrameAdvance(bool setting) {
+	NeedFPSFrameAdvance = setting;
+}
+
+bool GetNeedFPSFrameAdvance(void) {
+	return(NeedFPSFrameAdvance);
+}
+
 void DoFrameAdvance(void)
 {
  InFrameAdvance = 1;
  NeedFrameAdvance = 1;
-
+ NeedFPSFrameAdvance = 1;
 }
 
 static int GameLoopPaused = 0;
