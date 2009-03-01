@@ -356,8 +356,8 @@ static int Load(const char *name, MDFNFILE *fp)
 static void LoadCommonPre(void)
 {
  // FIXME:  Make these globals less global!
- pce_overclocked = MDFN_GetSettingUI("pce.ocmultiplier");
- PCE_ACEnabled = MDFN_GetSettingB("pce.arcadecard");
+ pce_overclocked = (int)MDFN_GetSettingUI("pce.ocmultiplier");
+ PCE_ACEnabled =   (int)MDFN_GetSettingB("pce.arcadecard");
 
  if(pce_overclocked > 1)
   MDFN_printf(_("CPU overclock: %dx\n"), pce_overclocked);
@@ -453,8 +453,8 @@ static int LoadCommon(void)
  MDFN_LoadGameCheats(0);
  MDFNMP_InstallReadPatches();
 
- MDFNGameInfo->DisplayRect.y = MDFN_GetSettingUI("pce.slstart");
- MDFNGameInfo->DisplayRect.h = MDFN_GetSettingUI("pce.slend") - MDFNGameInfo->DisplayRect.y + 1;
+ MDFNGameInfo->DisplayRect.y = (int)MDFN_GetSettingUI("pce.slstart");
+ MDFNGameInfo->DisplayRect.h = (int)MDFN_GetSettingUI("pce.slend") - MDFNGameInfo->DisplayRect.y + 1;
 
  return(1);
 }

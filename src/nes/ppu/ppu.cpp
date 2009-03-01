@@ -1329,13 +1329,13 @@ static void RedoRL(void)
 
  if(PAL)
  {
-  MDFNGameInfo->DisplayRect.y = MDFN_GetSettingUI("nes.slstartp");
-  MDFNGameInfo->DisplayRect.h = MDFN_GetSettingUI("nes.slendp") - MDFNGameInfo->DisplayRect.y + 1;
+  MDFNGameInfo->DisplayRect.y = (int)MDFN_GetSettingUI("nes.slstartp");
+  MDFNGameInfo->DisplayRect.h = (int)MDFN_GetSettingUI("nes.slendp") - MDFNGameInfo->DisplayRect.y + 1;
  }
  else
  {
-  MDFNGameInfo->DisplayRect.y = MDFN_GetSettingUI("nes.slstart");
-  MDFNGameInfo->DisplayRect.h = MDFN_GetSettingUI("nes.slend") - MDFNGameInfo->DisplayRect.y + 1;
+  MDFNGameInfo->DisplayRect.y = (int)MDFN_GetSettingUI("nes.slstart");
+  MDFNGameInfo->DisplayRect.h = (int)MDFN_GetSettingUI("nes.slend") - MDFNGameInfo->DisplayRect.y + 1;
  }
 
  if(MDFN_GetSettingUI("nes.clipsides"))

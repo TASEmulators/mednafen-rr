@@ -309,15 +309,15 @@ int InitVideo(MDFNGI *gi)
  std::string special_string = MDFN_GetSettingS(std::string(sn + "." + std::string("special")).c_str());
 
  _fullscreen = MDFN_GetSettingB("fs");
- _video.xres = MDFN_GetSettingUI(std::string(sn + "." + std::string("xres")).c_str());
- _video.yres = MDFN_GetSettingUI(std::string(sn + "." + std::string("yres")).c_str());
+ _video.xres = (int)MDFN_GetSettingUI(std::string(sn + "." + std::string("xres")).c_str());
+ _video.yres = (int)MDFN_GetSettingUI(std::string(sn + "." + std::string("yres")).c_str());
  _video.xscale = MDFN_GetSettingF(std::string(sn + "." + std::string("xscale")).c_str());
  _video.yscale = MDFN_GetSettingF(std::string(sn + "." + std::string("yscale")).c_str());
  _video.xscalefs = MDFN_GetSettingF(std::string(sn + "." + std::string("xscalefs")).c_str());
  _video.yscalefs = MDFN_GetSettingF(std::string(sn + "." + std::string("yscalefs")).c_str());
  _video.videoip = MDFN_GetSettingB(std::string(sn + "." + std::string("videoip")).c_str());
  _video.stretch = MDFN_GetSettingB(std::string(sn + "." + std::string("stretch")).c_str());
- _video.scanlines = MDFN_GetSettingUI(std::string(sn + "." + std::string("scanlines")).c_str());
+ _video.scanlines = (int)MDFN_GetSettingUI(std::string(sn + "." + std::string("scanlines")).c_str());
 
  _video.special = GetSpecialScalerID(special_string);
 

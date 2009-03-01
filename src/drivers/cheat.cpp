@@ -294,10 +294,10 @@ static void ModifyCheat(int num)
   name=0;	// Don't change name when MDFNI_SetCheat() is called.
 
  CHEAT_printf("Address [$%08x]: ",(unsigned int)A);
- A=GetUI(A);
+ A=(uint32)GetUI(A);
 
  CHEAT_printf("Byte length [%d]: ", bytelen);
- bytelen = GetUI(bytelen);
+ bytelen = (unsigned int)GetUI(bytelen);
 
  if(bytelen > 1)
  {
@@ -400,10 +400,10 @@ static void AddCheatParam(uint32 A, uint64 V, unsigned int bytelen, bool bigendi
  GetString(name,256);
 
  CHEAT_printf("Address [$%08x]: ", A);
- A=GetUI(A);
+ A=(uint32)GetUI(A);
 
  CHEAT_printf("Byte length [%d]: ", bytelen);
- bytelen = GetUI(bytelen);
+ bytelen = (unsigned int)GetUI(bytelen);
 
  if(bytelen > 1)
  {
@@ -573,17 +573,17 @@ static void DoSearch(void)
  if(method<=1)
  {
   CHEAT_printf("V1 [%03d]: ",v1);
-  v1=GetUI(v1);
+  v1=(int)GetUI(v1);	//adelikat: adding explicit casts
  }
 
  if(method<=2)
  {
   CHEAT_printf("V2 [%03d]: ",v2);
-  v2=GetUI(v2);
+  v2=(int)GetUI(v2);
  }
 
  CHEAT_printf("Byte length(1-8)[%1d]: ", searchbytelen);
- searchbytelen = GetUI(searchbytelen);
+ searchbytelen = (unsigned int)GetUI(searchbytelen);
 
  if(searchbytelen > 1)
  {

@@ -147,7 +147,7 @@ int LoadNSF(MDFNFILE *fp)
  NSFInfo->InitAddr = NSFHeader.InitAddressLow | (NSFHeader.InitAddressHigh << 8);
  NSFInfo->PlayAddr = NSFHeader.PlayAddressLow | (NSFHeader.PlayAddressHigh << 8);
 
- NSFInfo->NSFSize = MDFN_fgetsize(fp)-0x80;
+ NSFInfo->NSFSize = (int)MDFN_fgetsize(fp)-0x80;
 
  NSFInfo->NSFMaxBank = ((NSFInfo->NSFSize+(NSFInfo->LoadAddr&0xfff)+4095)/4096);
  NSFInfo->NSFMaxBank = uppow2(NSFInfo->NSFMaxBank);

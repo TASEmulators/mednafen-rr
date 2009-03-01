@@ -1067,7 +1067,7 @@ void MDFNI_TellState(int w)
 void MDFNI_DisplayState(int w)
 {
 	gzFile fp;
-	uint32 StateShow;
+	//uint32 StateShow;			//adelikat: commenting out unused variable, since code it was used in is commented
 	uint32 *StateShowPB = NULL;
 	uint32 StateShowPBWidth;
 	uint32 StateShowPBHeight;
@@ -1313,7 +1313,7 @@ void MDFN_StateEvilBegin(void)
 	if(!EvilEnabled)
 		return;
 
-	SRW_NUM = MDFN_GetSettingUI("srwframes");
+	SRW_NUM = (int)MDFN_GetSettingUI("srwframes");
 
 	SRWCompressor = SRW_COMPRESSOR_MINILZO;
 	srwcompstring = MDFN_GetSettingS("srwcompressor");

@@ -788,7 +788,7 @@ int GameLoop(void *arg)
 	  espec.SoundBuf = &sound;
 	  espec.SoundBufSize = &ssize;
 	  espec.skip = fskip;
-	  espec.soundmultiplier = CurGameSpeed;
+	  espec.soundmultiplier = (float)CurGameSpeed;
 	  espec.NeedRewind = DNeedRewind;
           MDFNI_Emulate(&espec); //(uint32 *)VTBuffer[VTBackBuffer], (MDFN_Rect *)VTLineWidths[VTBackBuffer], &sound, &ssize, fskip, CurGameSpeed);
 	ZeroStateShow();//get rid of state previews
@@ -1396,7 +1396,7 @@ static int GetSafeWaitTime(void)
   if(delay < 0) delay = 0;
  }
 
- return(delay);
+ return((int)delay);
 }
 
 void MDFND_Update(uint32 *XBuf, int16 *Buffer, int Count)

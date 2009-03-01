@@ -269,7 +269,7 @@ int PSG_Init(bool WantMono)
     }
     
     psg.forcemono = WantMono;
-    psg.cdpsgvolume = MDFN_GetSettingUI("pce.cdpsgvolume");
+    psg.cdpsgvolume = (unsigned int)MDFN_GetSettingUI("pce.cdpsgvolume");
 
     if(psg.cdpsgvolume != 100)
     {
@@ -506,7 +506,7 @@ int16 *PSG_Flush(int32 *len)
 {
  int32 timestamp;
 
- if(FSettings.SndRate);
+ if(FSettings.SndRate)
  {
   PSG_Update();
   if(PCE_IsCD)

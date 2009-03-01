@@ -527,7 +527,7 @@ static int SubLoad(MDFNFILE *fp)
   if(!(memcmp(header+1,"*NINTENDO-HVC*",14)))
   {
    long t;
-   t=MDFN_fgetsize(fp);
+   t=(long)MDFN_fgetsize(fp);	//adelikat: added exlicit cast to avoid annoying warnings.
    if(t<65500)
     t=65500;
    TotalSides=t/65500;

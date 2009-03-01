@@ -75,7 +75,7 @@ int InitSound(MDFNGI *gi)
  format.channels=gi->soundchan?gi->soundchan:1;
  format.byteorder = 0;
  format.rate=gi->soundrate?gi->soundrate : MDFN_GetSettingUI("soundrate");
- buffering.ms = MDFN_GetSettingUI("soundbufsize");
+ buffering.ms = (uint32_t)(MDFN_GetSettingUI("soundbufsize"));
 
  std::string zedevice = MDFN_GetSettingS("sounddevice");
  std::string zedriver = MDFN_GetSettingS("sounddriver");

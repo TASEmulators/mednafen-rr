@@ -912,7 +912,7 @@ static void DrawBG(vdc_t *vdc, uint32 *target, int enabled)
  {
   uint32 color = MK_COLOR(0x00, 0xFE, 0x00) | amask;
 
-  for(int x = start; x < end; x++)
+  for(unsigned int x = start; x < end; x++)
    target[x] = color;
   return;
  }
@@ -949,7 +949,7 @@ static void DrawBG(vdc_t *vdc, uint32 *target, int enabled)
   }
 
   // Clear the left overscan area
-  for(int x = 0; x < start; x++)
+  for(unsigned int x = 0; x < start; x++)
    target[x] = overscan_color;
 
   // Draw the first pixels of the first tile, depending on the lower 3 bits of the xscroll/xoffset register, to
@@ -976,7 +976,7 @@ static void DrawBG(vdc_t *vdc, uint32 *target, int enabled)
 
   if((vdc->MWR & 0x3) == 0x3)
   {
-   for(int x = first_end; x < end; x+=8)
+   for(unsigned int x = first_end; x < end; x+=8)
    {
     uint16 bat = vdc->VRAM[bat_boom | bat_y];
     uint32 *lut = &vce.color_table_cache[((bat >> 8) & 0xF0)];
@@ -1001,7 +1001,7 @@ static void DrawBG(vdc_t *vdc, uint32 *target, int enabled)
    }
   }
   else
-  for(int x = first_end; x < end; x+=8) // This will draw past the right side of the buffer, but since our pitch is 1024, and max width is ~512, we're safe.  Also,
+  for(unsigned int x = first_end; x < end; x+=8) // This will draw past the right side of the buffer, but since our pitch is 1024, and max width is ~512, we're safe.  Also,
 					// any overflow that is on the visible screen are will be hidden by the overscan color code below this code.
   {
    uint16 bat = vdc->VRAM[bat_boom | bat_y];
@@ -1062,7 +1062,7 @@ static void DrawBG(vdc_t *vdc, uint32 *target, int enabled)
    vdc->BG_XOffset++;
   }
 
-  for(int x = end; x < ClockModeWidths[vce.dot_clock]; x++)
+  for(unsigned int x = end; x < ClockModeWidths[vce.dot_clock]; x++)
    target[x] = overscan_color;
  }
 }

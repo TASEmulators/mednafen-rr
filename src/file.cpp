@@ -534,7 +534,7 @@ uint64 MDFN_fread(void *ptr, size_t size, size_t nmemb, MDFNFILE *fp)
 
  if((fp->location+total)>fp->size)
  {
-  int ak=fp->size-fp->location;
+  int ak=(int)fp->size-fp->location;
   memcpy((uint8*)ptr,fp->data+fp->location,ak);
   fp->location=fp->size;
   return(ak/size);

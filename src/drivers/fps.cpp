@@ -96,7 +96,7 @@ void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
  uint32 curtime = SDL_GetTicks();
  uint32 vt_frames_drawn = 0, dt_frames_drawn = 0, bt_frames_drawn = 0;
  uint32 vt_mintime, dt_mintime, bt_mintime;
- char virtfps[64], drawnfps[64], blitfps[64];
+ char virtfps[64]/*, drawnfps[64], f[64]*/;		//adelikat: commenting out variables that was only used in now commented code
 
  vt_mintime = dt_mintime = bt_mintime = curtime;
 
