@@ -30,7 +30,7 @@ void MDFNConsole::Scroll(int amount)
 
  if(ts < 0)
   ts = 0;
- Scrolled = ts;
+ Scrolled = (uint32)ts;
 }
 
 #include "../string/ConvertUTF.h"

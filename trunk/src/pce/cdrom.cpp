@@ -34,7 +34,7 @@
 
 static double CDDAVolumeSetting; // User setting!
 
-static bool8	bBRAMEnabled;
+static bool	bBRAMEnabled;		//adelikat: changing from bool8 to bool since it is only used for true/false.
 static uint8	_Port[15];
 static uint8 	ACKStatus;
 static uint8 	SubChannelData;

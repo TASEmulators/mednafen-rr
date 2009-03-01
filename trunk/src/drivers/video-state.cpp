@@ -214,7 +214,7 @@ void MT_SetStateStatus(StateStatusStruct *status)
  StateStatus = status;
 
  if(status)
-  StateShow = MDFND_GetTime() + MDFN_GetSettingUI("osd.state_display_time");
+  StateShow = (uint32)(MDFND_GetTime() + MDFN_GetSettingUI("osd.state_display_time"));
  else
   StateShow = 0;
 }
@@ -230,7 +230,7 @@ void MT_SetMovieStatus(StateStatusStruct *status)
  MovieStatus = status;
 
  if(status)
-  MovieShow = MDFND_GetTime() + MDFN_GetSettingUI("osd.state_display_time");
+  MovieShow = (uint32)(MDFND_GetTime() + MDFN_GetSettingUI("osd.state_display_time"));
  else
   MovieShow = 0;
 }

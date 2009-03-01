@@ -441,7 +441,7 @@ int LoadUNIFChunks(MDFNFILE *fp)
    int t;
    for(;;)
    {
-    t=MDFN_fread(&uchead,1,4,fp);
+    t=(int)MDFN_fread(&uchead,1,4,fp);
     if(t<4) 
     {
      if(t>0)

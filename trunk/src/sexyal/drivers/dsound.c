@@ -239,7 +239,7 @@ static uint32_t RawCanWrite(SexyAL_device *device)
 static uint32_t RawWrite(SexyAL_device *device, void *data, uint32_t len)
 {
  DSFobby *tmp=device->private_data;
- uint32_t cw;
+ //uint32_t cw;		//adelikat: commenting out unused variable
 
  //printf("Pre: %d\n",SexyALI_DSound_RawCanWrite(device));
  //fflush(stdout);

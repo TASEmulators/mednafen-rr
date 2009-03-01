@@ -184,7 +184,7 @@ int PCE_HESLoad(uint8 *buf, uint32 size)
  TotalSongs = 256;
 
  IBP[0x00] = 0x20;
- IBP[0x01] = InitAddr;
+ IBP[0x01] = (uint8)InitAddr;
  IBP[0x02] = InitAddr >> 8;
  IBP[0x03] = 0x58;
  IBP[0x04] = 0x4C;
@@ -255,7 +255,7 @@ void HES_Draw(uint32 *pXBuf, int16 *SoundBuf, int32 SoundBufSize)
   needreload = 1;
  }
 
- last = pce_jp_data[0];
+ last = (uint8)pce_jp_data[0];
 
  if(needreload)
   PCE_Power();

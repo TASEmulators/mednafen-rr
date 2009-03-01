@@ -328,8 +328,8 @@ CDRFile *cdrfile_open(const char *path)
 	if(path == NULL || stat(path, &stat_buf) || !S_ISREG(stat_buf.st_mode))
 	{
 		CdIo *p_cdio;
-		char **devices;
-		char **parseit;
+		//char **devices;		//adelikat: commenting out an unused variable, since the code is used in is commented out
+		//char **parseit;		//adelikat: ditto
 		cdio_init();
 
 		GetFileBase("cdrom");
@@ -1022,7 +1022,7 @@ static void MakeSubQ(const CDRFile *p_cdrfile, uint32 lsn, uint8 *SubPWBuf)
 	{
 		if(lsn >= (p_cdrfile->Tracks[track].LSN - p_cdrfile->Tracks[track].pregap) && lsn < (p_cdrfile->Tracks[track].LSN + p_cdrfile->Tracks[track].sectors))
 		{
-			track_found = TRUE;
+			track_found = true;
 			break;
 		}
 	}

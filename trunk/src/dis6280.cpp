@@ -378,7 +378,7 @@ void Dis6280::Disassemble(uint16 &a, uint16 SpecialA, char *stringo)
               sprintf(stringo + strlen(stringo), fstrings[info >> 16], (unsigned int)(arg & 0xFF), (a + (char)((arg >> 8) & 0xFF)) & 0xFFFF);
 	      sprintf(stringo + strlen(stringo), " @ $%04X = $%02X", (unsigned int)(arg & 0xFF) + 0x2000, Read((arg & 0xFF) + 0x2000));
               break;
-      case 2:tmp = arg + 0x2000;
+      case 2:tmp = (unsigned int)arg + 0x2000;
              if(optable[op_index].type&1)
              {
               sprintf(stringo+strlen(stringo),"    @ $%04X",tmp);
@@ -395,7 +395,7 @@ void Dis6280::Disassemble(uint16 &a, uint16 SpecialA, char *stringo)
              if(optable[op_index].type&1)
               sprintf(stringo+strlen(stringo)," = $%02X",Read(tmp));
              break;
-      case 5:tmp=arg;
+      case 5:tmp=(unsigned int)arg;
              if(optable[op_index].type&1) 
              {
               sprintf(stringo+strlen(stringo),"  @ $%04X",tmp);
@@ -425,7 +425,7 @@ void Dis6280::Disassemble(uint16 &a, uint16 SpecialA, char *stringo)
              break;
       case 19: // JMP indirect, X
 	     {
-	      uint16 tmp_addr = arg + GetX();
+	      uint16 tmp_addr = (uint16)arg + GetX();
 
               tmp = Read(tmp_addr) | (Read((tmp_addr + 1) & 0xFFFF) << 8);
               sprintf(stringo+strlen(stringo)," $%04X",tmp);

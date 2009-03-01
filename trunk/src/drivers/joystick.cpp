@@ -138,7 +138,7 @@ int InitJoysticks (void)
  	 continue;
 	}
 
-	AnalogThreshold = 32767 * MDFN_GetSettingF("analogthreshold") / 100;
+	AnalogThreshold = (int) ((32767 * MDFN_GetSettingF("analogthreshold") / 100) + 0.5); //adelikat: adding +0.5 to induce rounding instead of truncating. Also, adding explicit cast.
 	MDFN_indent(-1);
 	return(1);
 }
