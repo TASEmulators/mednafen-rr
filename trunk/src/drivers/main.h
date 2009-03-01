@@ -67,9 +67,14 @@
 
 bool GetInFrameAdvance(void);
 
+static bool InFrameAdvance = 0;
+static bool NeedFrameAdvance = 0;
+
 void SendCEvent(unsigned int code, void *data1, void *data2);
 
 void PauseGameLoop(bool p);
+
+bool GetNeedFrameAdvance(void);
 
 void DoPause(void);
 
