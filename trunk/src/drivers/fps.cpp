@@ -131,7 +131,7 @@ void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
   snprintf(virtfps, 64, "?");
 
  if(GetInFrameAdvance() == 1 && GetNeedFrameAdvance() == 0) { //&& !NeedFrameAdvance){
-	 snprintf(virtfps, 64, "0");}
+	 snprintf(virtfps, 64, " 0.0");}
 
 // if(curtime - dt_mintime)
 //  snprintf(drawnfps, 64, "%f", (double)dt_frames_drawn * 1000 / (curtime - dt_mintime));
