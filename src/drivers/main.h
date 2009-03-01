@@ -70,6 +70,13 @@ bool GetInFrameAdvance(void);
 static bool InFrameAdvance = 0;
 static bool NeedFrameAdvance = 0;
 
+static bool NeedFPSFrameAdvance;
+bool GetNeedFPSFrameAdvance(void);
+
+void SetNeedFrameAdvance(int setting);
+
+void SetFPSNeedFrameAdvance(bool setting);
+
 void SendCEvent(unsigned int code, void *data1, void *data2);
 
 void PauseGameLoop(bool p);
