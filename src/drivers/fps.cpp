@@ -23,6 +23,7 @@
 #include "video.h"
 
 #include "../movie.h"
+#include "../drivers/input.h"
 
 #define MK_COLOR_A(surface, r,g,b,a) ( ((a)<<surface->format->Ashift) | ((r)<<surface->format->Rshift) | ((g) << surface->format->Gshift) |((b) << surface->format->Bshift))
 
@@ -71,8 +72,13 @@ void FPS_ToggleView(void)
  isactive ^= 1;
 }
 
+int counter;
+
 void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
 {
+
+	
+
  if(!isactive) 
  {
   if(FPSSurface)
@@ -125,14 +131,23 @@ void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
   }
  }
 
+
+
  if(curtime - vt_mintime)
   snprintf(virtfps, 64, "%f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
  else
   snprintf(virtfps, 64, "?");
 
- if(GetInFrameAdvance() == 1 && GetNeedFPSFrameAdvance() == 0) {
+
+	// snprintf(virtfps, 64, "0.0");
+
+
+
+  if(GetInFrameAdvance() == 1 && GetNeedFPSFrameAdvance() == 0) {
 	 snprintf(virtfps, 64, " 0.0");}
- 
+
+   if(GetFrameAdvanceActive())
+	 snprintf(virtfps, 64, "%f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
 
 // if(curtime - dt_mintime)
 //  snprintf(drawnfps, 64, "%f", (double)dt_frames_drawn * 1000 / (curtime - dt_mintime));

@@ -985,7 +985,9 @@ static void KeyboardCommands(void)
   
   if(!MDFNDnetplay)
   {
-   if(CK_CheckActive(CK_ADVANCE_FRAME))
+	  if(CK_CheckActive(CK_ADVANCE_FRAME)) {
+
+		  SetFrameAdvanceActive(1);
 
 
 //this is to make holding down the frame advance key slower
@@ -1001,11 +1003,14 @@ static void KeyboardCommands(void)
 		if(FrameAdvanceDelayCounter > 10) {
     DoFrameAdvance();
 		}
-
+		
     FrameAdvanceCounter = 0;
     }
     FrameAdvanceCounter++;
 	FrameAdvanceDelayCounter++;
+	  }
+	  else
+			 SetFrameAdvanceActive(0);
 
    if(CK_Check(CK_RUN_NORMAL))
 

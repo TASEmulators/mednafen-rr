@@ -73,6 +73,8 @@ static bool NeedFrameAdvance = 0;
 static bool NeedFPSFrameAdvance;
 bool GetNeedFPSFrameAdvance(void);
 
+int GetFrameAdvanceActive(void);
+
 void SetNeedFrameAdvance(int setting);
 
 void SetFPSNeedFrameAdvance(bool setting);
@@ -104,6 +106,8 @@ extern bool pending_save_state, pending_snapshot, pending_save_movie;
 
 void DoRunNormal(void);
 void DoFrameAdvance(void);
+
+int SetFrameAdvanceActive(int value);
 
 void LockGameMutex(bool lock);
 void DebuggerFudge(void);
