@@ -981,63 +981,68 @@ static void KeyboardCommands(void)
   }
 
   if(!CurGame)
-	return;
-  
+	  return;
+
   if(!MDFNDnetplay)
   {
+
+	  //this code is shit
+	  //it is apparently dependent on the computer's speed
+	  //but it works for me
 	  if(CK_CheckActive(CK_ADVANCE_FRAME)) {
 
 		  SetFrameAdvanceActive(1);
 
 
-//this is to make holding down the frame advance key slower
-//it advanced at full speed before
-    if(FrameAdvanceCounter > FrameAdvanceSpeed) {
+		  //if the number of times that the key has been checked and is active is larger than our frame advance speed number
+		  //this is to give multiple speeds for advancing
+		  if(FrameAdvanceCounter > FrameAdvanceSpeed) { 
 
-		//the key hasn't been pressed yet
-		if(FrameAdvanceDelayCounter == 0) {
-			DoFrameAdvance();
-		}
-		
-		//the key has been pressed, but to start advancing again it must be larger than 10
-		if(FrameAdvanceDelayCounter > 10) {
-    DoFrameAdvance();
-		}
-		
-    FrameAdvanceCounter = 0;
-    }
-    FrameAdvanceCounter++;
-	FrameAdvanceDelayCounter++;
+			  //the key hasn't been pressed yet
+			  //we advance a frame immediately
+			  if(FrameAdvanceDelayCounter < 15) {
+				  DoFrameAdvance(); 
+			  }
+
+			  //the key has been pressed, but to start advancing again the counter must be larger than 15
+			  if(FrameAdvanceDelayCounter > 15) {
+				  DoFrameAdvance();
+			  }
+
+			  FrameAdvanceCounter = 0;
+		  }
+		  FrameAdvanceCounter++;
+		  FrameAdvanceDelayCounter++;
 	  }
 	  else
-			 SetFrameAdvanceActive(0);
+		  SetFrameAdvanceActive(0);
 
-   if(CK_Check(CK_RUN_NORMAL))
+	  if(CK_Check(CK_RUN_NORMAL))
 
 
-	   //if we are paused, unpause, otherwise, pause
-	   if(GetInFrameAdvance() == 1) {
-    DoRunNormal();
-	   }
-	   else {
+		  //if we are paused, unpause, otherwise, pause
+		  if(GetInFrameAdvance() == 1) {
+			  DoRunNormal();
+		  }
+		  else {
 
-		   DoFrameAdvance();
-	   }
+			  DoFrameAdvance();
+		  }
   }
 
   //this has to be outside or it doesn't ever reset the number
   //if the key isn't being pressed, we start the key delay process again
   if(!CK_CheckActive(CK_ADVANCE_FRAME)) {
 
-			FrameAdvanceDelayCounter =0;
-		}
+	  FrameAdvanceDelayCounter = 0;
+  }
 
   if(!Debugger_IsActive()) // We don't want to start button configuration when the debugger is active!
   {
-   if(CK_Check(CK_INPUT_CONFIG1))
-   {
-    if(!PortButtConfig[0].size())
-    {
+	  if(CK_Check(CK_INPUT_CONFIG1))
+	  {
+		  if(!PortButtConfig[0].size())
+		  {
      MDFN_DispMessage((UTF8*)_("No buttons to configure for input port %d!"), 1);
     }
     else
