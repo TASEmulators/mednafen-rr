@@ -93,7 +93,7 @@ int32 smem_tell(StateMem *st)
 	return(st->loc);
 }
 
-int32 smem_seek(StateMem *st, uint32 offset, int whence)
+int32 smem_seek(StateMem *st, int offset, int whence)
 {
 	switch(whence)
 	{
@@ -515,7 +515,7 @@ int MDFNSS_StateAction(StateMem *st, int load, int data_only, std::vector <SSDes
 						}
 					}
 				}
-				if(smem_seek(st, -total, SEEK_CUR) < 0)
+				if(smem_seek(st, -(int)total, SEEK_CUR) < 0)
 				{
 					puts("Reverse seek error");
 					return(0);

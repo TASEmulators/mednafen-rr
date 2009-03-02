@@ -35,6 +35,10 @@ typedef int mode_t;
 #define strncasecmp _strnicmp
 #define snprintf _snprintf
 #define fstat _fstat
+#define close _close
+#define open _open
+#define lseek _lseek
+#define read _read
 
 
 #ifdef __cplusplus

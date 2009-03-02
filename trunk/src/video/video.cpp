@@ -63,6 +63,7 @@ void MDFNI_SaveSnapshot(void)
  }
  catch(int x)
  {
+	 (void)x;
   MDFN_DispMessage((UTF8 *)_("Error saving screen snapshot."));
  }
 }
