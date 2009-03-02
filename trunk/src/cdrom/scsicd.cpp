@@ -421,7 +421,7 @@ static void DoMODESENSE6(void)
 {
  unsigned int PC = (cd.command_buffer[2] >> 6) & 0x3;
  unsigned int PageCode = cd.command_buffer[2] & 0x3F;
- bool DBD = cd.command_buffer[1] & 0x08;
+ bool DBD = cd.command_buffer[1] & 0x08 ? true : false;
  int AllocSize = cd.command_buffer[4];
  uint8 data_in[8192];
 
@@ -462,7 +462,7 @@ static void DoMODESENSE6(void)
 static void DoSTARTSTOPUNIT6(void)
 {
  bool Immed = cd.command_buffer[1] & 0x01;
- bool LoEj = cd.command_buffer[4] & 0x02;
+ bool LoEj = cd.command_buffer[4] & 0x02 ? true : false;
  bool Start = cd.command_buffer[4] & 0x01;
 
  //printf("Do start stop unit 6: %d %d %d\n", Immed, LoEj, Start);
@@ -619,7 +619,7 @@ static void DoREADTOC(void)
  int StartingTrack = cd.command_buffer[6];
  unsigned int AllocSize = (cd.command_buffer[7] << 8) | cd.command_buffer[8];
  unsigned int RealSize = 0;
- bool WantInMSF = cd.command_buffer[1] & 0x2;
+ bool WantInMSF = cd.command_buffer[1] & 0x2 ? true : false;
 
  //printf("READ TOC: %d %02x %d %d\n", StartingTrack, cd.command_buffer[6], AllocSize, WantInMSF);
 
@@ -705,7 +705,7 @@ static void DoREADTOC(void)
 static void DoREADHEADER(void)
 {
  uint8 data_in[8192];
- bool WantInMSF = cd.command_buffer[1] & 0x2;
+ bool WantInMSF = cd.command_buffer[1] & 0x2 ? true : false;
  uint32 HeaderLBA = (cd.command_buffer[2] << 24) | (cd.command_buffer[3] << 16) | (cd.command_buffer[4] << 8) | cd.command_buffer[5];
  int AllocSize = (cd.command_buffer[7] << 8) | cd.command_buffer[8];
  int Track = CDIF_FindTrackByLBA(HeaderLBA);
@@ -939,10 +939,10 @@ static void DoPREFETCH(void)
 {
  uint32 lba = (cd.command_buffer[2] << 24) | (cd.command_buffer[3] << 16) | (cd.command_buffer[4] << 8) | cd.command_buffer[5];
  uint32 len = (cd.command_buffer[7] << 8) | cd.command_buffer[8];
- bool link = cd.command_buffer[9] & 0x1;
- bool flag = cd.command_buffer[9] & 0x2;
- bool reladdr = cd.command_buffer[1] & 0x1;
- bool immed = cd.command_buffer[1] & 0x2;
+ bool link = cd.command_buffer[9] & 0x1 ? true : false;
+ bool flag = cd.command_buffer[9] & 0x2 ? true : false;
+ bool reladdr = cd.command_buffer[1] & 0x1 ? true : false;
+ bool immed = cd.command_buffer[1] & 0x2 ? true : false;
 
  //printf("Prefetch: %08x %08x %d %d %d %d\n", lba, len, link, flag, reladdr, immed);
  //SendStatusAndMessage(STATUS_GOOD, 0x00);
@@ -977,8 +977,8 @@ static void DoREADSUBCHANNEL(void)
  int DataFormat = cd.command_buffer[3];
  int TrackNum = cd.command_buffer[6];
  int AllocSize = (cd.command_buffer[7] << 8) | cd.command_buffer[8];
- bool WantQ = cd.command_buffer[2] & 0x40;
- bool WantMSF = cd.command_buffer[1] & 0x02;
+ bool WantQ = cd.command_buffer[2] & 0x40 ? true : false;
+ bool WantMSF = cd.command_buffer[1] & 0x02 ? true : false;
 
  //printf("42Read SubChannel: %02x %02x %d %d %d\n", DataFormat, TrackNum, AllocSize, WantQ, WantMSF);
  if(!WantQ)
@@ -1391,7 +1391,7 @@ uint32 SCSICD_Run(uint32 system_timestamp)
       if(tmp_read_sec > scan_sec_end)
        tmp_read_sec = scan_sec_end;
      }
-     read_sec = tmp_read_sec;
+     read_sec = (uint32)tmp_read_sec;
     }
     else
      read_sec++;
@@ -1737,13 +1737,13 @@ uint32 SCSICD_Run(uint32 system_timestamp)
 
  next_time = 0x7fffffff;
 
- if(CDReadTimer > 0 && CDReadTimer < next_time)
+ if(CDReadTimer > 0 && CDReadTimer < (int)next_time)
   next_time = CDReadTimer;
 
  if(CDDAStatus == CDDASTATUS_PLAYING || CDDAStatus == CDDASTATUS_SCANNING)
  {
   int32 cdda_div_sexytime = (CDDADiv + 0xFFFF) >> 16;
-  if(cdda_div_sexytime > 0 && cdda_div_sexytime < next_time)
+  if(cdda_div_sexytime > 0 && cdda_div_sexytime < (int)next_time)
    next_time = cdda_div_sexytime;
  }
 

@@ -197,7 +197,7 @@ _read_cdrdao (void *user_data, void *data, size_t size)
 
   while (size > 0) {
     int rem = this_track->datasize - env->pos.buff_offset;
-    if (size <= rem) {
+    if (size <= (unsigned int)rem) {
       this_size = cdio_stream_read(this_track->data_source, buf, size, 1);
       final_size += this_size;
       memcpy (p, buf, this_size);

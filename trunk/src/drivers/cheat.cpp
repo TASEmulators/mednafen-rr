@@ -324,7 +324,11 @@ static void ModifyCheat(int num)
  }
 
  CHEAT_printf("Enable? ");
- status = GetYN(status);
+ 
+ if (status)
+	 status = GetYN(true);
+ else
+	status = GetYN(false);
 
  MDFNI_SetCheat(num, name, A, V, compare, status, type, bytelen, bigendian);
 }

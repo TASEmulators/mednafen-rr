@@ -198,7 +198,7 @@ parse_nrg (_img_private_t *p_env, const char *psz_nrg_name,
       footer_start = uint32_to_be (buf.v50.footer_ofs); 
     } else if (buf.v55.ID == UINT32_TO_BE (NER5_ID)) {
       cdio_debug ("detected Nero version 5.5.x (64-bit offsets) NRG magic");
-      footer_start = uint64_from_be (buf.v55.footer_ofs);
+      footer_start = (unsigned long)(uint64_from_be (buf.v55.footer_ofs));
     } else {
       cdio_log (log_level, "Image not recognized as either version 5.0 or "
 		"version 5.5.x-6.x type NRG");

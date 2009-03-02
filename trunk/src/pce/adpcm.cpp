@@ -264,7 +264,7 @@ bool ADPCM_Init()
 	 return(0);
 	}
 
-	ADPCMVolumeSetting = MDFN_GetSettingUI("pce.adpcmvolume");
+	ADPCMVolumeSetting = (uint32)MDFN_GetSettingUI("pce.adpcmvolume");
 	if(ADPCMVolumeSetting != 100)
 	{
 	 MDFN_printf("ADPCM Volume: %d%%\n", ADPCMVolumeSetting);
@@ -599,7 +599,10 @@ void ADPCM_SetFreq(uint32 freq)
 
 bool ADPCM_IsPlaying()
 {
-	return(LastCmd & 0x20);
+	if (LastCmd & 0x20)
+		return true;
+	else
+		return false;
 }
 
 void ADPCM_FadeOut(int32 ms)

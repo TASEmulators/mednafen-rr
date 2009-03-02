@@ -970,7 +970,7 @@ void MDFNNES_Sound(int Rate)
 
  if(MDFNGameInfo)
  {
-  for(int x = 0; x < GameExpSound.size(); x++)
+  for(unsigned int x = 0; x < GameExpSound.size(); x++)
    if(GameExpSound[x].RChange)
     GameExpSound[x].RChange(&GameExpSound[x]);
  }

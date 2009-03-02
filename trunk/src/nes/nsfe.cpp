@@ -244,9 +244,9 @@ uint8 *MDFNI_CreateNSFE(NSFINFO *nfe, uint32 *totalsize)
   ANED("NSFE",4);
 
   BEGIN_CHUNK("INFO");
-  ANED16(nfe->LoadAddr);
-  ANED16(nfe->InitAddr);
-  ANED16(nfe->PlayAddr);
+  ANED16((uint8)nfe->LoadAddr);
+  ANED16((uint8)nfe->InitAddr);
+  ANED16((uint8)nfe->PlayAddr);
   ANED8(nfe->VideoSystem);
   ANED8(nfe->SoundChip);
   ANED8(nfe->TotalSongs);
