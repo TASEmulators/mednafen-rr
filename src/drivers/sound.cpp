@@ -66,7 +66,7 @@ int InitSound(MDFNGI *gi)
  memset(&format,0,sizeof(format));
  memset(&buffering,0,sizeof(buffering));
 
- MDFNI_SetSoundVolume(MDFN_GetSettingUI("soundvol"));
+ MDFNI_SetSoundVolume((uint32)MDFN_GetSettingUI("soundvol"));
 
  Interface = (SexyAL *)SexyAL_Init(0);
  DriverTypes = Interface->EnumerateTypes(Interface);
@@ -74,7 +74,7 @@ int InitSound(MDFNGI *gi)
  format.sampformat=SEXYAL_FMT_PCMS16;
  format.channels=gi->soundchan?gi->soundchan:1;
  format.byteorder = 0;
- format.rate=gi->soundrate?gi->soundrate : MDFN_GetSettingUI("soundrate");
+ format.rate=gi->soundrate?gi->soundrate : (uint32_t)MDFN_GetSettingUI("soundrate");
  buffering.ms = (uint32_t)(MDFN_GetSettingUI("soundbufsize"));
 
  std::string zedevice = MDFN_GetSettingS("sounddevice");

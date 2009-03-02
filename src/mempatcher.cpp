@@ -253,7 +253,9 @@ void MDFN_LoadGameCheats(FILE *override)
    char namebuf[2048];
    char *tbuf=linebuf;
 
-   addr=val=compare=status=type=0;
+   addr=status=0;
+   val=compare=0;
+   type=0;
    bigendian = 0;
    icount = 0;
 
@@ -650,7 +652,7 @@ void MDFNMP_ApplyPeriodicCheats(void)
       else
        tmpval >>= x * 8;
 
-      RAMPtrs[page][(chit->addr + x) % PageSize] = tmpval;
+      RAMPtrs[page][(chit->addr + x) % PageSize] = (uint8)tmpval;
      }
    }
   }

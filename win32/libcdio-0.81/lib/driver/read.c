@@ -130,7 +130,7 @@ driver_return_code_t
 cdio_read_audio_sectors (const CdIo_t *p_cdio, void *p_buf, lsn_t i_lsn,
                          uint32_t i_blocks) 
 {
-  check_lsn_blocks(i_lsn, i_blocks);
+  check_lsn_blocks(i_lsn, (int32_t)i_blocks);
 
   if (0 == i_blocks) return DRIVER_OP_SUCCESS;
 
@@ -203,7 +203,7 @@ driver_return_code_t
 cdio_read_mode1_sectors (const CdIo_t *p_cdio, void *p_buf, lsn_t i_lsn, 
                          bool b_form2,  uint32_t i_blocks)
 {
-  check_lsn_blocks(i_lsn, i_blocks);
+  check_lsn_blocks(i_lsn, (int32_t)i_blocks);
 
   if (0 == i_blocks) return DRIVER_OP_SUCCESS;
 
@@ -250,7 +250,7 @@ driver_return_code_t
 cdio_read_mode2_sectors (const CdIo_t *p_cdio, void *p_buf, lsn_t i_lsn, 
                          bool b_form2, uint32_t i_blocks)
 {
-  check_lsn_blocks(i_lsn, i_blocks);
+  check_lsn_blocks(i_lsn, (int32_t)i_blocks);
 
   if (0 == i_blocks) return DRIVER_OP_SUCCESS;
 

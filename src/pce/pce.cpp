@@ -294,7 +294,7 @@ static int Load(const char *name, MDFNFILE *fp)
    headerlen = 512;
  }
 
- r_size = fp->size - headerlen;
+ r_size = (uint32) (fp->size - headerlen);
  if(r_size > 4096 * 1024) r_size = 4096 * 1024;
 
  for(int x = 0; x < 0x100; x++)
@@ -308,11 +308,11 @@ static int Load(const char *name, MDFNFILE *fp)
 
  if(IsHES)
  {
-  if(!PCE_HESLoad(fp->data, fp->size))
+  if(!PCE_HESLoad(fp->data, (uint32)fp->size))
    return(0);
  }
  else
-  HuCLoad(fp->data + headerlen, fp->size - headerlen, crc);
+  HuCLoad(fp->data + headerlen, (uint32)(fp->size - headerlen), crc);
 
  if(!strcasecmp(fp->ext, "sgx"))
   IsSGX = TRUE;
