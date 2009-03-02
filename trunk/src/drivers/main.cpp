@@ -642,6 +642,12 @@ std::cout << "lalala" << MovieToLoad <<std::endl;
         if(MDFN_GetSettingB("autosave"))
 	 MDFNI_LoadState(NULL, "ncq");
 
+
+		//if someone specifies loading a state with loadstate
+		if(strcmp(MDFN_GetSettingS("loadstate").c_str(),"loadstate PATH NOT SET")) {
+
+			MDFNI_LoadState(MDFN_GetSettingS("loadstate").c_str(), NULL);}
+
 #ifdef NETWORK
 	if(netconnect)
 	 MDFND_NetworkConnect();

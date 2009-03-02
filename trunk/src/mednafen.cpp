@@ -84,6 +84,7 @@ static MDFNSetting MednafenSettings[] =
   { "mov", gettext_noop("Path to the movie to be played/recorded to"), MDFNST_STRING, "mov PATH NOT SET" },
   { "play", gettext_noop("Start playing the current movie immediately on startup"), MDFNST_BOOL, "0" },
   { "pause", gettext_noop("Start the emulator paused"), MDFNST_BOOL, "0" },
+  { "loadstate", gettext_noop("Load the specified state"), MDFNST_STRING, "" },
   //{ "recordmov", gettext_noop("Path to the movie to be recorded to"), MDFNST_STRING, "recordmov PATH NOT SET" },
 
 
@@ -515,6 +516,7 @@ void MDFNI_Kill(void)
 {
 
  MDFNI_SetSetting("mov", "mov PATH NOT SET");
+ MDFNI_SetSetting("loadstate", "loadstate PATH NOT SET");
  
  MDFN_SaveSettings();
  //MDFNNES_Kill();
