@@ -267,7 +267,7 @@ int32 PCECD_Init()
 
 	ADPCM_SetNotificationFunction(adpcm_state_notification_callback_function);
 
-	SCSICD_Init(SCSICD_PCE, 1 * pce_overclocked, &sbuf[0], &sbuf[1], 126000 * MDFN_GetSettingUI("pce.cdspeed"), 7159091 * pce_overclocked, CDIRQ, StuffSubchannel);
+	SCSICD_Init(SCSICD_PCE, 1 * pce_overclocked, &sbuf[0], &sbuf[1], (uint32)(126000 * MDFN_GetSettingUI("pce.cdspeed")), 7159091 * pce_overclocked, CDIRQ, StuffSubchannel);
 
 	SyncCDVolume();
 
@@ -499,10 +499,13 @@ void PCECD_Write(uint32	physAddr, uint8 data)
 			 puts("IRQ on waah 0x20");
 			#endif
 
-			SCSICD_SetACK(data & 0x80);
+			if (data & 0x80)
+				SCSICD_SetACK(true);
+			else
+				SCSICD_SetACK(false);
 			SCSICD_Run(HuCPU.timestamp);
 			_Port[2] = data;
-			ACKStatus = (bool)(data & 0x80);
+			ACKStatus = (data & 0x80) ? true : false;
 			update_irq_state();
 			return;
 
@@ -511,7 +514,10 @@ void PCECD_Write(uint32	physAddr, uint8 data)
 			return;
 
 		case 0x4:
-			SCSICD_SetRST(data & 0x2);
+			if (data & 0x2)
+				SCSICD_SetRST(true);
+			else
+				SCSICD_SetRST(false);
 			SCSICD_Run(HuCPU.timestamp);
 			if(data & 0x2)
 			{
@@ -660,8 +666,14 @@ int PCECD_StateAction(StateMem *sm, int load, int data_only)
 	{
 	 SyncCDVolume();
 	 //SCSICD_SetDB(_Port[1]);
-	 SCSICD_SetACK(ACKStatus);
-         SCSICD_SetRST(_Port[4] & 0x2);
+	 if (ACKStatus)
+		SCSICD_SetACK(true);
+	 else
+		SCSICD_SetACK(true);
+     if (_Port[4] & 0x2)
+		 SCSICD_SetRST(true);
+	 else
+		 SCSICD_SetRST(false);
 	}
 	return(ret);
 }

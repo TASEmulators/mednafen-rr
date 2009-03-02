@@ -626,9 +626,9 @@ parse_nrg (_img_private_t *p_env, const char *psz_nrg_name,
 	{
 	  unsigned int idx;
 	  for (idx = 0; idx < entries; idx++) {
-	    uint32_t _len = uint64_from_be (_entries[idx].length);
+	    uint32_t _len = (uint32_t)(uint64_from_be (_entries[idx].length));
 	    uint32_t _start = uint32_from_be (_entries[idx].start_lsn);
-	    uint32_t _start2 = uint64_from_be (_entries[idx].start);
+	    uint32_t _start2 = (uint32_t)(uint64_from_be (_entries[idx].start));
 	    uint32_t track_mode= uint32_from_be (_entries[idx].type);
 	    bool     track_green = true;
 	    track_format_t track_format = TRACK_FORMAT_XA;
@@ -924,7 +924,7 @@ _read_audio_sectors_nrg (void *p_user_data, void *data, lsn_t lsn,
     
     if (IN (lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
       int ret;
-      long int img_offset = _map->img_offset;
+      long int img_offset = (long int) _map->img_offset;
       
       img_offset += (lsn - _map->start_lsn) * CDIO_CD_FRAMESIZE_RAW;
       
@@ -965,7 +965,7 @@ _read_mode1_sector_nrg (void *p_user_data, void *data, lsn_t lsn,
     
     if (IN (lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
       int ret;
-      long int img_offset = _map->img_offset;
+      long int img_offset = (long int)_map->img_offset;
       
       img_offset += (lsn - _map->start_lsn) * _map->blocksize;
       
@@ -1036,7 +1036,7 @@ _read_mode2_sector_nrg (void *p_user_data, void *data, lsn_t lsn,
     
     if (IN (lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
       int ret;
-      long int img_offset = _map->img_offset;
+      long int img_offset = (long int)_map->img_offset;
       
       img_offset += (lsn - _map->start_lsn) * _map->blocksize;
       
