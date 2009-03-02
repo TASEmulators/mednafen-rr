@@ -493,7 +493,7 @@ bool ShaderBegin(SDL_Surface *surface, const SDL_Rect *rect, int tw, int th)
          p_glUniform1iARB(p_glGetUniformLocationARB(p, "Zlut"), 2);
 	}
 
-        p_glUniform2fARB(p_glGetUniformLocationARB(p, "TexSize"), tw, th);
+        p_glUniform2fARB(p_glGetUniformLocationARB(p, "TexSize"), (float)tw, (float)th);
         p_glUniform2fARB(p_glGetUniformLocationARB(p, "TexSizeInverse"), (float)1 / tw, (float) 1 / th);
 
 	return(1);

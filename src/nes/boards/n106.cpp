@@ -90,7 +90,7 @@ static DECLFR(Namco_Read4800)
 
 static DECLFR(Namco_Read5000)
 {
- return(IRQCount);
+ return((uint8)(IRQCount));	//added explicit cast, function should probably be changed to return uint16?
 }
 
 static DECLFR(Namco_Read5800)

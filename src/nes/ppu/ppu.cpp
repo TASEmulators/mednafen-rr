@@ -1371,12 +1371,12 @@ void MDFNPPU_Init(void)
 
   if(MDFN_GetSettingB("nes.ntsc.matrix"))
   {
-   matrix[0] = MDFN_GetSettingF("nes.ntsc.matrix.0");
-   matrix[1] = MDFN_GetSettingF("nes.ntsc.matrix.1");
-   matrix[2] = MDFN_GetSettingF("nes.ntsc.matrix.2");
-   matrix[3] = MDFN_GetSettingF("nes.ntsc.matrix.3");
-   matrix[4] = MDFN_GetSettingF("nes.ntsc.matrix.4");
-   matrix[5] = MDFN_GetSettingF("nes.ntsc.matrix.5");
+   matrix[0] = (float) MDFN_GetSettingF("nes.ntsc.matrix.0");	//adelikat - explicit casts.  changing matrix to double is probably better except for the const float setup.decoder
+   matrix[1] = (float) MDFN_GetSettingF("nes.ntsc.matrix.1");
+   matrix[2] = (float) MDFN_GetSettingF("nes.ntsc.matrix.2");
+   matrix[3] = (float) MDFN_GetSettingF("nes.ntsc.matrix.3");
+   matrix[4] = (float) MDFN_GetSettingF("nes.ntsc.matrix.4");
+   matrix[5] = (float) MDFN_GetSettingF("nes.ntsc.matrix.5");
 
    setup.decoder_matrix = matrix;
   }
