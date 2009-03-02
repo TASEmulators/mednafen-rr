@@ -1362,7 +1362,7 @@ static int ThrottleCheckFS(void)
    delay = (((tfreq/desiredfps)-(ttime-ltime)) / 10000) - 1;
 
    if(delay >= 0)
-    SDL_Delay(delay);
+    SDL_Delay((uint32)delay);
 
    goto waiter;
   }

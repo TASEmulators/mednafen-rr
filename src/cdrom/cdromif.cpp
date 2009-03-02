@@ -251,7 +251,7 @@ int CDIF_FindTrackByLBA(uint32 LBA)
 {
  for(track_t track = CD_Info.FirstTrack; track < CD_Info.FirstTrack + CD_Info.NumTracks; track++)
  {
-  if(LBA >= CD_Info.Tracks[track].LSN && LBA < (CD_Info.Tracks[track].LSN + cdrfile_get_track_sec_count(p_cdrfile, track)))
+  if((int)LBA >= CD_Info.Tracks[track].LSN && LBA < (CD_Info.Tracks[track].LSN + cdrfile_get_track_sec_count(p_cdrfile, track)))
   {
    return(track);
   }

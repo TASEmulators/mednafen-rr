@@ -1020,7 +1020,7 @@ static void MakeSubQ(const CDRFile *p_cdrfile, uint32 lsn, uint8 *SubPWBuf)
 
 	for(track = p_cdrfile->FirstTrack; track < (p_cdrfile->FirstTrack + p_cdrfile->NumTracks); track++)
 	{
-		if(lsn >= (p_cdrfile->Tracks[track].LSN - p_cdrfile->Tracks[track].pregap) && lsn < (p_cdrfile->Tracks[track].LSN + p_cdrfile->Tracks[track].sectors))
+		if((int)lsn >= (p_cdrfile->Tracks[track].LSN - p_cdrfile->Tracks[track].pregap) && (int)lsn < (p_cdrfile->Tracks[track].LSN + p_cdrfile->Tracks[track].sectors))
 		{
 			track_found = true;
 			break;
@@ -1050,7 +1050,7 @@ static void MakeSubQ(const CDRFile *p_cdrfile, uint32 lsn, uint8 *SubPWBuf)
 	buf[0] = (adr << 0) | (control << 4);
 	buf[1] = INT_TO_BCD(track);
 
-	if(lsn < p_cdrfile->Tracks[track].LSN) // Index is 00 in pregap
+	if((int)lsn < p_cdrfile->Tracks[track].LSN) // Index is 00 in pregap
 		buf[2] = INT_TO_BCD(0x00);
 	else
 		buf[2] = INT_TO_BCD(0x01);
@@ -1113,7 +1113,7 @@ int cdrfile_read_mode1_sectors (const CDRFile *p_cdrfile, void *buf, uint8 *SubP
 				else
 					lt_lsn = ~0;
 
-				if(lsn >= (p_cdrfile->Tracks[track].LSN - p_cdrfile->Tracks[track].pregap) && lsn < lt_lsn)
+				if(lsn >= (p_cdrfile->Tracks[track].LSN - p_cdrfile->Tracks[track].pregap) && lsn < (int)lt_lsn)
 				{
 					if(lsn < p_cdrfile->Tracks[track].LSN)
 					{

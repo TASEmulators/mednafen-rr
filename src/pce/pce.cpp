@@ -303,7 +303,7 @@ static int Load(const char *name, MDFNFILE *fp)
   PCEWrite[x] = PCENullWrite;
  }
 
- uint32 crc = crc32(0, fp->data + headerlen, fp->size - headerlen);
+ uint32 crc = (uint32)crc32(0, fp->data + headerlen, (uInt)(fp->size - headerlen));
 
 
  if(IsHES)

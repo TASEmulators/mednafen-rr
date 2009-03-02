@@ -203,7 +203,7 @@ static MDFNFILE *MakeMemWrap(void *tz, int type)
   else
   {
   #endif
-   if(!(tmp->data=(uint8*)MDFN_malloc(tmp->size, _("file read buffer"))))
+   if(!(tmp->data=(uint8*)MDFN_malloc((uint32)(tmp->size), _("file read buffer"))))
    {
     free(tmp);
     tmp=0;

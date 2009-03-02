@@ -61,7 +61,7 @@ void WriteSoundSilence(int ms)
  Output->Write(Output, SBuffer, frames);
 }
 
-int InitSound(MDFNGI *gi)
+bool InitSound(MDFNGI *gi)
 {
  memset(&format,0,sizeof(format));
  memset(&buffering,0,sizeof(buffering));
@@ -105,7 +105,7 @@ int InitSound(MDFNGI *gi)
   Interface->Destroy(Interface);
   Interface=0;
   MDFN_indent(-2);
-  return(0);
+  return(false);
  }
 
  if(format.rate<8192 || format.rate > 48000)
@@ -113,7 +113,7 @@ int InitSound(MDFNGI *gi)
   MDFND_PrintError(_("Set rate is out of range [8192-48000]"));
   KillSound();
   MDFN_indent(-2);
-  return(0);
+  return(false);
  }
  MDFNI_printf(_("\nBits: %u\nRate: %u\nChannels: %u\nByte order: CPU %s\nBuffer size: %u sample frames(%f ms)\n"),(format.sampformat>>4)*8,format.rate,format.channels,format.byteorder?"Reversed":"Native",buffering.latency,(double)buffering.latency*1000/format.rate);
 
@@ -137,7 +137,7 @@ int InitSound(MDFNGI *gi)
    soundrecfn=0;
   }
  }
- return(1);
+ return(true);
 }
 
 void SilenceSound(int n)
