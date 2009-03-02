@@ -21,6 +21,8 @@ typedef int mode_t;
 #include <sys/stat.h>
 #include <stdio.h>
 #include <errno.h>
+#include <io.h>
+#include <stdlib.h>
 #define HAVE__MKDIR 1
 #define HAVE_MEMSET 1
 #define EMPTY_ARRAY_SIZE 1

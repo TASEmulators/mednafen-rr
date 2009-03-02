@@ -579,7 +579,7 @@ void MDFN_rewind(MDFNFILE *fp)
 
 int MDFN_read16le(uint16 *val, MDFNFILE *fp)
 {
- uint8 t[2];
+ uint8 t[4];
 
  if(fp->location+2>fp->size)
  {return 0;}
