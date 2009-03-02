@@ -106,7 +106,7 @@ _register_mapping (_img_private_t *env, lsn_t start_lsn, uint32_t sec_count,
   this_track->track_num = track_num+1;
   this_track->blocksize = blocksize;
   if (env->is_cues) 
-    this_track->datastart = img_offset;
+    this_track->datastart = (uint16_t) img_offset;  //added explicit cast
   else 
     this_track->datastart = 0;
 
@@ -492,7 +492,7 @@ parse_nrg (_img_private_t *p_env, const char *psz_nrg_name,
 	      continue;
 	    }
 	    if (DAOX_ID == opcode) {
-	       p_env->tocent[i].pregap = (uint64_from_be
+	       p_env->tocent[i].pregap = (lba_t)(uint64_from_be					//adelikat - lba_t = int32, added explicit cast
 		(_xentries->track_info[i].index0)) / (p_env->tocent[i].datasize);
 	    } else {
 	       p_env->tocent[i].pregap = (uint32_from_be

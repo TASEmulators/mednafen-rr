@@ -116,7 +116,7 @@ static bool ApplyIPS(FILE *ips, MDFNFILE *dest, const char *path)
 
     dest->size=offset+size;
     dest->data=tmp;
-    memset(dest->data+dest->size,0,offset+size-dest->size);
+    memset(dest->data+dest->size,0,(size_t)(offset+size-dest->size));
    }
 
    b=fgetc(ips);
@@ -144,7 +144,7 @@ static bool ApplyIPS(FILE *ips, MDFNFILE *dest, const char *path)
      return(0);
     }
     dest->data=tmp;
-    memset(dest->data+dest->size,0,offset+size-dest->size);
+    memset(dest->data+dest->size,0,(size_t)(offset+size-dest->size));
    }
    fread(dest->data+offset,1,size,ips);
   }
@@ -209,7 +209,7 @@ static MDFNFILE *MakeMemWrap(void *tz, int type)
     tmp=0;
     goto doret;
    }
-   fread(tmp->data,1,tmp->size,(FILE *)tz);
+   fread(tmp->data,1,(size_t)tmp->size,(FILE *)tz);
   #ifdef HAVE_MMAP
   }
   #endif
@@ -534,7 +534,7 @@ uint64 MDFN_fread(void *ptr, size_t size, size_t nmemb, MDFNFILE *fp)
 
  if((fp->location+total)>fp->size)
  {
-  int ak=(int)fp->size-fp->location;
+  int ak=(int)(fp->size-fp->location);
   memcpy((uint8*)ptr,fp->data+fp->location,ak);
   fp->location=fp->size;
   return(ak/size);
@@ -682,7 +682,7 @@ static INLINE bool MDFN_DumpToFileReal(const char *filename, int compress, const
    const void *data = pearpairs[i].GetData();
    const uint64 length = pearpairs[i].GetLength();
 
-   if(gzwrite(gp, (uint8*)data, length) != length)
+   if(gzwrite(gp, (uint8*)data, (unsigned int)length) != length)
    {
     int errnum;
 
@@ -712,7 +712,7 @@ static INLINE bool MDFN_DumpToFileReal(const char *filename, int compress, const
    const void *data = pearpairs[i].GetData();
    const uint64 length = pearpairs[i].GetLength();
 
-   if(fwrite(data, 1, length, fp) != length)
+   if(fwrite(data, 1, (size_t)length, fp) != length)
    {
     MDFN_PrintError(_("Error writing to \"%s\": %m"), filename, errno);
     fclose(fp);

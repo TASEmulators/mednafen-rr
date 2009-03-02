@@ -155,13 +155,13 @@ void BlitOpenGLRaw(SDL_Surface *surface, const SDL_Rect *rect, const SDL_Rect *d
   p_glBegin(GL_QUADS);
 
   p_glTexCoord2f(0.0f, 1.0f * rect->h / tmpheight);  // Bottom left of our picture.
-  p_glVertex2f(dest_rect->x, dest_rect->y + dest_rect->h);
+  p_glVertex2f((float)dest_rect->x, (float)dest_rect->y + dest_rect->h);
 
   p_glTexCoord2f((float)rect->w / tmpwidth, 1.0f * rect->h / tmpheight); // Bottom right of our picture.
-  p_glVertex2f(dest_rect->x + dest_rect->w, dest_rect->y + dest_rect->h);
+  p_glVertex2f((float)dest_rect->x + dest_rect->w, (float)dest_rect->y + dest_rect->h);
 
   p_glTexCoord2f((float)rect->w / tmpwidth, 0.0f);    // Top right of our picture.
-  p_glVertex2f(dest_rect->x + dest_rect->w,  dest_rect->y);
+  p_glVertex2f((float)dest_rect->x + dest_rect->w,  (float)dest_rect->y);
 
   p_glTexCoord2f(0.0f, 0.0f);     // Top left of our picture.
   p_glVertex2f(dest_rect->x, dest_rect->y);
@@ -293,13 +293,13 @@ void BlitOpenGL(SDL_Surface *src_surface, const SDL_Rect *src_rect, const SDL_Re
   if(CurGame->rotated == MDFN_ROTATE90)
   {
    p_glTexCoord2f(0, 0);
-    p_glVertex2f(dest_rect->x, dest_rect->y + dest_rect->h);
+    p_glVertex2f((float)dest_rect->x, (float)dest_rect->y + dest_rect->h);
 
    p_glTexCoord2f(0, (float)src_rect->h / tmpheight);
-    p_glVertex2f(dest_rect->x + dest_rect->w, dest_rect->y + dest_rect->h);
+    p_glVertex2f((float)dest_rect->x + dest_rect->w, (float)dest_rect->y + dest_rect->h);
 
    p_glTexCoord2f(1.0f * right / tmpwidth, (float)src_rect->h / tmpheight);
-    p_glVertex2f(dest_rect->x + dest_rect->w,  dest_rect->y);
+    p_glVertex2f((float)dest_rect->x + dest_rect->w,  (float)dest_rect->y);
 
    p_glTexCoord2f(1.0f * right / tmpwidth, 0);
     p_glVertex2f(dest_rect->x,  dest_rect->y);
@@ -307,11 +307,11 @@ void BlitOpenGL(SDL_Surface *src_surface, const SDL_Rect *src_rect, const SDL_Re
   else
   {
    p_glTexCoord2f(1.0f * right / tmpwidth, (float)src_rect->h / tmpheight);
-    p_glVertex2f(dest_rect->x, dest_rect->y + dest_rect->h);
+    p_glVertex2f((float)dest_rect->x, (float)dest_rect->y + dest_rect->h);
    p_glTexCoord2f(1.0f * right / tmpwidth, 0);
-    p_glVertex2f(dest_rect->x + dest_rect->w, dest_rect->y + dest_rect->h);
+    p_glVertex2f((float)dest_rect->x + dest_rect->w, (float)dest_rect->y + dest_rect->h);
    p_glTexCoord2f(0, 0);
-    p_glVertex2f(dest_rect->x + dest_rect->w,  dest_rect->y);
+    p_glVertex2f((float)dest_rect->x + dest_rect->w,  (float)dest_rect->y);
    p_glTexCoord2f(0, (float)src_rect->h / tmpheight);
     p_glVertex2f(dest_rect->x,  dest_rect->y);
   }
@@ -321,9 +321,9 @@ void BlitOpenGL(SDL_Surface *src_surface, const SDL_Rect *src_rect, const SDL_Re
   p_glTexCoord2f(0, (1.0f * src_rect->h) / tmpheight);
    p_glVertex2f(dest_rect->x, twitchy + dest_rect->y + dest_rect->h);
    p_glTexCoord2f(1.0f * right / tmpwidth, (1.0f * src_rect->h) / tmpheight);
-  p_glVertex2f(dest_rect->x + dest_rect->w, twitchy + dest_rect->y + dest_rect->h);
+  p_glVertex2f((float)dest_rect->x + dest_rect->w, (float)twitchy + dest_rect->y + dest_rect->h);
   p_glTexCoord2f(1.0f * right / tmpwidth, 0);
-   p_glVertex2f(dest_rect->x + dest_rect->w, twitchy + dest_rect->y);
+   p_glVertex2f((float)dest_rect->x + dest_rect->w, (float)twitchy + dest_rect->y);
 
   p_glTexCoord2f(0, 0);
    p_glVertex2f(dest_rect->x, twitchy + dest_rect->y);
@@ -361,13 +361,13 @@ void BlitOpenGL(SDL_Surface *src_surface, const SDL_Rect *src_rect, const SDL_Re
   p_glBegin(GL_QUADS);
 
   p_glTexCoord2f(0.0f, 1.0f * sl_bottom/256);  // Bottom left of our picture.
-  p_glVertex2f(dest_rect->x, dest_rect->y + dest_rect->h);
+  p_glVertex2f((float)dest_rect->x, (float)dest_rect->y + dest_rect->h);
 
   p_glTexCoord2f(1.0f, 1.0f * sl_bottom/256); // Bottom right of our picture.
-  p_glVertex2f(dest_rect->x + dest_rect->w, dest_rect->y + dest_rect->h);
+  p_glVertex2f((float)dest_rect->x + dest_rect->w, (float)dest_rect->y + dest_rect->h);
 
   p_glTexCoord2f(1.0f, 0.0f);    // Top right of our picture.
-  p_glVertex2f(dest_rect->x + dest_rect->w,  dest_rect->y);
+  p_glVertex2f((float)dest_rect->x + dest_rect->w,  (float)dest_rect->y);
 
   p_glTexCoord2f(0.0f, 0.0f);     // Top left of our picture.
   p_glVertex2f(dest_rect->x,  dest_rect->y);
@@ -574,7 +574,10 @@ int InitOpenGL(int ipolate, int scanlines, std::string pixshader, SDL_Surface *s
   uint8 *buf;
   int x,y;
 
-  using_scanlines = scanlines;
+  if (scanlines)
+	using_scanlines = true;
+  else
+	using_scanlines = false;
 
   p_glBindTexture(GL_TEXTURE_2D, textures[1]);
   p_glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
@@ -609,7 +612,10 @@ int InitOpenGL(int ipolate, int scanlines, std::string pixshader, SDL_Surface *s
 
  p_glBindTexture(GL_TEXTURE_2D, textures[0]);
      
- UsingIP = ipolate;
+ if (ipolate)
+	 UsingIP = true;
+ else
+	 UsingIP = false;
 
  p_glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,ipolate?GL_LINEAR:GL_NEAREST);
  p_glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,ipolate?GL_LINEAR:GL_NEAREST);
