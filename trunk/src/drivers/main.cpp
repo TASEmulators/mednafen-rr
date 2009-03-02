@@ -741,6 +741,19 @@ void DoFrameAdvance(void)
  NeedFPSFrameAdvance = 1;
 }
 
+int FrameAdvanceActive;
+
+int SetFrameAdvanceActive(int value) {
+
+	FrameAdvanceActive = value;
+
+	return(FrameAdvanceActive);
+}
+
+int GetFrameAdvanceActive(void) {
+	return(FrameAdvanceActive);
+}
+
 static int GameLoopPaused = 0;
 
 void DebuggerFudge(void)
