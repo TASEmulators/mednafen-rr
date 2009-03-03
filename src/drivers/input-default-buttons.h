@@ -1,12 +1,41 @@
 // This file should only be included *ONCE* from drivers/input.cpp!!!
 
+/*
+
+Current NESKey Defaults
+
+
+B:	D
+A:	F
+Start:	Enter
+Select: S
+Up:		Up
+Down:	Down
+Left:	Left
+Right:	Right
+
+
+
+  OLD
+
+  Keypad 2	B
+Keypad 3	A
+Enter/Return	Start
+Tab	Select
+Z	Down
+W	Up
+A	Left
+S	Right
+
+  */
+
 
 #define GPZ()   {MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ()}
 static const ButtConfig NESGamePadConfig[4][8]={
         /* Gamepad 1 */
         {
-         MK(KP3), MK(KP2), MK(TAB), MK(RETURN), MK(w),MK(z),
-                MK(a), MK(s)
+         MK(f), MK(d), MK(s), MK(RETURN), MK(UP),MK(DOWN),
+                MK(LEFT), MK(RIGHT)
         },
 
         /* Gamepad 2 */
@@ -44,14 +73,50 @@ static const ButtConfig PCFXPadConfig[2][12]=
         {MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ()}
 };
 
+/*
+
+New
+
+II:		D
+I:		F
+Run		Enter
+Select:	S
+Up:		Up
+Down:	Down
+Left:	Left
+Right:	Right
+
+6 Button Extras:
+
+2/6 mode select: M
+III:	G
+IV:		E
+V:		R
+VI:		T
+
+OLD
+
+Keypad 2	II
+Keypad 3	I
+Enter/Return	Run
+Tab	Select
+W	Up
+Z	Down
+A	Left
+S	Right
+
+
+
+  */
+
 #define GPZ()   {MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ(), MKZ()}
 static const ButtConfig PCEPadConfig[5][13]={
         /* Gamepad 1 */
         {
-         MK(KP3), MK(KP2), MK(TAB), MK(RETURN), MK(w), MK(s), MK(z), MK(a),
+         MK(d), MK(f), MK(s), MK(RETURN), MK(UP), MK(RIGHT), MK(DOWN), MK(LEFT),
 
          // Extra 4 buttons on 6-button pad
-         MK(KP1), MK(KP4), MK(KP5), MK(KP6),
+         MK(g), MK(e), MK(r), MK(t),
 
          // ..and special 2/6 mode select
          MK(m),
