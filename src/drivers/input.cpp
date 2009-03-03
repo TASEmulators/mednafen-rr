@@ -414,39 +414,47 @@ static void BuildPortInfo(MDFNGI *gi)
    PortData[NumPorts] = NULL;
   else
   {
-   PortData[NumPorts] = malloc(PortDataSize[NumPorts]);
-   memset(PortData[NumPorts], 0, PortDataSize[NumPorts]);
+	  PortData[NumPorts] = malloc(PortDataSize[NumPorts]);
+	  memset(PortData[NumPorts], 0, PortDataSize[NumPorts]);
   }
-
+  
   // Now, search for exclusion buttons
   if(!zedevice->PortExpanderDeviceInfo)
-  for(int x = 0; x < zedevice->NumInputs; x++)
-  {
-   if(zedevice->IDII[x].Type == IDIT_BUTTON || zedevice->IDII[x].Type == IDIT_BUTTON_CAN_RAPID)
-   {
-    if(zedevice->IDII[x].ExcludeName)
-    {
-     int bo = 0xFFFFFFFF;
+	  for(int x = 0; x < zedevice->NumInputs; x++)
+	  {
+		  if(zedevice->IDII[x].Type == IDIT_BUTTON || zedevice->IDII[x].Type == IDIT_BUTTON_CAN_RAPID)
+		  {
+			  if(zedevice->IDII[x].ExcludeName)
+			  {
 
-     for(unsigned int sub_x = 0; sub_x < PortButtSettingNames[NumPorts].size(); sub_x++)
-     {
-      if(!strcasecmp(zedevice->IDII[x].ExcludeName, strrchr(PortButtSettingNames[NumPorts][sub_x], '.') + 1 ))
-       bo = PortButtBitOffsets[NumPorts][sub_x];
-     }
-     //printf("%s %s %d\n", zedevice->IDII[x].SettingName, zedevice->IDII[x].ExcludeName, bo);
-     PortButtExclusionBitOffsets[NumPorts].push_back(bo);
-    }
-    else
-     PortButtExclusionBitOffsets[NumPorts].push_back(0xFFFFFFFF);
 
-    if(zedevice->IDII[x].Type == IDIT_BUTTON_CAN_RAPID) // FIXME in the future, but I doubt we'll ever have rapid-fire directional buttons!
-     PortButtExclusionBitOffsets[NumPorts].push_back(0xFFFFFFFF);
+				  int bo = 0xFFFFFFFF;
+				  
+				  for(unsigned int sub_x = 0; sub_x < PortButtSettingNames[NumPorts].size(); sub_x++)
+				  {
+					  				  //let people enable/disable lr and ud exclusion
+				  if(MDFN_GetSettingB("allowlrud") == 0) {
+					  if(!strcasecmp(zedevice->IDII[x].ExcludeName, strrchr(PortButtSettingNames[NumPorts][sub_x], '.') + 1 ))
+						  bo = PortButtBitOffsets[NumPorts][sub_x];
+					  	  }
+				  }
+				  //printf("%s %s %d\n", zedevice->IDII[x].SettingName, zedevice->IDII[x].ExcludeName, bo);
+				  PortButtExclusionBitOffsets[NumPorts].push_back(bo);
 
-   }
-   else if(zedevice->IDII[x].Type == IDIT_BUTTON_BYTE)
-    PortButtExclusionBitOffsets[NumPorts].push_back(0xFFFFFFFF);
+			
 
-  }
+			  }
+			  else
+				  PortButtExclusionBitOffsets[NumPorts].push_back(0xFFFFFFFF);
+			  
+			  if(zedevice->IDII[x].Type == IDIT_BUTTON_CAN_RAPID) // FIXME in the future, but I doubt we'll ever have rapid-fire directional buttons!
+				  PortButtExclusionBitOffsets[NumPorts].push_back(0xFFFFFFFF);
+			  
+		  }
+		  else if(zedevice->IDII[x].Type == IDIT_BUTTON_BYTE)
+			  PortButtExclusionBitOffsets[NumPorts].push_back(0xFFFFFFFF);
+		  
+	  }
 
   //numports refers to the number of ports supported by the console
   //for example PCE supports 5
@@ -1240,80 +1248,80 @@ static void KeyboardCommands(void)
    if(CK_Check(CK_TL4))
     MDFNI_ToggleLayer(3);
    if(CK_Check(CK_TL5))
-    MDFNI_ToggleLayer(4);
+	   MDFNI_ToggleLayer(4);
    if(CK_Check(CK_TL6))
-    MDFNI_ToggleLayer(5);
+	   MDFNI_ToggleLayer(5);
    if(CK_Check(CK_TL7))
-    MDFNI_ToggleLayer(6);
+	   MDFNI_ToggleLayer(6);
    if(CK_Check(CK_TL8))
-    MDFNI_ToggleLayer(7);
+	   MDFNI_ToggleLayer(7);
    if(CK_Check(CK_TL9))
-    MDFNI_ToggleLayer(8);
-
+	   MDFNI_ToggleLayer(8);
+   
    if(CK_Check(CK_frame_advance_speedINC))
    {
-
- 
-MDFN_DispMessage((UTF8 *)_("Speed %d"),FrameAdvanceSpeed);
-  //  MDFNI_SelectState(666 + 1);
-
-//the decrease in speed starts to get too small afer a point, so we increase by 2 in that case
-
-if(FrameAdvanceSpeed < 4) {
-
-FrameAdvanceSpeed = FrameAdvanceSpeed + 1;
-}
-else {
-FrameAdvanceSpeed = FrameAdvanceSpeed + 2;
-}
-
+	   
+	   
+	   MDFN_DispMessage((UTF8 *)_("Speed %d"),FrameAdvanceSpeed);
+	   //  MDFNI_SelectState(666 + 1);
+	   
+	   //the decrease in speed starts to get too small afer a point, so we increase by 2 in that case
+	   
+	   if(FrameAdvanceSpeed < 4) {
+		   
+		   FrameAdvanceSpeed = FrameAdvanceSpeed + 1;
+	   }
+	   else {
+		   FrameAdvanceSpeed = FrameAdvanceSpeed + 2;
+	   }
+	   
    }
-
+   
    if(CK_Check(CK_frame_advance_speedDEC))
    {
-
-
-//the increase in speed starts to get too small afer a point, so we decrease by 2 in that case
-
-if(FrameAdvanceSpeed < 5) {
-
-FrameAdvanceSpeed = FrameAdvanceSpeed - 1;
-}
-else {
-FrameAdvanceSpeed = FrameAdvanceSpeed - 2;
-}
-
-
-//FrameAdvanceSpeed = FrameAdvanceSpeed -1;
-MDFN_DispMessage((UTF8 *)_("Speed %d"),FrameAdvanceSpeed);
-}
-
+	   
+	   
+	   //the increase in speed starts to get too small afer a point, so we decrease by 2 in that case
+	   
+	   if(FrameAdvanceSpeed < 5) {
+		   
+		   FrameAdvanceSpeed = FrameAdvanceSpeed - 1;
+	   }
+	   else {
+		   FrameAdvanceSpeed = FrameAdvanceSpeed - 2;
+	   }
+	   
+	   
+	   //FrameAdvanceSpeed = FrameAdvanceSpeed -1;
+	   MDFN_DispMessage((UTF8 *)_("Speed %d"),FrameAdvanceSpeed);
+   }
+   
    // MDFNI_SelectState(666 - 1);
    
   }
-
+  
   if(CK_Check(CK_RESET))
   {
-	LockGameMutex(1);
-	MDFNI_Reset();
-	LockGameMutex(0);
-	Debugger_ForceStepIfStepping();
+	  LockGameMutex(1);
+	  MDFNI_Reset();
+	  LockGameMutex(0);
+	  Debugger_ForceStepIfStepping();
   }
-
+  
   if(CK_Check(CK_POWER))
   {
-	LockGameMutex(1);
-	MDFNI_Power();
-	LockGameMutex(0);
-	Debugger_ForceStepIfStepping();
+	  LockGameMutex(1);
+	  MDFNI_Power();
+	  LockGameMutex(0);
+	  Debugger_ForceStepIfStepping();
   }
-
+  
   if(CurGame->GameType == GMT_ARCADE)
   {
-	#ifdef WANT_NES_EMU
-	if(CK_Check(CK_INSERT_COIN))
-		MDFNI_VSUniCoin();
-	if(CK_Check(CK_TOGGLE_DIPVIEW))
+#ifdef WANT_NES_EMU
+	  if(CK_Check(CK_INSERT_COIN))
+		  MDFNI_VSUniCoin();
+	  if(CK_Check(CK_TOGGLE_DIPVIEW))
         {
 	 DIPS^=1;
 	 MDFNI_VSUniToggleDIPView();
@@ -1343,262 +1351,262 @@ MDFN_DispMessage((UTF8 *)_("Speed %d"),FrameAdvanceSpeed);
      barcoder ^= 1;
      if(!barcoder)
      {
-      if(!strcmp(PortDevice[4]->ShortName, "bworld"))
-      {
-       uint8 *meowptr = (uint8 *)PortData[4];
-
-       memset(meowptr + 1, 0, 13);
-       meowptr[0] = 1;
-
-       strncpy((char*)meowptr + 1, (char *)bbuf, 13);
-      }
-      else
-       MDFNI_DatachSet(bbuf);
-      MDFNI_DispMessage((UTF8 *)_("Barcode Entered"));
+		 if(!strcmp(PortDevice[4]->ShortName, "bworld"))
+		 {
+			 uint8 *meowptr = (uint8 *)PortData[4];
+			 
+			 memset(meowptr + 1, 0, 13);
+			 meowptr[0] = 1;
+			 
+			 strncpy((char*)meowptr + 1, (char *)bbuf, 13);
+		 }
+		 else
+			 MDFNI_DatachSet(bbuf);
+		 MDFNI_DispMessage((UTF8 *)_("Barcode Entered"));
      } 
      else { bbuft = 0; MDFNI_DispMessage((UTF8 *)_("Enter Barcode"));}
     }
    } 
    else 
-    barcoder = 0;
-
-   #define SSM(x) { if(bbuft < 13) {bbuf[bbuft++] = '0' + x; bbuf[bbuft] = 0;} MDFNI_DispMessage((UTF8 *)_("Barcode: %s"),bbuf); }
-
-   DIPSless:
-
+	   barcoder = 0;
+   
+#define SSM(x) { if(bbuft < 13) {bbuf[bbuft++] = '0' + x; bbuf[bbuft] = 0;} MDFNI_DispMessage((UTF8 *)_("Barcode: %s"),bbuf); }
+   
+DIPSless:
+   
    if(barcoder)
    {
-    if(CK_Check(CK_0)) SSM(0);
-    if(CK_Check(CK_1)) SSM(1);
-    if(CK_Check(CK_2)) SSM(2);
-    if(CK_Check(CK_3)) SSM(3);
-    if(CK_Check(CK_4)) SSM(4);
-    if(CK_Check(CK_5)) SSM(5);
-    if(CK_Check(CK_6)) SSM(6);
-    if(CK_Check(CK_7)) SSM(7);
-    if(CK_Check(CK_8)) SSM(8);
-    if(CK_Check(CK_9)) SSM(9);
+	   if(CK_Check(CK_0)) SSM(0);
+	   if(CK_Check(CK_1)) SSM(1);
+	   if(CK_Check(CK_2)) SSM(2);
+	   if(CK_Check(CK_3)) SSM(3);
+	   if(CK_Check(CK_4)) SSM(4);
+	   if(CK_Check(CK_5)) SSM(5);
+	   if(CK_Check(CK_6)) SSM(6);
+	   if(CK_Check(CK_7)) SSM(7);
+	   if(CK_Check(CK_8)) SSM(8);
+	   if(CK_Check(CK_9)) SSM(9);
    }
    else
-   #endif
+#endif
    {
-    if(CurGame->GameType != GMT_PLAYER)
-    {
-	//State Selecting Hotkeys
-		//
-
-		//
-
-		if(CK_Check(CK_SS0)) {
-		MDFNI_TellState(0);
-}
-
-if(CK_Check(CK_SS1)) {
-MDFNI_TellState(1);
-}
-
-if(CK_Check(CK_SS2)) {
-MDFNI_TellState(2);
-}
-
-if(CK_Check(CK_SS3)) {
-MDFNI_TellState(3);
-}
-
-if(CK_Check(CK_SS4)) {
-MDFNI_TellState(4);
-}
-
-if(CK_Check(CK_SS5)) {
-MDFNI_TellState(5);
-}
-
-if(CK_Check(CK_SS6)) {
-MDFNI_TellState(6);
-}
-
-if(CK_Check(CK_SS7)) {
-MDFNI_TellState(7);
-}
-
-if(CK_Check(CK_SS8)) {
-MDFNI_TellState(8);
-}
-
-if(CK_Check(CK_SS9)) {
-MDFNI_TellState(9);
-}
-
-////
-//// State Loading Hotkeys
-///
-if(CK_Check(CK_0)) {
-MDFNI_SelectStateSimple(0);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_1)) {
-MDFNI_SelectStateSimple(1);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_2)) {
-MDFNI_SelectStateSimple(2);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_3)) {
-MDFNI_SelectStateSimple(3);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_4)) {
-MDFNI_SelectStateSimple(4);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_5)) {
-MDFNI_SelectStateSimple(5);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_6)) {
-MDFNI_SelectStateSimple(6);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_7)) {
-MDFNI_SelectStateSimple(7);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_8)) {
-MDFNI_SelectStateSimple(8);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-if(CK_Check(CK_9)) {
-MDFNI_SelectStateSimple(9);
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-//save/load current state
-
-if(CK_Check(CK_SAVE_CURRENT_STATE)) {
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_LOAD_CURRENT_STATE)) {
-LockGameMutex(1);
-MDFNI_LoadState(NULL, NULL);
-Debugger_ForceStepIfStepping();
-LockGameMutex(0);
-}
-
-//
-//state saving hotkeys
-//
-
-if(CK_Check(CK_M0)) {
-MDFNI_SelectStateSimple(0);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M1)) {
-MDFNI_SelectStateSimple(1);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M2)) {
-MDFNI_SelectStateSimple(2);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M3)) {
-MDFNI_SelectStateSimple(3);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M4)) {
-MDFNI_SelectStateSimple(4);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M5)) {
-MDFNI_SelectStateSimple(5);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M6)) {
-MDFNI_SelectStateSimple(6);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M6)) {
-MDFNI_SelectStateSimple(6);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M7)) {
-MDFNI_SelectStateSimple(7);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M8)) {
-MDFNI_SelectStateSimple(8);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M8)) {
-MDFNI_SelectStateSimple(8);
-pending_save_state = 1;
-}
-
-if(CK_Check(CK_M9)) {
-MDFNI_SelectStateSimple(9);
-pending_save_state = 1;
-}
-
+	   if(CurGame->GameType != GMT_PLAYER)
+	   {
+		   //State Selecting Hotkeys
+		   //
+		   
+		   //
+		   
+		   if(CK_Check(CK_SS0)) {
+			   MDFNI_TellState(0);
+		   }
+		   
+		   if(CK_Check(CK_SS1)) {
+			   MDFNI_TellState(1);
+		   }
+		   
+		   if(CK_Check(CK_SS2)) {
+			   MDFNI_TellState(2);
+		   }
+		   
+		   if(CK_Check(CK_SS3)) {
+			   MDFNI_TellState(3);
+		   }
+		   
+		   if(CK_Check(CK_SS4)) {
+			   MDFNI_TellState(4);
+		   }
+		   
+		   if(CK_Check(CK_SS5)) {
+			   MDFNI_TellState(5);
+		   }
+		   
+		   if(CK_Check(CK_SS6)) {
+			   MDFNI_TellState(6);
+		   }
+		   
+		   if(CK_Check(CK_SS7)) {
+			   MDFNI_TellState(7);
+		   }
+		   
+		   if(CK_Check(CK_SS8)) {
+			   MDFNI_TellState(8);
+		   }
+		   
+		   if(CK_Check(CK_SS9)) {
+			   MDFNI_TellState(9);
+		   }
+		   
+		   ////
+		   //// State Loading Hotkeys
+		   ///
+		   if(CK_Check(CK_0)) {
+			   MDFNI_SelectStateSimple(0);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_1)) {
+			   MDFNI_SelectStateSimple(1);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_2)) {
+			   MDFNI_SelectStateSimple(2);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_3)) {
+			   MDFNI_SelectStateSimple(3);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_4)) {
+			   MDFNI_SelectStateSimple(4);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_5)) {
+			   MDFNI_SelectStateSimple(5);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_6)) {
+			   MDFNI_SelectStateSimple(6);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_7)) {
+			   MDFNI_SelectStateSimple(7);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_8)) {
+			   MDFNI_SelectStateSimple(8);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   if(CK_Check(CK_9)) {
+			   MDFNI_SelectStateSimple(9);
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   //save/load current state
+		   
+		   if(CK_Check(CK_SAVE_CURRENT_STATE)) {
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_LOAD_CURRENT_STATE)) {
+			   LockGameMutex(1);
+			   MDFNI_LoadState(NULL, NULL);
+			   Debugger_ForceStepIfStepping();
+			   LockGameMutex(0);
+		   }
+		   
+		   //
+		   //state saving hotkeys
+		   //
+		   
+		   if(CK_Check(CK_M0)) {
+			   MDFNI_SelectStateSimple(0);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M1)) {
+			   MDFNI_SelectStateSimple(1);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M2)) {
+			   MDFNI_SelectStateSimple(2);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M3)) {
+			   MDFNI_SelectStateSimple(3);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M4)) {
+			   MDFNI_SelectStateSimple(4);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M5)) {
+			   MDFNI_SelectStateSimple(5);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M6)) {
+			   MDFNI_SelectStateSimple(6);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M6)) {
+			   MDFNI_SelectStateSimple(6);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M7)) {
+			   MDFNI_SelectStateSimple(7);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M8)) {
+			   MDFNI_SelectStateSimple(8);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M8)) {
+			   MDFNI_SelectStateSimple(8);
+			   pending_save_state = 1;
+		   }
+		   
+		   if(CK_Check(CK_M9)) {
+			   MDFNI_SelectStateSimple(9);
+			   pending_save_state = 1;
+		   }
+		   
     }
    }
-   #undef SSM
+#undef SSM
  }
 }
 
 void MDFND_UpdateInput(void)
 {
- static unsigned int rapid=0;
- int mouse_x, mouse_y;
+	static unsigned int rapid=0;
+	int mouse_x, mouse_y;
 
  MouseData[2] = SDL_GetMouseState(&mouse_x,&mouse_y);
  PtoV(&mouse_x, &mouse_y);

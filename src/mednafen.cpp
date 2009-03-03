@@ -86,6 +86,7 @@ static MDFNSetting MednafenSettings[] =
   { "pause", gettext_noop("Start the emulator paused"), MDFNST_BOOL, "0" },
   { "loadstate", gettext_noop("Load the specified state"), MDFNST_STRING, "" },
   { "readonly", gettext_noop("Start the emulator in read only mode"), MDFNST_BOOL, "1" },
+  { "allowlrud", gettext_noop("Enable/Disable button exclusion"), MDFNST_BOOL, "0" },
   //{ "recordmov", gettext_noop("Path to the movie to be recorded to"), MDFNST_STRING, "recordmov PATH NOT SET" },
 
 
@@ -890,6 +891,10 @@ void MDFNI_ToggleLayer(int which)
    MDFN_DispMessage((UTF8*)_("%s disabled."), _(goodies));
  }
 }
+
+//initialization, not regular emulation
+//however this sets up a pointer, which points to another pointer, which.....
+//that eventually gets you to the emulated console
 
 void MDFNI_SetInput(int port, const char *type, void *ptr, uint32 ptr_len_thingy)
 {
