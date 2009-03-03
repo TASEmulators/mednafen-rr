@@ -459,6 +459,13 @@ void setreadonly(void) {
 
 }
 
+
+void setreadonlycli(int value) {
+
+	readonly = value;
+
+}
+
 //gets the total number of frames to the hud
 
 int DisplayTotalFrames(void) {

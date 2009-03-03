@@ -85,6 +85,7 @@ static MDFNSetting MednafenSettings[] =
   { "play", gettext_noop("Start playing the current movie immediately on startup"), MDFNST_BOOL, "0" },
   { "pause", gettext_noop("Start the emulator paused"), MDFNST_BOOL, "0" },
   { "loadstate", gettext_noop("Load the specified state"), MDFNST_STRING, "" },
+  { "readonly", gettext_noop("Start the emulator in read only mode"), MDFNST_BOOL, "1" },
   //{ "recordmov", gettext_noop("Path to the movie to be recorded to"), MDFNST_STRING, "recordmov PATH NOT SET" },
 
 
@@ -537,6 +538,10 @@ int alreadyplayed;
 //so that the emulator only pauses on startup
 int alreadypaused;
 
+
+//so that your readonly command line setting is only done once
+int alreadyreadonly;
+
 void MDFNI_Emulate(EmulateSpecStruct *espec) //uint32 *pXBuf, MDFN_Rect *LineWidths, int16 **SoundBuf, int32 *SoundBufSize, int skip, float soundmultiplier)
 {
 
@@ -557,6 +562,15 @@ incFrameCounter();
 DoPause();
 alreadypaused = 1;
 
+ }
+
+ if(alreadyreadonly == 0)  {
+
+	 int tempvalue; 
+	 tempvalue = MDFN_GetSettingB("readonly");
+
+	 setreadonlycli(tempvalue);
+	 alreadyreadonly = 1;
  }
 
  //for loading a movie upon start
