@@ -11,6 +11,10 @@
 
 #include "huc6280.h"
 
+int GetLagFlag(void);
+void SetLagFlag(int number); 
+
+extern char lagFlag;
 
 extern bool PCE_InDebug;
 extern bool PCE_ACEnabled; // Arcade Card emulation enabled?

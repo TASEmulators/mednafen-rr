@@ -50,6 +50,7 @@
 #include	"tests.h"
 #include	"video/vblur.h"
 #include    "settings-driver.h"
+#include    "pce/pce.h"
 
 static const char *CSD_vblur = gettext_noop("Blur each frame with the last frame.");
 static const char *CSD_vblur_accum = gettext_noop("Accumulate color data rather than discarding it.");
@@ -543,10 +544,17 @@ int alreadypaused;
 //so that your readonly command line setting is only done once
 int alreadyreadonly;
 
+int templagFlag;
+
+bool retjustLagged(void) {
+	return(justLagged); 
+}
+
+
 void MDFNI_Emulate(EmulateSpecStruct *espec) //uint32 *pXBuf, MDFN_Rect *LineWidths, int16 **SoundBuf, int32 *SoundBufSize, int skip, float soundmultiplier)
 {
 
-
+SetLagFlag(1); 
 incFrameCounter();
 
 
@@ -651,7 +659,20 @@ alreadypaused = 1;
   }
   MDFN_WriteWaveData(*(espec->SoundBuf), *(espec->SoundBufSize)); /* This function will just return if sound recording is off. */
  }
+ if (GetLagFlag() == 1) 
+	{
+		lagCounter++;
+		justLagged = true;
+	}
+	else justLagged = false;
 }
+
+int GetlagCounter(void) {
+
+	return(lagCounter);
+}
+
+
 
 // This function should only be called for state rewinding.
 // FIXME:  Add a macro for SFORMAT structure access instead of direct access
