@@ -127,7 +127,9 @@ static INLINE bool CheckLM(int n)
 
 uint8 INPUT_Read(unsigned int A)
 {
+ 
  uint8 ret = 0xF;
+ SetLagFlag(0);
  int tmp_ri = read_index;
 
  if(tmp_ri > 4)

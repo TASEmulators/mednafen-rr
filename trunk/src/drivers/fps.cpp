@@ -221,10 +221,43 @@ snprintf(tempcount, 64, "%d", retFrameCounter());
 
 //frame counter
 
+//draw white
+if(retjustLagged() == false) {
+
 DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+}
 
-// DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)blitfps, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+//draw red
 
+if(retjustLagged() == true) {
+
+DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount, MK_COLOR_A(FPSSurface, 0xFF, 0x00, 0x00, 0xFF), FALSE, TRUE);
+
+}
+
+static int lagCounter = 0;
+
+char templag[64];
+
+snprintf(templag, 64, "%d", GetlagCounter());
+
+//lagcounter
+
+
+
+//draw white
+if(retjustLagged() == false) {
+
+ DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)templag, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+}
+
+//draw red
+
+if(retjustLagged() == true) {
+
+DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)templag, MK_COLOR_A(FPSSurface, 0xFF, 0x00, 0x00, 0xFF), FALSE, TRUE);
+
+}
 //the final container for all the stuff
 //resizing this will get you a "zoomed in" fps box
 

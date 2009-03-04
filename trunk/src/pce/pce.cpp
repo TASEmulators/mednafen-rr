@@ -176,6 +176,8 @@ static DECLFW(BaseRAMWrite)
  BaseRAM[A & 0x1FFF] = V;
 }
 
+char lagFlag;
+
 static DECLFR(IORead)
 {
  A &= 0x1FFF;
@@ -199,7 +201,7 @@ static DECLFR(IORead)
   case 0x1000: if(HuCPU.in_block_move)
                 return(0);
 	       {
-	        uint8 ret = INPUT_Read(A);
+	            uint8 ret = INPUT_Read(A);
                 if(!PCE_InDebug) PCEIODataBuffer = ret;
                 return(ret);
                }
@@ -228,6 +230,14 @@ static DECLFR(IORead)
   //default: printf("Eeep\n");break;
  }
  return(0xFF);
+}
+
+int GetLagFlag(void) {
+	return(lagFlag);
+}
+
+void SetLagFlag(int number) {
+	lagFlag = number;
 }
 
 static DECLFW(IOWrite)

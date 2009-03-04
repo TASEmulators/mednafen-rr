@@ -24,9 +24,17 @@ typedef struct {
 
 extern MDFNS FSettings;
 
+static int lagCounter;
+
+int GetlagCounter(void);
+
 void MDFN_PrintError(const char *format, ...);
 void MDFN_printf(const char *format, ...);
 void MDFN_DispMessage(UTF8 *format, ...);
+
+static bool justLagged = false;
+
+bool retjustLagged(void);
 
 class MDFNException
 {
