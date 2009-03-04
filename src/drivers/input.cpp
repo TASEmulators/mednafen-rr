@@ -1032,23 +1032,32 @@ static void KeyboardCommands(void)
 
   if(!MDFNDnetplay)
   {
+
+	  if(FrameAdvanceCounter > FrameAdvanceSpeed) { 
 		CK_CheckFrameAdvance();
+		FrameAdvanceCounter = 0;
+	  }
 
+FrameAdvanceCounter++;
 
-
+//fps meter junk
+if(CK_CheckActive(CK_ADVANCE_FRAME)) {
+SetFrameAdvanceActive(1);
+}
+else
+ SetFrameAdvanceActive(0);
 
 
 	  //this code is shit
 	  //it is apparently dependent on the computer's speed
 	  //but it works for me
-	/*  if(CK_CheckActive(CK_ADVANCE_FRAME)) {
-
-		  SetFrameAdvanceActive(1);
+	/*  
+		  
 
 
 		  //if the number of times that the key has been checked and is active is larger than our frame advance speed number
 		  //this is to give multiple speeds for advancing
-		  if(FrameAdvanceCounter > FrameAdvanceSpeed) { 
+		  
 
 			  //the key hasn't been pressed yet
 			  //we advance a frame immediately
@@ -1061,13 +1070,13 @@ static void KeyboardCommands(void)
 				  DoFrameAdvance();
 			  }
 
-			  FrameAdvanceCounter = 0;
+			  
 		  }
-		  FrameAdvanceCounter++;
+		  
 		  FrameAdvanceDelayCounter++;
 	  }
 	  else
-		  SetFrameAdvanceActive(0);
+		 
 */
 	  if(CK_Check(CK_RUN_NORMAL))
 
