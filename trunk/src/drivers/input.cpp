@@ -1878,6 +1878,25 @@ static void subcon_begin(std::vector<ButtConfig> &bc)
  jitter_correct = 0;
 }
 
+//make configuring joypads a little less cryptic
+
+char ConfigInfo[30];
+
+void RetConfigStr(int snooty) {
+
+	char confirm[60] = " - Confirm selection by pressing again";
+	char press[30] = " - Press desired key";
+
+	if(snooty > 1) {
+		sprintf(ConfigInfo, "%s", confirm);
+	//ConfigInfo = confirm;
+	}
+	else
+		sprintf(ConfigInfo, "%s", press);
+		//ConfigInfo = press;
+
+}
+
 /* Configures an individual virtual button. */
 static int subcon(const char *text, std::vector<ButtConfig> &bc, int commandkey)
 {
@@ -1885,7 +1904,8 @@ static int subcon(const char *text, std::vector<ButtConfig> &bc, int commandkey)
 
  while(1)
  {
-  sprintf(buf,"%s (%d)",text,subcon_wc+1);
+   RetConfigStr(subcon_wc+1);
+  sprintf(buf,"%s (%d) %s",text,subcon_wc+1, ConfigInfo);
   MDFNI_DispMessage((UTF8*)buf);
 
   if(subcon_tb != subcon_wc)
@@ -1941,25 +1961,6 @@ static void ConfigDeviceBegin(void)
  cd_lx = -1;
 }
 
-//make configuring joypads a little less cryptic
-
-char ConfigInfo[30];
-
-void RetConfigStr(int snooty) {
-
-	char confirm[30] = " - Confirm selection";
-	char press[30] = " - Press desired key";
-
-	if(snooty > 1) {
-		sprintf(ConfigInfo, "%s", confirm);
-	//ConfigInfo = confirm;
-	}
-	else
-		sprintf(ConfigInfo, "%s", press);
-		//ConfigInfo = press;
-
-}
-
 int ConfigDevice(int arg)
 {
  char buf[256];
@@ -1979,12 +1980,10 @@ int ConfigDevice(int arg)
   // For Lynx, GB, GBA, NGP, WonderSwan(especially wonderswan!)
   //if(!strcasecmp(PortDevice[arg]->ShortName, "builtin")) // && !arg)
 
-RetConfigStr(subcon_wc + 1);
-
   if(NumPorts == 1 && PortPossibleDevices[CurGame->shortname][0].size() == 1)
    sprintf(buf, "%s", PortButtons[arg][snooty]);
   else
-   sprintf(buf, "%s %d: %s %s", PortDevice[arg]->FullName, arg + 1, PortButtons[arg][snooty], ConfigInfo);
+   sprintf(buf, "%s %d: %s ", PortDevice[arg]->FullName, arg + 1, PortButtons[arg][snooty]);
 
   if(cd_x != cd_lx)
   {
