@@ -704,6 +704,45 @@ static int CK_Check(CommandKey which)
  return(0);
 }
 
+int FrameAdvanceLastState = 0;
+int FrameAdvanceTimeLastPressed = 0;
+int AdvancedOnceAlready = 0;
+
+static int CK_CheckFrameAdvance(void)
+{
+	int last = FrameAdvanceLastState;
+	int tmp_ckdelay = 400;
+
+	if((FrameAdvanceLastState = DTestButtonCombo(CKeysBC[CK_ADVANCE_FRAME], keys)))
+	{
+		if(!last)
+			FrameAdvanceTimeLastPressed = CurTicks;
+	}
+	else {
+		FrameAdvanceTimeLastPressed = 0xFFFFFFFF;
+		AdvancedOnceAlready = 0;
+		return(0);
+	}
+
+	//curticks == fatlp only if it's pressed for the first time
+	if(CurTicks == FrameAdvanceTimeLastPressed && AdvancedOnceAlready == 0)
+	{
+		//FrameAdvanceTimeLastPressed = 0xFFFFFFFF;
+		DoFrameAdvance();
+		AdvancedOnceAlready = 1;
+		return(1);
+	}
+
+	//if we have passed the amount of delay time, start advancing again 
+	if(CurTicks >= (FrameAdvanceTimeLastPressed + tmp_ckdelay) && AdvancedOnceAlready == 1)
+	{
+		//FrameAdvanceTimeLastPressed = 0xFFFFFFFF;
+		DoFrameAdvance();
+		return(1);
+	}
+	return(0);
+}
+
 static int CK_CheckActive(CommandKey which)
 {
  return(DTestButtonCombo(CKeysBC[which], keys));
@@ -993,11 +1032,16 @@ static void KeyboardCommands(void)
 
   if(!MDFNDnetplay)
   {
+		CK_CheckFrameAdvance();
+
+
+
+
 
 	  //this code is shit
 	  //it is apparently dependent on the computer's speed
 	  //but it works for me
-	  if(CK_CheckActive(CK_ADVANCE_FRAME)) {
+	/*  if(CK_CheckActive(CK_ADVANCE_FRAME)) {
 
 		  SetFrameAdvanceActive(1);
 
@@ -1024,7 +1068,7 @@ static void KeyboardCommands(void)
 	  }
 	  else
 		  SetFrameAdvanceActive(0);
-
+*/
 	  if(CK_Check(CK_RUN_NORMAL))
 
 
