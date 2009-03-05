@@ -1059,7 +1059,9 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 			StopPlayback();
 			return;
 		}
+		tempmloc = ftell(fp);
 	}
+	
 	else			/* Recording */
 	{
 		if(MDFN_StateEvilIsRunning())
@@ -1082,7 +1084,7 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 	//uncomment this line to get proper state saving during playback
 	//but it causes a segfault when you try to record
 
-	//tempmloc = ftell(fp); 
+ 
 
 }
 

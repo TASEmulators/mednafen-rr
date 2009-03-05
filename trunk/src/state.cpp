@@ -617,6 +617,8 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 	return(1);
 }
 
+int temporarylength1;
+
 int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *LineWidths)
 {
 	StateMem st;
@@ -664,7 +666,7 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	//to the current position in the movie file stream
 	//to prevent messed up movies with junk data in them
 
-	uint32 templength;
+	
 
 
 	FILE* statemovie;
@@ -682,15 +684,21 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	//truncate movie
 	if(checkcurrent() < 0) {
 
-		templength= getmloc();
+		
+
+		temporarylength1 = 0;
+
+		temporarylength1= getmloc();
+
+		temporarylength1 = temporarylength1 - 256;  //remove header
 
 		smem_seek(&Grabtempmov(), 0, SEEK_SET);
 
-		fwrite(Grabtempmov().data, 1, templength, statemovie);
+		fwrite(Grabtempmov().data, 1, temporarylength1, statemovie);
 
 	}
 
-	//we are not playing back
+	//we are recording
 	//do not truncate the movie
 	else {
 
