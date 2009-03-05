@@ -439,6 +439,8 @@ int getreadonly(void) {
 
 void setreadonly(void) {
 
+	if(!(current > 0)) { //we can only toggle during playback
+
 	//it's a toggle
 
 	if(readonly == 1) {
@@ -456,6 +458,10 @@ void setreadonly(void) {
 
 		MDFN_DispMessage((UTF8 *)_("Read Only"));
 	}
+
+	}
+	else{
+		MDFN_DispMessage((UTF8 *)_("Can't toggle during recording"));}
 
 }
 
