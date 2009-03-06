@@ -116,11 +116,7 @@ void ReadHeader(FILE* headertest) {
 
 	//MEDNAFEN_VERSION_NUMERIC
 
-	std::cout << "Version " << version <<std::endl; //display 1st digit
-
 	version = fgetc(headertest);
-
-	std::cout << "Version " << version <<std::endl; //display 2nd digit
 
 	//compare movie file format version
 
@@ -130,33 +126,17 @@ void ReadHeader(FILE* headertest) {
 
 	movversion = fgetc(headertest);
 
-	std::cout << "MovVersion " << movversion <<std::endl;
-
 	//compare MD5 Sums
 
 	fread(md5_of_rom_used, 1, 16, headertest);
 
 	snprintf(MovieMD5Sum, 16, "%d", md5_of_rom_used);
 
-	//std::cout << "MD5 " << md5_of_rom_used[3] <<std::endl;
-
-	//fread(MovieMD5Sum, sizeof(char), 32, headertest);
-
-	//md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str()
-
 	//update rerecords with value from file
 
 	fseek(headertest, 112, SEEK_SET);
 
 	read32le(&RerecordCount, headertest);
-
-	//fread(RerecordCount, 1, 4, headertest);
-
-	//RerecordCount = read32le(((uint32 *)headertest));
-
-
-
-	//read32le(fuck, headertest);
 
 	//read console - only useful for counting frames
 
@@ -192,15 +172,13 @@ void WriteHeader(FILE* headertest) {
 	//file indicator
 	//MDFNMOVI
 
-	fputc(77, headertest);
-	fputc(68, headertest);
-	fputc(70, headertest);
-	fputc(78, headertest);
-	fputc(77, headertest);
-	fputc(79, headertest);
-	fputc(86, headertest);
-	fputc(73, headertest);
+    static char MDFNMOVI[9] = "MDFNMOVI";
 
+	//snprintf(writeauthor, 32, "%s", author.c_str());
+
+	//strlen so that we don't write a bunch of junk to the file
+
+	fwrite(MDFNMOVI, sizeof(char), strlen(MDFNMOVI), headertest);
 
 	//write mednafen version
 
@@ -215,32 +193,13 @@ void WriteHeader(FILE* headertest) {
 	//write MD5, Filename of the rom
 	//GetMD5AndFilename(headertest);  //up to 64 chars of filename
 
-
-
-//snprintf(MovMD5Sum, 16, "%s"PSS"%s.%d.mcm", eff_dir.c_str(), FileBase.c_str(), id1);
-//MD5
-//snprintf(MovMD5Sum, 33, "%s"PSS"%s.%d.mcm", md5_context::asciistr(MDFNGameInfo->MD5, 0).c_str());
-
 snprintf(MovMD5Sum, 16, "%s", MDFNGameInfo->MD5);
+
+fwrite(MovMD5Sum, sizeof(char), 32, headertest);
 
 //Filename
 
 GetMovFileBase(headertest);
-
-//snprintf(MovRomFilename, 64, "%s", GetMovFileBase());
-
-//snprintf(tmp_path, 4096, "%s"PSS"%s%s.ips",FileBaseDirectory.c_str(),FileBase.c_str(),FileExt.c_str());
-
-//"PSS"%s.%d.mcm
-
-
-fwrite(MovMD5Sum, sizeof(char), 32, headertest);
-
-//fwrite(array, sizeof(char), 10, headertest);
-
-//fwrite(MovRomFilename, sizeof(char), 64, headertest);
-
-
 
 	//Rerecords
 	write32le(RerecordCount, headertest);
@@ -256,8 +215,6 @@ fwrite(MovMD5Sum, sizeof(char), 32, headertest);
 
 
 	//author's name
-
-
 
 	std::string author = MDFN_GetSettingS("author");
 
@@ -279,11 +236,6 @@ fwrite(MovMD5Sum, sizeof(char), 32, headertest);
 		fputc(0, headertest);
 
 	}
-
-
-	//close the file
-
-	//fclose(headertest);
 
 }
 
@@ -439,7 +391,7 @@ int getreadonly(void) {
 
 void setreadonly(void) {
 
-	if(!(current > 0)) { //we can only toggle during playback
+	if(!(current > 0)) { //we can only toggle during playback or stopped
 
 	//it's a toggle
 
@@ -611,6 +563,7 @@ void Writetempmov(StateMem in) {
 
 
 
+int firstopen = 1;
 
 static void StopRecording(void)
 {
@@ -641,11 +594,12 @@ static void StopRecording(void)
 FILE* tempbuffertest3;
 
 	//make sure the setting isn't the default
-	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0) {
+	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0 && firstopen == 1) {
 
 		//if there's a setting, play from the designated movie
 		if(tempbuffertest3=fopen(MDFN_GetSettingS("mov").c_str(),"wb")) {
 		}
+		firstopen = 0;
 	}
 	else
 	{
