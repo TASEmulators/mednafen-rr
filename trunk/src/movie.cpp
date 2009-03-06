@@ -52,15 +52,17 @@
 
 #include "drivers/main.h"
 
-//#include "pce/huc.h"
 
-static uint32 RerecordCount;
-
-uint32 FrameCounter;
 
 uint32 tempmloc;
 
 StateMem temporarymoviebuffer;
+
+
+//movie status stuff
+
+static uint32 RerecordCount;
+uint32 FrameCounter;
 
 int readonly = 1; //movie is read only by default
 
@@ -68,6 +70,10 @@ int isMov = 0; //used to create a second set of savestates for nonrecording/nonp
 //0 = not playing or recording
 
 static int current = 0;		// > 0 for recording, < 0 for playback
+
+///////////////////
+
+
 static FILE* slots[10]={0};
 
 
@@ -75,18 +81,17 @@ static int RecentlySavedMovie = -1;
 static int MovieStatus[10];
 static StateMem RewindBuffer;
 
-char movieauthor[33];
-char MovieMD5Sum[33];
-
-
 static uint32 moviedatasize = 0;
-
-
 char * tempbuffer;
 
 
-uint8  md5_of_rom_used[16];
+//playback related variables
 
+uint8  md5_of_rom_used[16];
+char movieauthor[33];
+char MovieMD5Sum[33];
+
+///////////////////////
 
 //used for starting recording when a state is loaded in read+write playback
 void SetCurrent(int incurrent) {
@@ -97,53 +102,40 @@ void SetCurrent(int incurrent) {
 
 
 
-
+//TODO actual comparisons
 void ReadHeader(FILE* headertest) {
 
 	//check file indicator
 
 
 
-	//compare mednafen version
-
-	uint32 version;
-
+	//compare mednafen version  //MEDNAFEN_VERSION_NUMERIC
+	
 	//read32le(version, headertest);
 
 	fseek(headertest, 8, SEEK_SET);
 
-	version = fgetc(headertest);
-
-	//MEDNAFEN_VERSION_NUMERIC
-
-	version = fgetc(headertest);
-
 	//compare movie file format version
 
 	uint32 movversion;
-
 	fseek(headertest, 12, SEEK_SET);
-
 	movversion = fgetc(headertest);
 
 	//compare MD5 Sums
 
 	fread(md5_of_rom_used, 1, 16, headertest);
-
-	snprintf(MovieMD5Sum, 16, "%d", md5_of_rom_used);
+	snprintf(MovieMD5Sum, 16, "%d", md5_of_rom_used);  //for displaying later
 
 	//update rerecords with value from file
 
 	fseek(headertest, 112, SEEK_SET);
-
 	read32le(&RerecordCount, headertest);
 
-	//read console - only useful for counting frames
+	//read console - only useful for counting frames //probably only useful for the site really
 
 	//read author's name
 
 	fseek(headertest, 121, SEEK_SET);
-
 	fread(movieauthor, sizeof(char), 32, headertest);
 
 	//finished
@@ -425,72 +417,43 @@ void setreadonlycli(int value) {
 }
 
 //gets the total number of frames to the hud
-
 int DisplayTotalFrames(void) {
 
 	return(MovieFrameCount);
 }
 
-
-
-
 //display plackback/recording indicator
-
 //also for indicating whether saveram should be cleared
-
 int MovInd(void) 
-
 {
-
 	if(isMov == 1) 
-
 	{
-
 		if(current > 0 ) //recording
-
 		{
-
 			return(666);	
-
 		}
-
 		else { //playback
-
 			return(333);
-
 		}
-
-
-
-
-
 	}
-
 	else { return(111); }//not recording or playback 
-
 }
 
 
-
+//we want a separate set of savestates for nonrecording/nonplayback so movies don't accidentally get ruined
+//this is done by increasing the savestate number so that the normal ones won't be overwritten
 int retisMov(void) {
 
-	std::cout << "isMov " << isMov <<std::endl;
-
-	//we want a separate set of savestates for nonrecording/nonplayback so movies don't accidentally get ruined
 	if(isMov == 0) {
-
 		return(42);  //this could be any number large enough to make the savestates not conflict
-
 	}
 
 	else {
-
 		return(NULL);
-
 	}
-
 }
 
+//framecounter functions
 
 void incFrameCounter(void) {
 
@@ -504,6 +467,14 @@ uint32 retFrameCounter(void) {
 
 }
 
+uint32 setFrameCounter(uint32 value) {
+
+	FrameCounter = value;
+	//TODO TODO TODO - zero didnt know what this should do
+	return 0;
+	//TODO TODO TODO - zero didnt know what this should do
+}
+
 //used for conditionals in state.cpp depending on whether we are playing back or recording
 int checkcurrent(void) {
 
@@ -512,13 +483,6 @@ int checkcurrent(void) {
 }
 
 
-uint32 setFrameCounter(uint32 value) {
-
-	FrameCounter = value;
-	//TODO TODO TODO - zero didnt know what this should do
-	return 0;
-	//TODO TODO TODO - zero didnt know what this should do
-}
 
 //used for truncating the movie file when a state is saved during playback
 uint32 getmloc(void) {
@@ -565,6 +529,7 @@ void Writetempmov(StateMem in) {
 
 int firstopen = 1;
 
+//when a recording is stopped, write the movie file to disk
 static void StopRecording(void)
 {
 	// MDFNMOV_RecordState(); //saves the ending state into the movie file with playback indicator 0x80 - we don't want this to happen
@@ -599,7 +564,7 @@ static void StopRecording(void)
 		//if there's a setting, play from the designated movie
 		if(tempbuffertest3=fopen(MDFN_GetSettingS("mov").c_str(),"wb")) {
 		}
-		firstopen = 0;
+		firstopen = 0;  //stuff breaks without this
 	}
 	else
 	{
@@ -608,34 +573,24 @@ static void StopRecording(void)
 		tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 666,0).c_str(),"wb");
 	}
 
-
 	smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
-	//	tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
-	//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
-
 
 	//write the header
-
 
 	WriteHeader(tempbuffertest3);
 
 	// write the movie starting at the end of the header
 
 	fseek(tempbuffertest3, 256, SEEK_SET);
-
 	fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest3);
-
 	fclose(tempbuffertest3);
 
-	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
-
+	memset(&temporarymoviebuffer, 0, sizeof(StateMem));  //not sure if this stuff is necessary
 	free(temporarymoviebuffer.data);
-
-
 
 	/////
 
-	isMov = 0;
+	isMov = 0;  //change the hud indicator to stopped
 
 }
 
