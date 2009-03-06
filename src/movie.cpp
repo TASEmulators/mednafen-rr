@@ -53,9 +53,6 @@
 #include "drivers/main.h"
 
 
-
-uint32 tempmloc;
-
 StateMem temporarymoviebuffer;
 
 
@@ -90,6 +87,7 @@ char * tempbuffer;
 uint8  md5_of_rom_used[16];
 char movieauthor[33];
 char MovieMD5Sum[33];
+uint32 tempmloc;//contains ftell of a playing movie file, allowing resuming a movie from a playback-made savestate possible
 
 ///////////////////////
 
@@ -142,7 +140,7 @@ void ReadHeader(FILE* headertest) {
 
 }
 
-
+//increment the record counter
 void AddRerecordCount(void) {
 
 	//only if we are in record mode
@@ -245,53 +243,32 @@ void MovClearAllSRAM(void) {
 /////////////////////////////
 
 
-int NumberOfPorts = 5;  //PCE hardcoded for the moment
 
-uint32 PortDataCacheLength = 2; //PCE hardcoded for the moment
-
-int MovieFrameCount;  //total number of frames in a movie
+int MovieFrameCount;  //total number of frames in a movie that is being played back
 
 
 
 //this is for the sake of properly counting frames
 
+//pce defaults
+int NumberOfPorts = 5;
+uint32 PortDataCacheLength = 2;
+
 void SetNumberOfPorts(void) {
 
-
 	if (strcmp (CurGame->shortname, "lynx") == 0 || strcmp (CurGame->shortname, "wswan") == 0 || strcmp(CurGame->shortname, "ngp")== 0 ) 
-
 	{
-
 		NumberOfPorts = 1;
-
 	}
-
-
-
-
 	if (strcmp (CurGame->shortname, "pcfx") == 0 ) 
-
 	{
-
 		NumberOfPorts = 2;
-
 	}
-
 	if (strcmp (CurGame->shortname, "pce")== 0 ) 
-
 	{
-
 		NumberOfPorts = 5;
-
 	}
-
 }
-
-
-
-
-
-
 
 ////////////////////////
 
@@ -325,11 +302,6 @@ void MDFNMOV_Seek(FILE* fp)
 
 	fseek (fp , MoviePlaybackPointer, SEEK_SET );
 }
-
-
-
-
-
 
 /////////////////////////////////////////
 //count the number of frames in a movie//
@@ -409,7 +381,7 @@ void setreadonly(void) {
 
 }
 
-
+//allows people to start in either readonly or read+write mode by the command line
 void setreadonlycli(int value) {
 
 	readonly = value;
@@ -624,20 +596,14 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 
 	if(fname){  //if a filename was given in the arguments, use that
 		fp = fopen(fname, "wb3");
-		std::cout << "1_____________" <<std::endl;
-		std::cout << fname <<std::endl;
 	} 
 	else
 	{
 		// fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3"); 
 		//fp=fopen("junk.txt","wb3"); 
-		std::cout << "2_____________" <<std::endl;
 	}
 
 	// if(!fp) return;
-
-
-	std::cout << "3_____________" <<std::endl;
 
 	// MDFNSS_SaveFP(fp, fb, LineWidths);
 
@@ -703,29 +669,8 @@ void MDFNMOV_Stop(void)
 	if(current > 0) StopRecording();
 }
 
-
-
-
-
-/*
-void LoadMovieCLI(void) {
-
-
-
-std::string fname = MDFN_GetSettingS("playmovie");
-
-//char * fname2 = fname;
-
-MDFNI_LoadMovie(fname2);
-
-}
-*/
-
-
 void MDFNI_LoadMovie(char *fname)
 {
-	//std::cout << fname <<std::endl;
-
 	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
 
 	free(temporarymoviebuffer.data);
@@ -962,8 +907,6 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 			StopPlayback();
 			return; 
 		}
-		//std::cout << "ftell after while " << ftell(fp) <<std::endl;
-		//std::cout << "PDClen " << PDClen <<std::endl;
 		//we play movies back from the disk
 
 		if(fread(PDCdata, 1, PDClen, fp) != PDClen)
@@ -974,6 +917,7 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 			StopPlayback();
 			return;
 		}
+		//this allows you to save a state during playback and then resume a movie from it
 		tempmloc = ftell(fp);
 	}
 
@@ -995,12 +939,6 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 			//  fwrite(PDCdata, 1, PDClen, fp);
 		}
 	}
-
-	//uncomment this line to get proper state saving during playback
-	//but it causes a segfault when you try to record
-
-
-
 }
 
 
