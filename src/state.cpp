@@ -684,16 +684,10 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	//truncate movie
 	if(checkcurrent() < 0) {
 
-
-
 		temporarylength1 = 0;
-
-		temporarylength1= getmloc();
-
+		temporarylength1= getmloc();//and we use getmloc to get the position in the movie file on disk
 		temporarylength1 = temporarylength1 - 256;  //remove header
-
 		smem_seek(&Grabtempmov(), 0, SEEK_SET);
-
 		fwrite(Grabtempmov().data, 1, temporarylength1, statemovie);
 
 	}
@@ -703,10 +697,7 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	else {
 
 		smem_seek(&Grabtempmov(), 0, SEEK_SET);
-
 		fwrite(Grabtempmov().data, 1, Grabtempmov().len, statemovie);
-
-
 	}
 
 	fclose(statemovie);
@@ -923,9 +914,7 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 				//the size ought to be truncated so that a movie won't get garbage written to the end
 
 				temp.len = moviedatasize;
-
 				smem_write(&temp, tempbuffer, moviedatasize);
-
 				smem_seek(&temp, moviedatasize, SEEK_SET);
 
 				fclose(statemovie);
