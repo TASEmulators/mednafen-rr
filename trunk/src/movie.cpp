@@ -15,6 +15,15 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+/*
+Functions you are probably looking for:
+
+Stopping a recording and saving it to disk: static void StopRecording(void)
+Starting a recording - it will be recorded in memory: void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
+Starting playback (played from disk): void MDFNI_LoadMovie(char *fname)
+Stopping playback: static void StopPlayback(void)
+*/
+
 #include <string>
 
 
@@ -90,6 +99,22 @@ char MovieMD5Sum[33];
 uint32 tempmloc;//contains ftell of a playing movie file, allowing resuming a movie from a playback-made savestate possible
 
 ///////////////////////
+
+void ResetVariables(void) {
+//	moviedatasize = 0;
+//	current = 0;
+//	FrameCounter = 0;
+//	RerecordCount = 0;
+//	tempmloc = 0;
+
+//MovieFrameCount = 0;
+moviedatasize=0;
+tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
+memset(&temporarymoviebuffer, 0, sizeof(StateMem));
+FrameCounter = 0;
+
+}
+
 
 //used for starting recording when a state is loaded in read+write playback
 void SetCurrent(int incurrent) {
@@ -541,7 +566,6 @@ static void StopRecording(void)
 	else
 	{
 		//we do a default movie name
-		char realmovie[10] = "realmovie";
 		tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 666,0).c_str(),"wb");
 	}
 
@@ -557,8 +581,8 @@ static void StopRecording(void)
 	fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest3);
 	fclose(tempbuffertest3);
 
-	memset(&temporarymoviebuffer, 0, sizeof(StateMem));  //not sure if this stuff is necessary
-	free(temporarymoviebuffer.data);
+//	memset(&temporarymoviebuffer, 0, sizeof(StateMem));  //not sure if this stuff is necessary
+//	free(temporarymoviebuffer.data);
 
 	/////
 
@@ -568,6 +592,8 @@ static void StopRecording(void)
 
 void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 {
+
+	
 
 	if(readonly == 1) {
 		MDFN_DispMessage((UTF8 *)_("Can't record. Toggle read only first"));
@@ -656,7 +682,9 @@ static void StopPlayback(void)
 
 	isMov = 0;
 
-	free(temporarymoviebuffer.data);
+	//free(temporarymoviebuffer.data);
+
+	void ResetVariables(void);
 
 	MDFN_DispMessage((UTF8 *)_("Movie playback stopped."));
 }
@@ -671,9 +699,9 @@ void MDFNMOV_Stop(void)
 
 void MDFNI_LoadMovie(char *fname)
 {
-	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
+//	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
 
-	free(temporarymoviebuffer.data);
+	//free(temporarymoviebuffer.data);
 
 	FILE* fp;
 	//puts("KAO");
@@ -754,7 +782,7 @@ void MDFNI_LoadMovie(char *fname)
 
 	fread (tempbuffer,1,moviedatasize,fp);
 	//rewind(fp);
-	fseek(fp, 256, SEEK_SET);
+	fseek(fp, 256, SEEK_SET);//right now this will crash the program if the fp is smaller than 256
 
 	//test temp buffer
 	//this is debugging junk

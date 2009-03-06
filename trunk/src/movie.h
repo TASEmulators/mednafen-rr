@@ -17,6 +17,8 @@ void MDFNMOV_RecordState();
 
 void LoadMovieCLI(void);
 
+void ResetVariables(void);
+
 void setreadonlycli(int value);
 
 void SetCurrent(int incurrent);
