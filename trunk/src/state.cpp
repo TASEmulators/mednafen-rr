@@ -666,7 +666,7 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	//to the current position in the movie file stream
 	//to prevent messed up movies with junk data in them
 
-	
+
 
 
 	FILE* statemovie;
@@ -684,7 +684,7 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	//truncate movie
 	if(checkcurrent() < 0) {
 
-		
+
 
 		temporarylength1 = 0;
 

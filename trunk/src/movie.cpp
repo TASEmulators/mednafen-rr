@@ -91,11 +91,11 @@ uint8  md5_of_rom_used[16];
 //used for starting recording when a state is loaded in read+write playback
 void SetCurrent(int incurrent) {
 
-current=CurrentMovie;
-current++;
+	current=CurrentMovie;
+	current++;
 }
 
-	
+
 
 
 void ReadHeader(FILE* headertest) {
@@ -155,7 +155,7 @@ void AddRerecordCount(void) {
 
 	//only if we are in record mode
 	if(current > 0)
-	RerecordCount++;
+		RerecordCount++;
 
 }
 
@@ -172,7 +172,7 @@ void WriteHeader(FILE* headertest) {
 	//file indicator
 	//MDFNMOVI
 
-    static char MDFNMOVI[9] = "MDFNMOVI";
+	static char MDFNMOVI[9] = "MDFNMOVI";
 
 	//snprintf(writeauthor, 32, "%s", author.c_str());
 
@@ -193,13 +193,13 @@ void WriteHeader(FILE* headertest) {
 	//write MD5, Filename of the rom
 	//GetMD5AndFilename(headertest);  //up to 64 chars of filename
 
-snprintf(MovMD5Sum, 16, "%s", MDFNGameInfo->MD5);
+	snprintf(MovMD5Sum, 16, "%s", MDFNGameInfo->MD5);
 
-fwrite(MovMD5Sum, sizeof(char), 32, headertest);
+	fwrite(MovMD5Sum, sizeof(char), 32, headertest);
 
-//Filename
+	//Filename
 
-GetMovFileBase(headertest);
+	GetMovFileBase(headertest);
 
 	//Rerecords
 	write32le(RerecordCount, headertest);
@@ -393,23 +393,23 @@ void setreadonly(void) {
 
 	if(!(current > 0)) { //we can only toggle during playback or stopped
 
-	//it's a toggle
+		//it's a toggle
 
-	if(readonly == 1) {
+		if(readonly == 1) {
 
-		readonly = 0; // read+write
+			readonly = 0; // read+write
 
-		MDFN_DispMessage((UTF8 *)_("Read+Write"));
+			MDFN_DispMessage((UTF8 *)_("Read+Write"));
 
-	}
+		}
 
-	else {
+		else {
 
-		readonly = 1;// read onlymovie.cpp:124: error: at this point in file
+			readonly = 1;// read onlymovie.cpp:124: error: at this point in file
 
 
-		MDFN_DispMessage((UTF8 *)_("Read Only"));
-	}
+			MDFN_DispMessage((UTF8 *)_("Read Only"));
+		}
 
 	}
 	else{
@@ -591,7 +591,7 @@ static void StopRecording(void)
 
 	//open a new file
 
-FILE* tempbuffertest3;
+	FILE* tempbuffertest3;
 
 	//make sure the setting isn't the default
 	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0 && firstopen == 1) {
@@ -610,7 +610,7 @@ FILE* tempbuffertest3;
 
 
 	smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
-//	tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
+	//	tempbuffertest3=fopen("stoprecordingsmemmovie.txt","wb");
 	//tempbuffertest3=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie,0).c_str(),"wb3");
 
 
@@ -631,7 +631,7 @@ FILE* tempbuffertest3;
 
 	free(temporarymoviebuffer.data);
 
-	
+
 
 	/////
 
@@ -1021,7 +1021,7 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 		}
 		tempmloc = ftell(fp);
 	}
-	
+
 	else			/* Recording */
 	{
 		if(MDFN_StateEvilIsRunning())
@@ -1044,7 +1044,7 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 	//uncomment this line to get proper state saving during playback
 	//but it causes a segfault when you try to record
 
- 
+
 
 }
 
