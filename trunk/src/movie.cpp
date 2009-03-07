@@ -26,8 +26,6 @@ Stopping playback: static void StopPlayback(void)
 
 #include <string>
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -63,7 +61,6 @@ Stopping playback: static void StopPlayback(void)
 
 
 StateMem temporarymoviebuffer;
-
 
 //movie status stuff
 
@@ -101,20 +98,13 @@ uint32 tempmloc;//contains ftell of a playing movie file, allowing resuming a mo
 ///////////////////////
 
 void ResetVariables(void) {
-//	moviedatasize = 0;
-//	current = 0;
-//	FrameCounter = 0;
-//	RerecordCount = 0;
-//	tempmloc = 0;
 
-//MovieFrameCount = 0;
 moviedatasize=0;
 tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
 memset(&temporarymoviebuffer, 0, sizeof(StateMem));
 FrameCounter = 0;
 
 }
-
 
 //used for starting recording when a state is loaded in read+write playback
 void SetCurrent(int incurrent) {
@@ -123,14 +113,9 @@ void SetCurrent(int incurrent) {
 	current++;
 }
 
-
-
-//TODO actual comparisons
-void ReadHeader(FILE* headertest) {
+void ReadHeader(FILE* headertest) { //TODO actual comparisons
 
 	//check file indicator
-
-
 
 	//compare mednafen version  //MEDNAFEN_VERSION_NUMERIC
 	
@@ -162,18 +147,15 @@ void ReadHeader(FILE* headertest) {
 	fread(movieauthor, sizeof(char), 32, headertest);
 
 	//finished
-
 }
 
-//increment the record counter
-void AddRerecordCount(void) {
+void AddRerecordCount(void) { //increment the record counter
 
 	//only if we are in record mode
 	if(current > 0)
 		RerecordCount++;
 
 }
-
 
 void WriteHeader(FILE* headertest) {
 
@@ -251,10 +233,7 @@ void WriteHeader(FILE* headertest) {
 		fputc(0, headertest);
 
 	}
-
 }
-
-
 
 void MovClearAllSRAM(void) {
 
@@ -263,15 +242,7 @@ void MovClearAllSRAM(void) {
 
 }
 
-
-
-/////////////////////////////
-
-
-
 int MovieFrameCount;  //total number of frames in a movie that is being played back
-
-
 
 //this is for the sake of properly counting frames
 
@@ -282,33 +253,24 @@ uint32 PortDataCacheLength = 2;
 void SetNumberOfPorts(void) {
 
 	if (strcmp (CurGame->shortname, "lynx") == 0 || strcmp (CurGame->shortname, "wswan") == 0 || strcmp(CurGame->shortname, "ngp")== 0 ) 
-	{
 		NumberOfPorts = 1;
-	}
+	
 	if (strcmp (CurGame->shortname, "pcfx") == 0 ) 
-	{
 		NumberOfPorts = 2;
-	}
+	
 	if (strcmp (CurGame->shortname, "pce")== 0 ) 
-	{
 		NumberOfPorts = 5;
-	}
 }
 
 ////////////////////////
 
-
 uint32 MoviePlaybackPointer;
-
 
 void setMoviePlaybackPointer(uint32 value) {
 
 	MoviePlaybackPointer = value;
 
 }
-
-
-
 
 FILE* getSlots() {
 
@@ -378,32 +340,24 @@ int getreadonly(void) {
 }
 
 
-void setreadonly(void) {
+void setreadonly(void) { //it's a toggle
 
 	if(!(current > 0)) { //we can only toggle during playback or stopped
-
-		//it's a toggle
 
 		if(readonly == 1) {
 
 			readonly = 0; // read+write
-
 			MDFN_DispMessage((UTF8 *)_("Read+Write"));
-
 		}
 
 		else {
 
 			readonly = 1;// read onlymovie.cpp:124: error: at this point in file
-
-
 			MDFN_DispMessage((UTF8 *)_("Read Only"));
 		}
-
 	}
-	else{
-		MDFN_DispMessage((UTF8 *)_("Can't toggle during recording"));}
-
+	else
+		MDFN_DispMessage((UTF8 *)_("Can't toggle during recording"));
 }
 
 //allows people to start in either readonly or read+write mode by the command line
@@ -426,14 +380,13 @@ int MovInd(void)
 	if(isMov == 1) 
 	{
 		if(current > 0 ) //recording
-		{
 			return(666);	
-		}
-		else { //playback
+		
+		else  //playback
 			return(333);
-		}
 	}
-	else { return(111); }//not recording or playback 
+	else  
+		return(111); //not recording or playback 
 }
 
 
@@ -441,13 +394,11 @@ int MovInd(void)
 //this is done by increasing the savestate number so that the normal ones won't be overwritten
 int retisMov(void) {
 
-	if(isMov == 0) {
+	if(isMov == 0) 
 		return(42);  //this could be any number large enough to make the savestates not conflict
-	}
 
-	else {
+	else 
 		return(NULL);
-	}
 }
 
 //framecounter functions
@@ -511,18 +462,13 @@ StateMem Grabtempmov(void) {
 
 	StateMem ret = temporarymoviebuffer;
 	return(ret);
-
-
 }
 
 
 void Writetempmov(StateMem in) {
 
 	temporarymoviebuffer = in;
-
 }
-
-
 
 int firstopen = 1;
 
@@ -665,11 +611,6 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 	MDFN_DispMessage((UTF8 *)_("Movie recording started."));
 }
 
-
-
-
-
-
 static void StopPlayback(void)
 {
 	if(RewindBuffer.data)
@@ -771,63 +712,23 @@ void MDFNI_LoadMovie(char *fname)
 
 	fseek(fp, 0, SEEK_END);
 	moviedatasize=ftell (fp);
-
 	moviedatasize = moviedatasize - 256; //subtract length of header
-
 	fseek(fp, 256, SEEK_SET);  //seek past header
 
 	//copy it
 
 	tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
-
 	fread (tempbuffer,1,moviedatasize,fp);
 	//rewind(fp);
 	fseek(fp, 256, SEEK_SET);//right now this will crash the program if the fp is smaller than 256
 
-	//test temp buffer
-	//this is debugging junk
-
-	//FILE* tempbuffertest;
-
-	//tempbuffertest=fopen("tempbuffertest.txt","wb");
-	//fwrite(tempbuffer, 1, moviedatasize, tempbuffertest);
-
-	//fclose(tempbuffertest);
-
-
-	////////////////////////
-	////////////////////////
-	////////////////////////
-
 	//writing it to a statemem
-
-
 
 	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
 	temporarymoviebuffer.initial_malloc = moviedatasize;
 
 	//smem_write(&temporarymoviebuffer, sm.data, sm.len);
 	smem_write(&temporarymoviebuffer, tempbuffer, moviedatasize);
-
-
-	//gzwrite(slots[current - 1], sm->data, sm->len);
-
-
-
-	//test temp buffer 2 
-	// more debugging junk
-
-	//FILE* tempbuffertest2;
-
-	//tempbuffertest2=fopen("smembuffertest.txt","wb");
-	//fwrite(temporarymoviebuffer.data, 1, temporarymoviebuffer.len, tempbuffertest2);
-	//std::cout << "temporarymbuflen" << temporarymoviebuffer.len <<std::endl;
-
-	//fclose(tempbuffertest2);
-
-
-	//fwrite(
-
 	smem_seek(&temporarymoviebuffer, 0, SEEK_SET);
 
 
@@ -836,33 +737,16 @@ void MDFNI_LoadMovie(char *fname)
 	//movies start at frame zero
 
 	FrameCounter = 0;
-
 	SetNumberOfPorts(); //so we can load a state and continue playback correctly
-
-
-
 	current = CurrentMovie;
 	slots[current] = fp;
-
 	current = -1 - current;
 	MovieStatus[CurrentMovie] = 1;
 
-	//start from clean sram
-
-	MovClearAllSRAM();
-
-
-	/////movies always play back from poweron
-
-	MDFNI_Power();
-
-	///////
-
+	MovClearAllSRAM(); //start from clean sram
+	MDFNI_Power(); /////movies always play back from poweron
 	isMov = 1;  //use movie specfic savestates
-
 	readonly = 1;  //we always start read only so that the user can toggle it later
-
-	//MDFN_DispMessage((UTF8*)_("Movie playback started. Length: %d Frames /n"), MovieFrameCount);
 
 	MDFN_DispMessage((UTF8*)_("Read-Only Playback - Frames: %d Re-records: %d Author: %s MD5: %s"), MovieFrameCount, RerecordCount, movieauthor, MovieMD5Sum);
 }
@@ -876,7 +760,6 @@ void MDFNI_LoadMovie(char *fname)
 // PortDataLenCache
 
 //DPCdata and PDClen were originally donutdata and donutlen
-
 
 int tempcount = 0;
 
@@ -969,9 +852,6 @@ void MDFNMOV_AddJoy(void *PDCdata, uint32 PDClen)
 	}
 }
 
-
-
-
 //adds non-controller data commmands like reset and poweron to a movie
 void MDFNMOV_AddCommand(int cmd)
 {
@@ -983,7 +863,6 @@ void MDFNMOV_AddCommand(int cmd)
 		//fputc(cmd, slots[current - 1]);
 		smem_putc(&temporarymoviebuffer, cmd);
 }
-
 
 //current behavior is saving the state to the movie file so that the state loads during playback
 void MDFNMOV_RecordState(void) 
@@ -1017,8 +896,7 @@ void MDFNMOV_RecordState(void)
 	*/
 }
 
-//used during rewinding
-void MDFNMOV_ForceRecord(StateMem *sm)
+void MDFNMOV_ForceRecord(StateMem *sm) //used during rewinding
 {
 	printf("Farced: %d\n", sm->len);
 	// fwrite(slots[current - 1], sm->data, sm->len);
