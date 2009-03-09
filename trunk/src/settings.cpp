@@ -348,7 +348,12 @@ double MDFN_GetSettingF(const char *name)
 
 bool MDFN_GetSettingB(const char *name)
 {
- return(strtoull(FindSetting(name), NULL, 10));
+	if (strtoull(FindSetting(name), NULL, 10))
+		return true;
+	else
+		return false;
+
+	//return(strtoull(FindSetting(name), NULL, 10));	//adelikat: replaced with if/else to avoid warnings
 }
 
 std::string MDFN_GetSettingS(const char *name)

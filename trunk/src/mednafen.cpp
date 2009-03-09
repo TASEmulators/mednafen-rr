@@ -625,7 +625,10 @@ alreadypaused = 1;
   }
  }
 
- espec->NeedSoundReverse = MDFN_StateEvil(espec->NeedRewind);
+ if (MDFN_StateEvil(espec->NeedRewind))
+	 espec->NeedSoundReverse = true;
+ else
+	 espec->NeedSoundReverse = false;
 
  MDFNGameInfo->Emulate(espec);
 

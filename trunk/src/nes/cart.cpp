@@ -446,7 +446,11 @@ void SetupCartMirroring(int m, int hard, uint8 *extra)
 
 bool CartHasHardMirroring(void)
 {
- return(mirrorhard);
+	if (mirrorhard)
+		return true;
+	else
+		return false;
+	//return(mirrorhard); //adelikat: replaced with if/else to avoid warning
 }
 
 static uint8 *GENIEROM=0;

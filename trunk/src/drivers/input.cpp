@@ -734,7 +734,7 @@ static int CK_CheckFrameAdvance(void)
 	}
 
 	//if we have passed the amount of delay time, start advancing again 
-	if(CurTicks >= (FrameAdvanceTimeLastPressed + tmp_ckdelay) && AdvancedOnceAlready == 1)
+	if((int)CurTicks >= (FrameAdvanceTimeLastPressed + tmp_ckdelay) && AdvancedOnceAlready == 1)
 	{
 		//FrameAdvanceTimeLastPressed = 0xFFFFFFFF;
 		DoFrameAdvance();
