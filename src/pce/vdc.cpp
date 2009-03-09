@@ -492,7 +492,7 @@ DECLFR(VCE_Read)
 {
  switch(A & 0x7)
  {
-  case 4: return(vce.color_table[vce.ctaddress & 0x1FF]);
+  case 4: return (uint8)(vce.color_table[vce.ctaddress & 0x1FF]);
   case 5: {
 	   uint8 ret = vce.color_table[vce.ctaddress & 0x1FF] >> 8;
 	   ret &= 1;
@@ -594,9 +594,9 @@ DECLFR(VDC_Read)
   {
    case 0x8: return(vpc.priority[0]);
    case 0x9: return(vpc.priority[1]);
-   case 0xA: return(vpc.winwidths[0]);
+   case 0xA: return(uint8)(vpc.winwidths[0]);	//adelikat added (uint8) to fix warnings
    case 0xB: return(vpc.winwidths[0] >> 8);
-   case 0xC: return(vpc.winwidths[1]);
+   case 0xC: return(uint8)(vpc.winwidths[1]);
    case 0xD: return(vpc.winwidths[1] >> 8);
    case 0xE: return(0);
   }
