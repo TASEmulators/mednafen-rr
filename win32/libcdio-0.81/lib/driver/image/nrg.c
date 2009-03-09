@@ -898,7 +898,7 @@ _read_audio_sectors_nrg (void *p_user_data, void *data, lsn_t lsn,
   _img_private_t *p_env = p_user_data;
   CdioListNode_t *node;
 
-  if (lsn >= p_env->size)
+  if ((uint32)lsn >= p_env->size)
     {
       cdio_warn ("trying to read beyond image size (%lu >= %lu)", 
 		 (long unsigned int) lsn, (long unsigned int) p_env->size);
@@ -922,7 +922,7 @@ _read_audio_sectors_nrg (void *p_user_data, void *data, lsn_t lsn,
   _CDIO_LIST_FOREACH (node, p_env->mapping) {
     _mapping_t *_map = _cdio_list_node_data (node);
     
-    if (IN (lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
+    if (IN ((uint32)lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
       int ret;
       long int img_offset = (long int) _map->img_offset;
       
@@ -953,7 +953,7 @@ _read_mode1_sector_nrg (void *p_user_data, void *data, lsn_t lsn,
 
   CdioListNode_t *node;
 
-  if (lsn >= p_env->size)
+  if ((uint32)lsn >= p_env->size)
     {
       cdio_warn ("trying to read beyond image size (%lu >= %lu)", 
 		 (long unsigned int) lsn, (long unsigned int) p_env->size);
@@ -963,7 +963,7 @@ _read_mode1_sector_nrg (void *p_user_data, void *data, lsn_t lsn,
   _CDIO_LIST_FOREACH (node, p_env->mapping) {
     _mapping_t *_map = _cdio_list_node_data (node);
     
-    if (IN (lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
+    if (IN ((uint32)lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
       int ret;
       long int img_offset = (long int)_map->img_offset;
       
@@ -1024,7 +1024,7 @@ _read_mode2_sector_nrg (void *p_user_data, void *data, lsn_t lsn,
 
   CdioListNode_t *node;
 
-  if (lsn >= p_env->size)
+  if ((uint32)lsn >= p_env->size)
     {
       cdio_warn ("trying to read beyond image size (%lu >= %lu)", 
 		 (long unsigned int) lsn, (long unsigned int) p_env->size);
@@ -1034,7 +1034,7 @@ _read_mode2_sector_nrg (void *p_user_data, void *data, lsn_t lsn,
   _CDIO_LIST_FOREACH (node, p_env->mapping) {
     _mapping_t *_map = _cdio_list_node_data (node);
     
-    if (IN (lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
+    if (IN ((uint32)lsn, _map->start_lsn, (_map->start_lsn + _map->sec_count - 1))) {
       int ret;
       long int img_offset = (long int)_map->img_offset;
       
