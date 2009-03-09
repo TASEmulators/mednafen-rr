@@ -1237,7 +1237,11 @@ void MDFN_StateEvilBegin(void)
 
 bool MDFN_StateEvilIsRunning(void)
 {
-	return(EvilEnabled);
+	if (EvilEnabled)
+		return true;
+	else
+		return false;
+	//return(EvilEnabled);	//adelikat: replaced with if/else to avoid warnings
 }
 
 void MDFN_StateEvilEnd(void)

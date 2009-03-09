@@ -110,7 +110,12 @@ static void DumpCUEISOWAV(void)
 #endif
 bool CDIF_ReadAudioSector(int16 *buffer, uint8 *SubPWBuf, uint32 read_sec)
 {
- return(cdrfile_read_audio_sector(p_cdrfile, buffer, SubPWBuf, read_sec));
+	if (cdrfile_read_audio_sector(p_cdrfile, buffer, SubPWBuf, read_sec))
+		return true;
+	else
+		return false;
+	
+	//return(cdrfile_read_audio_sector(p_cdrfile, buffer, SubPWBuf, read_sec));	//adelikat: replaced with if/else to prevent warnings
 }
 
 static bool cdif_open_sub(const char *device_name)
@@ -261,7 +266,12 @@ int CDIF_FindTrackByLBA(uint32 LBA)
 
 bool CDIF_ReadSector(uint8* pBuf, uint8 *SubPWBuf, uint32 lsn_sector, uint32 nSectors)
 {
- return(cdrfile_read_mode1_sectors(p_cdrfile, pBuf, SubPWBuf, lsn_sector, false, nSectors));
+	if (cdrfile_read_mode1_sectors(p_cdrfile, pBuf, SubPWBuf, lsn_sector, false, nSectors))
+		return true;
+	else
+		return false;
+
+	//return(cdrfile_read_mode1_sectors(p_cdrfile, pBuf, SubPWBuf, lsn_sector, false, nSectors));	//adelikat: replaced with if/else to avoid warnings
 }
 
 uint32 CDIF_GetTrackSectorCount(int32 track)
