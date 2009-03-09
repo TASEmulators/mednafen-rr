@@ -460,7 +460,11 @@ bool MDFNNES_ToggleLayer(int which)
 
  RedoRenderCache();
 
- return(((rendis >> which) & 1) ^ 1);
+if (((rendis >> which) & 1) ^ 1)
+	return true;
+else
+	return false;
+//return(((rendis >> which) & 1) ^ 1);	//adelikat - put above if/else in to fix a warning
 }
 
 static void EndRL(void)
@@ -1533,12 +1537,12 @@ static void DoGfxDecode(void)
      }
      else
      {
-      switch(MMC5HackCHRMode)
-      {
-       default: //which_tile &= 0x1FF;
+      //switch(MMC5HackCHRMode)	//adelikat: commenting out until there is case labels
+      //{
+      // default: //which_tile &= 0x1FF;
                 cg_ptr = MMC5BGVRAMADR(which_tile * 16);
-		break;
-      }
+	  //	break;
+      //}
      }
     }
     else
