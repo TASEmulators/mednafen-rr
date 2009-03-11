@@ -180,17 +180,17 @@ SetFPSNeedFrameAdvance(0);
 
 if(MovInd() == 666) {
 
-snprintf(tempcount2, 64, "Recording %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
+snprintf(tempcount2, 64, "Recording     %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
 }
 
 if(MovInd() == 333) {
 
-snprintf(tempcount2, 64, "Playback  %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
+snprintf(tempcount2, 64, "Playback      %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
 }
 
 if(MovInd() == 111) {
 
-snprintf(tempcount2, 64, "Stopped   %s", virtfps);
+snprintf(tempcount2, 64, "Stopped       %s", virtfps);
 }
 
 
