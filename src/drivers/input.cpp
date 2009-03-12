@@ -554,7 +554,7 @@ typedef enum {
 	CK_ROTATESCREEN,
 	CK_TOGGLENETVIEW,
 	CK_ADVANCE_FRAME,
-	CK_RUN_NORMAL,
+	CK_pause,
 	CK_TOGGLECHEATVIEW,
 	CK_TOGGLE_CHEAT_ACTIVE,
 	CK_TOGGLE_FPS_VIEW,
@@ -659,7 +659,7 @@ static COKE CKeys[_CK_COUNT]	=
 
 	{ MK_CK(t), "togglenetview", ~0, 1, gettext_noop("Toggle netplay console")},
 	{ MK_CK(BACKSLASH), "advance_frame", ~0, 1, gettext_noop("Advance frame") },
-	{ MK_CK(PAUSE), "run_normal", ~0, 1, gettext_noop("Return to normal mode after advancing frames") },
+	{ MK_CK(PAUSE), "pause", ~0, 1, gettext_noop("Return to normal mode after advancing frames") },
 	{ MK_CK_ALT(c), "togglecheatview", ~0, 1, gettext_noop("Toggle cheat console") },
 	{ MK_CK_ALT(t), "togglecheatactive", ~0, 1, gettext_noop("Enable/Disable cheats") },
         { MK_CK_CTRL_SHIFT(F1), "toggle_fps_view", ~0, 1, gettext_noop("Toggle frames-per-second display") },
@@ -1078,7 +1078,7 @@ else
 	  else
 		 
 */
-	  if(CK_Check(CK_RUN_NORMAL))
+	  if(CK_Check(CK_pause))
 
 
 		  //if we are paused, unpause, otherwise, pause
