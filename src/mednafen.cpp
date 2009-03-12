@@ -80,7 +80,7 @@ static MDFNSetting MednafenSettings[] =
   { "cdrom.lec_eval", gettext_noop("Enable simple error correction of raw data sector rips by evaluating L-EC and EDC data."), MDFNST_BOOL, "1" },
   #endif
 
-
+  { "lagadvance", gettext_noop("Automatically advance lag frames"), MDFNST_BOOL, "0" },
   { "author", gettext_noop("Author's name"), MDFNST_STRING, "" },
   { "mov", gettext_noop("Path to the movie to be played/recorded to"), MDFNST_STRING, "mov PATH NOT SET" },
   { "play", gettext_noop("Start playing the current movie immediately on startup"), MDFNST_BOOL, "0" },

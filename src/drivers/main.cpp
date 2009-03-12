@@ -54,6 +54,7 @@
 #include "help.h"
 #include "video-state.h"
 #include "remote.h"
+#include "../pce/pce.h"
 
 static bool RemoteOn = FALSE;
 bool pending_save_state, pending_snapshot, pending_save_movie;
@@ -823,6 +824,12 @@ int GameLoop(void *arg)
           MDFNI_Emulate(&espec); //(uint32 *)VTBuffer[VTBackBuffer], (MDFN_Rect *)VTLineWidths[VTBackBuffer], &sound, &ssize, fskip, CurGameSpeed);
 	ZeroStateShow();//get rid of state previews
 	 }
+	 	 
+	 if(MDFN_GetSettingB("lagadvance") == 1) {
+	   if (GetLagFlag() == 1) {
+	NeedFrameAdvance = 1;
+	   } 
+ }
 	 LockGameMutex(0);
 	 FPS_IncVirtual();
 	 if(!fskip)
