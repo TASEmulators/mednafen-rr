@@ -22,6 +22,8 @@
 #include "../netplay.h"
 #include "../endian.h"
 
+char InputDisplayString[40];
+
 static int InputTypes[5];
 static uint8 *data_ptr[5];
 
@@ -42,6 +44,11 @@ static uint8 sel;
 static uint8 read_index = 0;
 
 static void SyncSettings(void);
+
+char* ReturnInputDisplayString(void) {
+
+	return(InputDisplayString);
+}
 
 void PCEINPUT_SettingChanged(const char *name)
 {
@@ -66,6 +73,78 @@ void PCEINPUT_SetInput(int port, const char *type, void *ptr)
  data_ptr[port] = (uint8 *)ptr;
 }
 
+//#include <string.h>
+
+#include <iostream>
+#include <string>
+
+
+char testing[41];
+
+int bits[16];
+
+//std::string str;
+
+char str[40];
+
+void SetInputDisplayCharacters(void) {
+
+	strcpy(str, "");
+
+	if(bits[4] == 16) {
+		strcat(str, "↑");
+	}
+	else
+		strcat(str, " ");
+
+	if(bits[6] == 64) {
+		strcat(str, "↓");
+	}
+	else
+		strcat(str, " ");
+
+	if(bits[7] == 128) {
+		strcat(str, "←");
+	}
+	else
+		strcat(str, " ");
+
+	if(bits[5] == 32) {
+		strcat(str, "→");
+	}
+	else
+		strcat(str, " ");
+
+	if(bits[0] == 1) {
+		strcat(str, "II ");
+	}
+	else
+		strcat(str, "   ");
+
+
+	if(bits[1] == 2) {
+		strcat(str, "I ");
+	}
+	else
+		strcat(str, "  ");
+
+
+	if(bits[3] == 8) {
+		strcat(str, "Run ");
+	}
+	else
+		strcat(str, "    ");
+
+
+	if(bits[2] == 4) {
+		strcat(str, "Select");
+	}
+	else
+		strcat(str, "      ");
+	
+	strcpy(InputDisplayString, str);
+}
+
 void INPUT_Frame(void)
 {
  for(int x = 0; x < 5; x++)
@@ -81,6 +160,22 @@ void INPUT_Frame(void)
    }
 
    pce_jp_data[x] = new_data;
+   //printf(" - %d %04x", x, new_data);
+
+   
+
+   if(x == 0) {
+
+	   for (int x = 0; x < 16; x++) {
+	   bits[x] = new_data & (1 << x);
+	   }
+	   SetInputDisplayCharacters();
+
+  // snprintf(testing, 40, " - %d %04x", x, new_data);
+	 //  snprintf(testing, 40, "%d%d%d%d%d%d%d%d", bits[0], bits[1], bits[2], bits[3], bits[4], bits[5], bits[6], bits[7]);
+	 //  snprintf(testing, 40, "%s", &str);
+  // MDFN_DispMessage((UTF8 *)str);
+   }
   }
   else if(InputTypes[x] == 2)
   {
@@ -89,6 +184,7 @@ void INPUT_Frame(void)
    pce_mouse_button[x] = *(uint8 *)(data_ptr[x] + 8);
   }
  }
+ puts("");
 }
 
 void INPUT_FixTS(void)
