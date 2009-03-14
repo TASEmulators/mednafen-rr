@@ -1596,6 +1596,17 @@ void VDC_RunFrame(uint32 *pXBuf, MDFN_Rect *LineWidths, int skip)
 
 void VDC_Reset(void)
 {
+ 
+ //additional reset stuff
+ vce.CR = 0;
+ vce.lc263 = 0;
+ vce.bw = 0;
+ vce.dot_clock = 0;
+ vce.ctaddress = 0;
+ memset(vce.color_table, 0, sizeof(vce.color_table));
+ for(int x = 0; x < 512; x++)
+ FixPCache(x);
+
  ContinuePoint = 0;
 
  vdc_chips[0]->read_buffer = 0xFFFF;
