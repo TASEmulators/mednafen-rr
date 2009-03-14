@@ -94,6 +94,7 @@ uint8  md5_of_rom_used[16];
 char movieauthor[33];
 char MovieMD5Sum[33];
 uint32 tempmloc;//contains ftell of a playing movie file, allowing resuming a movie from a playback-made savestate possible
+uint32 MoviePlaybackPointer;
 
 ///////////////////////
 
@@ -103,6 +104,8 @@ moviedatasize=0;
 tempbuffer = (char*) malloc (sizeof(char)*moviedatasize);
 memset(&temporarymoviebuffer, 0, sizeof(StateMem));
 FrameCounter = 0;
+tempmloc=0;
+MoviePlaybackPointer=0;
 
 }
 
@@ -264,7 +267,7 @@ void SetNumberOfPorts(void) {
 
 ////////////////////////
 
-uint32 MoviePlaybackPointer;
+
 
 void setMoviePlaybackPointer(uint32 value) {
 
@@ -539,8 +542,6 @@ static void StopRecording(void)
 void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 {
 
-	
-
 	if(readonly == 1) {
 		MDFN_DispMessage((UTF8 *)_("Can't record. Toggle read only first"));
 		return;
@@ -548,8 +549,6 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 	FILE* fp;
 
 	//movies start at frame zero
-
-	FrameCounter = 0;
 
 	if(current < 0)	// Can't save a movie during playback.
 		return;
@@ -560,6 +559,11 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 		return;   memset(&RewindBuffer, 0, sizeof(StateMem));
 		RewindBuffer.initial_malloc = 16;
 	}
+
+	FrameCounter = 0;
+	ResetlagCounter();
+
+	memset(&temporarymoviebuffer, 0, sizeof(StateMem));
 
 	memset(&RewindBuffer, 0, sizeof(StateMem));  // init
 	RewindBuffer.initial_malloc = 16;
@@ -622,6 +626,7 @@ static void StopPlayback(void)
 	current=0;
 
 	isMov = 0;
+	ResetlagCounter();
 
 	//free(temporarymoviebuffer.data);
 
@@ -644,6 +649,7 @@ void MDFNI_LoadMovie(char *fname)
 
 	//free(temporarymoviebuffer.data);
 
+	ResetlagCounter();
 	FILE* fp;
 	//puts("KAO");
 
