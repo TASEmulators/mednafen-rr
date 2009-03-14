@@ -24,6 +24,7 @@
 
 #include "../movie.h"
 #include "../drivers/input.h"
+#include "../pce/input.h"
 
 #define MK_COLOR_A(surface, r,g,b,a) ( ((a)<<surface->format->Ashift) | ((r)<<surface->format->Rshift) | ((g) << surface->format->Gshift) |((b) << surface->format->Bshift))
 
@@ -93,9 +94,9 @@ void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
  {
 	//resizing this will get you more digits
 
-  FPSSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, 9 * 8, 3 * 7, 32, 0xFF << rs, 0xFF << gs, 0xFF << bs, 0xFF << as);
+  FPSSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, 9 * 8, 4 * 7, 32, 0xFF << rs, 0xFF << gs, 0xFF << bs, 0xFF << as);
   FPSRect.w = 9 * 8;
-  FPSRect.h = 3 * 7;
+  FPSRect.h = 4 * 7;
   FPSRect.x = FPSRect.y = 0;
  }
 
@@ -192,11 +193,13 @@ if(MovInd() == 111) {
 
 snprintf(tempcount2, 64, "Stopped       %s", virtfps);
 }
-
+						
 
 //snprintf(tempcount2, 64, "%f", (double)retFrameCounter());
 
-DrawTextTrans((uint32 *)FPSSurface->pixels + 0 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount2, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+DrawTextTrans((uint32 *)FPSSurface->pixels + 0 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)ReturnInputDisplayString(), MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+
+DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount2, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
 
 /////////
 //
@@ -224,14 +227,14 @@ snprintf(tempcount, 64, "%d", retFrameCounter());
 //draw white
 if(retjustLagged() == false) {
 
-DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2 *(FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
 }
 
 //draw red
 
 if(retjustLagged() == true) {
 
-DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount, MK_COLOR_A(FPSSurface, 0xFF, 0x00, 0x00, 0xFF), FALSE, TRUE);
+DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2* (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)tempcount, MK_COLOR_A(FPSSurface, 0xFF, 0x00, 0x00, 0xFF), FALSE, TRUE);
 
 }
 
@@ -248,14 +251,14 @@ snprintf(templag, 64, "%d", GetlagCounter());
 //draw white
 if(retjustLagged() == false) {
 
- DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)templag, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
+ DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 3 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)templag, MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
 }
 
 //draw red
 
 if(retjustLagged() == true) {
 
-DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 2 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)templag, MK_COLOR_A(FPSSurface, 0xFF, 0x00, 0x00, 0xFF), FALSE, TRUE);
+DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * 3 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)templag, MK_COLOR_A(FPSSurface, 0xFF, 0x00, 0x00, 0xFF), FALSE, TRUE);
 
 }
 //the final container for all the stuff

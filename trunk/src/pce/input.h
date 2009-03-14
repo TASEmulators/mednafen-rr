@@ -12,4 +12,6 @@ extern InputInfoStruct PCEInputInfo;
 void INPUT_FixTS(void);
 void PCEINPUT_Power(void);
 
+char* ReturnInputDisplayString(void);
+
 #endif
