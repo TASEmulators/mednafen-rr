@@ -675,6 +675,12 @@ int GetlagCounter(void) {
 	return(lagCounter);
 }
 
+int ResetlagCounter(void) {
+
+	lagCounter=0;
+	return 0;
+}
+
 
 
 // This function should only be called for state rewinding.

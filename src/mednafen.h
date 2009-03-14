@@ -27,6 +27,7 @@ extern MDFNS FSettings;
 static int lagCounter;
 
 int GetlagCounter(void);
+int ResetlagCounter(void);
 
 void MDFN_PrintError(const char *format, ...);
 void MDFN_printf(const char *format, ...);

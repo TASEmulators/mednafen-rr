@@ -332,3 +332,18 @@ static void SyncSettings(void)
  InputDeviceInfo[1].IDII = MDFN_GetSettingB("pce.disable_softreset") ? GamepadIDII_DSR : GamepadIDII;
 }
 
+void PCEINPUT_Power(void)
+{
+ puts("Moo");
+ memset(AVPad6Which, 0, sizeof(AVPad6Which));
+ memset(AVPad6Enabled, 0, sizeof(AVPad6Enabled));
+ 
+ memset(mouse_last_meow, 0, sizeof(mouse_last_meow));
+ memset(mouse_x, 0, sizeof(mouse_x));
+ memset(mouse_y, 0, sizeof(mouse_y));
+ memset(mouse_rel, 0, sizeof(mouse_rel));
+ memset(mouse_index, 0, sizeof(mouse_index));
+ sel = 0;
+ read_index = 0;
+}
+

@@ -545,6 +545,7 @@ void PCE_Power(void)
  VDC_Power();
  PSG_Power();
  HuC_Power();
+ PCEINPUT_Power();
 
  if(IsHES)
   HES_Reset();
