@@ -87,61 +87,37 @@ int bits[16];
 
 char str[40];
 
-void SetInputDisplayCharacters(void) {
+/*
+
+Controller Bits
+
+0 - II
+1 - I
+2 - Select
+3 - Run
+4 - Up
+5 - Right
+6 - Down
+7 - Left
+
+*/
+
+const char* Buttons[8] = {"II ", "I ", "S", "Run ", "↑", "→", "↓", "←"};
+const char* Spaces[8]  = {"   ", "  ", " ", "    ", " ", " ", " ", " "};
+
+void SetInputDisplayCharacters(uint16 new_data) {
 
 	strcpy(str, "");
 
-	if(bits[4] == 16) {
-		strcat(str, "↑");
-	}
-	else
-		strcat(str, " ");
-
-	if(bits[6] == 64) {
-		strcat(str, "↓");
-	}
-	else
-		strcat(str, " ");
-
-	if(bits[7] == 128) {
-		strcat(str, "←");
-	}
-	else
-		strcat(str, " ");
-
-	if(bits[5] == 32) {
-		strcat(str, "→");
-	}
-	else
-		strcat(str, " ");
-
-	if(bits[0] == 1) {
-		strcat(str, "II ");
-	}
-	else
-		strcat(str, "   ");
-
-
-	if(bits[1] == 2) {
-		strcat(str, "I ");
-	}
-	else
-		strcat(str, "  ");
-
-
-	if(bits[3] == 8) {
-		strcat(str, "Run ");
-	}
-	else
-		strcat(str, "    ");
-
-
-	if(bits[2] == 4) {
-		strcat(str, "Select");
-	}
-	else
-		strcat(str, "      ");
+	for (int x = 0; x < 8; x++) {
 	
+		if(new_data & (1 << x)) {
+			strcat(str, Buttons[x]);
+		}
+		else
+			strcat(str, Spaces[x]);
+	}
+
 	strcpy(InputDisplayString, str);
 }
 
@@ -162,19 +138,17 @@ void INPUT_Frame(void)
    pce_jp_data[x] = new_data;
    //printf(" - %d %04x", x, new_data);
 
-   
-
    if(x == 0) {
 
 	   for (int x = 0; x < 16; x++) {
 	   bits[x] = new_data & (1 << x);
 	   }
-	   SetInputDisplayCharacters();
+	   SetInputDisplayCharacters(new_data);
 
   // snprintf(testing, 40, " - %d %04x", x, new_data);
 	 //  snprintf(testing, 40, "%d%d%d%d%d%d%d%d", bits[0], bits[1], bits[2], bits[3], bits[4], bits[5], bits[6], bits[7]);
 	 //  snprintf(testing, 40, "%s", &str);
-  // MDFN_DispMessage((UTF8 *)str);
+  // MDFN_DispMessage((UTF8 *)testing);
    }
   }
   else if(InputTypes[x] == 2)
