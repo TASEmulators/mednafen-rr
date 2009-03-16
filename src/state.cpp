@@ -675,8 +675,10 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 
 	else { //we are recording, just write the movie
 
+		uint32 smemthing = 0;
+		smemthing = smem_tell(&Grabtempmov());
 		smem_seek(&Grabtempmov(), 0, SEEK_SET);
-		fwrite(Grabtempmov().data, 1, Grabtempmov().len, statemovie);
+		fwrite(Grabtempmov().data, 1, smemthing, statemovie);
 	}
 
 	fclose(statemovie);
@@ -829,7 +831,7 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 		if(!fname && !suffix)
 		{
 
-			AddRerecordCount();  //every loaded state during recording is +1 rerecord
+			AddRerecordCount();  //every loaded state during recording is +1 rerecord, this function takes care of the conditional
 
 			//when a state is loaded, load the associated movie file
 			//and overwrite the temporarymoviebuffer(we record to this)
