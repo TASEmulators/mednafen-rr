@@ -600,8 +600,11 @@ alreadypaused = 1;
  #endif
 
  for(int x = 0; x < 16; x++)
-  if(PortDataCache[x])
+	 if(PortDataCache[x]) {
    MDFNMOV_AddJoy(PortDataCache[x], PortDataLenCache[x]);
+	 }
+
+	 SetCommandAdded();
 
  if(VBlur_IsOn())
   espec->skip = 0;
