@@ -15,6 +15,29 @@ void MDFNMOV_ForceRecord(StateMem *sm);
 StateMem MDFNMOV_GrabRewindJoy(void);
 void MDFNMOV_RecordState();
 
+struct MovieStruct
+{
+	int status;
+	FILE *fp;
+	int readonly;
+	int rerecords;
+	int size;
+	int frames;
+	const char* filename;
+	int framelength;
+	int headersize;
+};
+
+#define stopped	  1
+#define recording 2
+#define playback  3
+
+struct MovieBufferStruct
+{
+	int size;
+	char* data;
+};
+
 void LoadMovieCLI(void);
 
 void ResetVariables(void);
@@ -22,10 +45,11 @@ void ResetVariables(void);
 void setreadonlycli(int value);
 
 void SetCurrent(int incurrent);
-
-
+ 
 static char MovMD5Sum[33];
 static char MovRomFilename[64];
+
+void SetCommandAdded(void);
 
 int DisplayTotalFrames(void);
 
@@ -85,7 +109,11 @@ uint32 Getloc(void);
 uint32 getmloc(void);
 
 
+void MovieLoadState(void);
 
+void ReplaceMovie(FILE* fp);
+
+void CopyMovie(FILE* fp);
 
 #endif
 
