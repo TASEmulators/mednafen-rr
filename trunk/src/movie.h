@@ -23,7 +23,7 @@ struct MovieStruct
 	int rerecords;
 	int size;
 	int frames;
-	const char* filename;
+	char* filename;
 	int framelength;
 	int headersize;
 };
@@ -114,6 +114,12 @@ void MovieLoadState(void);
 void ReplaceMovie(FILE* fp);
 
 void CopyMovie(FILE* fp);
+
+struct MovieBufferStruct ReadMovieIntoABuffer(FILE* fp);
+
+void OpenMovie(const char * arg);
+
+void MakeMovieFilename(const char* arg);
 
 #endif
 

@@ -505,18 +505,7 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 
 	current=CurrentMovie;
 
-	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0){// && firstopen == 1) {
-
-		//if there's a setting, use the designated movie
-		if(Movie.fp=fopen(MDFN_GetSettingS("mov").c_str(),"w+b")) {
-		}
-		//firstopen = 0;  //stuff breaks without this
-	}
-	else
-	{
-		//we do a default movie name
-		Movie.fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 666,0).c_str(),"w+b");
-	}
+    MakeMovieFilename("w+b");
 
 	// if(!fp) return;
 
@@ -549,6 +538,32 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 	Movie.status=recording;
 
 	MDFN_DispMessage((UTF8 *)_("Movie recording started."));
+}
+
+char filename[4096];
+
+void MakeMovieFilename(const char* arg) {
+
+	//record should be w+b
+	//play should be r+b
+
+	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0){// && firstopen == 1) {
+
+		//if there's a setting, use the designated movie
+		if(Movie.fp=fopen(MDFN_GetSettingS("mov").c_str(),arg)) {
+			snprintf(filename, 4096, "%s", MDFN_GetSettingS("mov").c_str());
+		}
+		//firstopen = 0;  //stuff breaks without this
+	}
+	else
+	{
+		//we do a default movie name
+		Movie.fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 666,0).c_str(),arg);
+		snprintf(filename, 4096, "%s", MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 666,0).c_str());
+	}
+
+	Movie.filename=filename;
+
 }
 
 static void StopPlayback(void)
@@ -606,6 +621,8 @@ void MDFNI_LoadMovie(char *fname)
 		return;
 	}
 
+	MakeMovieFilename("r+b") ;
+/*
 	//make sure the setting isn't the default
 	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0) {
 
@@ -619,7 +636,7 @@ void MDFNI_LoadMovie(char *fname)
 		Movie.fp=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentMovie + 666, 0).c_str(),"r+b");
 		//fp=fopen("stoprecordingsmemmovie.txt","rb");
 	}
-
+*/
 	if(!Movie.fp) return;
 
 	//count the number of frames in the movie
@@ -900,6 +917,27 @@ void MDFNI_SelectMovie(int w)
 	MDFND_SetMovieStatus(status);
 }
 
+struct MovieBufferStruct truncatebuffer;
+
+void TruncateMovie(struct MovieStruct Movie) {
+
+	//when we resume recording, shorten the movie so that there isn't 
+	//potential garbage data at the end
+
+	
+
+	fseek(Movie.fp,0,SEEK_SET);
+	truncatebuffer=ReadMovieIntoABuffer(Movie.fp);
+	fclose(Movie.fp);
+
+	//clear the file and write it again
+	Movie.fp=fopen(Movie.filename,"wb");
+	fwrite(truncatebuffer.data,Movie.framelength,FrameCounter,Movie.fp);
+	fclose(Movie.fp);
+
+	Movie.fp=fopen(Movie.filename,"r+b");
+}
+
 void MovieLoadState(void) {
 
 	Movie.headersize=256;
@@ -918,11 +956,12 @@ void MovieLoadState(void) {
 
 	if(Movie.status == playback && Movie.readonly == 0) {
 		Movie.status = recording;
+		TruncateMovie(Movie);
 		fseek (Movie.fp,Movie.headersize+FrameCounter * Movie.framelength,SEEK_SET);
 		SetCurrent(1);
 		//RecordingFileOpened=1;
 		//strcpy(MovieStatus, "Recording Resumed");
-		//TruncateMovie(Movie);
+		
 
 	}
 }

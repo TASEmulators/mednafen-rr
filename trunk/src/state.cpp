@@ -762,7 +762,6 @@ int MDFNSS_LoadFP(gzFile fp)
 	free(st.data);
 	return(1);
 }
-int shit2;
 
 int MDFNSS_Load(const char *fname, const char *suffix)
 {
