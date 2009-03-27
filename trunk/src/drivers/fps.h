@@ -1,7 +1,7 @@
 #ifndef __MDFN_DRIVERS_FPS_H
 #define __MDFN_DRIVERS_FPS_H
 
-#include "..\..\src\mednafen.h"
+#include "../mednafen.h"
 
 void FPS_IncVirtual(void);
 void FPS_IncDrawn(void);
