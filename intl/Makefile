@@ -55,12 +55,12 @@ INSTALL_DATA = ${INSTALL} -m 644
 # We use $(mkdir_p).
 # In automake <= 1.9.x, $(mkdir_p) is defined either as "mkdir -p --" or as
 # "$(mkinstalldirs)" or as "$(install_sh) -d". For these automake versions,
-# $(SHELL) /home/tuxdistro/Desktop/mednafen/install-sh does not start with $(SHELL), so we add it.
+# $(SHELL) /home/tuxdistro/Desktop/medlin/install-sh does not start with $(SHELL), so we add it.
 # In automake >= 1.10, /bin/mkdir -p is derived from ${MKDIR_P}, which is defined
 # either as "/path/to/mkdir -p" or ".../install-sh -c -d". For these automake
 # versions, $(mkinstalldirs) and $(install_sh) are unused.
-mkinstalldirs = $(SHELL) $(SHELL) /home/tuxdistro/Desktop/mednafen/install-sh -d
-install_sh = $(SHELL) $(SHELL) /home/tuxdistro/Desktop/mednafen/install-sh
+mkinstalldirs = $(SHELL) $(SHELL) /home/tuxdistro/Desktop/medlin/install-sh -d
+install_sh = $(SHELL) $(SHELL) /home/tuxdistro/Desktop/medlin/install-sh
 MKDIR_P = /bin/mkdir -p
 mkdir_p = /bin/mkdir -p
 
@@ -70,7 +70,7 @@ AR = ar
 CC = gcc
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 RANLIB = ranlib
-YACC = : -y -d
+YACC = bison -y -d
 YFLAGS = --name-prefix=__gettext
 WINDRES = 
 
@@ -82,12 +82,12 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" -DLOCALE_ALIAS_PATH=\"$(aliaspath)\" \
 -Dset_relocation_prefix=libintl_set_relocation_prefix \
 -Drelocate=libintl_relocate \
 -DDEPENDS_ON_LIBICONV=1 -DHAVE_CONFIG_H
-CPPFLAGS =      -Wall -Winline -Wshadow  -fomit-frame-pointer -finline-limit=6000 --param large-function-growth=800 --param inline-unit-growth=175 --param max-inline-insns-single=10000 -fno-strict-overflow -I -I -g -O2  -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
-CFLAGS =      -Wall -Winline -Wshadow  -fomit-frame-pointer -finline-limit=6000 --param large-function-growth=800 --param inline-unit-growth=175 --param max-inline-insns-single=10000 -fno-strict-overflow -I -g -O2  -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT -fvisibility=hidden
+CPPFLAGS = -I/usr/local/include      -Wall -Winline -Wshadow  -fomit-frame-pointer -finline-limit=6000 --param large-function-growth=800 --param inline-unit-growth=175 --param max-inline-insns-single=10000 -fno-strict-overflow -I -I -g -O2  -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
+CFLAGS = -I/usr/local/include      -Wall -Winline -Wshadow  -fomit-frame-pointer -finline-limit=6000 --param large-function-growth=800 --param inline-unit-growth=175 --param max-inline-insns-single=10000 -fno-strict-overflow -I -g -O2  -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT -fvisibility=hidden
 LDFLAGS =  $(LDFLAGS_no)
 LDFLAGS_yes = -Wl,--export-all-symbols
 LDFLAGS_no =
-LIBS = -lsndfile   -lcdio -lm   -lz  -lz  -lasound -lm -ldl -lpthread -L/usr/lib -lSDL -lSDL_net
+LIBS = -lsndfile   -L/usr/local/lib -lcdio -lm   -lz  -lz  -lasound -lm -ldl -lpthread -L/usr/lib -lSDL -lSDL_net
 
 COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(XCFLAGS)
 

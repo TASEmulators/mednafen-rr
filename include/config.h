@@ -435,10 +435,10 @@
 #define WANT_DEBUGGER 1
 
 /* Define if we are compiling with GBA emulation. */
-/* #undef WANT_GBA_EMU */
+#define WANT_GBA_EMU 1
 
 /* Define if we are compiling with GB emulation. */
-/* #undef WANT_GB_EMU */
+#define WANT_GB_EMU 1
 
 /* Define if we are compiling with internal CJK fonts. */
 #define WANT_INTERNAL_CJK 1
@@ -447,7 +447,7 @@
 #define WANT_LYNX_EMU 1
 
 /* Define if we are compiling with NES emulation. */
-/* #undef WANT_NES_EMU */
+#define WANT_NES_EMU 1
 
 /* Define if we are compiling with NGP emulation. */
 #define WANT_NGP_EMU 1
@@ -459,7 +459,7 @@
 #define WANT_PCFX_EMU 1
 
 /* Define if we are compiling with SMS+GG emulation. */
-/* #undef WANT_SMS_EMU */
+#define WANT_SMS_EMU 1
 
 /* Define if we are compiling with WonderSwan emulation. */
 #define WANT_WSWAN_EMU 1
