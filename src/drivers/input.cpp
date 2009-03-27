@@ -1880,7 +1880,7 @@ static void subcon_begin(std::vector<ButtConfig> &bc)
 
 //make configuring joypads a little less cryptic
 
-char ConfigInfo[30];
+char ConfigInfo[90];
 
 void RetConfigStr(int snooty) {
 
