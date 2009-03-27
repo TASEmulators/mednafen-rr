@@ -255,7 +255,7 @@ uint32 PortDataCacheLength = 2;
 
 void SetNumberOfPorts(void) {
 
-	if (strcmp (CurGame->shortname, "lynx") == 0 || strcmp (CurGame->shortname, "wswan") == 0 || strcmp(CurGame->shortname, "ngp")== 0 ) 
+	if (strcmp (CurGame->shortname, "lynx") == 0 || strcmp (CurGame->shortname, "wswan") == 0 || strcmp(CurGame->shortname, "ngp")== 0 )
 		NumberOfPorts = 1;
 	
 	if (strcmp (CurGame->shortname, "pcfx") == 0 ) 
@@ -305,6 +305,7 @@ void MDFNMOV_Count(FILE* fp)
 
 	int moviesize1 = 0;
 
+	SetNumberOfPorts();
 	//get the size of the movie
 
 	fseek(fp, 0, SEEK_END);
@@ -497,6 +498,7 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 
 	FrameCounter = 0;
 	ResetlagCounter();
+	SetNumberOfPorts();
 
 	//memset(&temporarymoviebuffer, 0, sizeof(StateMem));
 
