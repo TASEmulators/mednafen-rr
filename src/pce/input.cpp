@@ -158,7 +158,6 @@ void INPUT_Frame(void)
    pce_mouse_button[x] = *(uint8 *)(data_ptr[x] + 8);
   }
  }
- puts("");
 }
 
 void INPUT_FixTS(void)
