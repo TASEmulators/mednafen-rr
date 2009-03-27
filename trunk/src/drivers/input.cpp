@@ -1033,9 +1033,14 @@ static void KeyboardCommands(void)
   if(!MDFNDnetplay)
   {
 
-	  if(FrameAdvanceCounter > FrameAdvanceSpeed) { 
-		CK_CheckFrameAdvance();
-		FrameAdvanceCounter = 0;
+	  if(!inff) { 
+		  if(FrameAdvanceCounter > FrameAdvanceSpeed) { 
+			  CK_CheckFrameAdvance();
+			  FrameAdvanceCounter = 0;
+		  }
+	  }
+	  else {
+		  CK_CheckFrameAdvance();
 	  }
 
 FrameAdvanceCounter++;
@@ -1047,37 +1052,6 @@ SetFrameAdvanceActive(1);
 else
  SetFrameAdvanceActive(0);
 
-
-	  //this code is shit
-	  //it is apparently dependent on the computer's speed
-	  //but it works for me
-	/*  
-		  
-
-
-		  //if the number of times that the key has been checked and is active is larger than our frame advance speed number
-		  //this is to give multiple speeds for advancing
-		  
-
-			  //the key hasn't been pressed yet
-			  //we advance a frame immediately
-			  if(FrameAdvanceDelayCounter < 15) {
-				  DoFrameAdvance(); 
-			  }
-
-			  //the key has been pressed, but to start advancing again the counter must be larger than 15
-			  if(FrameAdvanceDelayCounter > 15) {
-				  DoFrameAdvance();
-			  }
-
-			  
-		  }
-		  
-		  FrameAdvanceDelayCounter++;
-	  }
-	  else
-		 
-*/
 	  if(CK_Check(CK_pause))
 
 
@@ -1174,7 +1148,7 @@ else
    }
   }
 
- 
+
  if(!strcmp(CurGame->shortname, "lynx") || !strcmp(CurGame->shortname, "wswan"))
  {
   if(CK_Check(CK_ROTATESCREEN))
@@ -1212,6 +1186,11 @@ else
    {
     inff = !inff;
     RefreshThrottleFPS(inff ? (unsigned int)MDFN_GetSettingUI("ffspeed") : 1);
+/*	if(inff)
+		DoRunNormal();
+	else
+		DoFrameAdvance();*/
+
    }
   }
   else
@@ -1222,6 +1201,7 @@ else
     {
      RefreshThrottleFPS((unsigned int)MDFN_GetSettingUI("ffspeed"));
      inff = 1;
+	 DoRunNormal();
     }
    }
    else
