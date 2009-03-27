@@ -118,7 +118,12 @@ static uint32_t RawWrite(SexyAL_device *device, void *data, uint32_t len)
 
    sw->BufferIn += maxcopy;
 
+   #ifdef _MSC_VER
    (uint8_t*)data += maxcopy;
+   #else
+   data += maxcopy;
+   #endif
+   
    tocopy -= maxcopy;
    len -= maxcopy;
   }
