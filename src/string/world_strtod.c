@@ -72,7 +72,7 @@ double world_strtod (const char *nptr, char **endptr)
 	char *cp;
 	double ret;
 	
-	cp = buf = _strdup(nptr);
+	cp = buf = strdup(nptr);  //the underscore breaks compilation on linux
 	while(*cp) {
 		if(*cp == ',') *cp = '.';
 		cp++;
