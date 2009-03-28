@@ -38,6 +38,8 @@ struct MovieBufferStruct
 	char* data;
 };
 
+extern struct MovieStruct Movie;
+
 void LoadMovieCLI(void);
 
 void ResetVariables(void);
@@ -73,10 +75,11 @@ int getreadonly(void);
 
 //void setreadonly(void);
 
-
+extern int current;
 
 void AddRerecordCount(void);
 
+extern int RecordingSwitchToPlayback;
 
 int MovInd(void);
 

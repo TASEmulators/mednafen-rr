@@ -788,6 +788,18 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 	{
 		if(!fname && !suffix)
 		{
+			if(RecordingSwitchToPlayback==1) {
+				RecordingSwitchToPlayback=0;
+					current = CurrentMovie;
+	                //slots[current] = Movie.fp;
+					current = -1 - current;
+					//MovieStatus[CurrentMovie] = 1;
+					Movie.status=playback;
+					Movie.readonly = 1;
+					MovieLoadState();
+			}
+
+			else {
 
 			AddRerecordCount();  //every loaded state during recording is +1 rerecord, this function takes care of the conditional
 
@@ -805,6 +817,7 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 			SaveStateStatus[CurrentState]=1;
 			MDFN_DispMessage((UTF8 *)_("State %d loaded."),CurrentState);
 			SaveStateStatus[CurrentState]=1;
+			}
 		}
 		gzclose(st);
 		return(1);
