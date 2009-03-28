@@ -255,7 +255,7 @@ uint32 PortDataCacheLength = 2;
 
 void SetNumberOfPorts(void) {
 
-	if (strcmp (CurGame->shortname, "lynx") == 0 || strcmp (CurGame->shortname, "wswan") == 0 || strcmp(CurGame->shortname, "ngp")== 0 )
+	if (strcmp (CurGame->shortname, "lynx") == 0 || strcmp (CurGame->shortname, "wswan") == 0)
 		NumberOfPorts = 1;
 	
 	if (strcmp (CurGame->shortname, "pcfx") == 0 ) 
@@ -263,6 +263,19 @@ void SetNumberOfPorts(void) {
 	
 	if (strcmp (CurGame->shortname, "pce")== 0 ) 
 		NumberOfPorts = 5;
+	if (strcmp (CurGame->shortname, "sms")== 0 ) {
+		NumberOfPorts = 2;
+		PortDataCacheLength=1;
+	}
+	if (strcmp (CurGame->shortname, "ngp")== 0 ) {
+		NumberOfPorts = 1;
+		PortDataCacheLength=1;
+	}
+	//not really correct, the nes has 5 ports with the last one as length 0 apparently...
+	if (strcmp (CurGame->shortname, "nes")== 0 ) {
+		NumberOfPorts = 4;
+		PortDataCacheLength=1;
+	}
 }
 
 ////////////////////////
