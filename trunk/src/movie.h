@@ -38,6 +38,10 @@ struct MovieBufferStruct
 	char* data;
 };
 
+void FCEUI_MakeBackupMovie(bool dispMessage);
+
+bool CheckFileExists(const char* filename);
+
 extern struct MovieStruct Movie;
 
 void LoadMovieCLI(void);

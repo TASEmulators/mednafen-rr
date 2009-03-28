@@ -24,6 +24,16 @@ Starting playback: void MDFNI_LoadMovie(char *fname)
 Stopping playback: static void StopPlayback(void)
 */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#include <zlib.h>
+#include <iomanip>
+#include <limits.h>
+#include <stdarg.h>
+#include <sstream>
+
 #include <string>
 
 #include <stdio.h>
@@ -969,8 +979,9 @@ void MovieLoadState(void) {
 		fseek (Movie.fp,Movie.headersize+FrameCounter * Movie.framelength,SEEK_SET);
 	}
 
-	if(Movie.status == recording)
+	if(Movie.status == recording) {
 		fseek (Movie.fp,Movie.headersize+FrameCounter * Movie.framelength,SEEK_SET);
+	}
 
 	if(Movie.status == playback && Movie.readonly == 0) {
 		Movie.status = recording;
@@ -1035,3 +1046,106 @@ void CopyMovie(FILE* fp) {
 		fwrite(tempbuffer.data, tempbuffer.size, 1, fp);//and copy it to destination
 	}
 }
+
+using namespace std;
+
+bool CheckFileExists(const char* filename)
+{
+	//This function simply checks to see if the given filename exists
+	std::string checkFilename; 
+
+    if (FILE * file = fopen(filename, "r")) //I'm sure, you meant for READING =)
+    {
+        fclose(file);
+        return true;
+    }
+    return false;
+
+
+}
+//const char * backupfilename;
+
+//char * backupfilename;
+
+void FCEUI_MakeBackupMovie(bool dispMessage)
+{
+	FILE* backupfile;
+	
+
+	//This function generates backup movie files
+	std::string currentFn;					//Current movie fillename
+	std::string backupFn;					//Target backup filename
+	std::string tempFn;						//temp used in back filename creation
+	stringstream stream;
+	int x;								//Temp variable for string manip
+	bool exist = false;					//Used to test if filename exists
+	bool overflow = false;				//Used for special situation when backup numbering exceeds limit
+
+	currentFn = Movie.filename;		//Get current moviefilename
+	backupFn = Movie.filename;		//Make backup filename the same as current moviefilename
+	x = backupFn.find_last_of(".");		 //Find file extension
+	backupFn = backupFn.substr(0,x);	//Remove extension
+	tempFn = backupFn;					//Store the filename at this point
+	for (unsigned int backNum=0;backNum<999;backNum++) //999 = arbituary limit to backup files
+	{
+		stream.str("");					 //Clear stream
+		if (backNum > 99)
+			stream << "-" << backNum;	 //assign backNum to stream
+		else if (backNum <=99 && backNum >= 10)
+			stream << "-0";				//Make it 010, etc if two digits
+		else
+			stream << "-00" << backNum;	 //Make it 001, etc if single digit
+		backupFn.append(stream.str());	 //add number to bak filename
+		backupFn.append(".bak");		 //add extension
+
+		exist = CheckFileExists(backupFn.c_str());	//Check if file exists
+		
+		if (!exist) 
+			break;						//Yeah yeah, I should use a do loop or something
+		else
+		{
+			backupFn = tempFn;			//Before we loop again, reset the filename
+			
+			if (backNum == 999)			//If 999 exists, we have overflowed, let's handle that
+			{
+				backupFn.append("-001.bak"); //We are going to simply overwrite 001.bak
+				overflow = true;		//Flag that we have exceeded limit
+				break;					//Just in case
+			}
+		}
+	}
+
+//	MovieData md = currMovieData;								//Get current movie data
+
+	//snprintf(backupfilename, 1023, "%s", backupFn);
+	//backupfilename = backupFn.c_str ();
+	//backupfilename = strdup(backupFn.c_str());
+
+
+	//std::string str;
+	char * backupfilename = new char[backupFn.size() + 1];
+	std::copy(backupFn.begin(), backupFn.end(), backupfilename);
+	backupfilename[backupFn.size()] = '\0'; // don't forget the terminating 0
+
+
+
+	backupfile=fopen(backupfilename, "wb");	//open/create file
+    CopyMovie(backupfile);
+
+		// don't forget to free the string after finished using it
+	delete[] backupfilename;
+	//md.dump(outf,false);										//dump movie data
+//	delete outf;												//clean up, delete file object
+	
+	//TODO, decide if fstream successfully opened the file and print error message if it doesn't
+
+//	if (dispMessage)	//If we should inform the user 
+//	{
+	//	if (overflow)
+	//		FCEUI_DispMessage("Backup overflow, overwriting %s",backupFn.c_str()); //Inform user of overflow
+	//	else
+	//		FCEUI_DispMessage("%s created",backupFn.c_str()); //Inform user of backup filename
+//	}
+}
+
+

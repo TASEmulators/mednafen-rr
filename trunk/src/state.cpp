@@ -803,6 +803,8 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 
 			AddRerecordCount();  //every loaded state during recording is +1 rerecord, this function takes care of the conditional
 
+			FCEUI_MakeBackupMovie(0);
+
 			FILE* statemovie;  //the movie file that will be read
 			statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"r+b");
 			ReplaceMovie(statemovie);
