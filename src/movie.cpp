@@ -73,7 +73,7 @@ int readonly = 1; //movie is read only by default
 int isMov = 0; //used to create a second set of savestates for nonrecording/nonplayback
 //0 = not playing or recording
 
-static int current = 0;		// > 0 for recording, < 0 for playback
+int current = 0;		// > 0 for recording, < 0 for playback
 
 ///////////////////
 
@@ -323,10 +323,11 @@ int getreadonly(void) {
 	return(Movie.readonly);
 }
 
+int RecordingSwitchToPlayback;
 
 void setreadonly(void) { //it's a toggle
 
-	if(!(current > 0)) { //we can only toggle during playback or stopped
+	if(!(current > 0)) { //special case if we are recording
 
 		if(Movie.readonly == 1) {
 			Movie.readonly=0;
@@ -342,8 +343,10 @@ void setreadonly(void) { //it's a toggle
 			MDFN_DispMessage((UTF8 *)_("Read Only"));
 		}
 	}
-	else
-		MDFN_DispMessage((UTF8 *)_("Can't toggle during recording"));
+	else {
+		MDFN_DispMessage((UTF8 *)_("Recording continuing - Load a state to play read-only"));
+		RecordingSwitchToPlayback=1;
+	}
 }
 
 //allows people to start in either readonly or read+write mode by the command line
