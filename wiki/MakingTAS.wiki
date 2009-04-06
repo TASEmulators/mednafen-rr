@@ -1,2 +1,13 @@
 #labels Featured
-TODO: This info will be up shortly
+Windows Users:
+Mednafen is command line only.  This can be cumbersome but there are some options.  The first is to create a shortcut to mednafen then right-click the shortcut and go to properties.  Add the commandline options to the target line.
+
+The other option is to download Let's Mednafen: 
+http://translate.google.com/translate?hl=en&sl=ja&u=http://lhsp.s206.xrea.com/works/frontend.html
+
+Load up lmednafen, then set up your window settings.
+Then in the "other command-line" box, add -mov [yourmoviename]
+
+This will load your movie into memory when mednafen loads (or create one if it doesn't exist).  Then go to File > Loading files to select your game.
+
+Once mednafen is launched, you can begin recording by pressing shift+R, or to playback the movie, press shift+P.  To toggle read-only status, press shift+T.
