@@ -10,4 +10,9 @@ Then in the "other command-line" box, add -mov [yourmoviename]
 
 This will load your movie into memory when mednafen loads (or create one if it doesn't exist).  Then go to File > Loading files to select your game.
 
+All users:
+
 Once mednafen is launched, you can begin recording by pressing shift+R, or to playback the movie, press shift+P.  To toggle read-only status, press shift+T.
+
+To reassign your controller buttons press shift+alt+1 (for player 1)
+To reassign hotkeys press shift+alt+h + the hotkey you wish to modify
