@@ -947,23 +947,24 @@ void MDFNI_SelectMovie(int w)
 
 struct MovieBufferStruct truncatebuffer;
 
-void TruncateMovie(struct MovieStruct Movie) {
+void TruncateMovie(struct MovieStruct mov) {
+	int length;
 
-	//when we resume recording, shorten the movie so that there isn't 
+	//when we resume recording, shorten the mov so that there isn't 
 	//potential garbage data at the end
 
+	fseek(mov.fp,0,SEEK_SET);
+	truncatebuffer=ReadMovieIntoABuffer(mov.fp);
+	fclose(mov.fp);
 	
-
-	fseek(Movie.fp,0,SEEK_SET);
-	truncatebuffer=ReadMovieIntoABuffer(Movie.fp);
-	fclose(Movie.fp);
-
 	//clear the file and write it again
-	Movie.fp=fopen(Movie.filename,"wb");
-	fwrite(truncatebuffer.data,Movie.framelength,FrameCounter,Movie.fp);
-	fclose(Movie.fp);
+	mov.fp=fopen(mov.filename,"wb");
+	//fwrite(truncatebuffer.data,256,1,mov.fp);//header
+	length=(mov.framelength*FrameCounter)+256;
+	fwrite(truncatebuffer.data,1,length,mov.fp);
+	fclose(mov.fp);
 
-	Movie.fp=fopen(Movie.filename,"r+b");
+	mov.fp=fopen(mov.filename,"r+b");
 }
 
 void MovieLoadState(void) {
@@ -1060,8 +1061,6 @@ bool CheckFileExists(const char* filename)
         return true;
     }
     return false;
-
-
 }
 //const char * backupfilename;
 
@@ -1147,5 +1146,7 @@ void FCEUI_MakeBackupMovie(bool dispMessage)
 	//		FCEUI_DispMessage("%s created",backupFn.c_str()); //Inform user of backup filename
 //	}
 }
+
+
 
 
