@@ -755,7 +755,7 @@ static int DIPS=0;
 #define KEY(__a) keys[MKK(__a)]
 
 static int cidisabled=0;
-static int inff = 0;
+int inff = 0;
 
 typedef enum
 {
