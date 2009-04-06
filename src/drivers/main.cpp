@@ -249,7 +249,7 @@ static MDFNSetting DriverSettings[] =
   { "vdriver", gettext_noop("Select video driver, \"opengl\" or \"sdl\"."), MDFNST_STRING, "opengl", NULL, NULL, MDFND_ValidateVideoSetting },
   { "glvsync", gettext_noop("Attempt to synchronize OpenGL page flips to vertical retrace period."), MDFNST_BOOL, "1" },
 
-  { "ffspeed", gettext_noop("Fast-forwarding speed multiplier."), MDFNST_UINT, "4", "1", "15" },
+  { "ffspeed", gettext_noop("Fast-forwarding speed multiplier."), MDFNST_UINT, "15", "1", "15" },
   { "fftoggle", gettext_noop("Treat the fast-forward button as a toggle."), MDFNST_BOOL, "0" },
   { "ffnosound", gettext_noop("Silence sound output when fast-forwarding."), MDFNST_BOOL, "0" },
   { "autofirefreq", gettext_noop("Auto-fire frequency."), MDFNST_UINT, "3", "0", "1000" },
