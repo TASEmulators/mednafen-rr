@@ -1369,10 +1369,14 @@ static uint32 last_btime = 0;
 static uint64 ttime,ltime=0;
 static int skipcount = 0;
 
+//#include "input.h"
+
 // Throttle and check for frame skip
 static int ThrottleCheckFS(void)
 {
+	 
  int needskip = 0;
+
  bool nothrottle = MDFN_GetSettingB("nothrottle");
 
  waiter:
@@ -1394,10 +1398,10 @@ static int ThrottleCheckFS(void)
   }
  }
 
-#ifdef NETWORK
- if(!MDFNDnetplay)
- {
-  if(((ttime-ltime) >= (1.5*tfreq/desiredfps)))
+//#ifdef NETWORK
+// if(!MDFNDnetplay)
+// {
+  if(((ttime-ltime) >= (1.5*tfreq/desiredfps))|| inff)
   {
    //MDFN_DispMessage((UTF8*)"%8d %8d %8d, %8d", ttime, ltime, ttime-ltime, tfreq / desiredfps);
    if(skipcount < 4 || (CurGameSpeed > 1 && skipcount < CurGameSpeed))     // Only skip four frames in a row at maximum.
@@ -1415,8 +1419,8 @@ static int ThrottleCheckFS(void)
   }
   else
    ltime+=tfreq/desiredfps;
- }
-#endif
+// }
+//#endif
 
  return(needskip);
 }

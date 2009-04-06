@@ -18,6 +18,8 @@ extern CFGSTRUCT InputConfig[];
 #define MKK(k) SDLK_##k
 #define MKK_COUNT (SDLK_LAST+1)
 
+extern int inff;
+
 // Called after a game is loaded.
 void InitGameInput(MDFNGI *GI);
 
