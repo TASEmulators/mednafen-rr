@@ -651,8 +651,10 @@ static COKE CKeys[_CK_COUNT]	=
         { MK_CK_ALT_SHIFT(3), "input_config3", ~0, 0, gettext_noop("Configure buttons on virtual port 3")  },
         { MK_CK_ALT_SHIFT(4), "input_config4", ~0, 0, gettext_noop("Configure buttons on virtual port 4")  },
 	{ MK_CK_ALT_SHIFT(5), "input_config5", ~0, 0, gettext_noop("Configure buttons on virtual port 5")  },
-	{ MK_CK_ALT_SHIFT(r), "reset", ~0, 0, gettext_noop("Reset") },
-	{ MK_CK_CTRL(p), "power", ~0, 0, gettext_noop("Power toggle") },
+
+	{ MK_CK_ALT_SHIFT(9), "reset", ~0, 0, gettext_noop("Reset") },
+	{ MK_CK_ALT_SHIFT(0), "power", ~0, 0, gettext_noop("Power toggle") },
+
 	{ MK_CK(ESCAPE), "exit", ~0, 0, gettext_noop("Exit") },
 	{ MK_CK(BACKSPACE), "state_rewind", ~0, 1, gettext_noop("Rewind") },
 	{ MK_CK_SHIFT(j), "rotatescreen", ~0, 1, gettext_noop("Rotate screen") },
