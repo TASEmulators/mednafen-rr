@@ -565,6 +565,8 @@ void MDFNI_SaveMovie(char *fname, uint32 *fb, MDFN_Rect *LineWidths)
 	isMov = 1;// use movie specific savestates
 	Movie.status=recording;
 
+	DoFrameAdvance();
+
 	MDFN_DispMessage((UTF8 *)_("Movie recording started."));
 }
 
