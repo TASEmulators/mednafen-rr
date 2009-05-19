@@ -818,7 +818,11 @@ int GameLoop(void *arg)
 	  espec.LineWidths = (MDFN_Rect *)VTLineWidths[VTBackBuffer];
 	  espec.SoundBuf = &sound;
 	  espec.SoundBufSize = &ssize;
-	  espec.skip = fskip;
+	  if(MDFN_GetSettingB("mmm"))
+	  espec.skip = 0;
+	  else
+		  espec.skip = fskip;
+
 	  espec.soundmultiplier = (float)CurGameSpeed;
 	  espec.NeedRewind = DNeedRewind;
           MDFNI_Emulate(&espec); //(uint32 *)VTBuffer[VTBackBuffer], (MDFN_Rect *)VTLineWidths[VTBackBuffer], &sound, &ssize, fskip, CurGameSpeed);
