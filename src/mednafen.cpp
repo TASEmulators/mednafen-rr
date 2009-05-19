@@ -96,9 +96,9 @@ static MDFNSetting MednafenSettings[] =
   { "allowlrud", gettext_noop("Enable/Disable button exclusion"), MDFNST_BOOL, "0" },
   { "mmm", gettext_noop("Record an mmm"), MDFNST_BOOL, "0" },
   { "mmmframes", gettext_noop("Number of frames to keep states for when state rewinding is enabled."), MDFNST_UINT, "0", "0", "999999" },
+  { "mmmfile", gettext_noop("Record mmm to this file"), MDFNST_STRING, "" },
 
   //{ "recordmov", gettext_noop("Path to the movie to be recorded to"), MDFNST_STRING, "recordmov PATH NOT SET" },
-
 
 
   { "path_snap", gettext_noop("Path override for screen snapshots."), MDFNST_STRING, "" },
@@ -686,7 +686,9 @@ alreadypaused = 1;
 
 if(!startedwriting) {
 
-MMRecord_Start("testmovie.mmm");
+std::string path = MDFN_GetSettingS("mmmfile");
+
+MMRecord_Start(path.c_str());
 
 	startedwriting=true;
 }
