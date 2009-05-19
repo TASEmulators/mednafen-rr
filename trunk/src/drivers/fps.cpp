@@ -78,7 +78,7 @@ int counter;
 void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
 {
 
-	
+isactive=!MDFN_GetSettingB("mmm");	
 
  if(!isactive) 
  {

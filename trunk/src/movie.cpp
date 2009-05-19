@@ -615,6 +615,7 @@ static void StopPlayback(void)
 
 	void ResetVariables(void);
 
+	if(!MDFN_GetSettingB("mmm"))
 	MDFN_DispMessage((UTF8 *)_("Movie playback stopped."));
 }
 
@@ -715,6 +716,7 @@ void MDFNI_LoadMovie(char *fname)
 	isMov = 1;  //use movie specfic savestates
 	Movie.readonly = 1;  //we always start read only so that the user can toggle it later
 
+	if(!MDFN_GetSettingB("mmm"))
 	MDFN_DispMessage((UTF8*)_("Read-Only Playback - Frames: %d Re-records: %d Author: %s MD5: %s"), MovieFrameCount, RerecordCount, movieauthor, MovieMD5Sum);
 }
 

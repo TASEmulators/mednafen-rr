@@ -51,6 +51,12 @@
 #include	"video/vblur.h"
 #include    "settings-driver.h"
 #include    "pce/pce.h"
+#include <iostream>
+
+void MMRecord_End(void);
+bool MMRecord_Start(const char *filename);
+void MMRecord_WriteFrame(const EmulateSpecStruct *espec);
+
 
 static const char *CSD_vblur = gettext_noop("Blur each frame with the last frame.");
 static const char *CSD_vblur_accum = gettext_noop("Accumulate color data rather than discarding it.");
@@ -88,6 +94,9 @@ static MDFNSetting MednafenSettings[] =
   { "loadstate", gettext_noop("Load the specified state"), MDFNST_STRING, "" },
   { "readonly", gettext_noop("Start the emulator in read only mode"), MDFNST_BOOL, "1" },
   { "allowlrud", gettext_noop("Enable/Disable button exclusion"), MDFNST_BOOL, "0" },
+  { "mmm", gettext_noop("Record an mmm"), MDFNST_BOOL, "0" },
+  { "mmmframes", gettext_noop("Number of frames to keep states for when state rewinding is enabled."), MDFNST_UINT, "0", "0", "999999" },
+
   //{ "recordmov", gettext_noop("Path to the movie to be recorded to"), MDFNST_STRING, "recordmov PATH NOT SET" },
 
 
@@ -550,6 +559,10 @@ bool retjustLagged(void) {
 	return(justLagged); 
 }
 
+bool startedwriting=false;
+int moviecounter=0;
+int endingframe=0;
+int wantrecording=0;
 
 void MDFNI_Emulate(EmulateSpecStruct *espec) //uint32 *pXBuf, MDFN_Rect *LineWidths, int16 **SoundBuf, int32 *SoundBufSize, int skip, float soundmultiplier)
 {
@@ -665,6 +678,34 @@ alreadypaused = 1;
   }
   MDFN_WriteWaveData(*(espec->SoundBuf), *(espec->SoundBufSize)); /* This function will just return if sound recording is off. */
  }
+
+ wantrecording = MDFN_GetSettingB("mmm");
+ endingframe = MDFN_GetSettingUI("mmmframes");
+
+ if(wantrecording) {
+
+if(!startedwriting) {
+
+MMRecord_Start("testmovie.mmm");
+
+	startedwriting=true;
+}
+
+if(startedwriting && moviecounter < endingframe) {
+MMRecord_WriteFrame(espec);
+
+moviecounter++;
+	std::cout << moviecounter << std::endl;
+}
+
+if(moviecounter >= endingframe) {
+
+MMRecord_End();
+MDFN_DispMessage((UTF8 *)_("Finished"));
+MDFNI_SetSettingB("mmm", 0);
+}
+ }
+
  if (GetLagFlag() == 1) 
 	{
 		lagCounter++;
@@ -973,3 +1014,584 @@ int MDFNI_DiskSelect(void)
 
  return(0);
 }
+
+#ifdef _MSC_VER
+#pragma pack(push,1)
+#endif
+
+typedef struct
+{
+ /* 0x00 */ uint8 magic[16];            // "Mednafen M Movie"
+ /* 0x10 */ uint32 version;             // 0x00
+ /* 0x14 */ uint16 video_compressor;    // 0x01 = MiniLZO
+ /* 0x16 */ uint16 audio_compressor;    // 0x00 = Raw
+
+ /* 0x18 */ uint32 nominal_width;       // Nominal width of video output(scale from individual frame's width to this)
+ /* 0x1C */ uint32 nominal_height;      // Nominal height of video output(scale from individual frame's height to this)
+
+ /* 0x20 */ uint32 min_width;           // Minimum video width
+ /* 0x24 */ uint32 max_width;           // Maximum video width
+ /* 0x28 */ uint32 min_height;          // Minimum video height
+ /* 0x2C */ uint32 max_height;          // Maximum video height
+
+ /* 0x30 */ uint64 video_frame_counter; // Total number of video/stream frames
+ /* 0x38 */ uint64 audio_frame_counter; // Total number of audio frames(audio samples / sound channels)
+ /* 0x40 */ uint64 frame_index_offset;  // Offset of the frame index chunk in the file
+ /* 0x48 */ uint64 sound_rate;          // Sound rate(32.32 fixed point)
+ /* 0x50 */ uint32 sound_channels;      // Number of sound channels(1 or 2)
+ /* 0x54 */ uint32 max_aframes_per_vframe;	// Maximum number of audio frames per video/stream frame.
+ /* 0x58 */ uint8 padding[0x100 - 0x58];
+//} 
+
+//__attribute__((__packed__)) MM_Main_Header;
+
+#ifdef _MSC_VER
+} MM_Main_Header;
+#pragma pack(pop)
+#else
+} __attribute__((__packed__)) MM_Main_Header;
+#endif
+
+static FILE *output_fp = NULL;
+static uint8 *pixel_buffer = NULL;
+static uint32 compress_buffer_size;
+static uint8 *compress_buffer = NULL;
+
+// Filled out partially and written when movie playback starts, completed and rewritten when movie playback ends.
+static MM_Main_Header main_header;
+
+static uint64 video_frame_counter;
+static uint64 audio_frame_counter;
+static uint32 min_width, max_width, min_height, max_height;
+static uint32 max_aframes_per_vframe;
+
+static uint64 LastFrameOffset;
+static uint64 LastFrameTime;
+
+static std::vector<uint32> FrameRelativeIndex;
+static std::vector<uint32> FrameRelativeTime;
+/*
+int WriteMovie(void) {
+
+ output_fp = fopen("movietest.txt", "wb");
+ if(!output_fp)
+ {
+  puts("fuck");
+ // MDFN_PrintError("%m\n", errno);
+  return(0);
+ }
+
+//TODO get proper height
+ //if(!(pixel_buffer = (uint8 *)MDFN_malloc(MDFNGameInfo->pitch * MDFNGameInfo->fb_height, _("compression buffer"))))
+  if(!(pixel_buffer = (uint8 *)MDFN_malloc(MDFNGameInfo->pitch * 232, _("compression buffer"))))
+ {
+  fclose(output_fp);
+  return(0);
+ }
+
+ //if(!(pixel_buffer = (uint8 *)MDFN_malloc(MDFNGameInfo->pitch * MDFNGameInfo->fb_height, _("compression buffer"))))
+// {
+ // fclose(output_fp);
+ // return(0);
+// }
+
+ compress_buffer_size = MDFNGameInfo->pitch * 232 * 1.10;//TODO proper height
+ if(!(compress_buffer = (uint8 *)MDFN_malloc(compress_buffer_size, _("compression buffer"))))
+ {
+  free(pixel_buffer);
+  fclose(output_fp);
+  return(0);
+ }
+
+ audio_frame_counter = 0;
+ video_frame_counter = 0;
+
+ min_width = min_height = 0xFFFFFFFF;
+ max_width = max_height = 0x00000000;
+
+ max_aframes_per_vframe = 1;
+
+ LastFrameOffset = 0;
+ LastFrameTime = 0;
+
+ FrameRelativeIndex.clear(); 
+ FrameRelativeTime.clear();
+
+ //compress_buffer_size = MDFNGameInfo->pitch * 320 * 1.10;
+ //if(!(compress_buffer = (uint8 *)MDFN_malloc(compress_buffer_size, _("compression buffer"))))
+ //{
+ //free(pixel_buffer);
+//  fclose(output_fp);
+//  return(0);
+// }
+
+return 1;
+
+}
+*/
+
+static INLINE void MDFN_en16lsb(uint8 *buf, uint16 morp)
+{
+ buf[0]=morp;
+ buf[1]=morp>>8;
+}
+
+static INLINE void MDFN_en24lsb(uint8 *buf, uint32 morp)
+{
+ buf[0]=morp;
+ buf[1]=morp>>8;
+ buf[2]=morp>>16;
+}
+
+/*
+static INLINE void MDFN_en32lsb(uint8 *buf, uint32 morp)
+{
+ buf[0]=morp;
+ buf[1]=morp>>8;
+ buf[2]=morp>>16;
+ buf[3]=morp>>24;
+}
+*/
+static INLINE void MDFN_en64lsb(uint8 *buf, uint64 morp)
+{
+ buf[0]=morp >> 0;
+ buf[1]=morp >> 8;
+ buf[2]=morp >> 16;
+ buf[3]=morp >> 24;
+ buf[4]=morp >> 32;
+ buf[5]=morp >> 40;
+ buf[6]=morp >> 48;
+ buf[7]=morp >> 56;
+}
+
+
+// Overloaded functions, yay.
+static INLINE void MDFN_enlsb(uint16 * buf, uint16 value)
+{
+ MDFN_en16lsb((uint8 *)buf, value);
+}
+
+static INLINE void MDFN_enlsb(uint32 * buf, uint32 value)
+{
+ MDFN_en32lsb((uint8 *)buf, value);
+}
+
+static INLINE void MDFN_enlsb(uint64 * buf, uint64 value)
+{
+ MDFN_en64lsb((uint8 *)buf, value);
+}
+
+
+bool MMRecord_Start(const char *filename)
+{
+
+int nominal_width=320;
+int nominal_height=232;
+int fb_height=232;
+
+	MM_Main_Header header;
+
+	memset(&header, 0, sizeof(MM_Main_Header));
+
+	output_fp = fopen(filename, "wb");
+	if(!output_fp)
+	{
+		MDFN_PrintError("%m\n", errno);
+		return(0);
+	}
+
+	memcpy(main_header.magic, "Mednafen M Movie", 16);
+
+	MDFN_enlsb(&main_header.version, 0);
+	MDFN_enlsb(&main_header.video_compressor, 1);	// MiniLZO
+	MDFN_enlsb(&main_header.audio_compressor, 0);	// Raw
+
+	MDFN_enlsb(&main_header.nominal_width, nominal_width);
+	MDFN_enlsb(&main_header.nominal_height, nominal_height);
+
+	// 32.32 sound rate
+	MDFN_enlsb(&main_header.sound_rate, (uint64)FSettings.SndRate << 32);
+
+	// Number of sound channels
+	MDFN_enlsb(&main_header.sound_channels, MDFNGameInfo->soundchan);
+
+
+	fwrite(&main_header, 1, sizeof(MM_Main_Header), output_fp);
+
+	if(!(pixel_buffer = (uint8 *)MDFN_malloc(MDFNGameInfo->pitch * fb_height, _("compression buffer"))))
+	{
+		fclose(output_fp);
+		return(0);
+	}
+
+	compress_buffer_size = MDFNGameInfo->pitch * fb_height * 1.10;
+	if(!(compress_buffer = (uint8 *)MDFN_malloc(compress_buffer_size, _("compression buffer"))))
+	{
+		free(pixel_buffer);
+		fclose(output_fp);
+		return(0);
+	}
+
+	audio_frame_counter = 0;
+	video_frame_counter = 0;
+
+	min_width = min_height = 0xFFFFFFFF;
+	max_width = max_height = 0x00000000;
+
+	max_aframes_per_vframe = 1;
+
+	LastFrameOffset = 0;
+	LastFrameTime = 0;
+
+	FrameRelativeIndex.clear(); 
+	FrameRelativeTime.clear();
+
+	return(1);
+}
+#include <iostream>
+
+static bool WriteChunk(const EmulateSpecStruct *espec)
+{
+uint32 frame_count = *espec->SoundBufSize;
+ //uint32 frame_count = espec->SoundBufSize;
+std::cout << *espec->SoundBufSize << std::endl;
+std::cout << "frame_count" << frame_count << std::endl;
+ const char *video_header = "FRAME\0\0";
+ uint16 height = MDFNGameInfo->DisplayRect.h;
+ uint16 width = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.w : 0;
+ uint8 *pb_ptr = pixel_buffer;
+ uint8 workmem[LZO1X_1_MEM_COMPRESS];
+ lzo_uint compressed_len;
+ 
+ uint32 compressed_size;
+ uint32 uncompressed_size;
+
+ FrameRelativeIndex.push_back(ftell(output_fp) - LastFrameOffset);
+ FrameRelativeTime.push_back(LastFrameTime);
+
+ LastFrameOffset = ftell(output_fp);
+ LastFrameTime = frame_count;
+
+ fwrite(video_header, 1, 8, output_fp);
+
+ fwrite(&width, 1, 2, output_fp);
+ fwrite(&height, 1, 2, output_fp);
+
+ if(height > max_height)
+  max_height = height;
+
+ if(height < min_height)
+  min_height = height;
+
+ for(int y = MDFNGameInfo->DisplayRect.y; y < MDFNGameInfo->DisplayRect.y + MDFNGameInfo->DisplayRect.h; y++)
+ {
+  uint16 meow_width = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.w : espec->LineWidths[y].w;
+  int meow_x = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.x : espec->LineWidths[y].x;
+  uint32 *fb_line = espec->pixels + y * (MDFNGameInfo->pitch >> 2) + meow_x;
+
+  //if(!width)
+  //{
+  // fwrite(&meow_width, 1, 2, output_fp);
+  //}
+
+  if(meow_width > max_width)
+   max_width = meow_width;
+
+  if(meow_width < min_width)
+   min_width = meow_width;
+
+  for(int x = 0; x < meow_width; x++)
+  {
+   uint32 pixel = fb_line[x];
+   int r, g, b;
+
+ //  espec->surface->DecodeColor(pixel, r, g, b);
+   DECOMP_COLOR(pixel, r, g, b);
+
+   *pb_ptr++ = r;
+   *pb_ptr++ = g;
+   *pb_ptr++ = b;
+  }
+ }
+
+ uncompressed_size = pb_ptr - pixel_buffer;
+ lzo1x_1_compress(pixel_buffer, uncompressed_size, compress_buffer, &compressed_len, workmem);
+ compressed_size = compressed_len;
+
+ fwrite(&compressed_size, 1, 4, output_fp);
+ fwrite(&uncompressed_size, 1, 4, output_fp);
+ fwrite(&frame_count, 1, 4, output_fp);
+
+ if(!width)
+ {
+  for(int y = MDFNGameInfo->DisplayRect.y; y < MDFNGameInfo->DisplayRect.y + MDFNGameInfo->DisplayRect.h; y++)
+  {
+   uint16 meow_width = espec->LineWidths[y].w;
+   fwrite(&meow_width, 1, 2, output_fp);
+  }
+ }
+
+ fwrite(compress_buffer, 1, compressed_len, output_fp);
+
+
+ fwrite(*espec->SoundBuf, 2 * MDFNGameInfo->soundchan, frame_count, output_fp);
+
+ if(max_aframes_per_vframe < frame_count)
+  max_aframes_per_vframe = frame_count;
+
+ audio_frame_counter += frame_count;
+
+ video_frame_counter++;
+
+ return(1);
+}
+/* sort of works
+static bool WriteChunk(const EmulateSpecStruct *espec)
+{
+	uint32 frame_count = 1536;//(uint32*)espec->SoundBufSize;// TODO
+	//uint32 frame_count = 100;
+
+	const char *video_header = "FRAME\0\0";
+	uint16 height = MDFNGameInfo->DisplayRect.h;
+	uint16 width = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.w : 0;
+	uint8 *pb_ptr = pixel_buffer;
+	uint8 workmem[LZO1X_1_MEM_COMPRESS];
+	lzo_uint compressed_len;
+
+	uint32 compressed_size;
+	uint32 uncompressed_size;
+
+	FrameRelativeIndex.push_back(ftell(output_fp) - LastFrameOffset);
+	FrameRelativeTime.push_back(LastFrameTime);
+
+	LastFrameOffset = ftell(output_fp);
+	LastFrameTime = frame_count;
+
+	fwrite(video_header, 1, 8, output_fp);
+
+	fwrite(&width, 1, 2, output_fp);
+	fwrite(&height, 1, 2, output_fp);
+
+	if(height > max_height)
+		max_height = height;
+
+	if(height < min_height)
+		min_height = height;
+
+	for(int y = MDFNGameInfo->DisplayRect.y; y < MDFNGameInfo->DisplayRect.y + MDFNGameInfo->DisplayRect.h; y++)
+	{
+		uint16 meow_width = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.w : espec->LineWidths[y].w;
+		int meow_x = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.x : espec->LineWidths[y].x;
+		uint32 *fb_line = espec->pixels + y * (MDFNGameInfo->pitch >> 2) + meow_x;
+
+		//if(!width)
+		//{
+		// fwrite(&meow_width, 1, 2, output_fp);
+		//}
+static bool WriteChunk(const EmulateSpecStruct *espec)
+{
+ uint32 frame_count = espec->SoundBufSize;
+ const char *video_header = "FRAME\0\0";
+ uint16 height = MDFNGameInfo->DisplayRect.h;
+ uint16 width = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.w : 0;
+ uint8 *pb_ptr = pixel_buffer;
+ uint8 workmem[LZO1X_1_MEM_COMPRESS];
+ lzo_uint compressed_len;
+ 
+ uint32 compressed_size;
+ uint32 uncompressed_size;
+
+ FrameRelativeIndex.push_back(ftell(output_fp) - LastFrameOffset);
+ FrameRelativeTime.push_back(LastFrameTime);
+
+ LastFrameOffset = ftell(output_fp);
+ LastFrameTime = frame_count;
+
+ fwrite(video_header, 1, 8, output_fp);
+
+ fwrite(&width, 1, 2, output_fp);
+ fwrite(&height, 1, 2, output_fp);
+
+ if(height > max_height)
+  max_height = height;
+
+ if(height < min_height)
+  min_height = height;
+
+ for(int y = MDFNGameInfo->DisplayRect.y; y < MDFNGameInfo->DisplayRect.y + MDFNGameInfo->DisplayRect.h; y++)
+ {
+  uint16 meow_width = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.w : espec->LineWidths[y].w;
+  int meow_x = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.x : espec->LineWidths[y].x;
+  uint32 *fb_line = espec->surface->pixels + y * (MDFNGameInfo->pitch >> 2) + meow_x;
+
+  //if(!width)
+  //{
+  // fwrite(&meow_width, 1, 2, output_fp);
+  //}
+
+  if(meow_width > max_width)
+   max_width = meow_width;
+
+  if(meow_width < min_width)
+   min_width = meow_width;
+
+  for(int x = 0; x < meow_width; x++)
+  {
+   uint32 pixel = fb_line[x];
+   int r, g, b;
+
+   espec->surface->DecodeColor(pixel, r, g, b);
+
+   *pb_ptr++ = r;
+   *pb_ptr++ = g;
+   *pb_ptr++ = b;
+  }
+ }
+
+ uncompressed_size = pb_ptr - pixel_buffer;
+ lzo1x_1_compress(pixel_buffer, uncompressed_size, compress_buffer, &compressed_len, workmem);
+ compressed_size = compressed_len;
+
+ fwrite(&compressed_size, 1, 4, output_fp);
+ fwrite(&uncompressed_size, 1, 4, output_fp);
+ fwrite(&frame_count, 1, 4, output_fp);
+
+ if(!width)
+ {
+  for(int y = MDFNGameInfo->DisplayRect.y; y < MDFNGameInfo->DisplayRect.y + MDFNGameInfo->DisplayRect.h; y++)
+  {
+   uint16 meow_width = espec->LineWidths[y].w;
+   fwrite(&meow_width, 1, 2, output_fp);
+  }
+ }
+
+ fwrite(compress_buffer, 1, compressed_len, output_fp);
+
+
+ fwrite(espec->SoundBuf, 2 * MDFNGameInfo->soundchan, frame_count, output_fp);
+
+ if(max_aframes_per_vframe < frame_count)
+  max_aframes_per_vframe = frame_count;
+
+ audio_frame_counter += frame_count;
+
+ video_frame_counter++;
+
+ return(1);
+}
+		if(meow_width > max_width)
+			max_width = meow_width;
+
+		if(meow_width < min_width)
+			min_width = meow_width;
+
+		for(int x = 0; x < meow_width; x++)
+		{
+			uint32 pixel = fb_line[x];
+			int r, g, b;
+
+			//espec->pixels->DecodeColor(pixel, r, g, b);
+
+			DECOMP_COLOR(pixel, r, g, b);
+			*pb_ptr++ = r;
+			*pb_ptr++ = g;
+			*pb_ptr++ = b;
+		}
+	}
+
+	uncompressed_size = pb_ptr - pixel_buffer;
+	lzo1x_1_compress(pixel_buffer, uncompressed_size, compress_buffer, &compressed_len, workmem);
+	compressed_size = compressed_len;
+
+	fwrite(&compressed_size, 1, 4, output_fp);
+	fwrite(&uncompressed_size, 1, 4, output_fp);
+	fwrite(&frame_count, 1, 4, output_fp);
+
+	if(!width)
+	{
+		for(int y = MDFNGameInfo->DisplayRect.y; y < MDFNGameInfo->DisplayRect.y + MDFNGameInfo->DisplayRect.h; y++)
+		{
+			uint16 meow_width = espec->LineWidths[y].w;
+			fwrite(&meow_width, 1, 2, output_fp);
+		}
+	}
+
+	fwrite(compress_buffer, 1, compressed_len, output_fp);
+
+
+	fwrite(espec->SoundBuf, 2 * MDFNGameInfo->soundchan, frame_count, output_fp);
+
+	if(max_aframes_per_vframe < frame_count)
+		max_aframes_per_vframe = frame_count;
+
+	audio_frame_counter += frame_count;
+
+	video_frame_counter++;
+
+	return(1);
+}
+*/
+void MMRecord_WriteFrame(const EmulateSpecStruct *espec)
+{
+	WriteChunk(espec);
+}
+
+//#endif
+/*
+void MDFN_en32lsb(uint8 *buf, uint32 morp)
+{ 
+ buf[0]=morp;
+ buf[1]=morp>>8;
+ buf[2]=morp>>16;
+ buf[3]=morp>>24;
+} 
+*/
+
+
+void MMRecord_End(void) {
+if(output_fp)
+	if(output_fp)
+ {
+  uint64 FrameIndexTableOffset;
+  const char *fi_header = "INDEX\0\0";
+
+  // First, write the frame index chunk
+  FrameIndexTableOffset = ftell(output_fp);
+  fwrite(fi_header, 1, 8, output_fp);
+  
+  // FIXME:  Speedup
+  for(uint64_t i = 0; i < FrameRelativeIndex.size(); i++)
+  {
+   uint32 qbuf[2];
+   MDFN_enlsb(&qbuf[0], FrameRelativeIndex[i]);
+   MDFN_enlsb(&qbuf[1], FrameRelativeTime[i]);
+   fwrite(qbuf, 1, 4 * 2, output_fp);
+  }
+
+  // Finish our main header.
+  MDFN_enlsb(&main_header.min_width, min_width);
+  MDFN_enlsb(&main_header.max_width, max_width);
+  MDFN_enlsb(&main_header.min_height, min_height);
+  MDFN_enlsb(&main_header.max_height, max_height);
+
+  MDFN_enlsb(&main_header.video_frame_counter, video_frame_counter);
+  MDFN_enlsb(&main_header.audio_frame_counter, audio_frame_counter);
+  MDFN_enlsb(&main_header.frame_index_offset, FrameIndexTableOffset);
+
+  MDFN_enlsb(&main_header.max_aframes_per_vframe, max_aframes_per_vframe);
+
+  // Now seek back and rewrite the completed header.
+  fseek(output_fp, 0, SEEK_SET);
+  fwrite(&main_header, 1, sizeof(MM_Main_Header), output_fp);
+
+  fclose(output_fp);
+  output_fp = NULL;
+  LastFrameOffset = 0;
+  LastFrameTime = 0;
+
+  FrameRelativeIndex.clear();
+  FrameRelativeTime.clear();
+ // return(1);
+ }
+}
+
