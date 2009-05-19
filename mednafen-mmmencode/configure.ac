@@ -1,0 +1,78 @@
+AC_INIT([src/main.cpp])
+AC_GNU_SOURCE
+
+MEDNAFEN_MMMENCODE_VERSION='0.0.1'
+MEDNAFEN_MMMENCODE_VERSION_NUMERIC=0x000001
+
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+AM_INIT_AUTOMAKE([mednafen_mmmencode], $MEDNAFEN_MMMENCODE_VERSION)
+AM_CONFIG_HEADER([include/config.h:include/config.h.in])
+
+AC_PROG_CC
+AC_PROG_CPP
+AM_PROG_AS
+AM_PROG_CC_C_O
+AC_PROG_CXX
+AC_PROG_CXXCPP
+AC_LANG_CPLUSPLUS
+AM_PROG_LIBTOOL
+AC_PROG_INSTALL
+
+
+AC_CHECK_TYPE(ptrdiff_t,long)
+AC_TYPE_SIZE_T
+AC_CHECK_SIZEOF(short)
+AC_CHECK_SIZEOF(int)
+AC_CHECK_SIZEOF(long)
+AC_CHECK_SIZEOF(long long)
+AC_CHECK_SIZEOF(double)
+AC_CHECK_SIZEOF(__int64)
+AC_CHECK_SIZEOF(void *)
+AC_CHECK_SIZEOF(size_t)
+AC_CHECK_SIZEOF(ptrdiff_t)
+AC_C_CONST
+AC_CHECK_FUNCS(memcmp memcpy memmove memset mmap munmap madvise signal fcntl getenv putenv setenv)
+AC_CHECK_HEADERS(fcntl.h)
+PKG_PROG_PKG_CONFIG
+
+AC_DEFINE(MINILZO_HAVE_CONFIG_H, [1], [Define if config.h is present])
+
+AM_ICONV
+AM_GNU_GETTEXT
+
+AC_SUBST(LIBICONV)
+AC_SUBST(LIBINTL)
+
+dnl Check for zlib
+AC_CHECK_LIB([z], [zlibVersion],[], AC_MSG_ERROR([*** zlib not found!]))
+LIBS="$LIBS -lz"
+
+OPTIMIZER_FLAGS=""
+
+WARNING_FLAGS="-Wall -Winline -Wshadow"
+
+CFLAGS="$WARNING_FLAGS $CFLAGS"
+CPPFLAGS="$WARNING_FLAGS $CPPFLAGS"
+
+AM_CONDITIONAL(WIN32, false)
+AM_CONDITIONAL(UNIX, false)
+
+CFLAGS="$CFLAGS"
+CPPFLAGS="$CPPFLAGS"
+PKG_CHECK_MODULES(SNDFILE, sndfile >= 1.0.2, [], AC_MSG_ERROR([*** libsndfile >= 1.0.2 not found!]))
+PKG_CHECK_MODULES(LIBQUICKTIME, libquicktime >= 1.0.0, [], AC_MSG_ERROR([*** libquicktime >= 1.0.0 not found!]))
+AC_C_BIGENDIAN([AC_DEFINE([MSB_FIRST],[1],[Define on big-endian platforms.])], 
+[
+ AC_DEFINE([LSB_FIRST],[1],[Define on little-endian platforms.])
+ AC_DEFINE([MPC_LITTLE_ENDIAN],[1],[Define on little-endian platforms.])
+])
+AC_DEFINE_UNQUOTED([MEDNAFEN_MMMENCODE_VERSION],"$MEDNAFEN_MMMENCODE_VERSION", [Mednafen-MMMEncode version definition.])
+AC_DEFINE_UNQUOTED([MEDNAFEN_MMMENCODE_VERSION_NUMERIC],$MEDNAFEN_MMMENCODE_VERSION_NUMERIC, [Mednafen-MMMEncode version numeric.])
+
+LIBS="$SNDFILE_LIBS $LIBQUICKTIME_LIBS $LIBS"
+CFLAGS="$SNDFILE_CFLAGS $LIBQUICKTIME_CFLAGS $CFLAGS"
+CPPFLAGS="$SNDFILE_CFLAGS $LIBQUICKTIME_CFLAGS $CPPFLAGS"
+
+dnl Output Makefiles
+AC_OUTPUT([Makefile src/Makefile intl/Makefile po/Makefile.in])
