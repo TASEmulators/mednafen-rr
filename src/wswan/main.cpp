@@ -38,7 +38,9 @@
 #include "eeprom.h"
 #include "debug.h"
 
-int 		wsc = 1;			/*color/mono*/
+uint32 eeprom_size;	//adelikat: made this an external here and not memory.h in order to try and fix linker errors
+
+extern int 		wsc = 1;			/*color/mono*/
 uint32		rom_size;
 
 uint16 WSButtonStatus;
