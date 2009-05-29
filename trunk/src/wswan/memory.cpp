@@ -35,7 +35,7 @@ static uint8 *wsSRAM = NULL;
 
 uint8 *wsCartROM;
 static uint32 sram_size;
-uint32 eeprom_size;
+extern uint32 eeprom_size; //adelikat: made this an external here and not memory.h in order to try and fix linker errors
 
 static uint8 ButtonWhich, ButtonReadLatch;
 

@@ -22,6 +22,8 @@
 
 #include <blip/Blip_Buffer.h>
 
+extern uint8 wsRAM[65536]; //adelikat: made external here instead of memory.h to fix linker errors
+
 static Blip_Synth<blip_good_quality, 256> WaveSynth;
 static Blip_Synth<blip_med_quality, 256> NoiseSynth;
 static Blip_Synth<blip_good_quality, 256 * 15> VoiceSynth;

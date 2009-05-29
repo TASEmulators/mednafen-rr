@@ -25,6 +25,9 @@
 #include "rtc.h"
 #include "../video.h"
 
+extern uint8 wsRAM[65536]; //adelikat: made external here instead of memory.h to fix linker errors
+int wsc;   //adelikat: ditto
+
 static uint32 wsMonoPal[16][4];
 static uint32 wsColors[8];
 static uint32 wsCols[16][16];

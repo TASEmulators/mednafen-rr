@@ -1,9 +1,9 @@
 #ifndef __WSWAN_MEMORY_H
 #define __WSWAN_MEMORY_H
 
-extern uint8 wsRAM[65536];
+//extern uint8 wsRAM[65536];
 extern uint8 *wsCartROM;
-extern uint32 eeprom_size;
+//extern uint32 eeprom_size;
 extern uint8 wsEEPROM[2048];
 
 uint8 WSwan_readmem20(uint32);
