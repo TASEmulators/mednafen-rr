@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "disasm.h"
+#if 0
 #include "dis_tables.h"
 
 x86_insn::x86_insn()
@@ -254,3 +255,11 @@ void disassembler::dis_putc(char symbol)
   *disbufptr++ = symbol;
   *disbufptr = 0;
 }
+#else
+void disassembler::dis_sprintf(const char *fmt, ...)
+{
+}
+void disassembler::dis_putc(char symbol)
+{
+}
+#endif
