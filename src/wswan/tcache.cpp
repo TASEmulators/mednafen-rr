@@ -22,7 +22,7 @@
 #include "wswan_gfx.h"
 #include "memory.h"
 
-//extern uint8 wsRAM[65536]; //adelikat: made external here instead of memory.h to fix linker errors
+extern uint8 wsRAM[65536]; //adelikat: made external here instead of memory.h to fix linker errors
 
 uint8	tiles[256][256][2][8];
 uint8	wsTCache[512*64];			
