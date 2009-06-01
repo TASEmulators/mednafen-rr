@@ -19,14 +19,15 @@
  */
 
 #include "wswan.h"
-#include "gfx.h"
+#include "wswan_memory.h"
+#include "wswan_gfx.h"
 #include "memory.h"
 #include "v30mz.h"
 #include "rtc.h"
 #include "../video.h"
 
 extern uint8 wsRAM[65536]; //adelikat: made external here instead of memory.h to fix linker errors
-int wsc;   //adelikat: ditto
+extern int wsc;   //adelikat: ditto
 
 static uint32 wsMonoPal[16][4];
 static uint32 wsColors[8];

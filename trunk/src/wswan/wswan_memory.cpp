@@ -19,8 +19,8 @@
  */
 
 #include "wswan.h"
-#include "gfx.h"
-#include "memory.h"
+#include "wswan_gfx.h"
+#include "wswan_memory.h"
 #include "sound.h"
 #include "eeprom.h"
 #include "rtc.h"

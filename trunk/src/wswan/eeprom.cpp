@@ -23,7 +23,7 @@
 #include "memory.h"
 #include <ctype.h>
 
-uint32 eeprom_size;	//adelikat: decalred it here, removed external from memory.h in order to try and fix linker errors
+extern uint32 eeprom_size;
 
 uint8 wsEEPROM[2048];
 
