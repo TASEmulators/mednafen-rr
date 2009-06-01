@@ -14,7 +14,7 @@
 
 #include "neopop.h"
 #include "flash.h"
-#include "interrupt.h"
+#include "ngp_interrupt.h"
 #include "TLCS900h_disassemble.h"
 
 //=============================================================================

@@ -14,7 +14,7 @@
 
 #include "neopop.h"
 #include "flash.h"
-#include "mem.h"
+#include "ngp_mem.h"
 
 //-----------------------------------------------------------------------------
 // Local Definitions

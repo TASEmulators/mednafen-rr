@@ -1,5 +1,5 @@
 #include "neopop.h"
-#include "sound.h"
+#include "ngp_sound.h"
 
 #include <blip/Blip_Buffer.h>
 #include "T6W28_Apu.h"

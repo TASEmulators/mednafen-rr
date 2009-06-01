@@ -13,9 +13,9 @@
 //---------------------------------------------------------------------------
 
 #include "neopop.h"
-#include "mem.h"
-#include "gfx.h"
-#include "interrupt.h"
+#include "ngp_mem.h"
+#include "ngp_gfx.h"
+#include "ngp_interrupt.h"
 #include "dma.h"
 #include "TLCS900h_registers.h"
 

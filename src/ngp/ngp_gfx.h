@@ -45,9 +45,9 @@ class NGPGFX_CLASS
  void power(void);
 
  private:
-
- uint8 zbuffer[256]  __attribute__ ((aligned (8)));	//Line z-buffer
- uint16 cfb_scanline[256] __attribute__ ((aligned (8)));
+//ALIGN(16) int16 WaveHiEx[40000];
+ ALIGN(8) uint8 zbuffer[256];//  __attribute__ ((aligned (8)));	//Line z-buffer
+ ALIGN(8) uint16 cfb_scanline[256]; //__attribute__ ((aligned (8)));
 
  uint8 winx, winw;
  uint8 winy, winh;
