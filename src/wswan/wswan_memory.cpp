@@ -21,7 +21,7 @@
 #include "wswan.h"
 #include "wswan_gfx.h"
 #include "wswan_memory.h"
-#include "sound.h"
+#include "wswan_sound.h"
 #include "eeprom.h"
 #include "rtc.h"
 #include "v30mz.h"

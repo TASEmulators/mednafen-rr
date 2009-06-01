@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".;../src;../src/drivers;../include;zlib;&quot;SDL-1.2.13/include&quot;;directx;&quot;libcdio-0.81/include&quot;;&quot;libcdio-0.81/lib/driver&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;WANT_NES_EMU;WANT_PCE_EMU;NEED_CDEMU;EXTERNAL_LIBCDIO_CONFIG_H;NO_CODECS;HAVE_DIRECTSOUND"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;WANT_NES_EMU;WANT_PCE_EMU;NEED_CDEMU;EXTERNAL_LIBCDIO_CONFIG_H;NO_CODECS;HAVE_DIRECTSOUND;WANT_WSWAN_EMU"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -2675,10 +2675,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\wswan\gfx.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\src\wswan\gfx.h"
 					>
 				</File>
@@ -2691,31 +2687,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\wswan\main.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\memory.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\memory.h"
-					>
-				</File>
-				<File
 					RelativePath="..\src\wswan\rtc.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\src\wswan\rtc.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\sound.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\sound.h"
 					>
 				</File>
 				<File
@@ -2754,30 +2730,40 @@
 					RelativePath="..\src\wswan\wswan.h"
 					>
 				</File>
+				<File
+					RelativePath="..\src\wswan\wswan_gfx.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\wswan\wswan_main.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\wswan\wswan_memory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\wswan\wswan_memory.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\wswan\wswan_sound.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\wswan\wswan_sound.h"
+					>
+				</File>
 				<Filter
 					Name="dis"
 					>
 					<File
 						RelativePath="..\src\wswan\dis\dis_decode.cpp"
 						>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\wswan\dis\dis_groups.cpp"
 						>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\wswan\dis\dis_tables.h"
