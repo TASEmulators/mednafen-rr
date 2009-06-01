@@ -29,18 +29,18 @@
 #include <math.h>
 #include <zlib.h>
 
-#include "gfx.h"
-#include "memory.h"
+#include "wswan_gfx.h"
+#include "wswan_memory.h"
 #include "start.h"
-#include "sound.h"
+#include "wswan_sound.h"
 #include "v30mz.h"
 #include "rtc.h"
 #include "eeprom.h"
 #include "debug.h"
 
-uint32 eeprom_size;	//adelikat: made this an external here and not memory.h in order to try and fix linker errors
+uint32 eeprom_size;
 
-extern int 		wsc = 1;			/*color/mono*/
+int 		wsc = 1;			/*color/mono*/
 uint32		rom_size;
 
 uint16 WSButtonStatus;
