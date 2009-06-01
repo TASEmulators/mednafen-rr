@@ -54,9 +54,9 @@
 
 #include "neopop.h"
 #include "TLCS900h_registers.h"
-#include "interrupt.h"
-#include "mem.h"
-#include "bios.h"
+#include "ngp_interrupt.h"
+#include "ngp_mem.h"
+#include "ngp_bios.h"
 #include "TLCS900h_interpret.h"
 #include "TLCS900h_interpret_single.h"
 #include "TLCS900h_interpret_src.h"

@@ -13,11 +13,11 @@
 //---------------------------------------------------------------------------
 
 #include "neopop.h"
-#include "mem.h"
-#include "sound.h"
-#include "Z80_interface.h"
+#include "ngp_mem.h"
+#include "ngp_sound.h"
+#include "ngp_Z80_interface.h"
 #include "TLCS900h_registers.h"
-#include "interrupt.h"
+#include "ngp_interrupt.h"
 #include "dma.h"
 
 static uint8 CommByte;

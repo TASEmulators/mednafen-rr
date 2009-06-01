@@ -41,7 +41,7 @@
 #include "TLCS900h_disassemble.h"
 #include "TLCS900h_registers.h"
 #include "TLCS900h_interpret.h"
-#include "mem.h"
+#include "ngp_mem.h"
 
 namespace TLCS900H
 {

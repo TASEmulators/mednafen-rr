@@ -14,14 +14,14 @@
 
 #include "neopop.h"
 #include "TLCS900h_registers.h"
-#include "Z80_interface.h"
-#include "bios.h"
-#include "gfx.h"
-#include "mem.h"
-#include "interrupt.h"
-#include "sound.h"
+#include "ngp_Z80_interface.h"
+#include "ngp_bios.h"
+#include "ngp_gfx.h"
+#include "ngp_mem.h"
+#include "ngp_interrupt.h"
+#include "ngp_sound.h"
 #include "flash.h"
-#include "rtc.h"
+#include "ngp_rtc.h"
 
 //=============================================================================
 

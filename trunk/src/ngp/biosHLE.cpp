@@ -13,13 +13,13 @@
 //---------------------------------------------------------------------------
 
 #include "neopop.h"
-#include "bios.h"
+#include "ngp_bios.h"
 #include "TLCS900h_registers.h"
 #include "TLCS900h_interpret.h"
-#include "mem.h"
+#include "ngp_mem.h"
 #include "flash.h"
 #include "dma.h"
-#include "interrupt.h"
+#include "ngp_interrupt.h"
 
 
 static uint8 CacheIntPrio[0xB]; // Iinterrupt prio registers at 0x0070-0x007a don't have priority readable.
