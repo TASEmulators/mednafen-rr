@@ -49,8 +49,8 @@
 
 #include <string.h>
 #include <errno.h>
-#include "system.h"
-#include "rom.h"
+#include "lynx-system.h"
+#include "lynx-rom.h"
 
 CRom::CRom(const char *romfile)
 {

@@ -46,8 +46,8 @@
 
 #include <string.h>
 #include <zlib.h>
-#include "system.h"
-#include "cart.h"
+#include "lynx-system.h"
+#include "lynx-cart.h"
 #include "../state.h"
 #include "../md5.h"
 

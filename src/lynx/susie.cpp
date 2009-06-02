@@ -50,7 +50,7 @@
 //#define TRACE_SUSIE
 
 #include <string.h>
-#include "system.h"
+#include "lynx-system.h"
 #include "susie.h"
 #include "lynxdef.h"
 
