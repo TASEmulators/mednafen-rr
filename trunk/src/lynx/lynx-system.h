@@ -102,9 +102,9 @@ class CSystem;
 //
 #include "lynxbase.h"
 #include "ram.h"
-#include "rom.h"
+#include "lynx-rom.h"
 #include "memmap.h"
-#include "cart.h"
+#include "lynx-cart.h"
 #include "susie.h"
 #include "mikie.h"
 #include "c65c02.h"

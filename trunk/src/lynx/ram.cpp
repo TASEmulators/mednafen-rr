@@ -49,7 +49,7 @@
 //#define   TRACE_RAM
 
 #include <string.h>
-#include "system.h"
+#include "lynx-system.h"
 #include "ram.h"
 #include "../mempatcher.h"
 

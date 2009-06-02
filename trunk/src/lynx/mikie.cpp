@@ -51,7 +51,7 @@
 //#define	TRACE_MIKIE
 
 #include <string.h>
-#include "system.h"
+#include "lynx-system.h"
 #include "mikie.h"
 #include "lynxdef.h"
 

@@ -55,7 +55,7 @@
 //#define	TRACE_SYSTEM
 
 #include <string.h>
-#include "system.h"
+#include "lynx-system.h"
 
 #include "../movie.h"
 #include "../general.h"

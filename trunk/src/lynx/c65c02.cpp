@@ -1,4 +1,4 @@
-#include "system.h"
+#include "lynx-system.h"
 
 #include "c65c02.h"
 

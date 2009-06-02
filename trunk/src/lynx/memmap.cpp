@@ -48,7 +48,7 @@
 //#define	TRACE_MEMMAP
 
 #include <string.h>
-#include "system.h"
+#include "lynx-system.h"
 #include "memmap.h"
 
 
