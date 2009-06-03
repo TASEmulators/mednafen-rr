@@ -8,8 +8,10 @@
     'Globals
     Dim CommandLine As String = ""      'Command line to run
 
+    'Startup routine
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.Text = EMUVERSION + " " + FRONTVERSION
+        LoadConfig()
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
@@ -34,40 +36,24 @@
     End Sub
 
     Private Sub RomBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomBrowse.Click
-        Dim OpenRom As New OpenFileDialog
-        OpenRom.InitialDirectory = System.Environment.CurrentDirectory
-        OpenRom.Filter = "Supported Files|*.nes;*.unf;*.fds;*.pce;*.lnx;*.o;*.ngp;*.ngc;*.ws;*.wsc|" & _
-            "NES (*.nes, *.unf, *.fds)|*.nes;*.unf;*.fds|" & _
-            "PCE (*.pce)|*.pce|" & _
-            "Lynx (*.lnx, *.o)|*.lnx;*.o|" & _
-            "NGP (*.ngp, .ngc)|*.ngp;*.ngc|" & _
-            "WS (*.ws, *.wsc)|*.ws;*.wsc|" & _
-            "All files (*.*)|*.*"
-        OpenRom.RestoreDirectory = False
-
-
-        OpenRom.ShowDialog()
-        If (OpenRom.FileName.Length) Then
-            RomBox.Text = OpenRom.FileName
-        End If
+        GetRom()
     End Sub
 
     Private Sub MovieBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieBrowse.Click
-        Dim OpenMovie As New SaveFileDialog
-        OpenMovie.InitialDirectory = System.Environment.CurrentDirectory
-        OpenMovie.Filter = "Mednafen movie file (*.mcm)|*.mcm"
-        OpenMovie.RestoreDirectory = False
+        GetMovie()
+    End Sub
 
+    Private Sub RomToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomToolStripMenuItem.Click
+        GetRom()
+    End Sub
 
-        OpenMovie.ShowDialog()
-        If (OpenMovie.FileName.Length) Then
-            MovieBox.Text = OpenMovie.FileName
-        End If
-
+    Private Sub MovieToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieToolStripMenuItem.Click
+        GetMovie()
     End Sub
 
     'Subs
     Private Sub CloseIt()
+        SaveConfig()
         Me.Close()
     End Sub
 
@@ -83,5 +69,50 @@
 
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
         About.ShowDialog()
+    End Sub
+
+    Private Sub GetRom()
+        Dim OpenRom As New OpenFileDialog
+        OpenRom.InitialDirectory = System.Environment.CurrentDirectory
+        OpenRom.Filter = "Supported Files|*.nes;*.unf;*.fds;*.pce;*.lnx;*.o;*.ngp;*.ngc;*.ws;*.wsc|" & _
+            "NES (*.nes, *.unf, *.fds)|*.nes;*.unf;*.fds|" & _
+            "PCE (*.pce)|*.pce|" & _
+            "Lynx (*.lnx, *.o)|*.lnx;*.o|" & _
+            "NGP (*.ngp, .ngc)|*.ngp;*.ngc|" & _
+            "WS (*.ws, *.wsc)|*.ws;*.wsc|" & _
+            "All files (*.*)|*.*"
+        OpenRom.RestoreDirectory = False
+
+        OpenRom.ShowDialog()
+        If (OpenRom.FileName.Length) Then
+            RomBox.Text = OpenRom.FileName
+        End If
+    End Sub
+
+    Private Sub GetMovie()
+        Dim OpenMovie As New SaveFileDialog
+        OpenMovie.InitialDirectory = System.Environment.CurrentDirectory
+        OpenMovie.Filter = "Mednafen movie file (*.mcm)|*.mcm"
+        OpenMovie.RestoreDirectory = False
+
+        OpenMovie.ShowDialog()
+        If (OpenMovie.FileName.Length) Then
+            MovieBox.Text = OpenMovie.FileName
+        End If
+    End Sub
+
+    'Open config file
+    Private Sub OpenConfig()
+
+    End Sub
+
+    'Save config file
+    Private Sub SaveConfig()
+
+    End Sub
+
+    'Load config file
+    Private Sub LoadConfig()
+
     End Sub
 End Class
