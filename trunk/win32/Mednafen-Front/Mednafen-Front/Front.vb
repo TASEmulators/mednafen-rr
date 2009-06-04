@@ -103,16 +103,26 @@
 
     'Open config file
     Private Sub OpenConfig()
+        'Dim fileReader As String
+        'fileReader = My.Computer.FileSystem.ReadAllText("med-front.cfg")
+        'MsgBox(fileReader)
+
+
 
     End Sub
 
     'Save config file
     Private Sub SaveConfig()
+        '
 
     End Sub
 
     'Load config file
     Private Sub LoadConfig()
+        'Check if med-front.cfg exists, if not create an empty file, populate with dafult values, save,  and finish
+        'If exists, pull out default values
+
+
 
     End Sub
 End Class
