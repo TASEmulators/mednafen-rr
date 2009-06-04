@@ -982,14 +982,62 @@
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\bincue.c"
 								>
+								<FileConfiguration
+									Name="Debug|Win32"
+									>
+									<Tool
+										Name="VCCLCompilerTool"
+										DisableSpecificWarnings="4133"
+									/>
+								</FileConfiguration>
+								<FileConfiguration
+									Name="Release|Win32"
+									>
+									<Tool
+										Name="VCCLCompilerTool"
+										DisableSpecificWarnings="4133"
+									/>
+								</FileConfiguration>
 							</File>
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\cdrdao.c"
 								>
+								<FileConfiguration
+									Name="Debug|Win32"
+									>
+									<Tool
+										Name="VCCLCompilerTool"
+										DisableSpecificWarnings="4133"
+									/>
+								</FileConfiguration>
+								<FileConfiguration
+									Name="Release|Win32"
+									>
+									<Tool
+										Name="VCCLCompilerTool"
+										DisableSpecificWarnings="4133"
+									/>
+								</FileConfiguration>
 							</File>
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\nrg.c"
 								>
+								<FileConfiguration
+									Name="Debug|Win32"
+									>
+									<Tool
+										Name="VCCLCompilerTool"
+										DisableSpecificWarnings="4133"
+									/>
+								</FileConfiguration>
+								<FileConfiguration
+									Name="Release|Win32"
+									>
+									<Tool
+										Name="VCCLCompilerTool"
+										DisableSpecificWarnings="4133"
+									/>
+								</FileConfiguration>
 							</File>
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\nrg.h"
@@ -2352,6 +2400,22 @@
 					<File
 						RelativePath="..\src\nes\ntsc\nes_ntsc.cpp"
 						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								DisableSpecificWarnings="4244"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								DisableSpecificWarnings="4244"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\nes\ntsc\nes_ntsc.h"
