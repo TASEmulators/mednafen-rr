@@ -960,6 +960,22 @@
 						<File
 							RelativePath=".\libcdio-0.81\lib\driver\mmc.c"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									DisableSpecificWarnings="4028;4333"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									DisableSpecificWarnings="4028;4333"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\libcdio-0.81\lib\driver\read.c"
@@ -1886,6 +1902,22 @@
 				<File
 					RelativePath="..\src\nes\nsfe.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DisableSpecificWarnings="4333"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DisableSpecificWarnings="4333"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\nes\nsfe.h"

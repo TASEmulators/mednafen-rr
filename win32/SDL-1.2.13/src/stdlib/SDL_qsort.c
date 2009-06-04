@@ -50,7 +50,7 @@
 */
 #include "SDL_stdinc.h"
 
-#define assert(X)
+//#define assert(X)
 #define malloc	SDL_malloc
 #define free	SDL_free
 #define memcpy	SDL_memcpy
