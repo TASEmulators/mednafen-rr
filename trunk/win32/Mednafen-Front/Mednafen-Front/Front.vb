@@ -190,6 +190,14 @@
             ConfigInfo = ConfigInfo.Substring(MovieBox.Text.Length + 2, ConfigInfo.Length - (MovieBox.Text.Length + 2))
 
             If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                StateBox.Text = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+            End If
+        End If
+
+        If (StateBox.Text.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(StateBox.Text.Length + 2, ConfigInfo.Length - (StateBox.Text.Length + 2))
+
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
                 OtherCommands.Text = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
             End If
         End If
@@ -202,6 +210,7 @@
     Private Sub SaveConfig()
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, RomBox.Text() & Environment.NewLine, False)
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, MovieBox.Text() & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, StateBox.Text() & Environment.NewLine, True)
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, OtherCommands.Text() & Environment.NewLine, True)
     End Sub
 
@@ -235,6 +244,4 @@
             CloseMednafenOnExitToolStripMenuItem.Checked = False
         End If
     End Sub
-
-    
 End Class
