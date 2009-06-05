@@ -5,12 +5,11 @@
     Friend EMUVERSION As String = "Mednafen Rerecording 1.1"
     Friend FRONTVERSION As String = "Frontend 1.0"
 
-    'Globals
-    Dim CommandLine As String = ""      'Command line to run
-
     'Startup routine
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.Text = EMUVERSION + " " + FRONTVERSION
+        CommandBox.Text = MEDNAFEN
+        LengthLabel.Text = CommandBox.Text.Length()
         LoadConfig()
     End Sub
 
@@ -30,7 +29,6 @@
 
     Private Sub LaunchButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LaunchButton.Click
         UpdateCommandLine()
-        CommandLine = CommandBox.Text()
         ''Launch mednafen using CommandLine
         Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
     End Sub
@@ -62,9 +60,8 @@
         If (MovieBox.Text.Length()) Then
             movieCommand = """" & MOVIE & """"""
         End If
-        CommandBox.Text = "\"""
-
         CommandBox.Text = MEDNAFEN + movieCommand + MovieBox.Text() + " " + OtherCommands.Text() + " " + """" + RomBox.Text() + """"
+        LengthLabel.Text = CommandBox.Text.Length()
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
@@ -107,13 +104,10 @@
         'fileReader = My.Computer.FileSystem.ReadAllText("med-front.cfg")
         'MsgBox(fileReader)
 
-
-
     End Sub
 
     'Save config file
     Private Sub SaveConfig()
-        '
 
     End Sub
 
@@ -121,8 +115,5 @@
     Private Sub LoadConfig()
         'Check if med-front.cfg exists, if not create an empty file, populate with dafult values, save,  and finish
         'If exists, pull out default values
-
-
-
     End Sub
 End Class
