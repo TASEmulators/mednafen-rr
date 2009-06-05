@@ -47,8 +47,10 @@ Partial Class Front
         Me.RomBrowse = New System.Windows.Forms.Button
         Me.MovieBrowse = New System.Windows.Forms.Button
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.Label5 = New System.Windows.Forms.Label
         Me.LengthLabel = New System.Windows.Forms.Label
+        Me.Label5 = New System.Windows.Forms.Label
+        Me.ClearButton = New System.Windows.Forms.Button
+        Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -94,6 +96,7 @@ Partial Class Front
         '
         'OptionsToolStripMenuItem
         '
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClearToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OptionsToolStripMenuItem.Text = "&Options"
@@ -124,19 +127,19 @@ Partial Class Front
         '
         'LaunchButton
         '
-        Me.LaunchButton.Location = New System.Drawing.Point(28, 215)
+        Me.LaunchButton.Location = New System.Drawing.Point(335, 215)
         Me.LaunchButton.Name = "LaunchButton"
-        Me.LaunchButton.Size = New System.Drawing.Size(75, 23)
+        Me.LaunchButton.Size = New System.Drawing.Size(109, 23)
         Me.LaunchButton.TabIndex = 1
-        Me.LaunchButton.Text = "Launch!"
+        Me.LaunchButton.Text = "Launch Mednafen"
         Me.LaunchButton.UseVisualStyleBackColor = True
         '
         'ExitButton
         '
         Me.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.ExitButton.Location = New System.Drawing.Point(369, 215)
+        Me.ExitButton.Location = New System.Drawing.Point(28, 255)
         Me.ExitButton.Name = "ExitButton"
-        Me.ExitButton.Size = New System.Drawing.Size(75, 23)
+        Me.ExitButton.Size = New System.Drawing.Size(46, 23)
         Me.ExitButton.TabIndex = 2
         Me.ExitButton.Text = "E&xit"
         Me.ExitButton.UseVisualStyleBackColor = True
@@ -150,7 +153,7 @@ Partial Class Front
         '
         'CommandBox
         '
-        Me.CommandBox.Location = New System.Drawing.Point(33, 309)
+        Me.CommandBox.Location = New System.Drawing.Point(33, 357)
         Me.CommandBox.Name = "CommandBox"
         Me.CommandBox.ReadOnly = True
         Me.CommandBox.Size = New System.Drawing.Size(411, 20)
@@ -160,7 +163,7 @@ Partial Class Front
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(30, 280)
+        Me.Label1.Location = New System.Drawing.Point(7, 17)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(80, 13)
         Me.Label1.TabIndex = 5
@@ -177,7 +180,7 @@ Partial Class Front
         '
         'Update
         '
-        Me.Update.Location = New System.Drawing.Point(344, 22)
+        Me.Update.Location = New System.Drawing.Point(344, 17)
         Me.Update.Name = "Update"
         Me.Update.Size = New System.Drawing.Size(75, 23)
         Me.Update.TabIndex = 7
@@ -239,30 +242,46 @@ Partial Class Front
         Me.GroupBox1.Controls.Add(Me.LengthLabel)
         Me.GroupBox1.Controls.Add(Me.Label5)
         Me.GroupBox1.Controls.Add(Me.Update)
-        Me.GroupBox1.Location = New System.Drawing.Point(25, 258)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Location = New System.Drawing.Point(25, 306)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(474, 90)
         Me.GroupBox1.TabIndex = 14
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Debug"
         '
+        'LengthLabel
+        '
+        Me.LengthLabel.AutoSize = True
+        Me.LengthLabel.Location = New System.Drawing.Point(191, 17)
+        Me.LengthLabel.Name = "LengthLabel"
+        Me.LengthLabel.Size = New System.Drawing.Size(39, 13)
+        Me.LengthLabel.TabIndex = 9
+        Me.LengthLabel.Text = "Label6"
+        '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(141, 22)
+        Me.Label5.Location = New System.Drawing.Point(142, 17)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(43, 13)
         Me.Label5.TabIndex = 8
         Me.Label5.Text = "Length:"
         '
-        'LengthLabel
+        'ClearButton
         '
-        Me.LengthLabel.AutoSize = True
-        Me.LengthLabel.Location = New System.Drawing.Point(191, 22)
-        Me.LengthLabel.Name = "LengthLabel"
-        Me.LengthLabel.Size = New System.Drawing.Size(39, 13)
-        Me.LengthLabel.TabIndex = 9
-        Me.LengthLabel.Text = "Label6"
+        Me.ClearButton.Location = New System.Drawing.Point(28, 215)
+        Me.ClearButton.Name = "ClearButton"
+        Me.ClearButton.Size = New System.Drawing.Size(46, 23)
+        Me.ClearButton.TabIndex = 15
+        Me.ClearButton.Text = "&Clear"
+        Me.ClearButton.UseVisualStyleBackColor = True
+        '
+        'ClearToolStripMenuItem
+        '
+        Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ClearToolStripMenuItem.Text = "&Clear"
         '
         'Front
         '
@@ -270,7 +289,8 @@ Partial Class Front
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.ExitButton
-        Me.ClientSize = New System.Drawing.Size(511, 350)
+        Me.ClientSize = New System.Drawing.Size(511, 408)
+        Me.Controls.Add(Me.ClearButton)
         Me.Controls.Add(Me.MovieBrowse)
         Me.Controls.Add(Me.RomBrowse)
         Me.Controls.Add(Me.Label4)
@@ -278,7 +298,6 @@ Partial Class Front
         Me.Controls.Add(Me.RomBox)
         Me.Controls.Add(Me.MovieBox)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CommandBox)
         Me.Controls.Add(Me.OtherCommands)
         Me.Controls.Add(Me.ExitButton)
@@ -323,5 +342,7 @@ Partial Class Front
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents LengthLabel As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents ClearButton As System.Windows.Forms.Button
+    Friend WithEvents ClearToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
