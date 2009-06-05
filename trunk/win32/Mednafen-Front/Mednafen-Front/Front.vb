@@ -191,12 +191,6 @@
         OtherCommands.Text = ""
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        Dim tempProc As Process = Process.GetProcessById(ShellHandle)
-        tempProc.CloseMainWindow()
-
-    End Sub
-
     Private Sub CloseMednafenOnExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseMednafenOnExitToolStripMenuItem.Click
         If (CloseMednafenOnExit) Then
             CloseMednafenOnExit = False

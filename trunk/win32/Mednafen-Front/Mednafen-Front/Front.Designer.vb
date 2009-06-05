@@ -51,7 +51,6 @@ Partial Class Front
         Me.Label5 = New System.Windows.Forms.Label
         Me.ClearButton = New System.Windows.Forms.Button
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.Button1 = New System.Windows.Forms.Button
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.CloseMednafenOnExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
@@ -286,15 +285,6 @@ Partial Class Front
         Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ClearToolStripMenuItem.Text = "&Clear"
         '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(160, 214)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 16
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'SettingsToolStripMenuItem
         '
         Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseMednafenOnExitToolStripMenuItem})
@@ -315,7 +305,6 @@ Partial Class Front
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.ExitButton
         Me.ClientSize = New System.Drawing.Size(511, 408)
-        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.ClearButton)
         Me.Controls.Add(Me.MovieBrowse)
         Me.Controls.Add(Me.RomBrowse)
@@ -370,7 +359,6 @@ Partial Class Front
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents ClearButton As System.Windows.Forms.Button
     Friend WithEvents ClearToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents SettingsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CloseMednafenOnExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
