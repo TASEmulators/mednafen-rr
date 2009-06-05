@@ -4,6 +4,8 @@
     Dim CONFIGFILE As String = "med-front.cfg"
     Dim MOVIE As String = "-mov "
     Dim STATE As String = "-loadstate "
+    Dim PAUSE As String = "-pause 1"
+
     Friend EMUVERSION As String = "Mednafen Rerecording 1.1"
     Friend FRONTVERSION As String = "Frontend 1.0"
 
@@ -120,8 +122,14 @@
             stateCommand = STATE & """" & StateBox.Text() & """"
         End If
 
+        'Add Flags
+        Dim Flags As String = ""
+        If (PauseCheckBox.Checked) Then
+            Flags = PAUSE
+        End If
+
         If (RomBox.Text.Length()) Then
-            CommandBox.Text = MEDNAFEN + movieCommand + " " + stateCommand + " " + OtherCommands.Text() + " " + """" + RomBox.Text() + """"
+            CommandBox.Text = MEDNAFEN + movieCommand + " " + stateCommand + " " + OtherCommands.Text() + " " + Flags + " " + """" + RomBox.Text() + """"
             LengthLabel.Text = CommandBox.Text.Length()
         End If
     End Sub
@@ -173,6 +181,8 @@
     End Sub
 
     Private Sub GetConfigInfo()
+        Dim Str As String = ""
+
         If (ConfigInfo.IndexOf(Environment.NewLine) > 0) Then
             RomBox.Text = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
         End If
@@ -202,6 +212,18 @@
             End If
         End If
 
+        If (OtherCommands.Text.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(OtherCommands.Text.Length + 2, ConfigInfo.Length - (OtherCommands.Text.Length + 2))
+
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+                If (Str = "True") Then
+                    PauseCheckBox.Checked = True
+                Else
+                    PauseCheckBox.Checked = False
+                End If
+            End If
+        End If
 
     End Sub
 
@@ -212,6 +234,16 @@
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, MovieBox.Text() & Environment.NewLine, True)
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, StateBox.Text() & Environment.NewLine, True)
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, OtherCommands.Text() & Environment.NewLine, True)
+
+        'Checkboxes
+        Dim Str As String
+        If (PauseCheckBox.Checked) = True Then
+            Str = "True"
+        Else
+            Str = "False"
+        End If
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+
     End Sub
 
     'Load config file
