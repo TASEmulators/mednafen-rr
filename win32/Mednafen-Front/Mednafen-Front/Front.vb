@@ -3,6 +3,7 @@
     Dim MEDNAFEN As String = "mednafen.exe "
     Dim CONFIGFILE As String = "med-front.cfg"
     Dim MOVIE As String = "-mov "
+    Dim STATE As String = "-loadstate "
     Friend EMUVERSION As String = "Mednafen Rerecording 1.1"
     Friend FRONTVERSION As String = "Frontend 1.0"
 
@@ -68,6 +69,10 @@
         GetMovie()
     End Sub
 
+    Private Sub StateBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles StateBrowse.Click
+        GetState()
+    End Sub
+
     Private Sub RomToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomToolStripMenuItem.Click
         GetRom()
     End Sub
@@ -104,12 +109,21 @@
     End Sub
 
     Private Sub UpdateCommandLine()
+
         Dim movieCommand As String = ""
         If (MovieBox.Text.Length()) Then
-            movieCommand = """" & MOVIE & """"""
+            movieCommand = MOVIE & """" & MovieBox.Text() & """"
         End If
-        CommandBox.Text = MEDNAFEN + movieCommand + MovieBox.Text() + " " + OtherCommands.Text() + " " + """" + RomBox.Text() + """"
-        LengthLabel.Text = CommandBox.Text.Length()
+
+        Dim stateCommand As String = ""
+        If (StateBox.Text.Length()) Then
+            stateCommand = STATE & """" & StateBox.Text() & """"
+        End If
+
+        If (RomBox.Text.Length()) Then
+            CommandBox.Text = MEDNAFEN + movieCommand + " " + stateCommand + " " + OtherCommands.Text() + " " + """" + RomBox.Text() + """"
+            LengthLabel.Text = CommandBox.Text.Length()
+        End If
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
@@ -146,6 +160,17 @@
         End If
     End Sub
 
+    Private Sub GetState()
+        Dim OpenState As New OpenFileDialog
+        OpenState.InitialDirectory = System.Environment.CurrentDirectory
+        OpenState.Filter = "Savestate Files(*.ncs)|*.nc*"
+        OpenState.RestoreDirectory = False
+
+        OpenState.ShowDialog()
+        If (OpenState.FileName.Length) Then
+            StateBox.Text = OpenState.FileName
+        End If
+    End Sub
 
     Private Sub GetConfigInfo()
         If (ConfigInfo.IndexOf(Environment.NewLine) > 0) Then
@@ -210,4 +235,6 @@
             CloseMednafenOnExitToolStripMenuItem.Checked = False
         End If
     End Sub
+
+    
 End Class
