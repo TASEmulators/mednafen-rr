@@ -1,9 +1,14 @@
 ﻿Public Class Front
     'Constants
     Dim MEDNAFEN As String = "mednafen.exe "
+    Dim CONFIGFILE As String = "med-front.cfg"
     Dim MOVIE As String = "-mov "
     Friend EMUVERSION As String = "Mednafen Rerecording 1.1"
     Friend FRONTVERSION As String = "Frontend 1.0"
+
+    'Globals
+    Dim ShellHandle As Integer
+    Dim ConfigInfo As String
 
     'Startup routine
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -29,8 +34,9 @@
 
     Private Sub LaunchButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LaunchButton.Click
         UpdateCommandLine()
+
         ''Launch mednafen using CommandLine
-        Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
+        ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
     End Sub
 
     Private Sub RomBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomBrowse.Click
@@ -47,6 +53,13 @@
 
     Private Sub MovieToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieToolStripMenuItem.Click
         GetMovie()
+    End Sub
+    Private Sub ClearButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClearButton.Click
+        ClearAllFields()
+    End Sub
+
+    Private Sub ClearToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClearToolStripMenuItem.Click
+        ClearAllFields()
     End Sub
 
     'Subs
@@ -98,22 +111,54 @@
         End If
     End Sub
 
-    'Open config file
-    Private Sub OpenConfig()
-        'Dim fileReader As String
-        'fileReader = My.Computer.FileSystem.ReadAllText("med-front.cfg")
-        'MsgBox(fileReader)
+
+    Private Sub GetConfigInfo()
+        If (ConfigInfo.IndexOf(Environment.NewLine) > 0) Then
+            RomBox.Text = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+        End If
+
+
+        If (RomBox.Text.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(RomBox.Text.Length + 2, ConfigInfo.Length - (RomBox.Text.Length + 2))
+
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                MovieBox.Text = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+            End If
+        End If
+
+        If (MovieBox.Text.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(MovieBox.Text.Length + 2, ConfigInfo.Length - (MovieBox.Text.Length + 2))
+
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                OtherCommands.Text = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+            End If
+        End If
+
 
     End Sub
 
+
     'Save config file
     Private Sub SaveConfig()
-
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, RomBox.Text() & Environment.NewLine, False)
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, MovieBox.Text() & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, OtherCommands.Text() & Environment.NewLine, True)
     End Sub
 
     'Load config file
     Private Sub LoadConfig()
-        'Check if med-front.cfg exists, if not create an empty file, populate with dafult values, save,  and finish
-        'If exists, pull out default values
+        If (My.Computer.FileSystem.FileExists(CONFIGFILE)) Then
+            ConfigInfo = My.Computer.FileSystem.ReadAllText("med-front.cfg")
+            GetConfigInfo()
+        Else
+            ConfigInfo = ""
+            My.Computer.FileSystem.WriteAllText(CONFIGFILE, ConfigInfo, False)
+        End If
+    End Sub
+
+    Private Sub ClearAllFields()
+        RomBox.Text = ""
+        MovieBox.Text = ""
+        OtherCommands.Text = ""
     End Sub
 End Class
