@@ -83,7 +83,13 @@
         ClearAllFields()
     End Sub
 
+    Private Sub HelpToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HelpToolStripMenuItem1.Click
+        'TODO: open this: http://code.google.com/p/mednafen-rr/
+    End Sub
+
+    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     'Subs
+    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     Private Sub CloseIt()
         SaveConfig()
         If (CloseMednafenOnExit And MednafenIsRunning) Then
