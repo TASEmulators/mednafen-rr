@@ -369,6 +369,8 @@ Partial Class Front
         'ReadonlyCheckBox
         '
         Me.ReadonlyCheckBox.AutoSize = True
+        Me.ReadonlyCheckBox.Checked = True
+        Me.ReadonlyCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ReadonlyCheckBox.Location = New System.Drawing.Point(6, 119)
         Me.ReadonlyCheckBox.Name = "ReadonlyCheckBox"
         Me.ReadonlyCheckBox.Size = New System.Drawing.Size(76, 17)
