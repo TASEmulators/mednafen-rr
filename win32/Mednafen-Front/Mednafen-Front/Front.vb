@@ -9,6 +9,8 @@
     'Globals
     Dim ShellHandle As Integer
     Dim ConfigInfo As String
+    Dim MednafenIsRunning As Boolean = False
+    Dim CloseMednafenOnExit As Boolean = False
 
     'Startup routine
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -33,14 +35,29 @@
     End Sub
 
     Private Sub LaunchButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LaunchButton.Click
+        'Debug
         UpdateCommandLine()
 
-        ''Launch mednafen using CommandLine
-        Try
-            ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
-        Catch
-            MessageBox.Show("Could not locate mednafen.exe", "File Error")
-        End Try
+        If (MednafenIsRunning) Then
+            Try
+                Dim tempProc As Process = Process.GetProcessById(ShellHandle)
+                tempProc.CloseMainWindow()
+                LaunchButton.Text = "Launch Mednafen"
+                MednafenIsRunning = False
+            Catch
+                MessageBox.Show("Could not close mednafen.exe", "Mednafen error")
+            End Try
+        Else
+            'Launch mednafen using CommandLine
+            Try
+                ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
+                LaunchButton.Text = "Close Mednafen"
+                MednafenIsRunning = True
+            Catch
+                MessageBox.Show("Could not locate mednafen.exe", "File Error")
+            End Try
+        End If
+
     End Sub
 
     Private Sub RomBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomBrowse.Click
@@ -69,6 +86,14 @@
     'Subs
     Private Sub CloseIt()
         SaveConfig()
+        If (CloseMednafenOnExit And MednafenIsRunning) Then
+            Try
+                Dim tempProc As Process = Process.GetProcessById(ShellHandle)
+                tempProc.CloseMainWindow()
+            Catch
+
+            End Try
+        End If
         Me.Close()
     End Sub
 
@@ -164,5 +189,25 @@
         RomBox.Text = ""
         MovieBox.Text = ""
         OtherCommands.Text = ""
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Dim tempProc As Process = Process.GetProcessById(ShellHandle)
+        tempProc.CloseMainWindow()
+
+    End Sub
+
+    Private Sub CloseMednafenOnExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseMednafenOnExitToolStripMenuItem.Click
+        If (CloseMednafenOnExit) Then
+            CloseMednafenOnExit = False
+        Else
+            CloseMednafenOnExit = True
+        End If
+
+        If (CloseMednafenOnExit) Then
+            CloseMednafenOnExitToolStripMenuItem.Checked = True
+        Else
+            CloseMednafenOnExitToolStripMenuItem.Checked = False
+        End If
     End Sub
 End Class
