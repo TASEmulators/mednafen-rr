@@ -265,7 +265,7 @@ Partial Class Front
         '
         'MovieBrowse
         '
-        Me.MovieBrowse.Location = New System.Drawing.Point(347, 15)
+        Me.MovieBrowse.Location = New System.Drawing.Point(347, 19)
         Me.MovieBrowse.Name = "MovieBrowse"
         Me.MovieBrowse.Size = New System.Drawing.Size(75, 23)
         Me.MovieBrowse.TabIndex = 13
