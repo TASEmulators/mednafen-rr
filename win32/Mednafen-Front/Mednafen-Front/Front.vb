@@ -60,11 +60,11 @@
     Private Sub UpdateCommandLine()
         Dim movieCommand As String = ""
         If (MovieBox.Text.Length()) Then
-            movieCommand = MOVIE
+            movieCommand = """" & MOVIE & """"""
         End If
         CommandBox.Text = "\"""
 
-        CommandBox.Text = MEDNAFEN + movieCommand + """" + MovieBox.Text() + """" + " " + OtherCommands.Text() + " " + """" + RomBox.Text() + """"
+        CommandBox.Text = MEDNAFEN + movieCommand + MovieBox.Text() + " " + OtherCommands.Text() + " " + """" + RomBox.Text() + """"
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
