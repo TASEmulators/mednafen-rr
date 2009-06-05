@@ -36,7 +36,11 @@
         UpdateCommandLine()
 
         ''Launch mednafen using CommandLine
-        ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
+        Try
+            ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
+        Catch
+            MessageBox.Show("Could not locate mednafen.exe", "File Error")
+        End Try
     End Sub
 
     Private Sub RomBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomBrowse.Click
