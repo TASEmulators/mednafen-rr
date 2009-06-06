@@ -90,6 +90,7 @@ static MDFNSetting MednafenSettings[] =
   { "author", gettext_noop("Author's name"), MDFNST_STRING, "" },
   { "mov", gettext_noop("Path to the movie to be played/recorded to"), MDFNST_STRING, "mov PATH NOT SET" },
   { "play", gettext_noop("Start playing the current movie immediately on startup"), MDFNST_BOOL, "0" },
+  { "record", gettext_noop("Start recording the current movie immediately on startup"), MDFNST_BOOL, "0" },
   { "pause", gettext_noop("Start the emulator paused"), MDFNST_BOOL, "0" },
   { "loadstate", gettext_noop("Load the specified state"), MDFNST_STRING, "" },
   { "readonly", gettext_noop("Start the emulator in read only mode"), MDFNST_BOOL, "1" },
@@ -564,6 +565,7 @@ int moviecounter=0;
 int endingframe=0;
 int wantrecording=0;
 int alreadyloadedstate=0;
+int alreadyrecorded=0;
 extern uint32 FrameCounter;
 
 void MDFNI_Emulate(EmulateSpecStruct *espec) //uint32 *pXBuf, MDFN_Rect *LineWidths, int16 **SoundBuf, int32 *SoundBufSize, int skip, float soundmultiplier)
@@ -605,6 +607,16 @@ alreadypaused = 1;
 	alreadyplayed = 1;
 	//so it doesn't play again next time you open the emulator
 	MDFNI_SetSettingB("play", 0);
+ }
+
+  if(!MDFNMOV_IsPlaying() && MDFN_GetSettingB("record") == 1 && alreadyrecorded == 0)
+  {
+
+	  MDFNI_SaveMovie(NULL, NULL, NULL);
+	//MDFNI_LoadMovie(NULL);
+	alreadyrecorded = 1;
+	//so it doesn't play again next time you open the emulator
+	MDFNI_SetSettingB("record", 0);
  }
 
  if(!alreadyloadedstate) {
