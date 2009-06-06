@@ -824,6 +824,11 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 			SaveStateStatus[CurrentState]=1;
 			}
 		}
+		else
+		{
+			MovieLoadState();
+
+		}
 		gzclose(st);
 		return(1);
 	}   
