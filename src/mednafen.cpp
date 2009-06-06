@@ -564,6 +564,7 @@ int moviecounter=0;
 int endingframe=0;
 int wantrecording=0;
 int alreadyloadedstate=0;
+extern uint32 FrameCounter;
 
 void MDFNI_Emulate(EmulateSpecStruct *espec) //uint32 *pXBuf, MDFN_Rect *LineWidths, int16 **SoundBuf, int32 *SoundBufSize, int skip, float soundmultiplier)
 {
@@ -607,6 +608,7 @@ alreadypaused = 1;
  }
 
  if(!alreadyloadedstate) {
+	 if(FrameCounter > 1) {
 
 		//if someone specifies loading a state with loadstate
 		if(strcmp(MDFN_GetSettingS("loadstate").c_str(),"loadstate PATH NOT SET")) {
@@ -614,6 +616,7 @@ alreadypaused = 1;
 			MDFNI_LoadState(MDFN_GetSettingS("loadstate").c_str(), NULL);
 			alreadyloadedstate=1;
 		}
+	 }
  }
 
  #ifdef NETWORK
