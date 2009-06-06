@@ -23,6 +23,9 @@
         CommandBox.Text = MEDNAFEN
         LengthLabel.Text = CommandBox.Text.Length()
         LoadConfig()
+        If (CloseMednafenOnExit) Then
+            CloseMednafenOnExitToolStripMenuItem.Checked = True
+        End If
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
@@ -142,6 +145,7 @@
             CommandBox.Text = MEDNAFEN + movieCommand + " " + stateCommand + " " + OtherCommands.Text() + " " + Flags + " " + """" + RomBox.Text() + """"
             LengthLabel.Text = CommandBox.Text.Length()
         End If
+        
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
@@ -255,6 +259,16 @@
             End If
         End If
 
+        ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
+        If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+            Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+            If (Str = "True") Then
+                CloseMednafenOnExit = True
+            Else
+                CloseMednafenOnExit = False
+            End If
+        End If
+
     End Sub
 
 
@@ -282,6 +296,13 @@
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
 
         If (PlayCheckBox.Checked) = True Then
+            Str = "True"
+        Else
+            Str = "False"
+        End If
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+
+        If (CloseMednafenOnExit) = True Then
             Str = "True"
         Else
             Str = "False"
