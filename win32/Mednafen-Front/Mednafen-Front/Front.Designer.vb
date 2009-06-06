@@ -183,7 +183,7 @@ Partial Class Front
         Me.OtherCommands.Location = New System.Drawing.Point(12, 170)
         Me.OtherCommands.Name = "OtherCommands"
         Me.OtherCommands.Size = New System.Drawing.Size(416, 20)
-        Me.OtherCommands.TabIndex = 3
+        Me.OtherCommands.TabIndex = 6
         '
         'CommandBox
         '
@@ -201,7 +201,7 @@ Partial Class Front
         Me.Label2.Location = New System.Drawing.Point(9, 151)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(87, 13)
-        Me.Label2.TabIndex = 6
+        Me.Label2.TabIndex = 0
         Me.Label2.Text = "Other commands"
         '
         'Update
@@ -218,14 +218,14 @@ Partial Class Front
         Me.MovieBox.Location = New System.Drawing.Point(6, 19)
         Me.MovieBox.Name = "MovieBox"
         Me.MovieBox.Size = New System.Drawing.Size(335, 20)
-        Me.MovieBox.TabIndex = 8
+        Me.MovieBox.TabIndex = 1
         '
         'RomBox
         '
         Me.RomBox.Location = New System.Drawing.Point(9, 23)
         Me.RomBox.Name = "RomBox"
         Me.RomBox.Size = New System.Drawing.Size(335, 20)
-        Me.RomBox.TabIndex = 9
+        Me.RomBox.TabIndex = 1
         '
         'Label3
         '
@@ -233,7 +233,7 @@ Partial Class Front
         Me.Label3.Location = New System.Drawing.Point(9, 7)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(32, 13)
-        Me.Label3.TabIndex = 10
+        Me.Label3.TabIndex = 0
         Me.Label3.Text = "ROM"
         '
         'Label4
@@ -242,7 +242,7 @@ Partial Class Front
         Me.Label4.Location = New System.Drawing.Point(3, 3)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(36, 13)
-        Me.Label4.TabIndex = 11
+        Me.Label4.TabIndex = 0
         Me.Label4.Text = "Movie"
         '
         'RomBrowse
@@ -250,7 +250,7 @@ Partial Class Front
         Me.RomBrowse.Location = New System.Drawing.Point(350, 21)
         Me.RomBrowse.Name = "RomBrowse"
         Me.RomBrowse.Size = New System.Drawing.Size(75, 23)
-        Me.RomBrowse.TabIndex = 12
+        Me.RomBrowse.TabIndex = 2
         Me.RomBrowse.Text = "Browse..."
         Me.RomBrowse.UseVisualStyleBackColor = True
         '
@@ -259,7 +259,7 @@ Partial Class Front
         Me.MovieBrowse.Location = New System.Drawing.Point(347, 19)
         Me.MovieBrowse.Name = "MovieBrowse"
         Me.MovieBrowse.Size = New System.Drawing.Size(75, 23)
-        Me.MovieBrowse.TabIndex = 13
+        Me.MovieBrowse.TabIndex = 2
         Me.MovieBrowse.Text = "Browse..."
         Me.MovieBrowse.UseVisualStyleBackColor = True
         '
@@ -336,7 +336,7 @@ Partial Class Front
         Me.Label6.Location = New System.Drawing.Point(7, 57)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(38, 13)
-        Me.Label6.TabIndex = 17
+        Me.Label6.TabIndex = 0
         Me.Label6.Text = "Author"
         '
         'AuthorBox
@@ -344,7 +344,7 @@ Partial Class Front
         Me.AuthorBox.Location = New System.Drawing.Point(7, 76)
         Me.AuthorBox.Name = "AuthorBox"
         Me.AuthorBox.Size = New System.Drawing.Size(334, 20)
-        Me.AuthorBox.TabIndex = 16
+        Me.AuthorBox.TabIndex = 3
         '
         'PlayCheckBox
         '
@@ -352,7 +352,7 @@ Partial Class Front
         Me.PlayCheckBox.Location = New System.Drawing.Point(6, 142)
         Me.PlayCheckBox.Name = "PlayCheckBox"
         Me.PlayCheckBox.Size = New System.Drawing.Size(77, 17)
-        Me.PlayCheckBox.TabIndex = 15
+        Me.PlayCheckBox.TabIndex = 5
         Me.PlayCheckBox.Text = "Play movie"
         Me.PlayCheckBox.UseVisualStyleBackColor = True
         '
@@ -364,7 +364,7 @@ Partial Class Front
         Me.ReadonlyCheckBox.Location = New System.Drawing.Point(6, 119)
         Me.ReadonlyCheckBox.Name = "ReadonlyCheckBox"
         Me.ReadonlyCheckBox.Size = New System.Drawing.Size(76, 17)
-        Me.ReadonlyCheckBox.TabIndex = 14
+        Me.ReadonlyCheckBox.TabIndex = 4
         Me.ReadonlyCheckBox.Text = "Read Only"
         Me.ReadonlyCheckBox.UseVisualStyleBackColor = True
         '
@@ -392,7 +392,7 @@ Partial Class Front
         Me.StateBrowse.Location = New System.Drawing.Point(350, 73)
         Me.StateBrowse.Name = "StateBrowse"
         Me.StateBrowse.Size = New System.Drawing.Size(75, 23)
-        Me.StateBrowse.TabIndex = 16
+        Me.StateBrowse.TabIndex = 4
         Me.StateBrowse.Text = "Browse..."
         Me.StateBrowse.UseVisualStyleBackColor = True
         '
@@ -401,7 +401,7 @@ Partial Class Front
         Me.StateBox.Location = New System.Drawing.Point(12, 73)
         Me.StateBox.Name = "StateBox"
         Me.StateBox.Size = New System.Drawing.Size(332, 20)
-        Me.StateBox.TabIndex = 15
+        Me.StateBox.TabIndex = 3
         '
         'Label7
         '
@@ -409,7 +409,7 @@ Partial Class Front
         Me.Label7.Location = New System.Drawing.Point(9, 56)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(54, 13)
-        Me.Label7.TabIndex = 14
+        Me.Label7.TabIndex = 0
         Me.Label7.Text = "Loadstate"
         '
         'PauseCheckBox
@@ -418,7 +418,7 @@ Partial Class Front
         Me.PauseCheckBox.Location = New System.Drawing.Point(12, 118)
         Me.PauseCheckBox.Name = "PauseCheckBox"
         Me.PauseCheckBox.Size = New System.Drawing.Size(56, 17)
-        Me.PauseCheckBox.TabIndex = 13
+        Me.PauseCheckBox.TabIndex = 5
         Me.PauseCheckBox.Text = "Pause"
         Me.PauseCheckBox.UseVisualStyleBackColor = True
         '
