@@ -239,36 +239,41 @@
             End If
         End If
 
-        ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
-        If (ConfigInfo.IndexOf(Environment.NewLine)) Then
-            Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
-            If (Str = "True") Then
-                ReadonlyCheckBox.Checked = True
-            Else
-                ReadonlyCheckBox.Checked = False
+        If (Str.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+                If (Str = "True") Then
+                    ReadonlyCheckBox.Checked = True
+                Else
+                    ReadonlyCheckBox.Checked = False
+                End If
             End If
         End If
 
-        ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
-        If (ConfigInfo.IndexOf(Environment.NewLine)) Then
-            Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
-            If (Str = "True") Then
-                PlayCheckBox.Checked = True
-            Else
-                PlayCheckBox.Checked = False
+        If (Str.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+                If (Str = "True") Then
+                    PlayCheckBox.Checked = True
+                Else
+                    PlayCheckBox.Checked = False
+                End If
             End If
         End If
 
-        ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
-        If (ConfigInfo.IndexOf(Environment.NewLine)) Then
-            Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
-            If (Str = "True") Then
-                CloseMednafenOnExit = True
-            Else
-                CloseMednafenOnExit = False
+        If (Str.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+                If (Str = "True") Then
+                    CloseMednafenOnExit = True
+                Else
+                    CloseMednafenOnExit = False
+                End If
             End If
         End If
-
     End Sub
 
 
