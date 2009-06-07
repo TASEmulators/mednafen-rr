@@ -7,6 +7,7 @@
     Dim PAUSE As String = "-pause 1"
     Dim READ As String = "-readonly 0"
     Dim PLAY As String = "-play 1"
+    Dim AUTHOR As String = "-author"
 
     Friend EMUVERSION As String = "Mednafen Rerecording 1.1"
     Friend FRONTVERSION As String = "Frontend 1.0"
