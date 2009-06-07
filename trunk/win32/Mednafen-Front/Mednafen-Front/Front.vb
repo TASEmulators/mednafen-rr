@@ -67,11 +67,19 @@
     End Sub
 
     Private Sub RomToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomToolStripMenuItem.Click
-        GetRom()
+        If (MednafenIsRunning) Then 'Just in case.  This menu event should never happen if this isn't already true though.
+            GetRom()
+            LaunchMednafen()    'Close Mednafen
+            LaunchMednafen()    'Open Mednafen
+        End If
     End Sub
 
     Private Sub MovieToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieToolStripMenuItem.Click
-        GetMovie()
+        If (MednafenIsRunning) Then 'Just in case.  This menu event should never happen if this isn't already true though.
+            GetMovie()
+            LaunchMednafen()    'Close Mednafen
+            LaunchMednafen()    'Open Mednafen
+        End If
     End Sub
     Private Sub ClearButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClearButton.Click
         ClearAllFields()
