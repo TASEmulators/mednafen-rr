@@ -64,6 +64,8 @@ Partial Class Front
         Me.StateBox = New System.Windows.Forms.TextBox
         Me.Label7 = New System.Windows.Forms.Label
         Me.PauseCheckBox = New System.Windows.Forms.CheckBox
+        Me.LaunchMednafenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TabControls.SuspendLayout()
@@ -82,21 +84,23 @@ Partial Class Front
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RomToolStripMenuItem, Me.MovieToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LaunchMednafenToolStripMenuItem, Me.ToolStripSeparator3, Me.RomToolStripMenuItem, Me.MovieToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(35, 20)
         Me.FileToolStripMenuItem.Text = "&File"
         '
         'RomToolStripMenuItem
         '
+        Me.RomToolStripMenuItem.Enabled = False
         Me.RomToolStripMenuItem.Name = "RomToolStripMenuItem"
-        Me.RomToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.RomToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.RomToolStripMenuItem.Text = "&Change Rom..."
         '
         'MovieToolStripMenuItem
         '
+        Me.MovieToolStripMenuItem.Enabled = False
         Me.MovieToolStripMenuItem.Name = "MovieToolStripMenuItem"
-        Me.MovieToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.MovieToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.MovieToolStripMenuItem.Text = "&Change Movie..."
         '
         'ToolStripSeparator1
@@ -429,6 +433,17 @@ Partial Class Front
         Me.PauseCheckBox.Text = "Pause"
         Me.PauseCheckBox.UseVisualStyleBackColor = True
         '
+        'LaunchMednafenToolStripMenuItem
+        '
+        Me.LaunchMednafenToolStripMenuItem.Name = "LaunchMednafenToolStripMenuItem"
+        Me.LaunchMednafenToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
+        Me.LaunchMednafenToolStripMenuItem.Text = "Launch Mednafen"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(167, 6)
+        '
         'Front
         '
         Me.AcceptButton = Me.LaunchButton
@@ -500,5 +515,7 @@ Partial Class Front
     Friend WithEvents StateBrowse As System.Windows.Forms.Button
     Friend WithEvents StateBox As System.Windows.Forms.TextBox
     Friend WithEvents AutoRunToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents LaunchMednafenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
 
 End Class
