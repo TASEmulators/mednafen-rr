@@ -7,7 +7,7 @@
     Dim PAUSE As String = "-pause 1"
     Dim READ As String = "-readonly 0"
     Dim PLAY As String = "-play 1"
-    Dim AUTHOR As String = "-author"
+    Dim AUTHOR As String = "-author "
 
     Friend EMUVERSION As String = "Mednafen Rerecording 1.1"
     Friend FRONTVERSION As String = "Frontend 1.0"
@@ -144,6 +144,11 @@
             stateCommand = STATE & """" & StateBox.Text() & """"
         End If
 
+        Dim authorCommand As String = ""
+        If (AuthorBox.Text.Length()) Then
+            authorCommand = AUTHOR & """" & AuthorBox.Text() & """"
+        End If
+
         'Add Flags
         Dim Flags As String = ""
         If (PauseCheckBox.Checked) Then
@@ -159,7 +164,7 @@
         End If
 
         If (RomBox.Text.Length()) Then
-            CommandBox.Text = MEDNAFEN + movieCommand + " " + stateCommand + " " + OtherCommands.Text() + " " + Flags + " " + """" + RomBox.Text() + """"
+            CommandBox.Text = MEDNAFEN + movieCommand + " " + stateCommand + " " + authorCommand + " " + OtherCommands.Text() + " " + Flags + " " + """" + RomBox.Text() + """"
             LengthLabel.Text = CommandBox.Text.Length()
         End If
         
