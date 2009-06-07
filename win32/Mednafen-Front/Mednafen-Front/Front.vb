@@ -17,6 +17,7 @@
     Dim ConfigInfo As String
     Dim MednafenIsRunning As Boolean = False
     Dim CloseMednafenOnExit As Boolean = False
+    Dim AutoRun As Boolean = False
 
     Dim tempProc As Process
 
@@ -28,6 +29,10 @@
         LoadConfig()
         If (CloseMednafenOnExit) Then
             CloseMednafenOnExitToolStripMenuItem.Checked = True
+        End If
+        If (AutoRun) Then
+            AutoRunToolStripMenuItem.Checked = True
+            LaunchMednafen()
         End If
     End Sub
 
@@ -46,47 +51,7 @@
     End Sub
 
     Private Sub LaunchButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LaunchButton.Click
-        If (ShellHandle) Then
-            Try
-                tempProc = Process.GetProcessById(ShellHandle)
-            Catch
-                ShellHandle = 0
-            End Try
-        End If
-
-        'Debug
-        UpdateCommandLine()
-
-        If (MednafenIsRunning) Then
-            If (tempProc.HasExited) Then
-                LaunchButton.Text = "Launch Mednafen"
-                MednafenIsRunning = False
-            Else
-                Try
-
-                    tempProc.CloseMainWindow()
-                    LaunchButton.Text = "Launch Mednafen"
-                    ShellHandle = 0
-                    MednafenIsRunning = False
-                Catch
-                    MessageBox.Show("Could not close mednafen.exe", "Mednafen error")
-                End Try
-            End If
-        Else
-            'Launch mednafen using CommandLine
-            Try
-                If (CommandBox.Text.Length() <= 255) Then
-                    ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
-                    LaunchButton.Text = "Close Mednafen"
-                    MednafenIsRunning = True
-                Else
-                    MessageBox.Show("Argument must be less than 255 characters", "Commandline Error")
-                End If
-            Catch
-                MessageBox.Show("Could not locate mednafen.exe", "File Error")
-            End Try
-        End If
-
+        LaunchMednafen()
     End Sub
 
     Private Sub RomBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomBrowse.Click
@@ -118,6 +83,34 @@
 
     Private Sub HelpToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HelpToolStripMenuItem1.Click
         Help.Show()
+    End Sub
+
+    Private Sub CloseMednafenOnExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseMednafenOnExitToolStripMenuItem.Click
+        If (CloseMednafenOnExit) Then
+            CloseMednafenOnExit = False
+        Else
+            CloseMednafenOnExit = True
+        End If
+
+        If (CloseMednafenOnExit) Then
+            CloseMednafenOnExitToolStripMenuItem.Checked = True
+        Else
+            CloseMednafenOnExitToolStripMenuItem.Checked = False
+        End If
+    End Sub
+
+    Private Sub AutoRunToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoRunToolStripMenuItem.Click
+        If (AutoRun) Then
+            AutoRun = False
+        Else
+            AutoRun = True
+        End If
+
+        If (AutoRun) Then
+            AutoRunToolStripMenuItem.Checked = True
+        Else
+            AutoRunToolStripMenuItem.Checked = False
+        End If
     End Sub
 
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -306,6 +299,18 @@
                 End If
             End If
         End If
+
+        If (Str.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+                If (Str = "True") Then
+                    AutoRun = True
+                Else
+                    AutoRun = False
+                End If
+            End If
+        End If
     End Sub
 
 
@@ -346,6 +351,14 @@
         End If
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
 
+        If (AutoRun) = True Then
+            Str = "True"
+        Else
+            Str = "False"
+        End If
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+
+
     End Sub
 
     'Load config file
@@ -365,17 +378,46 @@
         OtherCommands.Text = ""
     End Sub
 
-    Private Sub CloseMednafenOnExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseMednafenOnExitToolStripMenuItem.Click
-        If (CloseMednafenOnExit) Then
-            CloseMednafenOnExit = False
-        Else
-            CloseMednafenOnExit = True
+    Private Sub LaunchMednafen()
+        If (ShellHandle) Then
+            Try
+                tempProc = Process.GetProcessById(ShellHandle)
+            Catch
+                ShellHandle = 0
+            End Try
         End If
 
-        If (CloseMednafenOnExit) Then
-            CloseMednafenOnExitToolStripMenuItem.Checked = True
+        'Debug
+        UpdateCommandLine()
+
+        If (MednafenIsRunning) Then
+            If (tempProc.HasExited) Then
+                LaunchButton.Text = "Launch Mednafen"
+                MednafenIsRunning = False
+            Else
+                Try
+
+                    tempProc.CloseMainWindow()
+                    LaunchButton.Text = "Launch Mednafen"
+                    ShellHandle = 0
+                    MednafenIsRunning = False
+                Catch
+                    MessageBox.Show("Could not close mednafen.exe", "Mednafen error")
+                End Try
+            End If
         Else
-            CloseMednafenOnExitToolStripMenuItem.Checked = False
+            'Launch mednafen using CommandLine
+            Try
+                If (CommandBox.Text.Length() <= 255) Then
+                    ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
+                    LaunchButton.Text = "Close Mednafen"
+                    MednafenIsRunning = True
+                Else
+                    MessageBox.Show("Argument must be less than 255 characters", "Commandline Error")
+                End If
+            Catch
+                MessageBox.Show("Could not locate mednafen.exe", "File Error")
+            End Try
         End If
     End Sub
 End Class

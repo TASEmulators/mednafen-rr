@@ -32,6 +32,7 @@ Partial Class Front
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.CloseMednafenOnExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.AutoRunToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator
@@ -63,7 +64,6 @@ Partial Class Front
         Me.StateBox = New System.Windows.Forms.TextBox
         Me.Label7 = New System.Windows.Forms.Label
         Me.PauseCheckBox = New System.Windows.Forms.CheckBox
-        Me.AutoRunToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TabControls.SuspendLayout()
@@ -136,6 +136,12 @@ Partial Class Front
         Me.CloseMednafenOnExitToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
         Me.CloseMednafenOnExitToolStripMenuItem.Text = "Close Mednafen on Exit"
         '
+        'AutoRunToolStripMenuItem
+        '
+        Me.AutoRunToolStripMenuItem.Name = "AutoRunToolStripMenuItem"
+        Me.AutoRunToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.AutoRunToolStripMenuItem.Text = "Auto-Run"
+        '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HelpToolStripMenuItem1, Me.ToolStripSeparator2, Me.AboutToolStripMenuItem})
@@ -146,18 +152,18 @@ Partial Class Front
         'HelpToolStripMenuItem1
         '
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(114, 22)
         Me.HelpToolStripMenuItem1.Text = "&Help"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(111, 6)
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(114, 22)
         Me.AboutToolStripMenuItem.Text = "&About"
         '
         'LaunchButton
@@ -422,12 +428,6 @@ Partial Class Front
         Me.PauseCheckBox.TabIndex = 5
         Me.PauseCheckBox.Text = "Pause"
         Me.PauseCheckBox.UseVisualStyleBackColor = True
-        '
-        'AutoRunToolStripMenuItem
-        '
-        Me.AutoRunToolStripMenuItem.Name = "AutoRunToolStripMenuItem"
-        Me.AutoRunToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
-        Me.AutoRunToolStripMenuItem.Text = "Auto-Run"
         '
         'Front
         '
