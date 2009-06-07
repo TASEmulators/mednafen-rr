@@ -75,9 +75,13 @@
         Else
             'Launch mednafen using CommandLine
             Try
-                ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
-                LaunchButton.Text = "Close Mednafen"
-                MednafenIsRunning = True
+                If (CommandBox.Text.Length() <= 255) Then
+                    ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
+                    LaunchButton.Text = "Close Mednafen"
+                    MednafenIsRunning = True
+                Else
+                    MessageBox.Show("Argument must be less than 255 characters", "Commandline Error")
+                End If
             Catch
                 MessageBox.Show("Could not locate mednafen.exe", "File Error")
             End Try
@@ -165,6 +169,12 @@
 
         If (RomBox.Text.Length()) Then
             CommandBox.Text = MEDNAFEN + movieCommand + " " + stateCommand + " " + authorCommand + " " + OtherCommands.Text() + " " + Flags + " " + """" + RomBox.Text() + """"
+
+            If (CommandBox.Text.Length() > 255) Then
+                LengthLabel.ForeColor = Color.Red
+            Else
+                LengthLabel.ForeColor = Color.Black
+            End If
             LengthLabel.Text = CommandBox.Text.Length()
         End If
         
