@@ -17,6 +17,8 @@
     Dim MednafenIsRunning As Boolean = False
     Dim CloseMednafenOnExit As Boolean = False
 
+    Dim tempProc As Process
+
     'Startup routine
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.Text = EMUVERSION + " " + FRONTVERSION
@@ -43,18 +45,32 @@
     End Sub
 
     Private Sub LaunchButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LaunchButton.Click
+        If (ShellHandle) Then
+            Try
+                tempProc = Process.GetProcessById(ShellHandle)
+            Catch
+                ShellHandle = 0
+            End Try
+        End If
+
         'Debug
         UpdateCommandLine()
 
         If (MednafenIsRunning) Then
-            Try
-                Dim tempProc As Process = Process.GetProcessById(ShellHandle)
-                tempProc.CloseMainWindow()
+            If (tempProc.HasExited) Then
                 LaunchButton.Text = "Launch Mednafen"
                 MednafenIsRunning = False
-            Catch
-                MessageBox.Show("Could not close mednafen.exe", "Mednafen error")
-            End Try
+            Else
+                Try
+
+                    tempProc.CloseMainWindow()
+                    LaunchButton.Text = "Launch Mednafen"
+                    ShellHandle = 0
+                    MednafenIsRunning = False
+                Catch
+                    MessageBox.Show("Could not close mednafen.exe", "Mednafen error")
+                End Try
+            End If
         Else
             'Launch mednafen using CommandLine
             Try
@@ -103,7 +119,7 @@
     'Subs
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     Private Sub CloseIt()
-        SaveConfig()
+       SaveConfig()
         If (CloseMednafenOnExit And MednafenIsRunning) Then
             Try
                 Dim tempProc As Process = Process.GetProcessById(ShellHandle)
