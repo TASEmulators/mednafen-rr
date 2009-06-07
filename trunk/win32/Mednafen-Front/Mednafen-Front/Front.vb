@@ -112,7 +112,7 @@
     End Sub
 
     Private Sub HelpToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HelpToolStripMenuItem1.Click
-        'TODO: open this: http://code.google.com/p/mednafen-rr/
+        Help.Show()
     End Sub
 
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
