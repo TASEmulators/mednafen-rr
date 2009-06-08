@@ -150,6 +150,10 @@
         End If
     End Sub
 
+    Private Sub DirectoryOverridesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DirectoryOverridesToolStripMenuItem.Click
+        Directories.Show()
+    End Sub
+
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     'Subs
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -450,9 +454,21 @@
     End Sub
 
     Private Sub ClearAllFields()
+        'General
         RomBox.Text = ""
-        MovieBox.Text = ""
+        StateBox.Text = ""
         OtherCommands.Text = ""
+        PauseCheckBox.Checked = False
+
+        'Movie
+        MovieBox.Text = ""
+        AuthorBox.Text = ""
+        ReadonlyCheckBox.Checked = False
+        PlayCheckBox.Checked = False
+        RecordCheckBox.Checked = False
+
+        CommandBox.Text = MEDNAFEN
+
     End Sub
 
     Private Sub LaunchMednafen()
@@ -500,9 +516,5 @@
                 MessageBox.Show("Must specify a ROM to launch Mednafen", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         End If
-    End Sub
-
-    Private Sub DirectoryOverridesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DirectoryOverridesToolStripMenuItem.Click
-        Directories.Show()
     End Sub
 End Class

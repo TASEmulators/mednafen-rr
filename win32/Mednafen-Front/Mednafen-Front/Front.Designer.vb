@@ -22,6 +22,7 @@ Partial Class Front
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.LaunchMednafenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -35,6 +36,8 @@ Partial Class Front
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.CloseMednafenOnExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AutoRunToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
+        Me.DirectoryOverridesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator
@@ -57,25 +60,24 @@ Partial Class Front
         Me.ClearButton = New System.Windows.Forms.Button
         Me.TabControls = New System.Windows.Forms.TabControl
         Me.TabPage2 = New System.Windows.Forms.TabPage
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.RecordCheckBox = New System.Windows.Forms.CheckBox
+        Me.PlayCheckBox = New System.Windows.Forms.CheckBox
         Me.Label6 = New System.Windows.Forms.Label
         Me.AuthorBox = New System.Windows.Forms.TextBox
-        Me.PlayCheckBox = New System.Windows.Forms.CheckBox
         Me.ReadonlyCheckBox = New System.Windows.Forms.CheckBox
         Me.TabPage1 = New System.Windows.Forms.TabPage
         Me.StateBrowse = New System.Windows.Forms.Button
         Me.StateBox = New System.Windows.Forms.TextBox
         Me.Label7 = New System.Windows.Forms.Label
         Me.PauseCheckBox = New System.Windows.Forms.CheckBox
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.RecordCheckBox = New System.Windows.Forms.CheckBox
-        Me.DirectoryOverridesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TabControls.SuspendLayout()
         Me.TabPage2.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -99,6 +101,7 @@ Partial Class Front
         Me.LaunchMednafenToolStripMenuItem.Name = "LaunchMednafenToolStripMenuItem"
         Me.LaunchMednafenToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.LaunchMednafenToolStripMenuItem.Text = "Launch Mednafen"
+        Me.LaunchMednafenToolStripMenuItem.ToolTipText = "Open/Closes mednafen.exe"
         '
         'ToolStripSeparator3
         '
@@ -111,6 +114,7 @@ Partial Class Front
         Me.RomToolStripMenuItem.Name = "RomToolStripMenuItem"
         Me.RomToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.RomToolStripMenuItem.Text = "&Change Rom..."
+        Me.RomToolStripMenuItem.ToolTipText = "Specifies a new ROM to load into mednafen.exe.   Mednafen must be open."
         '
         'MovieToolStripMenuItem
         '
@@ -118,6 +122,7 @@ Partial Class Front
         Me.MovieToolStripMenuItem.Name = "MovieToolStripMenuItem"
         Me.MovieToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.MovieToolStripMenuItem.Text = "&Change Movie..."
+        Me.MovieToolStripMenuItem.ToolTipText = "Specifies a new movie for mednafen.exe to use.  Mednafen must be open."
         '
         'ToolStripSeparator1
         '
@@ -140,8 +145,9 @@ Partial Class Front
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(110, 22)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ClearToolStripMenuItem.Text = "&Clear"
+        Me.ClearToolStripMenuItem.ToolTipText = "Clears all fields."
         '
         'SettingsToolStripMenuItem
         '
@@ -155,12 +161,26 @@ Partial Class Front
         Me.CloseMednafenOnExitToolStripMenuItem.Name = "CloseMednafenOnExitToolStripMenuItem"
         Me.CloseMednafenOnExitToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
         Me.CloseMednafenOnExitToolStripMenuItem.Text = "Close Mednafen on Exit"
+        Me.CloseMednafenOnExitToolStripMenuItem.ToolTipText = "Specifies to close mednafen.exe on exit."
         '
         'AutoRunToolStripMenuItem
         '
         Me.AutoRunToolStripMenuItem.Name = "AutoRunToolStripMenuItem"
         Me.AutoRunToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
         Me.AutoRunToolStripMenuItem.Text = "Auto-Run"
+        Me.AutoRunToolStripMenuItem.ToolTipText = "This will cause mednafen.exe to be launched on startup."
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(195, 6)
+        '
+        'DirectoryOverridesToolStripMenuItem
+        '
+        Me.DirectoryOverridesToolStripMenuItem.Name = "DirectoryOverridesToolStripMenuItem"
+        Me.DirectoryOverridesToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.DirectoryOverridesToolStripMenuItem.Text = "Directory overrides..."
+        Me.DirectoryOverridesToolStripMenuItem.ToolTipText = "Set default directories such as where to find mednafen.exe"
         '
         'HelpToolStripMenuItem
         '
@@ -172,8 +192,9 @@ Partial Class Front
         'HelpToolStripMenuItem1
         '
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(114, 22)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
         Me.HelpToolStripMenuItem1.Text = "&Help"
+        Me.HelpToolStripMenuItem1.ToolTipText = "Help and Mednafen-Front documentation."
         '
         'ToolStripSeparator2
         '
@@ -193,6 +214,7 @@ Partial Class Front
         Me.LaunchButton.Size = New System.Drawing.Size(109, 23)
         Me.LaunchButton.TabIndex = 4
         Me.LaunchButton.Text = "Launch Mednafen"
+        Me.ToolTip1.SetToolTip(Me.LaunchButton, "Opens/Closes mednafen.exe")
         Me.LaunchButton.UseVisualStyleBackColor = True
         '
         'ExitButton
@@ -211,6 +233,7 @@ Partial Class Front
         Me.OtherCommands.Name = "OtherCommands"
         Me.OtherCommands.Size = New System.Drawing.Size(416, 20)
         Me.OtherCommands.TabIndex = 6
+        Me.ToolTip1.SetToolTip(Me.OtherCommands, "Add any additional commandlines you wish to specify here.")
         '
         'CommandBox
         '
@@ -221,6 +244,7 @@ Partial Class Front
         Me.CommandBox.TabIndex = 4
         Me.CommandBox.TabStop = False
         Me.CommandBox.Text = "mednafen.exe"
+        Me.ToolTip1.SetToolTip(Me.CommandBox, "This is the commandline that will be launched")
         '
         'Label2
         '
@@ -238,6 +262,7 @@ Partial Class Front
         Me.Update.Size = New System.Drawing.Size(75, 23)
         Me.Update.TabIndex = 7
         Me.Update.Text = "Update"
+        Me.ToolTip1.SetToolTip(Me.Update, "Updates the commandline with the most recent values")
         Me.Update.UseVisualStyleBackColor = True
         '
         'MovieBox
@@ -246,6 +271,7 @@ Partial Class Front
         Me.MovieBox.Name = "MovieBox"
         Me.MovieBox.Size = New System.Drawing.Size(335, 20)
         Me.MovieBox.TabIndex = 1
+        Me.ToolTip1.SetToolTip(Me.MovieBox, "Specifies a movie file for mednafen to use for recording or playback")
         '
         'RomBox
         '
@@ -253,6 +279,8 @@ Partial Class Front
         Me.RomBox.Name = "RomBox"
         Me.RomBox.Size = New System.Drawing.Size(335, 20)
         Me.RomBox.TabIndex = 1
+        Me.ToolTip1.SetToolTip(Me.RomBox, "Specifies the ROM to be loaded.  This must be specified in order to launch mednaf" & _
+                "en!")
         '
         'Label3
         '
@@ -311,6 +339,7 @@ Partial Class Front
         Me.LengthLabel.Size = New System.Drawing.Size(39, 13)
         Me.LengthLabel.TabIndex = 0
         Me.LengthLabel.Text = "Label6"
+        Me.ToolTip1.SetToolTip(Me.LengthLabel, "Length of the commandline in characters.  The maximum limit is 255.")
         '
         'Label5
         '
@@ -328,6 +357,7 @@ Partial Class Front
         Me.ClearButton.Size = New System.Drawing.Size(46, 23)
         Me.ClearButton.TabIndex = 2
         Me.ClearButton.Text = "&Clear"
+        Me.ToolTip1.SetToolTip(Me.ClearButton, "Clears all fields.")
         Me.ClearButton.UseVisualStyleBackColor = True
         '
         'TabControls
@@ -357,6 +387,40 @@ Partial Class Front
         Me.TabPage2.Text = "Movie"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.RecordCheckBox)
+        Me.GroupBox2.Controls.Add(Me.PlayCheckBox)
+        Me.GroupBox2.Location = New System.Drawing.Point(7, 119)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(122, 59)
+        Me.GroupBox2.TabIndex = 6
+        Me.GroupBox2.TabStop = False
+        '
+        'RecordCheckBox
+        '
+        Me.RecordCheckBox.AutoSize = True
+        Me.RecordCheckBox.Location = New System.Drawing.Point(7, 34)
+        Me.RecordCheckBox.Name = "RecordCheckBox"
+        Me.RecordCheckBox.Size = New System.Drawing.Size(92, 17)
+        Me.RecordCheckBox.TabIndex = 6
+        Me.RecordCheckBox.Text = "Record movie"
+        Me.ToolTip1.SetToolTip(Me.RecordCheckBox, "Specified movie will be recording on start up with this is checked.   If no movie" & _
+                " is specified a default one will be made.")
+        Me.RecordCheckBox.UseVisualStyleBackColor = True
+        '
+        'PlayCheckBox
+        '
+        Me.PlayCheckBox.AutoSize = True
+        Me.PlayCheckBox.Location = New System.Drawing.Point(6, 10)
+        Me.PlayCheckBox.Name = "PlayCheckBox"
+        Me.PlayCheckBox.Size = New System.Drawing.Size(77, 17)
+        Me.PlayCheckBox.TabIndex = 5
+        Me.PlayCheckBox.Text = "Play movie"
+        Me.ToolTip1.SetToolTip(Me.PlayCheckBox, "Specifies to begin playback of specified movie.  Movie must be specified for this" & _
+                " to have any effect")
+        Me.PlayCheckBox.UseVisualStyleBackColor = True
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -372,16 +436,8 @@ Partial Class Front
         Me.AuthorBox.Name = "AuthorBox"
         Me.AuthorBox.Size = New System.Drawing.Size(334, 20)
         Me.AuthorBox.TabIndex = 3
-        '
-        'PlayCheckBox
-        '
-        Me.PlayCheckBox.AutoSize = True
-        Me.PlayCheckBox.Location = New System.Drawing.Point(6, 10)
-        Me.PlayCheckBox.Name = "PlayCheckBox"
-        Me.PlayCheckBox.Size = New System.Drawing.Size(77, 17)
-        Me.PlayCheckBox.TabIndex = 5
-        Me.PlayCheckBox.Text = "Play movie"
-        Me.PlayCheckBox.UseVisualStyleBackColor = True
+        Me.ToolTip1.SetToolTip(Me.AuthorBox, "Specifies an author's name to be added to the movie file.  This only needs to be " & _
+                "included once.")
         '
         'ReadonlyCheckBox
         '
@@ -393,6 +449,7 @@ Partial Class Front
         Me.ReadonlyCheckBox.Size = New System.Drawing.Size(76, 17)
         Me.ReadonlyCheckBox.TabIndex = 4
         Me.ReadonlyCheckBox.Text = "Read Only"
+        Me.ToolTip1.SetToolTip(Me.ReadonlyCheckBox, "Specifies whether mednafen starts in read-only or read+write mode")
         Me.ReadonlyCheckBox.UseVisualStyleBackColor = True
         '
         'TabPage1
@@ -429,6 +486,8 @@ Partial Class Front
         Me.StateBox.Name = "StateBox"
         Me.StateBox.Size = New System.Drawing.Size(332, 20)
         Me.StateBox.TabIndex = 3
+        Me.ToolTip1.SetToolTip(Me.StateBox, "Specifies a state to be loaded on mednafen startup.  Warning, this is buggy when " & _
+                "used in relation with Play Movie or Record Movie.")
         '
         'Label7
         '
@@ -448,37 +507,6 @@ Partial Class Front
         Me.PauseCheckBox.TabIndex = 5
         Me.PauseCheckBox.Text = "Pause"
         Me.PauseCheckBox.UseVisualStyleBackColor = True
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Controls.Add(Me.RecordCheckBox)
-        Me.GroupBox2.Controls.Add(Me.PlayCheckBox)
-        Me.GroupBox2.Location = New System.Drawing.Point(7, 119)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(122, 59)
-        Me.GroupBox2.TabIndex = 6
-        Me.GroupBox2.TabStop = False
-        '
-        'RecordCheckBox
-        '
-        Me.RecordCheckBox.AutoSize = True
-        Me.RecordCheckBox.Location = New System.Drawing.Point(7, 34)
-        Me.RecordCheckBox.Name = "RecordCheckBox"
-        Me.RecordCheckBox.Size = New System.Drawing.Size(92, 17)
-        Me.RecordCheckBox.TabIndex = 6
-        Me.RecordCheckBox.Text = "Record movie"
-        Me.RecordCheckBox.UseVisualStyleBackColor = True
-        '
-        'DirectoryOverridesToolStripMenuItem
-        '
-        Me.DirectoryOverridesToolStripMenuItem.Name = "DirectoryOverridesToolStripMenuItem"
-        Me.DirectoryOverridesToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
-        Me.DirectoryOverridesToolStripMenuItem.Text = "Directory overrides..."
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(195, 6)
         '
         'Front
         '
@@ -503,10 +531,10 @@ Partial Class Front
         Me.TabControls.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
-        Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -559,5 +587,6 @@ Partial Class Front
     Friend WithEvents RecordCheckBox As System.Windows.Forms.CheckBox
     Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents DirectoryOverridesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
 
 End Class
