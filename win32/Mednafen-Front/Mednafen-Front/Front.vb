@@ -160,9 +160,11 @@
         If (MednafenIsRunning) Then
             RomToolStripMenuItem.Enabled = True
             MovieToolStripMenuItem.Enabled = True
+            LaunchMednafenToolStripMenuItem.Text = "Close Mednafen"
         Else
             RomToolStripMenuItem.Enabled = False
             MovieToolStripMenuItem.Enabled = False
+            LaunchMednafenToolStripMenuItem.Text = "Launch Mednafen"
         End If
     End Sub
 
