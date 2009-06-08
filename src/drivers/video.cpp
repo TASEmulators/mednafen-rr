@@ -37,6 +37,8 @@
 #include "video-state.h"
 #include "../video/selblur.h"
 
+char* VERSION = " Mednafen-rr v1.1";
+
 typedef struct
 {
         int xres;
@@ -491,7 +493,7 @@ int InitVideo(MDFNGI *gi)
   char buf[2048];
   char name[2048];
   #ifdef WIN32
-  wsprintf(buf, " %s", __DATE__);//,__TIME__)
+  wsprintf(buf, "%s %s", VERSION, __DATE__);//,__TIME__)
   strcpy(name, (char*)gi->name);
   strcat(name, buf); 
   #endif
