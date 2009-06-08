@@ -486,41 +486,45 @@
             End Try
         End If
 
-        'Debug
         UpdateCommandLine()
 
-        If (MednafenIsRunning) Then
-            If (tempProc.HasExited) Then
-                LaunchButton.Text = "Launch Mednafen"
-                MednafenIsRunning = False
-            Else
-                Try
-
-                    tempProc.CloseMainWindow()
+        Try
+            If (MednafenIsRunning) Then
+                If (tempProc.HasExited) Then
                     LaunchButton.Text = "Launch Mednafen"
-                    ShellHandle = 0
                     MednafenIsRunning = False
-                Catch
-                    MessageBox.Show("Could not close mednafen.exe", "Mednafen error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                End Try
-            End If
-        Else
-            'Launch mednafen using CommandLine
-            If (RomBox.Text.Length()) Then
-                Try
-                    If (CommandBox.Text.Length() <= 255) Then
-                        ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
-                        LaunchButton.Text = "Close Mednafen"
-                        MednafenIsRunning = True
-                    Else
-                        MessageBox.Show("Argument must be less than 255 characters", "Commandline Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                    End If
-                Catch
-                    MessageBox.Show("Could not locate mednafen.exe", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                End Try
+                Else
+                    Try
+
+                        tempProc.CloseMainWindow()
+                        LaunchButton.Text = "Launch Mednafen"
+                        ShellHandle = 0
+                        MednafenIsRunning = False
+                    Catch
+                        MessageBox.Show("Could not close mednafen.exe", "Mednafen error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    End Try
+                End If
             Else
-                MessageBox.Show("Must specify a ROM to launch Mednafen", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                'Launch mednafen using CommandLine
+                If (RomBox.Text.Length()) Then
+                    Try
+                        If (CommandBox.Text.Length() <= 255) Then
+                            ShellHandle = Shell(CommandBox.Text(), AppWinStyle.NormalFocus, False, -1)
+                            LaunchButton.Text = "Close Mednafen"
+                            MednafenIsRunning = True
+                        Else
+                            MessageBox.Show("Argument must be less than 255 characters", "Commandline Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                        End If
+                    Catch
+                        MessageBox.Show("Could not locate mednafen.exe", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    End Try
+                Else
+                    MessageBox.Show("Must specify a ROM to launch Mednafen", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                End If
             End If
-        End If
+        Catch
+            LaunchButton.Text = "Launch Mednafen"
+            MednafenIsRunning = False
+        End Try
     End Sub
 End Class
