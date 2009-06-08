@@ -34,6 +34,8 @@
         If (AutoRun) Then
             AutoRunToolStripMenuItem.Checked = True
             LaunchMednafen()
+        Else
+            UpdateCommandLine()
         End If
     End Sub
 
@@ -364,6 +366,15 @@
                 End If
             End If
         End If
+
+        'Directories
+        If (Str.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                Directories.MednafenDirectoryString = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+            End If
+        End If
+
     End Sub
 
 
@@ -422,6 +433,8 @@
         End If
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
 
+        'Directory Overrides
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Directories.MednafenDirectoryString & Environment.NewLine, True)
 
     End Sub
 
