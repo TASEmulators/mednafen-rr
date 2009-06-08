@@ -245,7 +245,7 @@
     Private Sub GetMovie()
         Dim OpenMovie As New SaveFileDialog
         OpenMovie.InitialDirectory = System.Environment.CurrentDirectory
-        OpenMovie.Filter = "Mednafen movie file (*.mcm)|*.mcm"
+        OpenMovie.Filter = "Mednafen movie file (*.mcm)|*.mcm|All files (*.*)|*.*"
         OpenMovie.RestoreDirectory = False
         OpenMovie.CheckFileExists = False
         OpenMovie.CreatePrompt = False
@@ -263,7 +263,7 @@
     Private Sub GetState()
         Dim OpenState As New OpenFileDialog
         OpenState.InitialDirectory = System.Environment.CurrentDirectory
-        OpenState.Filter = "Savestate Files(*.ncs)|*.nc*"
+        OpenState.Filter = "Savestate Files(*.ncs)|*.nc*|All files (*.*)|*.*"
         OpenState.RestoreDirectory = False
 
         OpenState.ShowDialog()
