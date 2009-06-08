@@ -38,6 +38,8 @@ Other commands - Any additional commandline options not available in Mednafen fr
 
 Movie - specifies the movie mednafen will use when loaded.
 
+Author - This will store the author's name into the specified movie file. *Must not contain spaces!* This only needs to be done once, since it will be stored into the file.
+
 Play Movie - specifies to begin playback of the specified movie on mednafen startup
 
 Record Movie - specifies to begin recording the specified movie on startup.  Careful, this will destroy a pre-existing movie.
