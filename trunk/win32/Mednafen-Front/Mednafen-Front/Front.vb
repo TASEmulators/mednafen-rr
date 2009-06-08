@@ -247,6 +247,12 @@
         OpenMovie.InitialDirectory = System.Environment.CurrentDirectory
         OpenMovie.Filter = "Mednafen movie file (*.mcm)|*.mcm"
         OpenMovie.RestoreDirectory = False
+        OpenMovie.CheckFileExists = False
+        OpenMovie.CreatePrompt = False
+        OpenMovie.CheckPathExists = False
+        OpenMovie.OverwritePrompt = False
+        OpenMovie.Title = "Select a movie file"
+
 
         OpenMovie.ShowDialog()
         If (OpenMovie.FileName.Length) Then
