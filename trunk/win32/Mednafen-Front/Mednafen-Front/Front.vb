@@ -7,6 +7,7 @@
     Dim PAUSE As String = "-pause 1"
     Dim READ As String = "-readonly 0"
     Dim PLAY As String = "-play 1"
+    Dim RECORD As String = "-record 1"
     Dim AUTHOR As String = "-author "
 
     Friend EMUVERSION As String = "Mednafen Rerecording 1.1"
@@ -135,6 +136,18 @@
         End If
     End Sub
 
+    Private Sub PlayCheckBox_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PlayCheckBox.Click
+        If (RecordCheckBox.Checked = True) Then
+            RecordCheckBox.Checked = False
+        End If
+    End Sub
+
+    Private Sub RecordCheckBox_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RecordCheckBox.Click
+        If (PlayCheckBox.Checked = True) Then
+            PlayCheckBox.Checked = False
+        End If
+    End Sub
+
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     'Subs
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -180,6 +193,8 @@
 
         If (PlayCheckBox.Checked) Then
             Flags = Flags & " " & PLAY
+        ElseIf (RecordCheckBox.Checked) Then
+            Flags = Flags & " " & RECORD
         End If
 
         If (RomBox.Text.Length()) Then
@@ -315,6 +330,18 @@
             If (ConfigInfo.IndexOf(Environment.NewLine)) Then
                 Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
                 If (Str = "True") Then
+                    RecordCheckBox.Checked = True
+                Else
+                    RecordCheckBox.Checked = False
+                End If
+            End If
+        End If
+
+        If (Str.Length + 2 < ConfigInfo.Length) Then
+            ConfigInfo = ConfigInfo.Substring(Str.Length + 2, ConfigInfo.Length - (Str.Length + 2))
+            If (ConfigInfo.IndexOf(Environment.NewLine)) Then
+                Str = ConfigInfo.Substring(0, ConfigInfo.IndexOf(Environment.NewLine))
+                If (Str = "True") Then
                     CloseMednafenOnExit = True
                 Else
                     CloseMednafenOnExit = False
@@ -365,6 +392,17 @@
             Str = "False"
         End If
         My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+
+        If (RecordCheckBox.Checked) = True Then
+            Str = "True"
+        Else
+            Str = "False"
+        End If
+        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        'Front settings
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
         If (CloseMednafenOnExit) = True Then
             Str = "True"
