@@ -1,14 +1,26 @@
 #labels Featured
 Windows Users:
-Mednafen is command line only.  This can be cumbersome but there are some options.  The first is to create a shortcut to mednafen then right-click the shortcut and go to properties.  Add the commandline options to the target line.
+Mednafen is command line only.  This can be cumbersome but there are some options.  
 
-The other option is to download Let's Mednafen: 
+= Configuring mednafen commandline properties =
+
+Mednafen-Front is packaged with mednafen to make it easier to use mednafen-rr via commandline.  For more details see [MednafenFront].
+
+To start a movie, specify a movie file in the Movie field of the Movie Tab.  Then specify a Rom name in the Rom field of the General tab and click launch mednafen.
+
+===Alternate methods===
+Another method is to create a shortcut to mednafen then right-click the shortcut and go to properties.  Add the commandline options to the target line.
+
+Another option is to download Let's Mednafen: 
 http://translate.google.com/translate?hl=en&sl=ja&u=http://lhsp.s206.xrea.com/works/frontend.html
+However, it does not have movie making options.
 
 Load up lmednafen, then set up your window settings.
 Then in the "other command-line" box, add -mov [yourmoviename]
 
 This will load your movie into memory when mednafen loads (or create one if it doesn't exist).  Then go to File > Loading files to select your game.
+
+= Starting a movie =
 
 All users:
 
