@@ -71,17 +71,45 @@
 
     Private Sub RomToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RomToolStripMenuItem.Click
         If (MednafenIsRunning) Then 'Just in case.  This menu event should never happen if this isn't already true though.
-            GetRom()
-            LaunchMednafen()    'Close Mednafen
-            LaunchMednafen()    'Open Mednafen
+            If (ShellHandle) Then
+                Try
+                    tempProc = Process.GetProcessById(ShellHandle)
+                Catch
+                    ShellHandle = 0
+                End Try
+            End If
+
+            Try
+                Dim DummyBool As Boolean = tempProc.HasExited   'Attempt to check the process, if it fails this causes the catch routine to play out intead
+                GetRom()
+                LaunchMednafen()    'Close Mednafen
+                LaunchMednafen()    'Open Mednafen
+            Catch
+                LaunchButton.Text = "Launch Mednafen"
+                MednafenIsRunning = False
+            End Try
         End If
     End Sub
 
     Private Sub MovieToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieToolStripMenuItem.Click
         If (MednafenIsRunning) Then 'Just in case.  This menu event should never happen if this isn't already true though.
-            GetMovie()
-            LaunchMednafen()    'Close Mednafen
-            LaunchMednafen()    'Open Mednafen
+            If (ShellHandle) Then
+                Try
+                    tempProc = Process.GetProcessById(ShellHandle)
+                Catch
+                    ShellHandle = 0
+                End Try
+            End If
+
+            Try
+                Dim DummyBool As Boolean = tempProc.HasExited   'Attempt to check the process, if it fails this causes the catch routine to play out intead
+                GetMovie()
+                LaunchMednafen()    'Close Mednafen
+                LaunchMednafen()    'Open Mednafen
+            Catch
+                LaunchButton.Text = "Launch Mednafen"
+                MednafenIsRunning = False
+            End Try
         End If
     End Sub
     Private Sub ClearButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClearButton.Click
@@ -252,7 +280,6 @@
         OpenMovie.CheckPathExists = False
         OpenMovie.OverwritePrompt = False
         OpenMovie.Title = "Select a movie file"
-
 
         OpenMovie.ShowDialog()
         If (OpenMovie.FileName.Length) Then
