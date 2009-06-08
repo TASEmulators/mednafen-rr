@@ -24,6 +24,8 @@ Partial Class Front
     Private Sub InitializeComponent()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.LaunchMednafenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator
         Me.RomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MovieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
@@ -64,13 +66,14 @@ Partial Class Front
         Me.StateBox = New System.Windows.Forms.TextBox
         Me.Label7 = New System.Windows.Forms.Label
         Me.PauseCheckBox = New System.Windows.Forms.CheckBox
-        Me.LaunchMednafenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.RecordCheckBox = New System.Windows.Forms.CheckBox
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TabControls.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -89,6 +92,17 @@ Partial Class Front
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(35, 20)
         Me.FileToolStripMenuItem.Text = "&File"
         '
+        'LaunchMednafenToolStripMenuItem
+        '
+        Me.LaunchMednafenToolStripMenuItem.Name = "LaunchMednafenToolStripMenuItem"
+        Me.LaunchMednafenToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
+        Me.LaunchMednafenToolStripMenuItem.Text = "Launch Mednafen"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(167, 6)
+        '
         'RomToolStripMenuItem
         '
         Me.RomToolStripMenuItem.Enabled = False
@@ -106,12 +120,12 @@ Partial Class Front
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(162, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(167, 6)
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.ExitToolStripMenuItem.Text = "E&xit"
         '
         'OptionsToolStripMenuItem
@@ -124,7 +138,7 @@ Partial Class Front
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(110, 22)
         Me.ClearToolStripMenuItem.Text = "&Clear"
         '
         'SettingsToolStripMenuItem
@@ -326,9 +340,9 @@ Partial Class Front
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.GroupBox2)
         Me.TabPage2.Controls.Add(Me.Label6)
         Me.TabPage2.Controls.Add(Me.AuthorBox)
-        Me.TabPage2.Controls.Add(Me.PlayCheckBox)
         Me.TabPage2.Controls.Add(Me.ReadonlyCheckBox)
         Me.TabPage2.Controls.Add(Me.Label4)
         Me.TabPage2.Controls.Add(Me.MovieBox)
@@ -360,7 +374,7 @@ Partial Class Front
         'PlayCheckBox
         '
         Me.PlayCheckBox.AutoSize = True
-        Me.PlayCheckBox.Location = New System.Drawing.Point(6, 142)
+        Me.PlayCheckBox.Location = New System.Drawing.Point(6, 10)
         Me.PlayCheckBox.Name = "PlayCheckBox"
         Me.PlayCheckBox.Size = New System.Drawing.Size(77, 17)
         Me.PlayCheckBox.TabIndex = 5
@@ -372,7 +386,7 @@ Partial Class Front
         Me.ReadonlyCheckBox.AutoSize = True
         Me.ReadonlyCheckBox.Checked = True
         Me.ReadonlyCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ReadonlyCheckBox.Location = New System.Drawing.Point(6, 119)
+        Me.ReadonlyCheckBox.Location = New System.Drawing.Point(141, 129)
         Me.ReadonlyCheckBox.Name = "ReadonlyCheckBox"
         Me.ReadonlyCheckBox.Size = New System.Drawing.Size(76, 17)
         Me.ReadonlyCheckBox.TabIndex = 4
@@ -433,16 +447,25 @@ Partial Class Front
         Me.PauseCheckBox.Text = "Pause"
         Me.PauseCheckBox.UseVisualStyleBackColor = True
         '
-        'LaunchMednafenToolStripMenuItem
+        'GroupBox2
         '
-        Me.LaunchMednafenToolStripMenuItem.Name = "LaunchMednafenToolStripMenuItem"
-        Me.LaunchMednafenToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
-        Me.LaunchMednafenToolStripMenuItem.Text = "Launch Mednafen"
+        Me.GroupBox2.Controls.Add(Me.RecordCheckBox)
+        Me.GroupBox2.Controls.Add(Me.PlayCheckBox)
+        Me.GroupBox2.Location = New System.Drawing.Point(7, 119)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(122, 59)
+        Me.GroupBox2.TabIndex = 6
+        Me.GroupBox2.TabStop = False
         '
-        'ToolStripSeparator3
+        'RecordCheckBox
         '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(167, 6)
+        Me.RecordCheckBox.AutoSize = True
+        Me.RecordCheckBox.Location = New System.Drawing.Point(7, 34)
+        Me.RecordCheckBox.Name = "RecordCheckBox"
+        Me.RecordCheckBox.Size = New System.Drawing.Size(92, 17)
+        Me.RecordCheckBox.TabIndex = 6
+        Me.RecordCheckBox.Text = "Record movie"
+        Me.RecordCheckBox.UseVisualStyleBackColor = True
         '
         'Front
         '
@@ -469,6 +492,8 @@ Partial Class Front
         Me.TabPage2.PerformLayout()
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -517,5 +542,7 @@ Partial Class Front
     Friend WithEvents AutoRunToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents LaunchMednafenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
+    Friend WithEvents RecordCheckBox As System.Windows.Forms.CheckBox
 
 End Class
