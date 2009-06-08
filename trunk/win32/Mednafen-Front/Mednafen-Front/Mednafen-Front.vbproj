@@ -87,6 +87,12 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Directories.Designer.vb">
+      <DependentUpon>Directories.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Directories.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Front.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,10 @@
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Directories.resx">
+      <DependentUpon>Directories.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Front.resx">

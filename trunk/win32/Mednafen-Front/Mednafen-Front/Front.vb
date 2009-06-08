@@ -165,6 +165,10 @@
     End Sub
 
     Private Sub UpdateCommandLine()
+        If (Directories.MednafenDirectoryString.Length()) Then
+            Dim Temp As String = Directories.MednafenDirectoryString & "\" & MEDNAFEN
+            MEDNAFEN = Temp
+        End If
 
         Dim movieCommand As String = ""
         If (MovieBox.Text.Length()) Then
@@ -207,7 +211,7 @@
             End If
             LengthLabel.Text = CommandBox.Text.Length()
         End If
-        
+
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
@@ -483,5 +487,9 @@
                 MessageBox.Show("Must specify a ROM to launch Mednafen", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         End If
+    End Sub
+
+    Private Sub DirectoryOverridesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DirectoryOverridesToolStripMenuItem.Click
+        Directories.Show()
     End Sub
 End Class

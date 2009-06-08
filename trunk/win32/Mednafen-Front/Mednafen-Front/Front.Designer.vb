@@ -68,6 +68,8 @@ Partial Class Front
         Me.PauseCheckBox = New System.Windows.Forms.CheckBox
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
         Me.RecordCheckBox = New System.Windows.Forms.CheckBox
+        Me.DirectoryOverridesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TabControls.SuspendLayout()
@@ -143,7 +145,7 @@ Partial Class Front
         '
         'SettingsToolStripMenuItem
         '
-        Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseMednafenOnExitToolStripMenuItem, Me.AutoRunToolStripMenuItem})
+        Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseMednafenOnExitToolStripMenuItem, Me.AutoRunToolStripMenuItem, Me.ToolStripSeparator4, Me.DirectoryOverridesToolStripMenuItem})
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
         Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(58, 20)
         Me.SettingsToolStripMenuItem.Text = "&Settings"
@@ -467,6 +469,17 @@ Partial Class Front
         Me.RecordCheckBox.Text = "Record movie"
         Me.RecordCheckBox.UseVisualStyleBackColor = True
         '
+        'DirectoryOverridesToolStripMenuItem
+        '
+        Me.DirectoryOverridesToolStripMenuItem.Name = "DirectoryOverridesToolStripMenuItem"
+        Me.DirectoryOverridesToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.DirectoryOverridesToolStripMenuItem.Text = "Directory overrides..."
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(195, 6)
+        '
         'Front
         '
         Me.AcceptButton = Me.LaunchButton
@@ -544,5 +557,7 @@ Partial Class Front
     Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents RecordCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents DirectoryOverridesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
