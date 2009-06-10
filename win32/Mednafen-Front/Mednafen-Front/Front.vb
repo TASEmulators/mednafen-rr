@@ -257,12 +257,13 @@
     Private Sub GetRom()
         Dim OpenRom As New OpenFileDialog
         OpenRom.InitialDirectory = System.Environment.CurrentDirectory
-        OpenRom.Filter = "Supported Files|*.nes;*.unf;*.fds;*.pce;*.lnx;*.o;*.ngp;*.ngc;*.ws;*.wsc|" & _
+        OpenRom.Filter = "Supported Files|*.nes;*.unf;*.fds;*.pce;*.lnx;*.o;*.ngp;*.ngc;*.ws;*.wsc;*.bin|" & _
             "NES (*.nes, *.unf, *.fds)|*.nes;*.unf;*.fds|" & _
             "PCE (*.pce)|*.pce|" & _
             "Lynx (*.lnx, *.o)|*.lnx;*.o|" & _
             "NGP (*.ngp, .ngc)|*.ngp;*.ngc|" & _
             "WS (*.ws, *.wsc)|*.ws;*.wsc|" & _
+            "CD (*.bin)|*.bin|" & _
             "All files (*.*)|*.*"
         OpenRom.RestoreDirectory = False
 
