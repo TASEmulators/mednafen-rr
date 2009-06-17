@@ -42,6 +42,6 @@ The input stream consists of 1 byte for power-on and reset, and then X bytes per
 ||PC Engine||5||2||11||
 ||PC-FX||2||2||5||
 ||SMS||2||1||3||
-||NES[2]||4||1||?||
+||NES||4||1||?||
 
-[2] Normally, NES receives from 5 input ports, where the first 4 have a length of 1 byte, and the last has a length of 0. For the sake of simplicity, it is interpreted as 4 ports of 1 byte length for re-recording. 
+Normally, NES receives from 5 input ports, where the first 4 have a length of 1 byte, and the last has a length of 0. For the sake of simplicity, it is interpreted as 4 ports of 1 byte length for re-recording. 
