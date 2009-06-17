@@ -35,8 +35,8 @@ TODO: Verify if NSTC/PAL mode used for the movie can be detected or not.
 ===Input Data Formats===
 The input stream consists of 1 byte for power-on and reset, and then X bytes per each input port per frame.
 
-Console Type	Input Ports	Bytes per Port	Frame Size (with Control Byte)
-Lynx	        1       2	3
+||Console Type||Input Ports||Bytes per Port||Frame Size (with Control Byte)||
+||Lynx||1||2||3||
 WonderSwan	1	2	3
 NG Pocket	1	1	2
 PC Engine	5	2	11
