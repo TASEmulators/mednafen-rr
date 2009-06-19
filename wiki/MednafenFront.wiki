@@ -1,9 +1,8 @@
 #Mednafen Frontend Documentation
-= Introduction =
 
-Mednafen-Front is a Windows Frontend used to operate mednafen-rr.  It is customized for using rerecording/movie making tools.
+Mednafen-Front is a Windows Frontend used to operate mednafen-rr.  It is customized for using rerecording/movie making tools.  It was written by adelikat using VB.Net 2008.
 
-It was written by adelikat using VB.Net 2008.
+[http://dl-client.getdropbox.com/u/75355/Med-FrontPic.png]
 
 = Overview =
 
