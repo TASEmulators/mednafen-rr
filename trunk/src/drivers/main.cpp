@@ -617,7 +617,7 @@ std::cout << "lalala" << MovieToLoad <<std::endl;
 	{
 
 	//char * tmppath = const_cast<char *>(path);
-	MDFNI_SaveMovie(ArgRecordMovie, NULL, NULL);
+	//MDFNI_SaveMovie(ArgRecordMovie, NULL, NULL);
 	//  return 0;
 	}
 
