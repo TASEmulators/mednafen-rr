@@ -1927,6 +1927,10 @@ void MDFNMOV_Stop(void)
 
 void MDFNI_LoadMovie(char *fname)
 {
+	if(movieMode == MOVIEMODE_PLAY) {
+		FCEUI_StopMovie();
+		return;
+	}
 	if(!strcmp(MDFN_GetSettingS("mov").c_str(), "mov PATH NOT SET") == 0)
 		FCEUI_LoadMovie(MDFN_GetSettingS("mov").c_str(), 1, 0, 0);
 	else
