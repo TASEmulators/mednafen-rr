@@ -355,7 +355,7 @@ MDFNGI *MDFNI_LoadCD(const char *sysname, const char *devicename)
    #endif
 
    MDFNSS_CheckStates();
-   MDFNMOV_CheckMovies();
+   //MDFNMOV_CheckMovies();
 
    MDFN_ResetMessages();   // Save state, status messages, etc.
 
@@ -452,7 +452,7 @@ MDFNGI *MDFNI_LoadGame(const char *name)
 	#endif
 
 	MDFNSS_CheckStates();
-	MDFNMOV_CheckMovies();
+	//MDFNMOV_CheckMovies();
 
 	MDFN_ResetMessages();	// Save state, status messages, etc.
 
@@ -566,13 +566,13 @@ int endingframe=0;
 int wantrecording=0;
 int alreadyloadedstate=0;
 int alreadyrecorded=0;
-extern uint32 FrameCounter;
+//extern uint32 FrameCounter;
 
 void MDFNI_Emulate(EmulateSpecStruct *espec) //uint32 *pXBuf, MDFN_Rect *LineWidths, int16 **SoundBuf, int32 *SoundBufSize, int skip, float soundmultiplier)
 {
 
 SetLagFlag(1); 
-incFrameCounter();
+//incFrameCounter();
 
 
  FSettings.soundmultiplier = espec->soundmultiplier;
@@ -595,7 +595,7 @@ alreadypaused = 1;
 	 int tempvalue; 
 	 tempvalue = MDFN_GetSettingB("readonly");
 
-	 setreadonlycli(tempvalue);
+	// setreadonlycli(tempvalue);
 	 alreadyreadonly = 1;
  }
 
@@ -612,13 +612,13 @@ alreadypaused = 1;
   if(!MDFNMOV_IsPlaying() && MDFN_GetSettingB("record") == 1 && alreadyrecorded == 0)
   {
 
-	  MDFNI_SaveMovie(NULL, NULL, NULL);
+	  //MDFNI_SaveMovie(NULL, NULL, NULL);
 	//MDFNI_LoadMovie(NULL);
 	alreadyrecorded = 1;
 	//so it doesn't play again next time you open the emulator
 	MDFNI_SetSettingB("record", 0);
  }
-
+/*
  if(!alreadyloadedstate) {
 	 if(FrameCounter > 1) {
 
@@ -630,7 +630,7 @@ alreadypaused = 1;
 		}
 	 }
  }
-
+*/
  #ifdef NETWORK
  if(MDFNnetplay)
  {
@@ -638,12 +638,14 @@ alreadypaused = 1;
  }
  #endif
 
+// FCEUMOV_AddInputState(PortDataCache[0]);
+/*
  for(int x = 0; x < 16; x++)
 	 if(PortDataCache[x]) {
    MDFNMOV_AddJoy(PortDataCache[x], PortDataLenCache[x]);
 	 }
-
-	 SetCommandAdded();
+*/
+	 //SetCommandAdded();
 
  if(VBlur_IsOn())
   espec->skip = 0;
@@ -745,6 +747,11 @@ MDFNI_SetSettingB("mmm", 0);
 int GetlagCounter(void) {
 
 	return(lagCounter);
+}
+
+void SetlagCounter(int input) {
+
+	lagCounter = input;
 }
 
 int ResetlagCounter(void) {
@@ -937,7 +944,7 @@ void MDFN_QSimpleCommand(int cmd)
   if(!MDFNMOV_IsPlaying())
   {
    MDFN_DoSimpleCommand(cmd);
-   MDFNMOV_AddCommand(cmd);
+   //MDFNMOV_AddCommand(cmd);
   }
  }
 }
