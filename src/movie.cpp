@@ -652,6 +652,8 @@ static void openRecordingMovie(const char* fname)
 		 osd->addFixed(mr->touch.x, mr->touch.y, "%s", "X");
 	 }*/
  }
+#define MDFNNPCMD_RESET 	0x01
+#define MDFNNPCMD_POWER 	0x02
 
  extern uint16 pcepad;
 
@@ -669,6 +671,7 @@ if(pad &(1 << 0)) pcepad |= (1 << 2);//s
 if(pad &(1 << 1)) pcepad |= (1 << 3);//n
 
 }
+ static int _currCommand = 0;
 extern void *PortDataCache[16];
  //the main interaction point between the emulator and the movie system.
  //either dumps the current joystick state or loads one state from the movie
@@ -700,7 +703,12 @@ void FCEUMOV_AddInputState()
 
 			 //reset if necessary
 			 if(mr->command_reset())
-			 {}
+				 MDFN_DoSimpleCommand(MDFNNPCMD_RESET);
+
+			 if(mr->command_power())
+				 MDFN_DoSimpleCommand(MDFNNPCMD_POWER);
+
+			// {}
 			 //ResetNES();
 
 			 NDS_setPadFromMovie(mr->pad);
@@ -728,8 +736,10 @@ void FCEUMOV_AddInputState()
 	 else if(movieMode == MOVIEMODE_RECORD)
 	 {
 		 MovieRecord mr;
+		mr.commands = _currCommand;
+		_currCommand = 0;
 
-		 mr.commands = 0;
+	//	 mr.commands = 0;
 
 		 strcpy(MovieStatusM, "Recording");
 
@@ -2115,6 +2125,8 @@ FCEUI_SaveMovie(fname, NULL);
 ////adds non-controller data commmands like reset and poweron to a movie
 void MDFNMOV_AddCommand(int cmd)
 {
+	_currCommand |= cmd;
+
 //	if(current <= 0) return;	/* Return if not recording a movie */
 //
 //	if(MDFN_StateEvilIsRunning())
