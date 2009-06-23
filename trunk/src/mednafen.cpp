@@ -944,7 +944,7 @@ void MDFN_QSimpleCommand(int cmd)
   if(!MDFNMOV_IsPlaying())
   {
    MDFN_DoSimpleCommand(cmd);
-   //MDFNMOV_AddCommand(cmd);
+   MDFNMOV_AddCommand(cmd);
   }
  }
 }
