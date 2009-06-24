@@ -354,7 +354,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // Store instance handle in our global variable
 
    med_hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, 340, 290, NULL, NULL, hInstance, NULL);//CW_USEDEFAULT, 0,
+      CW_USEDEFAULT, 0, 328, 278, NULL, NULL, hInstance, NULL);//CW_USEDEFAULT, 0,
 
    if (!med_hWnd)
    {
@@ -492,7 +492,7 @@ void setClientSize(int width, int height)
 	GetWindowRect(med_hWnd, &wndRect);
 	finalx = (xborder + width + xborder);
 	finaly = (ycaption + yborder + ymenu + height + yborder);
-	MoveWindow(med_hWnd, wndRect.left, wndRect.top, finalx, finaly, TRUE);
+//	MoveWindow(med_hWnd, wndRect.left, wndRect.top, finalx, finaly, TRUE);
 
 	/* Oops, we also need to check if the height */
 	/* of the menu bar has changed after the resize */
@@ -501,6 +501,6 @@ void setClientSize(int width, int height)
 	GetMenuBarInfo(med_hWnd, OBJID_MENU, 0, &mbi);
 	ymenunew = (mbi.rcBar.bottom - mbi.rcBar.top + 1);
 
-	if(ymenunew != ymenu)
-		MoveWindow(med_hWnd, wndRect.left, wndRect.top, finalx, (finaly + (ymenunew - ymenu)), TRUE);
+//	if(ymenunew != ymenu)
+//		MoveWindow(med_hWnd, wndRect.left, wndRect.top, finalx, (finaly + (ymenunew - ymenu)), TRUE);
 }
