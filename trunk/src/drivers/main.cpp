@@ -752,6 +752,11 @@ int GetFrameAdvanceActive(void) {
 
 static int GameLoopPaused = 0;
 
+#ifdef WIN32
+extern void Update_RAM_Search();
+extern void Update_RAM_Watch();
+#endif
+
 void DebuggerFudge(void)
 {
           LockGameMutex(0);
@@ -821,6 +826,11 @@ int GameLoop(void *arg)
 	  espec.soundmultiplier = (float)CurGameSpeed;
 	  espec.NeedRewind = DNeedRewind;
           MDFNI_Emulate(&espec); //(uint32 *)VTBuffer[VTBackBuffer], (MDFN_Rect *)VTLineWidths[VTBackBuffer], &sound, &ssize, fskip, CurGameSpeed);
+#ifdef WIN32
+		  Update_RAM_Search();
+		   Update_RAM_Watch();
+#endif
+
 	ZeroStateShow();//get rid of state previews
 	 }
 	 	 
