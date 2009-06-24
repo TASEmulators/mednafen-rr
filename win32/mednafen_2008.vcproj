@@ -1121,14 +1121,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\utils\md5.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\md5.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\utils\readwrite.cpp"
 				>
 			</File>
