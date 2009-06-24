@@ -139,7 +139,7 @@ static bool IsHES;
 int pce_overclocked;
 
 // Accessed in debug.cpp
-static uint8 BaseRAM[32768]; // 8KB for PCE, 32KB for Super Grafx
+uint8 BaseRAM[32768]; // 8KB for PCE, 32KB for Super Grafx
 
 uint8 PCEIODataBuffer;
 readfunc PCERead[0x100], NonCheatPCERead[0x100];

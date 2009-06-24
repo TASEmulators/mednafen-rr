@@ -185,7 +185,43 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ramsearch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ramsearch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ramwatch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ramwatch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\resource.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
 				RelativePath=".\unixstuff.h"
+				>
+			</File>
+			<File
+				RelativePath=".\winmain.cpp"
 				>
 			</File>
 			<Filter
