@@ -463,3 +463,44 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	return (INT_PTR)FALSE;
 }
+
+void setClientSize(int width, int height)
+{
+	int xborder, yborder;
+	int ymenu, ymenunew;
+	int ycaption;
+
+	MENUBARINFO mbi;
+
+	RECT wndRect;
+	int finalx, finaly;
+
+	/* Get the size of the border */
+	xborder = GetSystemMetrics(SM_CXSIZEFRAME);
+	yborder = GetSystemMetrics(SM_CYSIZEFRAME);
+	
+	/* Get the size of the menu bar */
+	ZeroMemory(&mbi, sizeof(mbi));
+	mbi.cbSize = sizeof(mbi);
+	GetMenuBarInfo(med_hWnd, OBJID_MENU, 0, &mbi);
+	ymenu = (mbi.rcBar.bottom - mbi.rcBar.top + 1);
+
+	/* Get the size of the caption bar */
+	ycaption = GetSystemMetrics(SM_CYCAPTION);
+
+	/* Finally, resize the window */
+	GetWindowRect(med_hWnd, &wndRect);
+	finalx = (xborder + width + xborder);
+	finaly = (ycaption + yborder + ymenu + height + yborder);
+	MoveWindow(med_hWnd, wndRect.left, wndRect.top, finalx, finaly, TRUE);
+
+	/* Oops, we also need to check if the height */
+	/* of the menu bar has changed after the resize */
+	ZeroMemory(&mbi, sizeof(mbi));
+	mbi.cbSize = sizeof(mbi);
+	GetMenuBarInfo(med_hWnd, OBJID_MENU, 0, &mbi);
+	ymenunew = (mbi.rcBar.bottom - mbi.rcBar.top + 1);
+
+	if(ymenunew != ymenu)
+		MoveWindow(med_hWnd, wndRect.left, wndRect.top, finalx, (finaly + (ymenunew - ymenu)), TRUE);
+}

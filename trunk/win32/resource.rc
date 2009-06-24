@@ -267,7 +267,7 @@ END
 STRINGTABLE
 BEGIN
    IDC_CV   "CV"
-   IDS_APP_TITLE       "cv"
+   IDS_APP_TITLE       "Mednafen"
 END
 
 #endif
