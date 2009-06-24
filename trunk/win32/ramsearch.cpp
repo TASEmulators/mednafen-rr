@@ -81,7 +81,7 @@ static BOOL s_prevValuesNeedUpdate = true; // if true, the "prev" values should 
 static unsigned int s_maxItemIndex = 0; // max currently valid item index, the listbox sometimes tries to update things past the end of the list so we need to know this to ignore those attempts
 
 extern uint8 BaseRAM[32768];
-static const MemoryRegion s_prgRegion    = {  0x01F0000, 0x8000, (unsigned char*)BaseRAM,     false};//ARM9Mem.MAIN_MEM
+static const MemoryRegion s_prgRegion    = {  0x0000, 0x8000, (unsigned char*)BaseRAM,     false};//ARM9Mem.MAIN_MEM//should be 0x01F0000
 
 /*
 static const MemoryRegion s_prgRegion    = {  0x020000, SEGACD_RAM_PRG_SIZE, (unsigned char*)Ram_Prg,     true};
