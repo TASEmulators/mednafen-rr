@@ -37,7 +37,7 @@
 #include "video-state.h"
 #include "../video/selblur.h"
 
-char* VERSION = " Mednafen-rr v1.2";
+char* VERSION = " Mednafen-rr v1.2-interim";
 
 typedef struct
 {
