@@ -421,10 +421,11 @@
 
     'Save config file
     Private Sub SaveConfig()
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, RomBox.Text() & Environment.NewLine, False)
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, MovieBox.Text() & Environment.NewLine, True)
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, StateBox.Text() & Environment.NewLine, True)
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, OtherCommands.Text() & Environment.NewLine, True)
+        Dim config As String = CfgPath + "\" + CONFIGFILE
+        My.Computer.FileSystem.WriteAllText(config, RomBox.Text() & Environment.NewLine, False)
+        My.Computer.FileSystem.WriteAllText(config, MovieBox.Text() & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, StateBox.Text() & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, OtherCommands.Text() & Environment.NewLine, True)
 
         'Checkboxes
         Dim Str As String
@@ -433,28 +434,28 @@
         Else
             Str = "False"
         End If
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, Str & Environment.NewLine, True)
 
         If (ReadonlyCheckBox.Checked) = True Then
             Str = "True"
         Else
             Str = "False"
         End If
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, Str & Environment.NewLine, True)
 
         If (PlayCheckBox.Checked) = True Then
             Str = "True"
         Else
             Str = "False"
         End If
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, Str & Environment.NewLine, True)
 
         If (RecordCheckBox.Checked) = True Then
             Str = "True"
         Else
             Str = "False"
         End If
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, Str & Environment.NewLine, True)
 
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         'Front settings
@@ -465,29 +466,30 @@
         Else
             Str = "False"
         End If
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, Str & Environment.NewLine, True)
 
         If (AutoRun) = True Then
             Str = "True"
         Else
             Str = "False"
         End If
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Str & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, Str & Environment.NewLine, True)
 
         'Directory Overrides
-        My.Computer.FileSystem.WriteAllText(CONFIGFILE, Directories.MednafenDirectoryString & Environment.NewLine, True)
+        My.Computer.FileSystem.WriteAllText(config, Directories.MednafenDirectoryString & Environment.NewLine, True)
 
     End Sub
 
     'Load config file
     Private Sub LoadConfig()
-        If (My.Computer.FileSystem.FileExists(CONFIGFILE)) Then
-            Dim config As String = CfgPath + "\" + CONFIGFILE
+        Dim config As String = CfgPath + "\" + CONFIGFILE
+        If (My.Computer.FileSystem.FileExists(config)) Then
+
             ConfigInfo = My.Computer.FileSystem.ReadAllText(config)
             GetConfigInfo()
         Else
             ConfigInfo = ""
-            My.Computer.FileSystem.WriteAllText(CONFIGFILE, ConfigInfo, False)
+            My.Computer.FileSystem.WriteAllText(config, ConfigInfo, False)
         End If
     End Sub
 
