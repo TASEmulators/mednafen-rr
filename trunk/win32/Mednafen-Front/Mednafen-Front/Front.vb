@@ -25,8 +25,7 @@
     'Startup routine
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         CfgPath = Application.StartupPath
-        Me.Text = CfgPath
-        'Me.Text = EMUVERSION + " " + FRONTVERSION
+        Me.Text = EMUVERSION + " " + FRONTVERSION
         CommandBox.Text = MEDNAFEN
         LengthLabel.Text = CommandBox.Text.Length()
         LoadConfig()
