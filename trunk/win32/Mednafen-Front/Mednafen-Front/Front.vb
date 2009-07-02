@@ -10,8 +10,8 @@
     Dim RECORD As String = "-record 1"
     Dim AUTHOR As String = "-author "
 
-    Friend EMUVERSION As String = "Mednafen Rerecording 1.1"
-    Friend FRONTVERSION As String = "Frontend 1.0"
+    Friend EMUVERSION As String = "Mednafen Rerecording 1.2"
+    Friend FRONTVERSION As String = "Frontend 1.1"
 
     'Globals
     Dim ShellHandle As Integer
@@ -276,7 +276,7 @@
     Private Sub GetMovie()
         Dim OpenMovie As New SaveFileDialog
         OpenMovie.InitialDirectory = System.Environment.CurrentDirectory
-        OpenMovie.Filter = "Mednafen movie file (*.mcm)|*.mcm|All files (*.*)|*.*"
+        OpenMovie.Filter = "Mednafen movie file (*.mc2)|*.mc2|All files (*.*)|*.*"
         OpenMovie.RestoreDirectory = False
         OpenMovie.CheckFileExists = False
         OpenMovie.CreatePrompt = False
