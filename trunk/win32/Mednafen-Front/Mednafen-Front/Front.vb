@@ -19,12 +19,14 @@
     Dim MednafenIsRunning As Boolean = False
     Dim CloseMednafenOnExit As Boolean = False
     Dim AutoRun As Boolean = False
-
+    Dim CfgPath As String = ""
     Dim tempProc As Process
 
     'Startup routine
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Me.Text = EMUVERSION + " " + FRONTVERSION
+        CfgPath = Application.StartupPath
+        Me.Text = CfgPath
+        'Me.Text = EMUVERSION + " " + FRONTVERSION
         CommandBox.Text = MEDNAFEN
         LengthLabel.Text = CommandBox.Text.Length()
         LoadConfig()
@@ -481,7 +483,8 @@
     'Load config file
     Private Sub LoadConfig()
         If (My.Computer.FileSystem.FileExists(CONFIGFILE)) Then
-            ConfigInfo = My.Computer.FileSystem.ReadAllText("med-front.cfg")
+            Dim config As String = CfgPath + "\" + CONFIGFILE
+            ConfigInfo = My.Computer.FileSystem.ReadAllText(config)
             GetConfigInfo()
         Else
             ConfigInfo = ""
