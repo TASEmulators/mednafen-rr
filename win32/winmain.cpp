@@ -155,7 +155,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	MSG msg;
 
 	OpenConsole();
-	
 
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -167,10 +166,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	{
 		return FALSE;
 	}
-
-	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CV));
-
-	//-------------------------
 	char *bufp;
 	char *lastp = NULL;
 	int argc, last_argc;
@@ -178,8 +173,35 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	char **argv;
 	size_t nLen;
 
+	//------------------------
+	char szChoice[MAX_PATH]={0};
+	OPENFILENAME ofn;
+				ZeroMemory(&ofn, sizeof(ofn));
+				ofn.lStructSize = sizeof(ofn);
+				ofn.hwndOwner = med_hWnd;
+				ofn.lpstrFilter = "PC Engine Things (*.pce, *.cue, *.sgx)\0*.pce;*.cue;*.sgx\0All files(*.*)\0*.*\0\0";
+				ofn.lpstrFile = (LPSTR)szChoice;
+				ofn.lpstrTitle = "Record a new movie";
+				ofn.lpstrDefExt = "pce";
+				ofn.nMaxFile = MAX_PATH;
+				ofn.Flags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+				if(GetOpenFileName(&ofn)) {
+					bufp = GetCommandLine();
+					strcat(bufp, " ");
+					strcat(bufp, szChoice);
+				}
+				else
+					return 0;
+
+	//------------------------
+
+	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CV));
+
+	//-------------------------
+
+
 	/* Grab the command line */
-	bufp = GetCommandLine();
+//	bufp = GetCommandLine();
 	nLen = SDL_strlen(bufp)+1;
 	cmdline = SDL_stack_alloc(char, nLen);
 	if ( cmdline == NULL ) {
@@ -255,6 +277,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	main(argc, argv);
 
 	//-----------------------------------------------------------------
+	msg.wParam = 0;
 
 	return (int) msg.wParam;
 }
