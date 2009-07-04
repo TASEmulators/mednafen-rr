@@ -12,6 +12,7 @@
 #include "SDL.h"
 #include "ramwatch.h"
 #include "ramsearch.h"
+#include "movie.h"
 
 HWND med_hWnd;
 HINSTANCE hAppInst = NULL;
@@ -379,6 +380,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY	- post a quit message and return
 //
 //
+
+				char szChoice[MAX_PATH]={0};
+				std::string fname;//[MAX_PATH]={0};
+				int x;
+				std::wstring la = L"";
+				OPENFILENAME ofn;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	int wmId, wmEvent;
@@ -387,6 +395,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
+	case WM_ENTERMENULOOP:
+			EnableMenuItem(GetMenu(hWnd), IDM_RECORD_MOVIE,      MF_BYCOMMAND | (movieMode == MOVIEMODE_INACTIVE) ? MF_ENABLED : MF_GRAYED);
+			EnableMenuItem(GetMenu(hWnd), IDM_PLAY_MOVIE,        MF_BYCOMMAND | (movieMode == MOVIEMODE_INACTIVE) ? MF_ENABLED : MF_GRAYED);
+			EnableMenuItem(GetMenu(hWnd), IDM_STOPMOVIE,         MF_BYCOMMAND | (movieMode != MOVIEMODE_INACTIVE) ? MF_ENABLED : MF_GRAYED);
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
@@ -397,6 +409,55 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 			MDFN_DoSimpleCommand(1);
 			}
+		case IDM_RECORD_MOVIE:
+//				OPENFILENAME ofn;
+
+				// browse button
+				ZeroMemory(&ofn, sizeof(ofn));
+				ofn.lStructSize = sizeof(ofn);
+				ofn.hwndOwner = hWnd;
+				ofn.lpstrFilter = "Mednafen Movie File (*.mc2)\0*.mc2\0All files(*.*)\0*.*\0\0";
+				ofn.lpstrFile = (LPSTR)szChoice;
+				ofn.lpstrTitle = "Record a new movie";
+				ofn.lpstrDefExt = "mc2";
+				ofn.nMaxFile = MAX_PATH;
+				ofn.Flags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+				GetSaveFileName(&ofn);
+			
+				//If user did not specify an extension, add .dsm for them
+//				fname = szChoice;
+//				x = fname.find_last_of(".");
+//				if (x < 0)
+//					fname.append(".mc2");
+
+				FCEUI_SaveMovie(szChoice, la);
+
+//				SetDlgItemText(hwndDlg, IDC_EDIT_FILENAME, fname.c_str());
+				//if(GetSaveFileName(&ofn))
+				//	UpdateRecordDialogPath(hwndDlg,szChoice);
+
+				return true;
+		//	MovieRecordTo();
+			return 0;
+		case IDM_PLAY_MOVIE:
+
+				// browse button
+				ZeroMemory(&ofn, sizeof(ofn));
+				ofn.lStructSize = sizeof(ofn);
+				ofn.hwndOwner = hWnd;
+				ofn.lpstrFilter = "Mednafen Movie File (*.mc2)\0*.mc2\0All files(*.*)\0*.*\0\0";
+				ofn.lpstrFile = (LPSTR)szChoice;
+				ofn.lpstrTitle = "Play a movie";
+				ofn.lpstrDefExt = "mc2";
+				ofn.nMaxFile = MAX_PATH;
+				ofn.Flags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+				GetOpenFileName(&ofn);
+//			Replay_LoadMovie();
+				FCEUI_LoadMovie(szChoice, 1, 0, 0);
+			return 0;
+		case IDM_STOPMOVIE:
+			FCEUI_StopMovie();
+			return 0;
 		case ID_RAM_SEARCH:
 					if(!RamSearchHWnd)
 					{

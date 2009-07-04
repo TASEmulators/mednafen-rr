@@ -40,6 +40,9 @@ IDC_CV MENU
 BEGIN
     POPUP "&File"
     BEGIN
+	MENUITEM "Play Movie",                IDM_PLAY_MOVIE
+	MENUITEM "Record Movie",                IDM_RECORD_MOVIE
+	MENUITEM "Stop Movie",                IDM_STOPMOVIE
         MENUITEM "E&xit",                IDM_EXIT
     END
     POPUP "&Emulation"
