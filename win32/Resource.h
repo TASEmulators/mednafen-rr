@@ -71,6 +71,9 @@
 #define ID_RAM_SEARCH 255
 #define IDD_RAMSEARCH 256
 #define IDC_PROMPT_TEXT 257
+#define IDM_RECORD_MOVIE 259
+#define IDM_PLAY_MOVIE 260
+#define IDM_STOPMOVIE 261
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
