@@ -191,7 +191,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 					strcat(bufp, szChoice);
 				}
 				else
-					return 0;
+					bufp = GetCommandLine();
 
 	//------------------------
 
