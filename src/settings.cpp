@@ -4,6 +4,10 @@
 #include <errno.h>
 #endif
 
+#ifdef WIN32
+#include "windows.h"
+#endif
+
 #include <string.h>
 #include <vector>
 #include <string>
@@ -148,9 +152,16 @@ static bool ValidateSetting(const char *value, const MDFNSetting *setting)
 bool MFDN_LoadSettings(const char *basedir)
 {
  FILE *fp;
-
+ 
+#ifdef WIN32
+ char path[2048];
+ fname = GetModuleFileName(NULL, path, 2048);
+#else
  fname = basedir;
+#endif
+
  fname += PSS;
+ 
  fname += "mednafen.cfg";
 
  MDFN_printf(_("Loading settings from \"%s\"..."), fname.c_str());
