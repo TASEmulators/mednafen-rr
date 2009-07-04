@@ -181,7 +181,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 				ofn.hwndOwner = med_hWnd;
 				ofn.lpstrFilter = "PC Engine Things (*.pce, *.cue, *.sgx)\0*.pce;*.cue;*.sgx\0All files(*.*)\0*.*\0\0";
 				ofn.lpstrFile = (LPSTR)szChoice;
-				ofn.lpstrTitle = "Record a new movie";
+				ofn.lpstrTitle = "Select a pce thing to open";
 				ofn.lpstrDefExt = "pce";
 				ofn.nMaxFile = MAX_PATH;
 				ofn.Flags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
