@@ -2125,7 +2125,7 @@ FCEUI_SaveMovie(fname, NULL);
 ////adds non-controller data commmands like reset and poweron to a movie
 void MDFNMOV_AddCommand(int cmd)
 {
-	_currCommand |= cmd;
+//	_currCommand |= cmd;
 
 //	if(current <= 0) return;	/* Return if not recording a movie */
 //
