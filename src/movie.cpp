@@ -690,7 +690,7 @@ void FCEUMOV_AddInputState()
 	 if(movieMode == MOVIEMODE_PLAY)
 	 {
 		 //stop when we run out of frames
-		 if(currFrameCounter == (int)currMovieData.records.size())
+		 if(currFrameCounter >= (int)currMovieData.records.size())
 		 {
 			 StopPlayback();
 		 }
