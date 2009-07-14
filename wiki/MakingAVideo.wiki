@@ -31,11 +31,11 @@ Now it will produce a .mov file (quicktime) that can be encoded any way you want
 You will need linux, you can do this with vmware free player or microsoft virtual machines.
 
 From a fresh ubuntu 9.04 installed & updated system you will need to get the following:
-
+{{{
 sudo apt-get install subversion build-essential automake autoconf libtool patchutils binutils libc6-dev bison flex gawk gettext imagemagick zlib1g-dev libsndfile-dev libquicktime-dev
-
+}}}
 Now get the source and compile mmmencode
-
+{{{
 svn checkout http://mednafen-rr.googlecode.com/svn/trunk/ mednafen-rr-read-only
 cd mednafen-rr-read-only
 cd mednafen-mmmencode
@@ -44,5 +44,6 @@ sudo ./autogen.sh
 sudo ./configure
 sudo make
 sudo make install
+}}}
 
 binary should be installed now.
