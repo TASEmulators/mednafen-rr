@@ -16,8 +16,8 @@ note: this assume you did set pce.cdbios in mednafen.cfg, if you didnt you need 
 
 When started mednafen will prompt for a rom to open, select it then it will play movie "mymovie.mc2". You would record 5000 frames before stopping. 
 Do not stop the recording prematurely, it will break the recording. Mednafen will display "finished" when it reach the 5000th frames, then you can close mednafen.
-It will produce a file "mymovie.mmm"
-If the file is superior to 2gb it wont be exportable to linux
+
+It will produce a file "mymovie.mmm", if the file is superior to 2gb it wont be exportable to linux
 
 == Transcoding ==
 
