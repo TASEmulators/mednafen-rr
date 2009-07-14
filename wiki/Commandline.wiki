@@ -26,6 +26,7 @@ Other useful things:
 -fftoggle x   boolean   0          Treat the fast-forward button as a toggle.
 -ffnosound x  boolean   0          Silence sound output when fast-forwarding.
 -mmm x        boolean   0          Record an mmm multimedia video if 1. See the MakingAVideo wiki page.
+-mmmfile x  string   ""            The path and name to the mmm file that will be created.
 -mmmframes x  integer   0          Record x number of frames in the mmm.
 }}}
 
