@@ -393,6 +393,61 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+#include "aviout.h"
+
+void YuiRecordAvi()
+{
+//	WCHAR filter[1024];
+//	char text[MAX_PATH];
+//	OPENFILENAME ofn;
+				char szChoice[MAX_PATH]={0};
+				std::string fname;//[MAX_PATH]={0};
+				int x;
+				std::wstring la = L"";
+				OPENFILENAME ofn;
+
+//	YuiTempPause();
+
+				ZeroMemory(&ofn, sizeof(ofn));
+				ofn.lStructSize = sizeof(ofn);
+				ofn.hwndOwner = med_hWnd;
+				ofn.lpstrFilter = "Avi file (*.avi)\0*.mc2\0All files(*.*)\0*.*\0\0";
+				ofn.lpstrFile = (LPSTR)szChoice;
+				ofn.lpstrTitle = "Avi Thingy";
+				ofn.lpstrDefExt = "avi";
+				ofn.nMaxFile = MAX_PATH;
+				ofn.Flags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+//				GetSaveFileName(&ofn);
+//			Replay_LoadMovie();
+				snprintf(szChoice, 260, "%s", MDFN_GetSettingS("mmmfile").c_str());
+			//	szChoice = MDFN_GetSettingS("mmmfile").c_str();
+			//	snprintf(szChoice, 20, "%s", "M:\\testmed.avi");
+				DRV_AviBegin(szChoice);
+/*
+	CreateFilter(filter, 1024,
+		"AVI Files *.avi)", "*.avi",
+		"All files (*.*)", "*.*", NULL);
+
+	SetupOFN(&ofn, OFN_DEFAULTSAVE, hWnd, filter,
+		avifilename, sizeof(avifilename)/sizeof(TCHAR));
+	ofn.lpstrDefExt = (LPCWSTR)_16("AVI");
+*//*
+	if (GetSaveFileName(&ofn))
+	{
+	//	WideCharToMultiByte(CP_ACP, 0, avifilename, -1, text, sizeof(text), NULL, NULL);
+
+		(text);
+//		AVIRecording=1;
+	}
+//	YuiTempUnPause();*/
+}
+
+void YuiStopAvi()
+{
+	DRV_AviEnd();
+//	AVIRecording=0;
+}
+
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -499,6 +554,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			else
 				SetForegroundWindow(RamWatchHWnd);
 			return 0;
+			case IDM_FILE_RECORDAVI:
+				YuiRecordAvi();
+				break;
+			case IDM_FILE_STOPAVI:
+				YuiStopAvi();
+				break;
 
 		case IDM_ABOUT:
 			

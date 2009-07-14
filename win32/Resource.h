@@ -74,6 +74,8 @@
 #define IDM_RECORD_MOVIE 259
 #define IDM_PLAY_MOVIE 260
 #define IDM_STOPMOVIE 261
+#define IDM_FILE_RECORDAVI 262
+#define IDM_FILE_STOPAVI 263
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1

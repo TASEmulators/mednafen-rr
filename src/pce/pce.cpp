@@ -496,6 +496,8 @@ static void CloseGame(void)
  PSG_Kill();
 }
 
+#include "aviout.h"
+
 static void Emulate(EmulateSpecStruct *espec)
 {
  MDFNGameInfo->fb = espec->pixels;
@@ -509,6 +511,10 @@ static void Emulate(EmulateSpecStruct *espec)
 
  if(IsHES && !espec->skip)
   HES_Draw(espec->pixels, *(espec->SoundBuf), *(espec->SoundBufSize));
+
+ DRV_AviSoundUpdate(*espec->SoundBuf, *espec->SoundBufSize);
+
+ DRV_AviVideoUpdate((uint16*)espec->pixels, espec);
 }
 
 static int StateAction(StateMem *sm, int load, int data_only)
