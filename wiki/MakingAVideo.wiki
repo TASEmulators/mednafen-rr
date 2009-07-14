@@ -1,19 +1,48 @@
-== Recording A Multimedia Video ==
+To produce an encode from a movie file you need to run mednafen with specific arguments, it will generate a mmm file that will need to be transcoded
+The only way to transcode mmm file for now is trought linux, but the mmm file can be made from windows
 
-Run Mednafen with the -mmm and -mmmframes arguments.
 
-For example:
+== Generating MMM ==
 
-mednafen -mmm 1 -mmmframes 5000 -play 1 -mov c:\mymovie.mcm c:\mygame.pce
+Win32 (revision249)
 
-This would play your movie "mymovie" on the "mygame" rom.  You would record 5000 frames before stopping.  Do not stop the recording prematurely, it will break the recording.
+Run Mednafen with the -mmm, -mmmfile and -mmmframes arguments. 
 
-This should produce a "testmovie.mmm" file.
+exemple:
+
+mednafen -mmm 1 -mmmfile c:\mymovie.mmm -mmmframes 5000 -play 1 -mov c:\mymovie.mc2
+
+note: this assume you did set pce.cdbios in mednafen.cfg, if you didnt you need to specify -pce.cdbios path-to\bios.pce
+
+When started mednafen will prompt for a rom to open, select it then it will play movie "mymovie.mc2". You would record 5000 frames before stopping. 
+Do not stop the recording prematurely, it will break the recording. Mednafen will display "finished" when it reach the 5000th frames, then you can close mednafen.
+It will produce a file "mymovie.mmm"
+If the file is superior to 2gb it wont be exportable to linux
 
 == Transcoding ==
 
-The mmm file isn't useful yet.  It needs to be transcoded with the mednafen-mmmencode program.  It is in the svn, you'll have to compile it yourself.
+The mmm file isn't useful yet. It needs to be transcoded with the mednafen-mmmencode program (linux only). It is in the svn, you'll have to compile it yourself. 
+mednafen-mmmencode mymovie.mmm
+Now it will produce a .mov file (quicktime) that can be encoded any way you want. 
 
-mednafen-mmmencode testmovie.mmm
 
-Now it will produce a .mov file that can be encoded any way you want.
+== Compiling mmmencode ==
+
+You will need linux, you can do this with vmware free player or microsoft virtual machines.
+
+From a fresh ubuntu 9.04 installed & updated system you will need to get the following:
+
+sudo apt-get install subversion build-essential automake autoconf libtool patchutils binutils libc6-dev bison flex gawk gettext imagemagick zlib1g-dev libsndfile-dev libquicktime-dev
+
+Now get the source and compile mmmencode
+
+svn checkout http://mednafen-rr.googlecode.com/svn/trunk/ mednafen-rr-read-only
+cd mednafen-rr-read-only
+cd mednafen-mmmencode
+chmod +x autogen.sh
+sudo ./autogen.sh
+sudo ./configure
+sudo make
+sudo make install
+
+binary should be installed now.
