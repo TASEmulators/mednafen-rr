@@ -43,6 +43,8 @@ BEGIN
 	MENUITEM "Play Movie",                IDM_PLAY_MOVIE
 	MENUITEM "Record Movie",                IDM_RECORD_MOVIE
 	MENUITEM "Stop Movie",                IDM_STOPMOVIE
+	MENUITEM "Record AVI",                IDM_FILE_RECORDAVI
+	MENUITEM "Stop AVI",                IDM_FILE_STOPAVI
         MENUITEM "E&xit",                IDM_EXIT
     END
     POPUP "&Emulation"
