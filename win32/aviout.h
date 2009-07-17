@@ -10,7 +10,7 @@
 extern "C" {
 #endif
 int DRV_AviIsRecording();
-int DRV_AviBegin(const char* fname);
+bool DRV_AviBegin(const char* fname);
 
 void DRV_AviEnd();
 void DRV_AviVideoUpdate(const uint16* buffer, EmulateSpecStruct *espec);

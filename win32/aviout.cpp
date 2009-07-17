@@ -1,48 +1,48 @@
-/* aviout.cpp
- *
- * Copyright (C) 2006-2008 Zeromus
- *
- * This file is part of DeSmuME
- *
- * DeSmuME is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * DeSmuME is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with DeSmuME; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+/*  aviout.cpp
+
+    Copyright (C) 2006-2009 DeSmuME team
+
+    This file is part of DeSmuME
+
+    DeSmuME is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    DeSmuME is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DeSmuME; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 */
 
-#include "windows.h" 
-
-#include "assert.h"
-#include "vfw.h"
-#include "stdio.h"
-//#include "settings/settings.h"
+#include "main.h"
+#include "types.h"
+//#include "windriver.h"
+#include "console.h"
+//#include "gfx3d.h"
 #include "aviout.h"
-//#include "medwin.h"
+//#include "../GPU_osd.h"
 extern HWND med_hWnd;
 
-int screenwidth = 256;
-int screenheight =  232;
+#include <assert.h>
+#include <vfw.h>
+#include <stdio.h>
 
-void EMU_PrintError(const char* msg) {
+#include "debug.h"
+
+static void EMU_PrintError(const char* msg) {
 //	LOG(msg);
 }
 
-void EMU_PrintMessage(const char* msg) {
+static void EMU_PrintMessage(const char* msg) {
 //	LOG(msg);
 }
 
-
-
-//extern PALETTEENTRY *color_palette;
+int screenwidth = 256;int screenheight =  232;//extern PALETTEENTRY *color_palette;
 //extern WAVEFORMATEX wf;
 //extern int soundo;
 
@@ -80,6 +80,9 @@ static struct AVIFile
 	int					end_scanline;
 	
 	long				tBytes, ByteBuffer;
+
+	uint8					audio_buffer[44800*2*2]; // 1 second buffer
+	int					audio_buffer_pos;
 } *avi_file = NULL;
 
 struct VideoSystemInfo
@@ -97,11 +100,11 @@ static int avi_segnum=0;
 //static FILE* avi_check_file=0;
 static struct AVIFile saved_avi_info;
 static int use_prev_options=0;
-static int use_sound=0;
+static bool use_sound=false;
 
 
 
-static int truncate_existing(const char* filename)
+static bool truncate_existing(const char* filename)
 {
 	// this is only here because AVIFileOpen doesn't seem to do it for us
 	FILE* fd = fopen(filename, "wb");
@@ -112,6 +115,15 @@ static int truncate_existing(const char* filename)
 	}
 
 	return 0;
+}
+
+static int avi_audiosegment_size(struct AVIFile* avi_out)
+{
+	if(!avi_out || !avi_out->valid || !avi_out->sound_added)
+		return 0;
+
+	assert(avi_out->wave_format.nAvgBytesPerSec <= sizeof(avi_out->audio_buffer));
+	return avi_out->wave_format.nAvgBytesPerSec;
 }
 
 static void avi_create(struct AVIFile** avi_out)
@@ -130,6 +142,18 @@ static void avi_destroy(struct AVIFile** avi_out)
 	{
 		if((*avi_out)->compressed_streams[AUDIO_STREAM])
 		{
+			if ((*avi_out)->audio_buffer_pos > 0) {
+				if(FAILED(AVIStreamWrite(avi_file->compressed_streams[AUDIO_STREAM],
+				                         avi_file->sound_samples, (*avi_out)->audio_buffer_pos / (*avi_out)->wave_format.nBlockAlign,
+				                         (*avi_out)->audio_buffer, (*avi_out)->audio_buffer_pos, 0, NULL, &avi_file->ByteBuffer)))
+				{
+					avi_file->valid = 0;
+				}
+				(*avi_out)->sound_samples += (*avi_out)->audio_buffer_pos / (*avi_out)->wave_format.nBlockAlign;
+				(*avi_out)->tBytes += avi_file->ByteBuffer;
+				(*avi_out)->audio_buffer_pos = 0;
+			}
+
 			LONG test = AVIStreamClose((*avi_out)->compressed_streams[AUDIO_STREAM]);
 			(*avi_out)->compressed_streams[AUDIO_STREAM] = NULL;
 			(*avi_out)->streams[AUDIO_STREAM] = NULL;				// compressed_streams[AUDIO_STREAM] is just a copy of streams[AUDIO_STREAM]
@@ -172,7 +196,7 @@ static void set_sound_format(const WAVEFORMATEX* wave_format, struct AVIFile* av
 	memcpy(&((*avi_out).wave_format), wave_format, sizeof(WAVEFORMATEX));
 	(*avi_out).sound_added = 1;
 }
-int penis;
+
 static int avi_open(const char* filename, const BITMAPINFOHEADER* pbmih, const WAVEFORMATEX* pwfex)
 {
 	int error = 1;
@@ -200,17 +224,17 @@ static int avi_open(const char* filename, const BITMAPINFOHEADER* pbmih, const W
 		avi_file->convert_buffer = new u8[256*384*3];*/
 
 		// open the file
-	
 		if(FAILED(AVIFileOpen(&avi_file->avi_file, filename, OF_CREATE | OF_WRITE, NULL)))
 			break;
+
 
 		// create the video stream
 		set_video_format(pbmih, avi_file);
 
 		memset(&avi_file->avi_video_header, 0, sizeof(AVISTREAMINFO));
 		avi_file->avi_video_header.fccType = streamtypeVIDEO;
-		avi_file->avi_video_header.dwScale = 65536*256;
-		avi_file->avi_video_header.dwRate = (int)(59.8261*65536*256);
+		avi_file->avi_video_header.dwScale = 16777;
+		avi_file->avi_video_header.dwRate = (int)1003715;//(59.826105415821075439453125);
 		avi_file->avi_video_header.dwSuggestedBufferSize = avi_file->bitmap_format.biSizeImage;
 		if(FAILED(AVIFileCreateStream(avi_file->avi_file, &avi_file->streams[VIDEO_STREAM], &avi_file->avi_video_header)))
 			break;
@@ -227,7 +251,7 @@ static int avi_open(const char* filename, const BITMAPINFOHEADER* pbmih, const W
 			avi_file->compress_options_ptr[VIDEO_STREAM] = &avi_file->compress_options[0];
 //retryAviSaveOptions: //mbg merge 7/17/06 removed
 			error = 0;
-			if(!AVISaveOptions(NULL, 0, 1, &avi_file->streams[VIDEO_STREAM], &avi_file->compress_options_ptr[VIDEO_STREAM])) //TODO is this right?
+			if(!AVISaveOptions(med_hWnd, 0, 1, &avi_file->streams[VIDEO_STREAM], &avi_file->compress_options_ptr[VIDEO_STREAM]))
 				break;
 			error = 1;
 		}
@@ -271,6 +295,7 @@ static int avi_open(const char* filename, const BITMAPINFOHEADER* pbmih, const W
 		avi_file->sound_samples = 0;
 		avi_file->tBytes = 0;
 		avi_file->ByteBuffer = 0;
+		avi_file->audio_buffer_pos = 0;
 
 		// success
 		error = 0;
@@ -288,53 +313,7 @@ static int avi_open(const char* filename, const BITMAPINFOHEADER* pbmih, const W
 
 	return result;
 }
-/*
-static void do_video_conversion(const uint16* buffer)
-{
 
-	uint8* outbuf = avi_file->convert_buffer + screenwidth*(screenheight-1)*3;
-
-	for(int y=0;y<screenheight;y++)
-	{
-		for(int x=0;x<screenwidth;x++)
-		{
-			uint16 col16 = *buffer++;
-			col16 &=0x7FFF;
-			uint32 col24 = col16;//color_15bit_to_24bit[col16];
-			*outbuf++ = (col24>>16)&0xFF;
-			*outbuf++ = (col24>>8)&0xFF;
-			*outbuf++ = col24&0xFF;
-		}
-
-		outbuf -= screenwidth*3*2;
-	}
-}*/
-/*
-//32 to 24, discard alpha
-static void do_video_conversion(const uint8* buffer)
-{
-	uint8* outbuf = avi_file->convert_buffer; //+ 320*(224-1)*3;
-	int y;
-	int x;
-
-	for(y=0;y<screenheight;y++)
-	{
-		for(x=0;x<screenwidth;x++)
-		{
-			uint16 a,b,c;
-
-			a = *buffer++;
-			b = *buffer++;
-			c = *buffer++;
-			*buffer++;
-
-			*outbuf++ = c;
-			*outbuf++ = b;
-			*outbuf++ = a;
-		}
-	}
-}
-*/
 #include "mednafen.h"
 #include "video.h"
 #include "memory.h"
@@ -368,109 +347,38 @@ uint8 *pb_ptr = avi_file->convert_buffer;//pixel_buffer;
  }
 }
 
-/*
 
-//works, but doesn't flip
-static void do_video_conversion(const uint8* buffer, EmulateSpecStruct *espec) {
 
-uint8 *pb_ptr = avi_file->convert_buffer;//pixel_buffer;
-
- for(int y = MDFNGameInfo->DisplayRect.y; y < MDFNGameInfo->DisplayRect.y + MDFNGameInfo->DisplayRect.h; y++)
- {
-  uint16 meow_width = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.w : espec->LineWidths[y].w;
-  int meow_x = (espec->LineWidths[0].w == ~0) ? MDFNGameInfo->DisplayRect.x : espec->LineWidths[y].x;
-  uint32 *fb_line = espec->pixels + y * (MDFNGameInfo->pitch >> 2) + meow_x;
-
-  //if(!width)
-  //{
-  // fwrite(&meow_width, 1, 2, output_fp);
-  //}
-
-//  if(meow_width > max_width)
- //  max_width = meow_width;
-
- // if(meow_width < min_width)
-//   min_width = meow_width;
-
-  for(int x = 0; x < meow_width; x++)
-  {
-   uint32 pixel = fb_line[x];
-   int r, g, b;
-
- //  espec->surface->DecodeColor(pixel, r, g, b);
-   DECOMP_COLOR(pixel, r, g, b);
-
-   *pb_ptr++ = r;
-   *pb_ptr++ = g;
-   *pb_ptr++ = b;
-  }
- }
-}
-*/
-
-/*
-static void do_video_conversion(const uint8* buffer) {
-
-	uint8* outbuf = avi_file->convert_buffer;
-
-	for(int y=0;y<screenheight;y++)
-	{
-		for(int x = 0; x < screenwidth; x++)
-		{
-
-			uint32 pixel = *buffer++;//fb_line[x];
-			int r, g, b;
-
-			//  espec->surface->DecodeColor(pixel, r, g, b);
-			DECOMP_COLOR(pixel, r, g, b);
-
-			*outbuf++ = r;
-			*outbuf++ = g;
-			*outbuf++ = b;
-		}
-	}
-}
-
-*/
-static int AviNextSegment(HWND HWnd)
+static bool AviNextSegment()
 {
-	int ret;
 	char avi_fname[MAX_PATH];
-	char avi_fname_temp[MAX_PATH];
 	strcpy(avi_fname,saved_avi_fname);
+	char avi_fname_temp[MAX_PATH];
 	sprintf(avi_fname_temp, "%s_part%d%s", avi_fname, avi_segnum+2, saved_avi_ext);
 	saved_avi_info=*avi_file;
 	use_prev_options=1;
 	avi_segnum++;
-	ret = DRV_AviBegin(avi_fname_temp);
+	bool ret = DRV_AviBegin(avi_fname_temp);
 	use_prev_options=0;
 	strcpy(saved_avi_fname,avi_fname);
 	return ret;
 }
-#include "mednafen.h"
-extern MDFNS FSettings;
-int DRV_AviBegin(const char* fname)
-{
-	WAVEFORMATEX wf;
-	BITMAPINFOHEADER bi;
-	WAVEFORMATEX* pwf;
-	char* dot;
 
+
+bool DRV_AviBegin(const char* fname)
+{
 	DRV_AviEnd();
 
+	BITMAPINFOHEADER bi;
 	memset(&bi, 0, sizeof(bi));
 	bi.biSize = 0x28;    
-	bi.biWidth = screenwidth;
-	bi.biHeight = screenheight;
 	bi.biPlanes = 1;
 	bi.biBitCount = 24;
-	bi.biCompression = 0;
+	bi.biWidth = screenwidth;
+	bi.biHeight = screenheight;
 	bi.biSizeImage = 3 * screenwidth * screenheight;
-	bi.biYPelsPerMeter = 0;
-	bi.biXPelsPerMeter = 0;
-	bi.biClrUsed = 0;
-	bi.biClrImportant = 0;
 
+	WAVEFORMATEX wf;
 	wf.cbSize = sizeof(WAVEFORMATEX);
 	wf.nAvgBytesPerSec = FSettings.SndRate * 4;
 	wf.nBlockAlign = 4;
@@ -486,12 +394,12 @@ int DRV_AviBegin(const char* fname)
 	//if this is a new movie..
 	/*if(!avi_file) {
 		if(FSettings.SndRate)
-			use_sound = 1;
-		else use_sound = 0;
+			use_sound = true;
+		else use_sound = false;
 	}*/
 
 	//mbg 8/10/08 - if there is no sound in this movie, then dont open the audio stream
-	pwf = &wf;
+	WAVEFORMATEX* pwf = &wf;
 	//if(!use_sound)
 	//	pwf = 0;
 
@@ -505,12 +413,12 @@ int DRV_AviBegin(const char* fname)
 	// Don't display at file splits
 	if(!avi_segnum) {
 		EMU_PrintMessage("AVI recording started.");
-//		SetMessageToDisplay("AVI recording started.");
+//		osd->addLine("AVI recording started.");
 	}
 
 	strncpy(saved_cur_avi_fnameandext,fname,MAX_PATH);
 	strncpy(saved_avi_fname,fname,MAX_PATH);
-	dot = strrchr(saved_avi_fname, '.');
+	char* dot = strrchr(saved_avi_fname, '.');
 	if(dot && dot > strrchr(saved_avi_fname, '/') && dot > strrchr(saved_avi_fname, '\\'))
 	{
 		strcpy(saved_avi_ext,dot);
@@ -540,27 +448,40 @@ void DRV_AviVideoUpdate(const uint16* buffer, EmulateSpecStruct *espec)
 
 	// segment / split AVI when it's almost 2 GB (2000MB, to be precise)
 	if(!(avi_file->video_frames % 60) && avi_file->tBytes > 2097152000)
-		AviNextSegment(med_hWnd);
+		AviNextSegment();
 }
 
+bool AVI_IsRecording()
+{
+	return avi_file && avi_file->valid;
+}
 void DRV_AviSoundUpdate(void* soundData, int soundLen)
 {
-	int nBytes;
-
-	if(!avi_file || !avi_file->valid || !avi_file->sound_added)
+	if(!AVI_IsRecording() || !avi_file->sound_added)
 		return;
 
-	nBytes = soundLen * avi_file->wave_format.nBlockAlign;
-    if(FAILED(AVIStreamWrite(avi_file->compressed_streams[AUDIO_STREAM],
-                             avi_file->sound_samples, soundLen,
-                             soundData, nBytes, 0, NULL, &avi_file->ByteBuffer)))
-	{
-		avi_file->valid = 0;
-		return;
+	const int audioSegmentSize = avi_audiosegment_size(avi_file);
+	const int samplesPerSegment = audioSegmentSize / avi_file->wave_format.nBlockAlign;
+	const int soundSize = soundLen * avi_file->wave_format.nBlockAlign;
+	int nBytes = soundSize;
+	while (avi_file->audio_buffer_pos + nBytes > audioSegmentSize) {
+		const int bytesToTransfer = audioSegmentSize - avi_file->audio_buffer_pos;
+		memcpy(&avi_file->audio_buffer[avi_file->audio_buffer_pos], &((uint8*)soundData)[soundSize - nBytes], bytesToTransfer);
+		nBytes -= bytesToTransfer;
+
+		if(FAILED(AVIStreamWrite(avi_file->compressed_streams[AUDIO_STREAM],
+		                         avi_file->sound_samples, samplesPerSegment,
+		                         avi_file->audio_buffer, audioSegmentSize, 0, NULL, &avi_file->ByteBuffer)))
+		{
+			avi_file->valid = 0;
+			return;
+		}
+		avi_file->sound_samples += samplesPerSegment;
+		avi_file->tBytes += avi_file->ByteBuffer;
+		avi_file->audio_buffer_pos = 0;
 	}
-
-	avi_file->sound_samples += soundLen;
-	avi_file->tBytes += avi_file->ByteBuffer;
+	memcpy(&avi_file->audio_buffer[avi_file->audio_buffer_pos], &((uint8*)soundData)[soundSize - nBytes], nBytes);
+	avi_file->audio_buffer_pos += nBytes;
 }
 
 void DRV_AviEnd()
@@ -571,15 +492,8 @@ void DRV_AviEnd()
 	// Don't display if we're just starting another segment
 	if(avi_file->tBytes <= 2097152000) {
 		EMU_PrintMessage("AVI recording ended.");
+//		osd->addLine("AVI recording ended.");
 	}
 
 	avi_destroy(&avi_file);
-}
-
-int DRV_AviIsRecording()
-{
-	if(avi_file)
-		return 1;
-
-	return 0;
 }
