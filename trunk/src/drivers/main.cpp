@@ -268,7 +268,7 @@ static MDFNSetting DriverSettings[] =
    "32"
    #endif
    ,"1", "1000" },
-  { "soundrate", gettext_noop("Specifies the sound playback rate, in frames per second(\"Hz\")."), MDFNST_UINT, "48000", "8192", "48000"},
+  { "soundrate", gettext_noop("Specifies the sound playback rate, in frames per second(\"Hz\")."), MDFNST_UINT, "44100", "8192", "44100"},
   { "helpenabled", gettext_noop("Enable the help screen."), MDFNST_BOOL, "1" },
 
   #ifdef WANT_DEBUGGER
