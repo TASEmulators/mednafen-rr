@@ -339,10 +339,11 @@ uint8 *pb_ptr = avi_file->convert_buffer;//pixel_buffer;
 
  //  espec->surface->DecodeColor(pixel, r, g, b);
    DECOMP_COLOR(pixel, r, g, b);
-
-   *pb_ptr++ = r;
-   *pb_ptr++ = g;
+  
    *pb_ptr++ = b;
+   *pb_ptr++ = g;
+   *pb_ptr++ = r;
+   
   }
  }
 }
