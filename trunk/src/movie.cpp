@@ -228,14 +228,14 @@ void MovieData::installValue(std::string& key, std::string& val)
 		installBool(val,binaryFlag);
 	else if(key == "savestate")
 	{
-		int len = Base64StringToBytesLength(val);
+/*		int len = Base64StringToBytesLength(val);
 		if(len == -1) len = HexStringToBytesLength(val); // wasn't base64, try hex
 		if(len >= 1)
 		{
 			savestate.resize(len);
 			StringToBytes(val,&savestate[0],len); // decodes either base64 or hex
 		}
-	}
+	}*/
 }
 
 char* RemovePath(char * input) {
@@ -292,8 +292,8 @@ int MovieData::dump(std::ostream *os, bool binary)
 	if(binary)
 		*os << "binary 1" << endl;
 		
-	if(savestate.size() != 0)
-		*os << "savestate " << BytesToString(&savestate[0],savestate.size()) << endl;
+//	if(savestate.size() != 0)
+//		*os << "savestate " << BytesToString(&savestate[0],savestate.size()) << endl;
 	if(binary)
 	{
 		//put one | to start the binary dump
