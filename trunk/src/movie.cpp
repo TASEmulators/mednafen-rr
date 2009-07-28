@@ -237,6 +237,7 @@ void MovieData::installValue(std::string& key, std::string& val)
 		}
 	}*/
 }
+}
 
 char* RemovePath(char * input) {
 
