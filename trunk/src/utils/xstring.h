@@ -16,7 +16,7 @@
 #include "prefix.h"
 #endif
 
-//#include "types.h"
+#include "../types.h"
 
 //definitions for str_strip() flags
 #define STRIP_SP	0x01 // space
