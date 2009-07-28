@@ -23,8 +23,6 @@
 #include "memory.h"
 #include <ctype.h>
 
-extern uint32 eeprom_size;
-
 uint8 wsEEPROM[2048];
 
 static uint8 iEEPROM[] = 

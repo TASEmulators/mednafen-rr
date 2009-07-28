@@ -25,10 +25,10 @@
 //                          Copyright (c) 1996,1997                         //
 //                                 K. Wilkins                               //
 //////////////////////////////////////////////////////////////////////////////
-// RAM emulation class                                                      //
+// ROM emulation class                                                      //
 //////////////////////////////////////////////////////////////////////////////
 //                                                                          //
-// This class emulates the system RAM (64KB), the interface is pretty       //
+// This class emulates the system ROM (512B), the interface is pretty       //
 // simple: constructor, reset, peek, poke.                                  //
 //                                                                          //
 //    K. Wilkins                                                            //
@@ -42,91 +42,53 @@
 //                                                                          //
 //////////////////////////////////////////////////////////////////////////////
 
-
-#define RAM_CPP
+#define ROM_CPP
 
 //#include <crtdbg.h>
-//#define   TRACE_RAM
+//#define   TRACE_ROM
 
 #include <string.h>
+#include <errno.h>
 #include "system.h"
-#include "ram.h"
-#include "../mempatcher.h"
+#include "rom.h"
 
-CRam::CRam(uint8 *filememory,uint32 filesize)
+CRom::CRom(const char *romfile)
 {
-	HOME_HEADER	header;
-
-	// Take a copy into the backup buffer for restore on reset
-	mFileSize=filesize;
-
-	if(filesize)
-	{
-		// Take a copy of the ram data
-		mFileData = new uint8[mFileSize];
-		memcpy(mFileData,filememory,mFileSize);
-
-		// Sanity checks on the header
-		memcpy(&header,mFileData,sizeof(HOME_HEADER));
-
-		if(header.magic[0]!='B' || header.magic[1]!='S' || header.magic[2]!='9' || header.magic[3]!='3')
-		{
-			//CLynxException lynxerr;
-			//lynxerr.Message() << "Handy Error: File format invalid (Magic No)";
-			//lynxerr.Description()
-			//	<< "The image you selected was not a recognised homebrew format." << endl
-			//	<< "(see the Handy User Guide for more information).";
-			//throw(lynxerr);
-		}
-	}
-	else
-	{
-		filememory=NULL;
-	}
-	// Reset will cause the loadup
-
+	mWriteEnable=FALSE;
 	Reset();
-}
 
-CRam::~CRam()
-{
-	if(mFileSize)
+	// Initialise ROM
+	for(int loop=0;loop<ROM_SIZE;loop++) mRomData[loop]=DEFAULT_ROM_CONTENTS;
+
+	// Load up the file
+
+	FILE	*fp;
+
+	if((fp=fopen(romfile,"rb"))==NULL)
 	{
-		delete[] mFileData;
-		mFileData=NULL;
+		std::string message;
+
+		MDFN_PrintError("The Lynx Boot ROM image(%s) couldn't be opened: %s\n", romfile, strerror(errno));
+		throw(0);
 	}
-}
 
-void CRam::Reset(void)
-{
-	MDFNMP_AddRAM(65536, 0x0000, mRamData);
+	// Read in the 512 bytes
 
-	for(int loop=0;loop<RAM_SIZE;loop++)
-		mRamData[loop]=DEFAULT_RAM_CONTENTS;
-
-	// Open up the file
-
-	if(mFileSize)
+	if(fread(mRomData,sizeof(char),ROM_SIZE,fp)!=ROM_SIZE)
 	{
-		HOME_HEADER	header;
-		uint8 tmp;
+                std::string message;
 
-		// Zero the RAM
-		for(int loop=0;loop<RAM_SIZE;loop++) mRamData[loop]=0x00;
-
-		// Reverse the bytes in the header words
-		memcpy(&header,mFileData,sizeof(HOME_HEADER));
-		tmp=(header.load_address&0xff00)>>8;
-		header.load_address=(header.load_address<<8)+tmp;
-		tmp=(header.size&0xff00)>>8;
-		header.size=(header.size<<8)+tmp;
-
-		// Now we can safely read/manipulate the data
-		header.load_address-=10;
-
-		memcpy(mRamData+header.load_address,mFileData,header.size);
-		gCPUBootAddress=header.load_address;
+                MDFN_PrintError("The Lynx Boot ROM image(%s) couldn't be read: %s\n", romfile, strerror(errno));
+                throw(0);    
 	}
+
+	fclose(fp);
 }
+
+void CRom::Reset(void)
+{
+	// Nothing to do here
+}
+
 
 //END OF FILE

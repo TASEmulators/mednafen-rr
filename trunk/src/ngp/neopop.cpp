@@ -19,13 +19,13 @@
 
 #include "TLCS900h_interpret.h"
 #include "TLCS900h_registers.h"
-#include "ngp_Z80_interface.h"
-#include "ngp_interrupt.h"
-#include "ngp_mem.h"
-#include "ngp_gfx.h"
-#include "ngp_sound.h"
+#include "Z80_interface.h"
+#include "interrupt.h"
+#include "mem.h"
+#include "gfx.h"
+#include "sound.h"
 #include "dma.h"
-#include "ngp_bios.h"
+#include "bios.h"
 #include "flash.h"
 
 extern uint8 CPUExRAM[16384];

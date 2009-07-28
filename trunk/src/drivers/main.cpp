@@ -268,7 +268,7 @@ static MDFNSetting DriverSettings[] =
    "32"
    #endif
    ,"1", "1000" },
-  { "soundrate", gettext_noop("Specifies the sound playback rate, in frames per second(\"Hz\")."), MDFNST_UINT, "44100", "8192", "44100"},
+  { "soundrate", gettext_noop("Specifies the sound playback rate, in frames per second(\"Hz\")."), MDFNST_UINT, "48000", "8192", "48000"},
   { "helpenabled", gettext_noop("Enable the help screen."), MDFNST_BOOL, "1" },
 
   #ifdef WANT_DEBUGGER
@@ -617,7 +617,7 @@ std::cout << "lalala" << MovieToLoad <<std::endl;
 	{
 
 	//char * tmppath = const_cast<char *>(path);
-	//MDFNI_SaveMovie(ArgRecordMovie, NULL, NULL);
+	MDFNI_SaveMovie(ArgRecordMovie, NULL, NULL);
 	//  return 0;
 	}
 
@@ -643,6 +643,11 @@ std::cout << "lalala" << MovieToLoad <<std::endl;
         if(MDFN_GetSettingB("autosave"))
 	 MDFNI_LoadState(NULL, "ncq");
 
+
+		//if someone specifies loading a state with loadstate
+		if(strcmp(MDFN_GetSettingS("loadstate").c_str(),"loadstate PATH NOT SET")) {
+
+			MDFNI_LoadState(MDFN_GetSettingS("loadstate").c_str(), NULL);}
 
 #ifdef NETWORK
 	if(netconnect)
@@ -752,11 +757,6 @@ int GetFrameAdvanceActive(void) {
 
 static int GameLoopPaused = 0;
 
-#ifdef WIN32
-extern void Update_RAM_Search();
-extern void Update_RAM_Watch();
-#endif
-
 void DebuggerFudge(void)
 {
           LockGameMutex(0);
@@ -826,11 +826,6 @@ int GameLoop(void *arg)
 	  espec.soundmultiplier = (float)CurGameSpeed;
 	  espec.NeedRewind = DNeedRewind;
           MDFNI_Emulate(&espec); //(uint32 *)VTBuffer[VTBackBuffer], (MDFN_Rect *)VTLineWidths[VTBackBuffer], &sound, &ssize, fskip, CurGameSpeed);
-#ifdef WIN32
-		  Update_RAM_Search();
-		   Update_RAM_Watch();
-#endif
-
 	ZeroStateShow();//get rid of state previews
 	 }
 	 	 

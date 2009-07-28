@@ -78,13 +78,7 @@ int counter;
 void FPS_Draw(SDL_Surface *screen, int rs, int gs, int bs, int as)
 {
 
-if(MDFN_GetSettingB("mmm")) {
-  if(FPSSurface)
-  {
-   SDL_FreeSurface(FPSSurface);
-   FPSSurface = NULL;
-  }
-}
+isactive=!MDFN_GetSettingB("mmm");	
 
  if(!isactive) 
  {
@@ -185,11 +179,6 @@ SetFPSNeedFrameAdvance(0);
 
 //display the right thing
 
-extern char MovieStatusM[40];
-
-snprintf(tempcount2, 64, "%s                       %f", MovieStatusM,(double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
-
-/*
 if(MovInd() == 666) {
 
 snprintf(tempcount2, 64, "Recording     %f", (double)vt_frames_drawn * 1000 / (curtime - vt_mintime));
@@ -205,7 +194,7 @@ if(MovInd() == 111) {
 snprintf(tempcount2, 64, "Stopped       %s", virtfps);
 }
 						
-*/
+
 //snprintf(tempcount2, 64, "%f", (double)retFrameCounter());
 
 DrawTextTrans((uint32 *)FPSSurface->pixels + 0 * (FPSSurface->pitch >> 2), FPSSurface->pitch, FPSSurface->w, (UTF8*)ReturnInputDisplayString(), MK_COLOR_A(FPSSurface, 0xFF, 0xFF, 0xFF, 0xFF), FALSE, TRUE);
@@ -224,17 +213,14 @@ DrawTextTrans((uint32 *)FPSSurface->pixels + 7 * (FPSSurface->pitch >> 2), FPSSu
 
 char tempcount[64];
 
-//if(MovInd() == 333) {
+if(MovInd() == 333) {
 
-if(MovieIsActive() && movie_readonly)
-	snprintf(tempcount, 64, "%d/%d", retFrameCounter(), (int)currMovieData.records.size());
-else
-	snprintf(tempcount, 64, "%d", retFrameCounter());
-//}
-//else {
+	snprintf(tempcount, 64, "%d/%d", retFrameCounter(), DisplayTotalFrames());
+}
+else {
 
-//snprintf(tempcount, 64, "%d", retFrameCounter());
-//}
+snprintf(tempcount, 64, "%d", retFrameCounter());
+}
 
 //frame counter
 

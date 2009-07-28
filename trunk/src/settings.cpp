@@ -449,4 +449,3 @@ bool MDFNI_SetSettingUI(const char *name, uint32 value)
  return(MDFNI_SetSetting(name, tmpstr, FALSE));
 }
 
-

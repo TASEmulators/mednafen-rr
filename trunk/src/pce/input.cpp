@@ -101,7 +101,7 @@ Controller Bits
 7 - Left
 
 */
-#include "../movie.h"
+
 const char* Buttons[8] = {"II ", "I ", "S", "Run ", "↑", "→", "↓", "←"};
 const char* Spaces[8]  = {"   ", "  ", " ", "    ", " ", " ", " ", " "};
 
@@ -121,10 +121,6 @@ void SetInputDisplayCharacters(uint16 new_data) {
 	strcpy(InputDisplayString, str);
 }
 
-uint16 pcepad;
-
-extern void FCEUMOV_AddInputState();
-
 void INPUT_Frame(void)
 {
  for(int x = 0; x < 5; x++)
@@ -137,13 +133,6 @@ void INPUT_Frame(void)
    {
     AVPad6Enabled[x] = !AVPad6Enabled[x];
     MDFN_DispMessage((UTF8 *)"%d-button mode selected for pad %d", AVPad6Enabled[x] ? 6 : 2, x + 1);
-   }
-
-   if(x == 0) {
-
-   pcepad = new_data;
-   FCEUMOV_AddInputState();
-   new_data = pcepad;
    }
 
    pce_jp_data[x] = new_data;

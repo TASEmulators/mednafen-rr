@@ -73,9 +73,7 @@ typedef struct
 	uint8 name[16];	//Null terminated string, holding the Game name
 }
 RomInfo;
-#ifdef _MSC_VER
-#pragma pack(push,1)
-#endif
+
 //RomHeader
 typedef struct
 {
@@ -90,12 +88,7 @@ typedef struct
 	uint32	reserved2;			// 0x34 - 0x37
 	uint32	reserved3;			// 0x38 - 0x3B
 	uint32	reserved4;			// 0x3C - 0x3F
-#ifdef _MSC_VER
-} RomHeader;
-#pragma pack(pop)
-#else
 } __attribute__((__packed__)) RomHeader;
-#endif
 
 //=============================================================================
 
@@ -219,7 +212,7 @@ typedef struct
 
 void int_redo_icache(void);
 
-#include "ngp_gfx.h"
+#include "gfx.h"
 
 extern NGPGFX_CLASS *NGPGfx;
 extern uint8 NGPJoyLatch;

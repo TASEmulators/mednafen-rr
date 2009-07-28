@@ -58,16 +58,10 @@ extern int errno;
 # endif
 #endif
 
-
 #include "world_strtod.h"
 
 #include <string.h>
 #include <stdlib.h>
-
-#ifdef WIN32
-#define strdup _strdup
-#endif
-
 
 /* Convert NPTR to a double.  If ENDPTR is not NULL, a pointer to the
    character after the last one used in the number is put in *ENDPTR.  */

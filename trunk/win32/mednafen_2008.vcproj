@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;../src;../src/drivers;../include;zlib;&quot;SDL-1.2.13/include&quot;;directx;&quot;libcdio-0.81/include&quot;;&quot;libcdio-0.81/lib/driver&quot;;&quot;../src/ngp/TLCS-900h&quot;;../src/ngp;&quot;../src/z80-fuse&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;WANT_NES_EMU;WANT_PCE_EMU;NEED_CDEMU;EXTERNAL_LIBCDIO_CONFIG_H;NO_CODECS;HAVE_DIRECTSOUND;WANT_WSWAN_EMU;WANT_NGP_EMU;WANT_LYNX_EMU"
+				AdditionalIncludeDirectories=".;../src;../src/drivers;../include;zlib;&quot;SDL-1.2.13/include&quot;;directx;&quot;libcdio-0.81/include&quot;;&quot;libcdio-0.81/lib/driver&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;WANT_NES_EMU;WANT_PCE_EMU;NEED_CDEMU;EXTERNAL_LIBCDIO_CONFIG_H;NO_CODECS;HAVE_DIRECTSOUND"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -51,7 +51,6 @@
 				WarnAsError="false"
 				DebugInformationFormat="4"
 				CompileAs="0"
-				DisableSpecificWarnings="4244,4800"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -64,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib directx/ddraw.lib directx/dinput.lib directx/dsound.lib directx/dxguid.lib vfw32.lib"
+				AdditionalDependencies="winmm.lib directx/ddraw.lib directx/dinput.lib directx/dsound.lib directx/dxguid.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -94,7 +93,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\output"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="0"
@@ -119,14 +118,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories=".;../src;../src/drivers;../include;zlib;&quot;SDL-1.2.13/include&quot;;directx;&quot;libcdio-0.81/include&quot;;&quot;libcdio-0.81/lib/driver&quot;;&quot;../src/z80-fuse&quot;;../src/ngp;&quot;../src/ngp/TLCS-900h&quot;"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;WANT_NES_EMU;WANT_PCE_EMU;NEED_CDEMU;EXTERNAL_LIBCDIO_CONFIG_H;NO_CODECS;HAVE_DIRECTSOUND;WANT_WSWAN_EMU;WANT_NGP_EMU;WANT_LYNX_EMU;"
+				AdditionalIncludeDirectories=".;../src;../src/drivers;../include;zlib;&quot;SDL-1.2.13/include&quot;;directx;&quot;libcdio-0.81/include&quot;;&quot;libcdio-0.81/lib/driver&quot;"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;WANT_NES_EMU;WANT_PCE_EMU;NEED_CDEMU;EXTERNAL_LIBCDIO_CONFIG_H;NO_CODECS;HAVE_DIRECTSOUND"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4244,4800"
+				DisableSpecificWarnings="4244"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -139,7 +138,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib directx/ddraw.lib directx/dinput.lib directx/dsound.lib directx/dxguid.lib vfw32.lib"
+				AdditionalDependencies="winmm.lib directx/ddraw.lib directx/dinput.lib directx/dsound.lib directx/dxguid.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -177,19 +176,7 @@
 			Name="win32"
 			>
 			<File
-				RelativePath=".\aviout.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\aviout.h"
-				>
-			</File>
-			<File
 				RelativePath=".\inttypes.h"
-				>
-			</File>
-			<File
-				RelativePath=".\medwin.h"
 				>
 			</File>
 			<File
@@ -197,43 +184,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ramsearch.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ramsearch.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ramwatch.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ramwatch.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Resource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\resource.rc"
-				>
-			</File>
-			<File
-				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\targetver.h"
-				>
-			</File>
-			<File
 				RelativePath=".\unixstuff.h"
-				>
-			</File>
-			<File
-				RelativePath=".\winmain.cpp"
 				>
 			</File>
 			<Filter
@@ -1008,22 +959,6 @@
 						<File
 							RelativePath=".\libcdio-0.81\lib\driver\mmc.c"
 							>
-							<FileConfiguration
-								Name="Debug|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									DisableSpecificWarnings="4028;4333"
-								/>
-							</FileConfiguration>
-							<FileConfiguration
-								Name="Release|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									DisableSpecificWarnings="4028;4333"
-								/>
-							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\libcdio-0.81\lib\driver\read.c"
@@ -1047,62 +982,14 @@
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\bincue.c"
 								>
-								<FileConfiguration
-									Name="Debug|Win32"
-									>
-									<Tool
-										Name="VCCLCompilerTool"
-										DisableSpecificWarnings="4133"
-									/>
-								</FileConfiguration>
-								<FileConfiguration
-									Name="Release|Win32"
-									>
-									<Tool
-										Name="VCCLCompilerTool"
-										DisableSpecificWarnings="4133"
-									/>
-								</FileConfiguration>
 							</File>
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\cdrdao.c"
 								>
-								<FileConfiguration
-									Name="Debug|Win32"
-									>
-									<Tool
-										Name="VCCLCompilerTool"
-										DisableSpecificWarnings="4133"
-									/>
-								</FileConfiguration>
-								<FileConfiguration
-									Name="Release|Win32"
-									>
-									<Tool
-										Name="VCCLCompilerTool"
-										DisableSpecificWarnings="4133"
-									/>
-								</FileConfiguration>
 							</File>
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\nrg.c"
 								>
-								<FileConfiguration
-									Name="Debug|Win32"
-									>
-									<Tool
-										Name="VCCLCompilerTool"
-										DisableSpecificWarnings="4133"
-									/>
-								</FileConfiguration>
-								<FileConfiguration
-									Name="Release|Win32"
-									>
-									<Tool
-										Name="VCCLCompilerTool"
-										DisableSpecificWarnings="4133"
-									/>
-								</FileConfiguration>
 							</File>
 							<File
 								RelativePath=".\libcdio-0.81\lib\driver\image\nrg.h"
@@ -1116,42 +1003,6 @@
 		<Filter
 			Name="src"
 			>
-			<File
-				RelativePath="..\src\utils\ConvertUTF.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\ConvertUTF.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\guid.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\guid.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\readwrite.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\readwrite.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\valuearray.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\xstring.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils\xstring.h"
-				>
-			</File>
 			<Filter
 				Name="drivers"
 				>
@@ -1986,22 +1837,6 @@
 				<File
 					RelativePath="..\src\nes\nsfe.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableSpecificWarnings="4333"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableSpecificWarnings="4333"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\nes\nsfe.h"
@@ -2517,22 +2352,6 @@
 					<File
 						RelativePath="..\src\nes\ntsc\nes_ntsc.cpp"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								DisableSpecificWarnings="4244"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								DisableSpecificWarnings="4244"
-							/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\src\nes\ntsc\nes_ntsc.h"
@@ -2833,490 +2652,6 @@
 				</File>
 				<File
 					RelativePath="..\src\cdrom\scsicd.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="wswan"
-				>
-				<File
-					RelativePath="..\src\wswan\debug.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\debug.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\eeprom.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\eeprom.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\gfx.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\interrupt.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\interrupt.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\rtc.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\rtc.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\start.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\tcache.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\v30mz-ea.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\v30mz-modrm.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\v30mz-private.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\v30mz.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\v30mz.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\wstech24.txt"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\wswan.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\wswan_gfx.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\wswan_main.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\wswan_memory.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\wswan_memory.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\wswan_sound.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\wswan\wswan_sound.h"
-					>
-				</File>
-				<Filter
-					Name="dis"
-					>
-					<File
-						RelativePath="..\src\wswan\dis\dis_decode.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\wswan\dis\dis_groups.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\wswan\dis\dis_tables.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\wswan\dis\disasm.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\wswan\dis\resolve.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\wswan\dis\syntax.cpp"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="ngp"
-				>
-				<File
-					RelativePath="..\src\ngp\biosHLE.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\dma.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\dma.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\flash.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\flash.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\gfx_scanline_colour.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\gfx_scanline_mono.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\neopop.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\neopop.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_bios.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_bios.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_gfx.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_gfx.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_interrupt.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_interrupt.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_mem.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_mem.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_rtc.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_rtc.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_sound.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_sound.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_Z80_interface.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\ngp_Z80_interface.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\rom.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\T6W28_Apu.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\T6W28_Apu.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ngp\T6W28_Oscs.h"
-					>
-				</File>
-				<Filter
-					Name="TLCS-900h"
-					>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_disassemble.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_disassemble.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_disassemble_dst.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_disassemble_extra.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_disassemble_reg.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_disassemble_src.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret_dst.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret_dst.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret_reg.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret_reg.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret_single.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret_single.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret_src.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_interpret_src.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapB.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeB0.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeB1.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeB2.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeB3.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeL0.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeL1.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeL2.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeL3.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeW0.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeW1.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeW2.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapCodeW3.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapL.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\ngp\TLCS-900h\TLCS900h_registers_mapW.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="z80-fuse"
-				>
-				<File
-					RelativePath="..\src\z80-fuse\z80.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\z80-fuse\z80.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\z80-fuse\z80_macros.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\z80-fuse\z80_ops.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="lynx"
-				>
-				<File
-					RelativePath="..\src\lynx\c6502mak.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\c65c02.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\c65c02.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\lynx-cart.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\lynx-cart.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\lynx-rom.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\lynx-rom.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\lynx-system.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\lynx-system.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\lynxbase.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\lynxdef.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\machine.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\memmap.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\memmap.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\mikie.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\mikie.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\ram.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\ram.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\susie.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\susie.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lynx\sysbase.h"
 					>
 				</File>
 			</Filter>
