@@ -1,6 +1,11 @@
 #ifndef _STATE_H
 #define _STATE_H
 
+#ifdef WIN32
+#else
+#include	<sys/types.h>
+#endif
+
 //#include <stdio.h>
 #include <zlib.h>
 

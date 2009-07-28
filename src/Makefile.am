@@ -4,7 +4,7 @@ DEFS = -DLOCALEDIR=\"$(datadir)/locale\" @DEFS@ @MATH_OPTIMIZER_FLAGS@
 DEFAULT_INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/intl
 
 bin_PROGRAMS	=	mednafen
-mednafen_SOURCES 	= 	debug.cpp error.cpp mempatcher.cpp settings.cpp Blip_Buffer.cpp Stereo_Buffer.cpp endian.cpp mednafen.cpp file.cpp general.cpp md5.cpp memory.cpp netplay.cpp state.cpp movie.cpp wave.cpp player.cpp psf.cpp tests.cpp
+mednafen_SOURCES 	= 	debug.cpp error.cpp mempatcher.cpp settings.cpp Blip_Buffer.cpp Stereo_Buffer.cpp endian.cpp mednafen.cpp file.cpp general.cpp md5.cpp memory.cpp netplay.cpp state.cpp movie.cpp wave.cpp player.cpp psf.cpp tests.cpp utils/xstring.cpp
 mednafen_LDADD = @LIBINTL@ @LIBICONV@ trio/libtrio.a
 mednafen_DEPENDENCIES	=	trio/libtrio.a
 
