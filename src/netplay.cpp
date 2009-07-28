@@ -286,7 +286,7 @@ int MDFNNET_RecvState(uint32 clen)
   return(0);
  }
  if(MDFNMOV_IsRecording())
-  MDFNMOV_RecordState();
+  //MDFNMOV_RecordState();
  return(1);
 }
 
