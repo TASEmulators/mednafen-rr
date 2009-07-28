@@ -1,6 +1,10 @@
 #include <assert.h>
 #include <limits.h>
 #include <fstream>
+#ifdef WIN32
+#else
+#include "types.h"
+#endif
 //#include "utils/guid.h"
 #include "utils/xstring.h"
 #include "movie.h"

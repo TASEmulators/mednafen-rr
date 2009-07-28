@@ -9,6 +9,7 @@
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<unistd.h>
+#include "types.h"
 #endif
 
 //#include <stdio.h>
