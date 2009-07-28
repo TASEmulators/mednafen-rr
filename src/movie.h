@@ -14,6 +14,7 @@
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<unistd.h>
+#include "types.h"
 #endif
 //#include "../../core.h"
 //#include "utils/guid.h"
