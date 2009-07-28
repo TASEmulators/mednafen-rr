@@ -1,9 +1,14 @@
 #ifndef _STATE_H
 #define _STATE_H
 
-#ifdef WIN32
+#ifdef _MSC_VER
+#include "unixstuff.h"
 #else
+#include	<stdarg.h>
+#include	<errno.h>
 #include	<sys/types.h>
+#include	<sys/stat.h>
+#include	<unistd.h>
 #endif
 
 //#include <stdio.h>
