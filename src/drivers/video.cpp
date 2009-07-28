@@ -37,8 +37,6 @@
 #include "video-state.h"
 #include "../video/selblur.h"
 
-char* VERSION = " Mednafen-rr v1.2-interim";
-
 typedef struct
 {
         int xres;
@@ -292,10 +290,6 @@ bool MDFND_ValidateSpecialScalerSetting(const char *name, const char *value)
 
 static uint32 real_rs, real_gs, real_bs, real_as;
 
-#ifdef WIN32
-extern void setClientSize(int width, int height);
-#endif
-
 int InitVideo(MDFNGI *gi)
 {
  const SDL_VideoInfo *vinf;
@@ -400,10 +394,6 @@ int InitVideo(MDFNGI *gi)
 
  GenerateRects(VideoGI->DisplayRect);
 
-#ifdef WIN32
- setClientSize(VideoGI->DisplayRect.w,VideoGI->DisplayRect.h);
-#endif  
-
  if(exs > 20)
  {
   MDFND_PrintError(_("Eep!  Effective X scale setting is way too high.  Correcting."));
@@ -495,16 +485,8 @@ int InitVideo(MDFNGI *gi)
    MDFN_printf(_("Warning:  Destination rectangle exceeds screen dimensions.  The rectangle will be adjusted to fit within the screen area.\n"));
   MDFN_indent(-1);
  }
- if(gi && gi->name) {
-	 char buf[2048];
-  char name[2048];
-  #ifdef WIN32
-  wsprintf(buf, "%s %s", VERSION, __DATE__);//,__TIME__)
-  strcpy(name, (char*)gi->name);
-  strcat(name, buf); 
-  #endif
-  SDL_WM_SetCaption(name,(char *)gi->name);
- }
+ if(gi && gi->name)
+  SDL_WM_SetCaption((char *)gi->name,(char *)gi->name);
  else
   SDL_WM_SetCaption("Mednafen","Mednafen");
 

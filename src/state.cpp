@@ -569,7 +569,7 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 		//this is so that the frame counter will decrement when a earlier state is loaded
 
 		MDFN_en32lsb(header + 12, retFrameCounter());
-		MDFN_en32lsb(header + 16, GetlagCounter());
+		MDFN_en32lsb(header + 16, MEDNAFEN_VERSION_NUMERIC);
 		MDFN_en32lsb(header + 24, neowidth);
 		MDFN_en32lsb(header + 28, neoheight);
 		smem_write(st, header, 32);
@@ -603,9 +603,6 @@ int MDFNSS_SaveSM(StateMem *st, int wantpreview, int data_only, uint32 *fb, MDFN
 	}
 	return(1);
 }
-
-extern void SaveStateMovie(char* filename);
-extern void LoadStateMovie(char* filename);
 
 int temporarylength1;
 
@@ -643,14 +640,12 @@ int MDFNSS_Save(const char *fname, const char *suffix, uint32 *fb, MDFN_Rect *Li
 	//when a state is saved, write the current movie to a movie file associated with the current savestate
 	//the association is by the filename used
 
-	SaveStateMovie((char*)MDFN_MakeFName(MDFNMKF_STATE,CurrentState + retisMov(),suffix).c_str());
-
 	//open a filestream for the associated movie file
-//	FILE* statemovie;
-//	statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"wb"); 
+	FILE* statemovie;
+	statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"wb"); 
 
-//	CopyMovie(statemovie);
-//	fclose(statemovie);
+	CopyMovie(statemovie);
+	fclose(statemovie);
 	//smem_seek(&Grabtempmov(), 0, SEEK_END); //go back to the end of the movie so that we continue recording to the right spot
 
 	if(!fname && !suffix)
@@ -686,7 +681,7 @@ int MDFNSS_SaveFP(gzFile fp, uint32 *fb, MDFN_Rect *LineWidths)
 	return(1);
 }
 
-extern void SetlagCounter(int input);	
+
 int MDFNSS_LoadSM(StateMem *st, int haspreview, int data_only)
 {
 	uint8 header[32];
@@ -705,13 +700,13 @@ int MDFNSS_LoadSM(StateMem *st, int haspreview, int data_only)
 		//grab the framecount from the savestate header and overwrite the framecounter 
 		//so that the frame counter will decrement when a earlier state is loaded
 		setFrameCounter(MDFN_de32lsb(header + 12));  
-		SetlagCounter(MDFN_de32lsb(header + 16));
+		stateversion = MDFN_de32lsb(header + 16);
 
-//		if(stateversion < 0x0600)
-//		{
-//			printf("State too old: %08x\n", stateversion);
-//			return(0);
-//		}
+		if(stateversion < 0x0600)
+		{
+			printf("State too old: %08x\n", stateversion);
+			return(0);
+		}
 	}
 
 	if(haspreview)
@@ -793,34 +788,32 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 	{
 		if(!fname && !suffix)
 		{
-			if(0) {
-		/*		RecordingSwitchToPlayback=0;
+			if(RecordingSwitchToPlayback==1) {
+				RecordingSwitchToPlayback=0;
 					current = CurrentMovie;
 	                //slots[current] = Movie.fp;
 					current = -1 - current;
 					//MovieStatus[CurrentMovie] = 1;
 					Movie.status=playback;
 					Movie.readonly = 1;
-					MovieLoadState();*/
+					MovieLoadState();
 			}
 
 			else {
 
-			//AddRerecordCount();  //every loaded state during recording is +1 rerecord, this function takes care of the conditional
+			AddRerecordCount();  //every loaded state during recording is +1 rerecord, this function takes care of the conditional
 
-		//	if(current > 0) {
-//
-//			FCEUI_MakeBackupMovie(0);
-//			}
+			if(current > 0) {
 
-			LoadStateMovie((char*)MDFN_MakeFName(MDFNMKF_STATE,CurrentState + retisMov(),suffix).c_str());
+			FCEUI_MakeBackupMovie(0);
+			}
 
-//			FILE* statemovie;  //the movie file that will be read
-//			statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"r+b");
-			//ReplaceMovie(statemovie);
-//			fclose(statemovie);
+			FILE* statemovie;  //the movie file that will be read
+			statemovie=fopen(MDFN_MakeFName(MDFNMKF_MOVIE,CurrentState + 10 + retisMov(),0).c_str(),"r+b");
+			ReplaceMovie(statemovie);
+			fclose(statemovie);
 
-			//MovieLoadState();
+			MovieLoadState();
 
 			MDFNI_DisplayState(CurrentState);//show the preview so you can tell what state you've loaded
 
@@ -830,11 +823,6 @@ int MDFNSS_Load(const char *fname, const char *suffix)
 			MDFN_DispMessage((UTF8 *)_("State %d loaded."),CurrentState);
 			SaveStateStatus[CurrentState]=1;
 			}
-		}
-		else
-		{
-			//MovieLoadState();
-
 		}
 		gzclose(st);
 		return(1);
@@ -1197,7 +1185,7 @@ void MDFN_StateEvilFlushMovieLove(void)
 		if(bcs[bahpos].MovieLove.data)
 		{
 			if(bcs[x].data)
-				//MDFNMOV_ForceRecord(&bcs[bahpos].MovieLove);
+				MDFNMOV_ForceRecord(&bcs[bahpos].MovieLove);
 			free(bcs[bahpos].MovieLove.data);
 			bcs[bahpos].MovieLove.data = NULL;
 		}
@@ -1270,7 +1258,7 @@ int MDFN_StateEvil(int rewind)
 
 			MDFNSS_LoadSM(&sm, 0, 1);
 
-	//		free(MDFNMOV_GrabRewindJoy().data);
+			free(MDFNMOV_GrabRewindJoy().data);
 			return(1);
 		}
 	}
@@ -1286,7 +1274,7 @@ int MDFN_StateEvil(int rewind)
 			if(bcs[bcspos].data && bcs[bcspos].MovieLove.data)
 			{
 				//printf("Force: %d\n", bcspos);
-				//MDFNMOV_ForceRecord(&bcs[bcspos].MovieLove);
+				MDFNMOV_ForceRecord(&bcs[bcspos].MovieLove);
 				free(bcs[bcspos].MovieLove.data);
 				bcs[bcspos].MovieLove.data = NULL;
 			}
@@ -1354,8 +1342,8 @@ int MDFN_StateEvil(int rewind)
 			}
 		}
 
-//		if(MDFNMOV_IsRecording())
-//			bcs[bcspos].MovieLove = MDFNMOV_GrabRewindJoy();
+		if(MDFNMOV_IsRecording())
+			bcs[bcspos].MovieLove = MDFNMOV_GrabRewindJoy();
 	}
 	return(0);
 }

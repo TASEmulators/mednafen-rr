@@ -139,7 +139,7 @@ static bool IsHES;
 int pce_overclocked;
 
 // Accessed in debug.cpp
-uint8 BaseRAM[32768]; // 8KB for PCE, 32KB for Super Grafx
+static uint8 BaseRAM[32768]; // 8KB for PCE, 32KB for Super Grafx
 
 uint8 PCEIODataBuffer;
 readfunc PCERead[0x100], NonCheatPCERead[0x100];
@@ -496,8 +496,6 @@ static void CloseGame(void)
  PSG_Kill();
 }
 
-#include "aviout.h"
-
 static void Emulate(EmulateSpecStruct *espec)
 {
  MDFNGameInfo->fb = espec->pixels;
@@ -511,10 +509,6 @@ static void Emulate(EmulateSpecStruct *espec)
 
  if(IsHES && !espec->skip)
   HES_Draw(espec->pixels, *(espec->SoundBuf), *(espec->SoundBufSize));
-
- DRV_AviSoundUpdate(*espec->SoundBuf, *espec->SoundBufSize);
-
- DRV_AviVideoUpdate((uint16*)espec->pixels, espec);
 }
 
 static int StateAction(StateMem *sm, int load, int data_only)

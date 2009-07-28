@@ -57,8 +57,8 @@
 #include "neopop.h"
 #include "TLCS900h_disassemble.h"
 #include "dma.h"
-#include "ngp_mem.h"
-#include "ngp_interrupt.h"
+#include "mem.h"
+#include "interrupt.h"
 
 //=============================================================================
 

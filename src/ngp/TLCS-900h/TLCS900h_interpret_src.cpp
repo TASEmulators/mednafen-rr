@@ -68,7 +68,7 @@
 #include "neopop.h"
 #include "TLCS900h_interpret.h"
 #include "TLCS900h_registers.h"
-#include "ngp_mem.h"
+#include "mem.h"
 
 namespace TLCS900H
 {

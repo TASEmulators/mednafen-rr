@@ -10,7 +10,7 @@
 #define  mBCD(value) (((value)/10)<<4)|((value)%10)
 
 extern          uint32 rom_size;
-//extern          int wsc;	//adelikat: removing from header file and declaring external in gfx.cpp to avoid unresolved externals
+extern          int wsc;
 
 #include "interrupt.h"
 
