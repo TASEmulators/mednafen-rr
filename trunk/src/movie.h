@@ -6,10 +6,14 @@
 #include <string>
 #include <ostream>
 #include <istream>
-#ifdef WIN32
-#include "prefix.h"
+#ifdef _MSC_VER
+#include "unixstuff.h"
 #else
+#include	<stdarg.h>
+#include	<errno.h>
 #include	<sys/types.h>
+#include	<sys/stat.h>
+#include	<unistd.h>
 #endif
 //#include "../../core.h"
 //#include "utils/guid.h"
