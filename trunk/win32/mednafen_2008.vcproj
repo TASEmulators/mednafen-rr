@@ -2656,6 +2656,42 @@
 				</File>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath="..\src\utils\ConvertUTF.c"
+			>
+		</File>
+		<File
+			RelativePath="..\src\utils\ConvertUTF.h"
+			>
+		</File>
+		<File
+			RelativePath="..\src\utils\guid.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\src\utils\guid.h"
+			>
+		</File>
+		<File
+			RelativePath="..\src\utils\readwrite.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\src\utils\readwrite.h"
+			>
+		</File>
+		<File
+			RelativePath="..\src\utils\valuearray.h"
+			>
+		</File>
+		<File
+			RelativePath="..\src\utils\xstring.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\src\utils\xstring.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

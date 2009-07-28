@@ -354,7 +354,7 @@ MDFNGI *MDFNI_LoadCD(const char *sysname, const char *devicename)
    #endif
 
    MDFNSS_CheckStates();
-   MDFNMOV_CheckMovies();
+//   MDFNMOV_CheckMovies();
 
    MDFN_ResetMessages();   // Save state, status messages, etc.
 
@@ -451,7 +451,7 @@ MDFNGI *MDFNI_LoadGame(const char *name)
 	#endif
 
 	MDFNSS_CheckStates();
-	MDFNMOV_CheckMovies();
+//	MDFNMOV_CheckMovies();
 
 	MDFN_ResetMessages();	// Save state, status messages, etc.
 
@@ -591,7 +591,7 @@ alreadypaused = 1;
 	 int tempvalue; 
 	 tempvalue = MDFN_GetSettingB("readonly");
 
-	 setreadonlycli(tempvalue);
+	 //setreadonlycli(tempvalue);
 	 alreadyreadonly = 1;
  }
 
@@ -614,7 +614,7 @@ alreadypaused = 1;
 
  for(int x = 0; x < 16; x++)
 	 if(PortDataCache[x]) {
-   MDFNMOV_AddJoy(PortDataCache[x], PortDataLenCache[x]);
+//   MDFNMOV_AddJoy(PortDataCache[x], PortDataLenCache[x]);
 	 }
 
 	 SetCommandAdded();
