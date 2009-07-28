@@ -558,7 +558,7 @@ static void openRecordingMovie(const char* fname)
 #ifdef WIN32
 	//HardResetGame();
 #else
-	YabauseReset();
+//	YabauseReset();
 #endif
 	MovClearAllSRAM();
 	MDFNI_Power();

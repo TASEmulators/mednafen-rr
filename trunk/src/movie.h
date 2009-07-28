@@ -6,7 +6,11 @@
 #include <string>
 #include <ostream>
 #include <istream>
+#ifdef WIN32
 #include "prefix.h"
+#else
+#include	<sys/types.h>
+#endif
 //#include "../../core.h"
 //#include "utils/guid.h"
 //#include "utils/md5.h"
