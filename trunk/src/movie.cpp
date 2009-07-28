@@ -1071,7 +1071,7 @@ void LoadFM2_binarychunk(MovieData& movieData, std::istream* fp, int size)
 
 #include <sstream>
 
-static bool CheckFileExists(const char* filename)
+bool CheckFileExists(const char* filename)
 {
 	//This function simply checks to see if the given filename exists
 	string checkFilename; 
