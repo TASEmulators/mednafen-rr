@@ -40,7 +40,7 @@ bool PCE_IsCD;
 
 static uint8 *TsushinRAM = NULL; // 0x8000
 static uint8 *PopRAM = NULL; // 0x8000
-static uint8 SaveRAM[2048];
+uint8 SaveRAM[2048];
 static uint8 *CDRAM = NULL; //262144;
 static uint8 *ACRAM = NULL; //0x200000 Yes, *2* MEGABYTES.  wow.
 static uint8 ACRAMUsed;	      // Something to speed up save states.

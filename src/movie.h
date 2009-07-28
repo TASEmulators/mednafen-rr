@@ -45,7 +45,7 @@ class MovieRecord
 {
 
 public:
-	uint16 pad;
+	uint16 pad[5];
 	
 	union {
 		struct {
@@ -62,7 +62,7 @@ public:
 	uint8 commands;
 	bool command_reset() { return (commands&MOVIECMD_RESET)!=0; }
 	bool command_power() { return (commands&MOVIECMD_POWER)!=0; }
-
+/*
 	void toggleBit(int bit)
 	{
 		pad ^= mask(bit);
@@ -88,7 +88,7 @@ public:
 	{
 		return (pad & mask(bit))!=0;
 	}
-
+*/
 	void clear();
 	
 	//a waste of memory in lots of cases..  maybe make it a pointer later?
@@ -129,6 +129,8 @@ public:
 
 	//was the frame data stored in binary?
 	bool binaryFlag;
+
+	int ports; //number of recorded ports
 
 	int getNumRecords() { return records.size(); }
 
@@ -182,7 +184,7 @@ private:
 	}
 };
 
-//extern int currFrameCounter;
+extern int currFrameCounter;
 extern EMOVIEMODE movieMode;		//adelikat: main needs this for frame counter display
 extern MovieData currMovieData;		//adelikat: main needs this for frame counter display
 
@@ -209,7 +211,10 @@ void PauseOrUnpause(void);
 void MakeMovieStateName(const char *filename);
 char* GetMovieLengthStr();
 
+void FCEUMOV_AddInputState();
 
+void SaveStateMovie(char* filename);
+void LoadStateMovie(char* filename);
 
 
 

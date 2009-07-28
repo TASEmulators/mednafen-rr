@@ -1,20 +1,3 @@
-/* Mednafen - Multi-system Emulator
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
-
 #include <assert.h>
 #include <limits.h>
 #include <fstream>
@@ -22,7 +5,7 @@
 #include "utils/xstring.h"
 #include "movie.h"
 
-extern void MDFNI_Power(void);
+extern void PCE_Power();
 
 #include "utils/readwrite.h"
 
@@ -65,17 +48,9 @@ int currRerecordCount;
 //--------------
 #include "mednafen.h"
 
-void DisplayMessage(char* blah) {
-MDFN_DispMessage((UTF8 *)_("%s"),blah);
-}
-/*
-const char* Buttons[8] = {"B", "C", "A", "S", "U", "D", "L", "R"};
-const char* Spaces[8]  = {" ", " ", " ", " ", " ", " ", " ", " "};
-const char* Buttons2[8] = {"", "", "", "L", "Z", "Y", "X", "R"};
-const char* Spaces2[8]  = {"", "", "", " ", " ", " ", " ", " "};
-*/
-//char str[40];
-//char InputDisplayString[40];
+void DisplayMessage(char* str) {}
+
+extern void DisplayMessage(char* str);
 
 //adelikat: Adding this specifically for the crappy yabause OSD, to return a string of /xxxx to add to a movie if in playback mode
 char* GetMovieLengthStr()
@@ -90,35 +65,6 @@ char* GetMovieLengthStr()
 	}
 
 	return str;
-}
-
-void SetInputDisplayCharacters(void) {
-
-/*	int x;
-
-	strcpy(str, "");
-
-	for (x = 0; x < 8; x++) {
-
-		if(PORTDATA1.data[2] & (1 << x)) {
-			strcat(str, Spaces[x]);	
-		}
-		else
-			strcat(str, Buttons[x]);
-
-	}
-
-	for (x = 0; x < 8; x++) {
-
-		if(PORTDATA1.data[3] & (1 << x)) {
-			strcat(str, Spaces2[x]);	
-		}
-		else
-			strcat(str, Buttons2[x]);
-
-	}
-
-	strcpy(InputDisplayString, str);*/
 }
 
 void MovieData::clearRecordRange(int start, int len)
@@ -146,7 +92,8 @@ void MovieData::insertEmpty(int at, int frames)
 
 void MovieRecord::clear()
 { 
-	pad = 0;
+	for (int i = 0; i < 5; i++)
+		pad[i] = 0;
 	commands = 0;
 	touch.padding = 0;
 }
@@ -201,7 +148,10 @@ void MovieRecord::parse(MovieData* md, std::istream* is)
 	
 	is->get(); //eat the pipe
 
-	parsePad(is, pad);
+	for (int i = 0; i < md->ports; i++) {
+		parsePad(is, pad[i]);
+		is->get();
+	}
 //	touch.x = u32DecFromIstream(is);
 //	touch.y = u32DecFromIstream(is);
 //	touch.touch = u32DecFromIstream(is);
@@ -220,11 +170,16 @@ void MovieRecord::dump(MovieData* md, std::ostream* os, int index)
 	putdec<uint8,1,true>(os,commands);
 
 	os->put('|');
-	dumpPad(os, pad);
+//	dumpPad(os, pad);
+	for (int i = 0; i < md->ports; i++) 
+	{
+		dumpPad(os,pad[i]); 
+		os->put('|');
+	}
 //	putdec<u8,3,true>(os,touch.x); os->put(' ');
 //	putdec<u8,3,true>(os,touch.y); os->put(' ');
 //	putdec<u8,1,true>(os,touch.touch);
-	os->put('|');
+//	os->put('|');
 	
 	//each frame is on a new line
 	os->put('\n');
@@ -257,6 +212,8 @@ void MovieData::installValue(std::string& key, std::string& val)
 		installInt(val,rerecordCount);
 	else if(key == "romFilename")
 		romFilename = val;
+	else if(key == "ports")
+		installInt(val, ports);
 //	else if(key == "romChecksum")
 //		StringToBytes(val,&romChecksum,MD5DATA::size);
 //	else if(key == "guid")
@@ -298,6 +255,7 @@ int MovieData::dump(std::ostream *os, bool binary)
 	*os << "version " << version << endl;
 	*os << "emuVersion " << emuVersion << endl;
 	*os << "rerecordCount " << rerecordCount << endl;
+	*os << "ports " << ports << endl;
 /*	*os << "cdGameName " << cdip->gamename << endl;
 	*os << "cdInfo " << cdip->cdinfo << endl;
 	*os << "cdItemNum " << cdip->itemnum << endl;
@@ -348,7 +306,7 @@ int MovieData::dump(std::ostream *os, bool binary)
 }
 
 //yuck... another custom text parser.
-static bool LoadFM2(MovieData& movieData, std::istream* fp, int size, bool stopAfterHeader)
+bool LoadFM2(MovieData& movieData, std::istream* fp, int size, bool stopAfterHeader)
 {
 	//TODO - start with something different. like 'desmume movie version 1"
 	std::ios::pos_type curr = fp->tellg();
@@ -489,7 +447,11 @@ void FCEUI_StopMovie()
 	curMovieFilename[0] = 0;
 	freshMovie = false;
 }
-	
+	extern void PCE_Power(void);
+
+extern uint8 SaveRAM[2048];
+
+
 //begin playing an existing movie
 void FCEUI_LoadMovie(const char *fname, bool _read_only, bool tasedit, int _pauseframe)
 {
@@ -517,6 +479,7 @@ void FCEUI_LoadMovie(const char *fname, bool _read_only, bool tasedit, int _paus
 
 	//LoadFM2(currMovieData, fp->stream, INT_MAX, false);
 
+	currMovieData.ports = 1;	
 	
 	fstream fs (fname);
 	LoadFM2(currMovieData, &fs, INT_MAX, false);
@@ -528,12 +491,7 @@ void FCEUI_LoadMovie(const char *fname, bool _read_only, bool tasedit, int _paus
 
 //	extern bool _HACK_DONT_STOPMOVIE;
 //	_HACK_DONT_STOPMOVIE = true;
-//	NDS_Reset();
-#ifdef WIN32
-	//HardResetGame();
-#else
-	YabauseReset();
-#endif
+	PCE_Power();
 //	_HACK_DONT_STOPMOVIE = false;
 	////WE NEED TO LOAD A SAVESTATE
 	//if(currMovieData.savestate.size() != 0)
@@ -548,10 +506,7 @@ void FCEUI_LoadMovie(const char *fname, bool _read_only, bool tasedit, int _paus
 	movieMode = MOVIEMODE_PLAY;
 	currRerecordCount = currMovieData.rerecordCount;
 	MovClearAllSRAM();
-	MDFNI_Power();
 //	InitMovieTime();
-//	MovieSRAM();
-//	BupFormat(0);
 	freshMovie = true;
 //	ClearAutoHold();
 	LagFrameCounter=0;
@@ -655,20 +610,23 @@ static void openRecordingMovie(const char* fname)
 #define MDFNNPCMD_RESET 	0x01
 #define MDFNNPCMD_POWER 	0x02
 
- extern uint16 pcepad;
+extern uint16 pcepad;
 
- void NDS_setPadFromMovie(uint16 pad)
- {
-	 pcepad = 0;
+void NDS_setPadFromMovie(uint16 pad[])
+{
+	for (int i = 0; i < currMovieData.ports; i++) {
+	pcepad = 0;
 
- if(pad &(1 << 7)) pcepad |= (1 << 4);//u
- if(pad &(1 << 6)) pcepad |= (1 << 6);//d
- if(pad &(1 << 5)) pcepad |= (1 << 7);//l
- if(pad &(1 << 4)) pcepad |= (1 << 5);//r
- if(pad &(1 << 3)) pcepad |= (1 << 1);//o
- if(pad &(1 << 2)) pcepad |= (1 << 0);//t
-if(pad &(1 << 0)) pcepad |= (1 << 2);//s
-if(pad &(1 << 1)) pcepad |= (1 << 3);//n
+	if(pad[i] &(1 << 7)) pcepad |= (1 << 4);//u
+	if(pad[i] &(1 << 6)) pcepad |= (1 << 6);//d
+	if(pad[i] &(1 << 5)) pcepad |= (1 << 7);//l
+	if(pad[i] &(1 << 4)) pcepad |= (1 << 5);//r
+	if(pad[i] &(1 << 3)) pcepad |= (1 << 0);//o
+	if(pad[i] &(1 << 2)) pcepad |= (1 << 1);//t
+	if(pad[i] &(1 << 0)) pcepad |= (1 << 2);//s
+	if(pad[i] &(1 << 1)) pcepad |= (1 << 3);//n
+
+	}
 
 }
  static int _currCommand = 0;
@@ -677,7 +635,7 @@ extern void *PortDataCache[16];
  //either dumps the current joystick state or loads one state from the movie
 void FCEUMOV_AddInputState()
  {
-	 uint16 pad;
+//	 uint16 pad;
 	 //todo - for tasedit, either dump or load depending on whether input recording is enabled
 	 //or something like that
 	 //(input recording is just like standard read+write movie recording with input taken from gamepad)
@@ -710,9 +668,8 @@ void FCEUMOV_AddInputState()
 
 			// {}
 			 //ResetNES();
-
 			 NDS_setPadFromMovie(mr->pad);
-			 NDS_setTouchFromMovie();
+//			 NDS_setTouchFromMovie();
 		 }
 
 		 //if we are on the last frame, then pause the emulator if the player requested it
@@ -743,79 +700,32 @@ void FCEUMOV_AddInputState()
 
 		 strcpy(MovieStatusM, "Recording");
 
-		 ///////////////////////
+		 int II, I, n, s, u, r, d, l;
 
-//	 int pdc = 1;// *(char *)inputdata;//(int)inputdata;
-//	 int pd2 = 0;// ((char*)inputdata)[1];
+		 for (int i = 0; i < currMovieData.ports; i++) {
 
-		 #define FIX(b) (b?1:0)
-	int II = FIX(pcepad &(1 << 0));
-	int I = FIX(pcepad & (1 << 1));
-	int n = FIX(pcepad & (1 << 2));
-	int s = FIX(pcepad & (1 << 3));
-	int u = FIX(pcepad & (1 << 4));
-	int r = FIX(pcepad & (1 << 7));
-	int d = FIX(pcepad & (1 << 6));
-	int l = FIX(pcepad & (1 << 5));
+			
 
-	pad =
-		(FIX(r)<<5)|
-		(FIX(l)<<4)|
-		(FIX(u)<<7)|
-		(FIX(d)<<6)|
-		(FIX(I)<<3)|
-		(FIX(II)<<2)|
-		(FIX(s)<<1)|
-		(FIX(n)<<0);
-//		(FIX(x)<<4)|
-//		(FIX(y)<<3)|
-//		(FIX(z)<<2)|
-//		(FIX(w)<<1)|
-//		(FIX(e)<<0);
+#define FIX(b) (b?1:0)
+			 II = FIX(pcepad &(1 << 1));
+			 I = FIX(pcepad & (1 << 0));
+			 n = FIX(pcepad & (1 << 2));
+			 s = FIX(pcepad & (1 << 3));
+			 u = FIX(pcepad & (1 << 4));
+			 r = FIX(pcepad & (1 << 7));
+			 d = FIX(pcepad & (1 << 6));
+			 l = FIX(pcepad & (1 << 5));
 
-/*
-		 #define FIX(b) (b?1:0)
-	int r = FIX(~PORTDATA1.data[2] & (1 << 6));//const char* Buttons[8] = {"B", "C", "A", "S", "U", "D", "R", "L"};
-	int l = FIX(~PORTDATA1.data[2] & (1 << 7));//const char* Buttons2[8] = {"", "", "", "L", "Z", "Y", "X", "R"};
-	int d = FIX(~PORTDATA1.data[2] & (1 << 5));
-	int u = FIX(~PORTDATA1.data[2] & (1 << 4));
-	int s = FIX(~PORTDATA1.data[2] & (1 << 3));
-	int a = FIX(~PORTDATA1.data[2] & (1 << 2));
-	int b = FIX(~PORTDATA1.data[2] & (1 << 0));
-	int c = FIX(~PORTDATA1.data[2] & (1 << 1));
-	int x = FIX(~PORTDATA1.data[3] & (1 << 6));
-	int y = FIX(~PORTDATA1.data[3] & (1 << 5));
-	int z = FIX(~PORTDATA1.data[3] & (1 << 4));
-	int w = FIX(~PORTDATA1.data[3] & (1 << 3));
-	int e = FIX(~PORTDATA1.data[3] & (1 << 7));
-
-
-	pad =
-		(FIX(r)<<12)|
-		(FIX(l)<<11)|
-		(FIX(d)<<9)|
-		(FIX(u)<<10)|
-		(FIX(s)<<8)|
-		(FIX(a)<<7)|
-		(FIX(b)<<6)|
-		(FIX(c)<<5)|
-		(FIX(x)<<4)|
-		(FIX(y)<<3)|
-		(FIX(z)<<2)|
-		(FIX(w)<<1)|
-		(FIX(e)<<0);
-	//////////////////////*/
-
-		 mr.pad = pad;
-/*		 if(nds.isTouch) {
-			 mr.touch.x = nds.touchX >> 4;
-			 mr.touch.y = nds.touchY >> 4;
-			 mr.touch.touch = 1;
-		 } else {
-			 mr.touch.x = 0;
-			 mr.touch.y = 0;
-			 mr.touch.touch = 0;
-		 }*/
+			 mr.pad[i] =
+				 (FIX(r)<<5)|
+				 (FIX(l)<<4)|
+				 (FIX(u)<<7)|
+				 (FIX(d)<<6)|
+				 (FIX(I)<<3)|
+				 (FIX(II)<<2)|
+				 (FIX(s)<<1)|
+				 (FIX(n)<<0);
+		 }
 
 		 mr.dump(&currMovieData, osRecordingMovie,currMovieData.records.size());
 		 currMovieData.records.push_back(mr);
@@ -823,8 +733,6 @@ void FCEUMOV_AddInputState()
 	 }
 
 	 currFrameCounter++;
-
-	 SetInputDisplayCharacters();
 
 	 /*extern u8 joy[4];
 	 memcpy(&cur_input_display,joy,4);*/
@@ -1099,7 +1007,18 @@ bool FCEUI_MovieGetInfo(std::istream* fp, MOVIE_INFO& info, bool skipFrameCount)
 bool MovieRecord::parseBinary(MovieData* md, std::istream* is)
 {
 	commands=is->get();
-	is->read((char *) &pad, sizeof pad);
+		
+	for (int i = 0; i < md->ports; i++)
+	{
+		is->read((char *) &pad[i], sizeof pad[i]);
+
+	//	parseJoy(is,pad[0]); is->get(); //eat the pipe
+	//	parseJoy(is,joysticks[1]); is->get(); //eat the pipe
+//		parseJoy(is,joysticks[2]); is->get(); //eat the pipe
+//		parseJoy(is,joysticks[3]); is->get(); //eat the pipe
+	}
+//	else
+//		is->read((char *) &pad, sizeof pad);
 //	is->read((char *) &touch.x, sizeof touch.x);
 //	is->read((char *) &touch.y, sizeof touch.y);
 //	is->read((char *) &touch.touch, sizeof touch.touch);
@@ -1110,7 +1029,9 @@ bool MovieRecord::parseBinary(MovieData* md, std::istream* is)
 void MovieRecord::dumpBinary(MovieData* md, std::ostream* os, int index)
 {
 	os->put(md->records[index].commands);
-	os->write((char *) &md->records[index].pad, sizeof md->records[index].pad);
+	for (int i = 0; i < md->ports; i++) {
+	os->write((char *) &md->records[index].pad[i], sizeof md->records[index].pad[i]);
+	}
 //	os->write((char *) &md->records[index].touch.x, sizeof md->records[index].touch.x);
 //	os->write((char *) &md->records[index].touch.y, sizeof md->records[index].touch.y);
 //	os->write((char *) &md->records[index].touch.touch, sizeof md->records[index].touch.touch);
@@ -1506,7 +1427,8 @@ static int RecentlySavedMovie = -1;
 void MovClearAllSRAM(void) {
 
 	//TODO ZERO
-	ClearPCESRAM();
+  memset(SaveRAM, 0x00, 2048);
+  memcpy(SaveRAM, "HUBM\x00\xa0\x10\x80", 8);  
 
 }
 //
