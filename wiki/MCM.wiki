@@ -4,7 +4,7 @@
 
 mcm is the movie capture format of Mednafen, a TurboGrafx 16 (PC Engine), PC-FX, Neo Geo Pocket (Color), WonderSwan (Color),and Atari Lynx emulator.  In addition it also supports NES,SMS,GG,GB,GBA.
 
-The following are only available on the linux version:
+The following are only available on the Linux version:
 PC-FX, GB, GBA, Sega MS, Game Gear
 
 ==Savestate/Movie Info==
@@ -18,7 +18,7 @@ Movie files have their associated savestates separate from "non-movie" savestate
 TODO: More details
 
 ===Movie File Format===
-
+{{{
      000 8-byte    "MDFNMOVI" signature
      008 uint32     Mednafen Version (Current is 0A 08)
      00C uint32     Movie Format Version (Current is 01)
@@ -26,10 +26,10 @@ TODO: More details
      030 64-byte    Filename of the ROM used (with extension)
      070 uint32     Re-record Count
      074 5-byte     Console indicator (pce, ngp, pcfx, wswan)
-     079 32-byte    Author's name
-     099 103-byte   Padding 0's
+     079 32-byte    Author name
+     099 103-byte   Padding 0s
      100 variable   Input data
-
+}}}
 TODO: Verify if NSTC/PAL mode used for the movie can be detected or not.
 
 ===Input Data Formats===
