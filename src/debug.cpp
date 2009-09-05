@@ -38,7 +38,7 @@ void MDFNDBG_PostGameLoad(void)
   MDFNGameInfo->Debugger->RegGroups = &RegGroups;
  }
 }
- 
+  
 // Called on game close.
 void MDFNDBG_Kill(void)
 {
