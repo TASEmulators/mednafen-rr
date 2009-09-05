@@ -29,7 +29,7 @@ void MDFNDBG_Init(void)
  AddressSpaces.clear();
  RegGroups.clear();
 }
- 
+  
 void MDFNDBG_PostGameLoad(void)
 {
  if(MDFNGameInfo->Debugger)
