@@ -17,7 +17,7 @@
 
 /* Support functions for the emulated system code-side of the debugger. */
 #include "mednafen.h"
-
+ 
 #ifdef WANT_DEBUGGER
 
 static std::vector<AddressSpaceType> AddressSpaces;
