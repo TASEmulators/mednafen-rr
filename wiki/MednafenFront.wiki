@@ -11,7 +11,7 @@ Mednafen-Front allows the user to browse for files such as ROM, Movie files, and
 = Using Mednafen-Front =
 
 == Controls ==
-
+ 
 ===Launch Mednafen/Close Mednafen===
 This button will open mednafen.exe.  If it is already open, it will close it.  In order to launch mednafen, a valid ROM name must be specified.  In addition, the commandline length must not exceed 255 characters.
 
