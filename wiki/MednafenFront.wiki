@@ -9,7 +9,7 @@ Mednafen-Front is a Windows Frontend used to operate mednafen-rr.  It is customi
 Mednafen-Front allows the user to browse for files such as ROM, Movie files, and savestates, as well as select movie options such as Read-only.  It then translates these into commandline options to feed into mednafen.
 
 = Using Mednafen-Front =
-
+ 
 == Controls ==
  
 ===Launch Mednafen/Close Mednafen===
