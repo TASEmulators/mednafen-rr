@@ -19,7 +19,7 @@
 #include "mednafen.h"
  
 #ifdef WANT_DEBUGGER
-
+ 
 static std::vector<AddressSpaceType> AddressSpaces;
 static std::vector<RegGroupType*> RegGroups;
 
