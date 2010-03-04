@@ -125,6 +125,7 @@ public:
 
 	int version;
 	int emuVersion;
+	int pcecd;
 	//todo - somehow force mutual exclusion for poweron and reset (with an error in the parser)
 	
 //	MD5DATA romChecksum;
