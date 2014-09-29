@@ -4,7 +4,7 @@
 
 Mednafen-Front is a Windows Frontend used to operate mednafen-rr.  It is customized for using rerecording/movie making tools.  It was written by adelikat using VB.Net 2008.
   
-[http://dl-client.getdropbox.com/u/75355/HostedImages/Med-FrontPic.png]
+https://dl.dropboxusercontent.com/u/75355/HostedImages/Med-FrontPic.png]
  
 = Overview =
 
